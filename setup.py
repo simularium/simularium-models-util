@@ -37,7 +37,10 @@ dev_requirements = [
     "wheel>=0.34.2",
 ]
 
-requirements = []
+requirements = [
+    "numpy>=1.16",
+    "scipy>=1.5.2",
+]
 
 extra_requirements = {
     "setup": setup_requirements,

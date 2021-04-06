@@ -110,3 +110,7 @@ ENV/
 
 # VSCode
 .vscode
+
+# Simularium
+*.simularium
+*.h5
