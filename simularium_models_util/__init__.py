@@ -13,4 +13,4 @@ def get_module_version():
     return __version__
 
 
-from .common import ReaddyUtil, QuiltUploader  # noqa: F401
+from .common import ReaddyUtil  # noqa: F401

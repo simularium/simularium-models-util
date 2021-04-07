@@ -3,7 +3,6 @@ import readdy
 import math
 import random
 import copy
-import matplotlib.pyplot as plt
 
 from ..common import ReaddyUtil
 
@@ -767,20 +766,20 @@ def add_necklinker_length_reporter(system):
         rate_function=ReaddyUtil.rate_function_infinity
     )
 
-'''
-plot necklinker lengths
-'''
-def plot_necklinker_lengths():
+# '''
+# plot necklinker lengths
+# '''
+# def plot_necklinker_lengths():
 
-    fig, ax = plt.subplots(1, 1)
-    ax.hist(necklinker_lengths, density=1, bins=10) 
-    plt.savefig("necklinker_lengths.png", dpi=220)
-    plt.close()
+#     fig, ax = plt.subplots(1, 1)
+#     ax.hist(necklinker_lengths, density=1, bins=10) 
+#     plt.savefig("necklinker_lengths.png", dpi=220)
+#     plt.close()
 
-    print(
-        "necklinker lengths: median = {}, mean = {}, std = {}".format(
-            np.median(necklinker_lengths), 
-            np.mean(necklinker_lengths), 
-            np.std(necklinker_lengths)
-        )
-    )
+#     print(
+#         "necklinker lengths: median = {}, mean = {}, std = {}".format(
+#             np.median(necklinker_lengths), 
+#             np.mean(necklinker_lengths), 
+#             np.std(necklinker_lengths)
+#         )
+#     )

@@ -8,7 +8,7 @@ import os
 import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import UnitData
+from simulariumio import MetaData, UnitData
 
 
 class KinesinVisualization():
@@ -41,7 +41,7 @@ class KinesinVisualization():
         """
         result = {}
         for particle_type in types_mapping:
-            types = get_all_polymer_types(particle_type)
+            types = KinesinVisualization.get_all_polymer_types(particle_type)
             for t in types:
                 result[t] = types_mapping[particle_type]
         return result
@@ -61,7 +61,7 @@ class KinesinVisualization():
             "tubulinB#" : tubulin_radius,
             "tubulinB#bound_" : tubulin_radius
         }
-        radii = get_mapping_for_all_polymer_types(radii)
+        radii = KinesinVisualization.get_mapping_for_all_polymer_types(radii)
         radii["hips"] = hips_radius
         radii["cargo"] = cargo_radius
         radii["motor#ADP"] = motor_radius
@@ -76,10 +76,12 @@ class KinesinVisualization():
             "tubulinB#bound_",
         }
         for group_type in group_types:
-            type_grouping[group_type[:-1]] = get_all_polymer_types(group_type)
+            type_grouping[group_type[:-1]] = KinesinVisualization.get_all_polymer_types(group_type)
         # convert
         data = ReaddyData(
-            box_size=np.array([box_size, box_size, box_size]),
+            meta_data=MetaData(
+                box_size=np.array([box_size, box_size, box_size]),
+            ),
             timestep=0.05,
             path_to_readdy_h5=path_to_readdy_h5,
             radii=radii,

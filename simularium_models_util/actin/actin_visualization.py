@@ -8,7 +8,7 @@ import os
 import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import UnitData
+from simulariumio import MetaData, UnitData
 
 
 class ActinVisualization():
@@ -84,12 +84,13 @@ class ActinVisualization():
         }
         # convert
         data = ReaddyData(
-            box_size=np.array([box_size, box_size, box_size]),
-            timestep=0.005,
+            meta_data=MetaData(
+                box_size=np.array([box_size, box_size, box_size]),
+            ),
+            timestep=0.1,
             path_to_readdy_h5=path_to_readdy_h5,
-            # rotations=rotations,
             radii=radii,
-            # type_grouping=type_grouping,
+            type_grouping=type_grouping,
             time_units=UnitData("ns"),
             spatial_units=UnitData("nm"),
             plots=plots,

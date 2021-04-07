@@ -8,7 +8,6 @@ from scipy.linalg import expm
 
 from ..common import ReaddyUtil
 from .fiber_data import FiberData
-from .arp_data import ArpData
 
 
 class ActinStructure:
@@ -77,34 +76,6 @@ class ActinStructure:
                 axis_position1, ActinStructure.mother_axis_direction, arc_length
             ),
         ])
-
-    @staticmethod
-    def fiber_network():
-        # daughter fiber
-        position0 = ActinStructure.daughter_positions[0]
-        v0 = position0 - ActinStructure.daughter_axis_point
-        d0 = np.dot(v0, ActinStructure.daughter_axis_direction)
-        axis_position0 = ActinStructure.daughter_axis_point + ActinStructure.daughter_axis_direction * d0
-        position1 = ActinStructure.daughter_positions[2]
-        v1 = position1 - ActinStructure.daughter_axis_point
-        d1 = np.dot(v1, ActinStructure.daughter_axis_direction)
-        axis_position1 = ActinStructure.daughter_axis_point + ActinStructure.daughter_axis_direction * d1
-        normal = ReaddyUtil.get_random_perpendicular_vector(ActinStructure.daughter_axis_direction)
-        arc_length = np.linalg.norm(axis_position1 - axis_position0)
-        daughter_fiber = FiberData(1, [
-            CurvePointData(
-                axis_position0, ActinStructure.daughter_axis_direction, 0
-            ),
-            CurvePointData(
-                axis_position1, ActinStructure.daughter_axis_direction, arc_length
-            ),
-        ])
-        # attach fibers and arp
-        arp = ArpData(0, ActinStructure.branch_positions()[0], True, True)
-        arp.daughter_fiber = daughter_fiber
-        mother_fiber = ActinStructure.mother_fiber()
-        mother_fiber.nucleated_arps.append(arp)
-        return {0: mother_fiber}
 
     @staticmethod
     def actin_distance_from_axis(): # was 1.59 nm

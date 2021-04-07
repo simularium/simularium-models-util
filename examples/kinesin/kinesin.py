@@ -20,7 +20,7 @@ verbose = set_verbose(True)
 
 output_name = "kinesin"
 box_size = set_box_size(300.) #nm
-total_steps = int(1e4)
+total_steps = int(1e3)
 
 motor_diffusion_factor = 1.
 hips_diffusion_factor = 1.
@@ -157,5 +157,4 @@ simulation.run(total_steps, timestep)
 
 # VISUALIZE -------------------------------------------------------------------
 
-vis_output_file = "{}.h5.simularium".format(output_name)
-KinesinVisualization.visualize_kinesin(simulation.output_file)
+KinesinVisualization.visualize_kinesin(simulation.output_file, box_size, [])

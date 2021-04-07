@@ -8,7 +8,7 @@ import os
 import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import UnitData
+from simulariumio import MetaData, UnitData
 
 
 class MicrotubulesVisualization():
@@ -41,7 +41,7 @@ class MicrotubulesVisualization():
         '''
         result = {}
         for particle_type in types_mapping:
-            types = get_all_polymer_types(particle_type)
+            types = MicrotubulesVisualization.get_all_polymer_types(particle_type)
             for t in types:
                 result[t] = types_mapping[particle_type]
         return result
@@ -63,7 +63,7 @@ class MicrotubulesVisualization():
             "tubulinB#GTP_bent_" : tubulin_radius,
             "tubulinB#GDP_bent_" : tubulin_radius
         }
-        radii = get_mapping_for_all_polymer_types(radii)
+        radii = MicrotubulesVisualization.get_mapping_for_all_polymer_types(radii)
         radii["tubulinA#free"] = tubulin_radius
         radii["tubulinB#free"] = tubulin_radius
         # type grouping
@@ -79,7 +79,7 @@ class MicrotubulesVisualization():
             "tubulinB#GDP_bent",
         }
         for group_type in group_types:
-            type_grouping[group_type] = get_all_polymer_types(group_type + "_")
+            type_grouping[group_type] = MicrotubulesVisualization.get_all_polymer_types(group_type + "_")
         # types to ignore
         ignore_types = [
             "site#out", "site#1", "site#1_GTP", "site#1_GDP", "site#1_detach",
@@ -88,7 +88,9 @@ class MicrotubulesVisualization():
         ]
         # convert
         data = ReaddyData(
-            box_size=np.array([box_size, box_size, box_size]),
+            meta_data=MetaData(
+                box_size=np.array([box_size, box_size, box_size]),
+            ),
             timestep=0.1,
             path_to_readdy_h5=path_to_readdy_h5,
             radii=radii,

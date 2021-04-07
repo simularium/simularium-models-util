@@ -4,7 +4,7 @@ import os
 from shutil import rmtree
 
 from simularium_models_util import ReaddyUtil
-from simularium_models_util.actin import *
+from simularium_models_util.microtubules import *
 
 # Ref: http://jcb.rupress.org/content/jcb/217/8/2691/F7.large.jpg
 
@@ -18,7 +18,7 @@ verbose = set_verbose(False)
 
 output_name = "microtubules"
 box_size = set_box_size(150.) #nm
-total_steps = int(1e7)
+total_steps = int(1e3)
 
 tubulin_concentration = 100. # uM
 
