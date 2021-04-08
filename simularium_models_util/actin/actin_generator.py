@@ -264,20 +264,23 @@ class ActinGenerator:
         return monomer_positions, monomer_types, monomer_edges
 
     @staticmethod
-    def get_monomers(fiber_data):
+    def get_monomers(fibers_data):
         """
-        get all the monomer data for the fibers in fiber_data 
-        (dict mapping fiber_id to each mother fiber)
+        get all the monomer data for the (branched) fibers in fibers_data 
+
+        fibers_data: List[FiberData]
+        (FiberData for mother fibers only, which should have 
+        their daughters' FiberData attached to their nucleated arps)
         """
         result = []
-        for fiber_id in fiber_data:
+        for fiber_data in fibers_data:
             monomer_positions, monomer_types, edges = ActinGenerator.get_monomers_for_fiber(
-                fiber_data[fiber_id], 
-                ReaddyUtil.get_random_perpendicular_vector(fiber_data[fiber_id].get_first_segment_direction()), 
-                fiber_data[fiber_id].pointed_point().position, 
+                fiber_data, 
+                ReaddyUtil.get_random_perpendicular_vector(fiber_data.get_first_segment_direction()), 
+                fiber_data.pointed_point().position, 
                 np.zeros(3),
                 1
             )
             monomer_types[0] = f"actin#pointed_ATP_{monomer_types[0][-1:]}"
-            result.append((monomer_positions, monomer_types, edges))
+            result.append((monomer_types, np.array(monomer_positions), edges))
         return result
