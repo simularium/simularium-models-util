@@ -494,7 +494,7 @@ class ReaddyUtil():
         try to remove an edge
         """
         if not ReaddyUtil.vertices_are_connected(topology, vertex1, vertex2):
-            return False, "tried to remove non-existent edge! {} -- {}".format(
+            return False, "Tried to remove non-existent edge! {} -- {}".format(
                 ReaddyUtil.vertex_to_string(topology, vertex1),
                 ReaddyUtil.vertex_to_string(topology, vertex2))
 

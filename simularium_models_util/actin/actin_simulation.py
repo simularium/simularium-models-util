@@ -18,8 +18,10 @@ class ActinSimulation:
 
         Params = Dict[str, float]
         keys:
-        verbose, box_size, actin_concentration, arp23_concentration, 
-        cap_concentration, dimerize_rate, dimerize_reverse_rate, 
+        total_steps, timestep, box_size, temperature_C, viscosity, 
+        force_constant, reaction_distance, n_cpu, actin_concentration, 
+        arp23_concentration, cap_concentration, seed_n_fibers, seed_fiber_length, 
+        actin_radius, arp23_radius, cap_radius, dimerize_rate, dimerize_reverse_rate, 
         trimerize_rate, trimerize_reverse_rate, pointed_growth_ATP_rate, 
         pointed_growth_ADP_rate, pointed_shrink_ATP_rate, 
         pointed_shrink_ADP_rate, barbed_growth_ATP_rate, 
@@ -29,9 +31,7 @@ class ActinSimulation:
         barbed_growth_branch_ATP_rate, barbed_growth_branch_ADP_rate, 
         debranching_ATP_rate, debranching_ADP_rate, cap_bind_rate, 
         cap_unbind_rate, hydrolysis_actin_rate, hydrolysis_arp_rate, 
-        nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, 
-        temperature_C, viscosity, force_constant, reaction_distance, 
-        actin_radius, arp23_radius, cap_radius, n_cpu
+        nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, verbose
         """
         self.parameters = parameters
         self.actin_util = ActinUtil(self.parameters)
@@ -209,7 +209,7 @@ class ActinSimulation:
         Add randomly distributed and oriented linear fibers
         """
         self.actin_util.add_random_linear_fibers(
-            self.simulation, int(self.parameters["n_fibers"]), self.parameters["fiber_length"])
+            self.simulation, int(self.parameters["seed_n_fibers"]), self.parameters["seed_fiber_length"])
 
     def add_fibers_from_data(self, fibers_data):
         """

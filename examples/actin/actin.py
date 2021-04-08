@@ -17,7 +17,7 @@ def main():
     parser.add_argument(
         "params_path", help="the file path of an excel file with parameters")
     args = parser.parse_args()
-    parameters = pandas.read_excel(args.params_path, usecols=[0, 1])
+    parameters = pandas.read_excel(args.params_path, sheet_name="actin", usecols=[0, 1])
     parameters.set_index('name', inplace=True)
     parameters.transpose()
     run_name = list(parameters)[0]
