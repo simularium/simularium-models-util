@@ -2455,28 +2455,28 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Arp_Bind_ATP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="s2">&quot;Actin-Polymer(actin#ATP_</span><span class="si">{i}</span><span class="s2">) + Arp23-Dimer(arp3) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + Arp23-Dimer(arp3) -&gt; &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#Branching(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--arp3#new)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Arp_Bind_ATP2</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="s2">&quot;Actin-Polymer(actin#ATP_</span><span class="si">{i}</span><span class="s2">) + Arp23-Dimer(arp3#ATP) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + Arp23-Dimer(arp3#ATP) -&gt; &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#Branching(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--arp3#new_ATP)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Arp_Bind_ADP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="s2">&quot;Actin-Polymer(actin#</span><span class="si">{i}</span><span class="s2">) + Arp23-Dimer(arp3) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + Arp23-Dimer(arp3) -&gt; &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#Branching(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--arp3#new)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Arp_Bind_ADP2</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="s2">&quot;Actin-Polymer(actin#</span><span class="si">{i}</span><span class="s2">) + Arp23-Dimer(arp3#ATP) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + Arp23-Dimer(arp3#ATP) -&gt; &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#Branching(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--arp3#new_ATP)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
