@@ -4,10 +4,8 @@
 import pandas
 import argparse
 
-from simularium_models_util.microtubules import (
-    MicrotubulesSimulation,
-    MicrotubulesVisualization,
-)
+from simularium_models_util.microtubules import MicrotubulesSimulation
+from simularium_models_util.visualization import MicrotubulesVisualization
 
 
 def main():

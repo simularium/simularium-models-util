@@ -37,19 +37,24 @@ dev_requirements = [
     "wheel>=0.34.2",
 ]
 
+viz_requirements = [
+    "simulariumio @ git+ssh://git@github.com/allen-cell-animated/simulariumio.git",
+]
+
 requirements = [
     "numpy>=1.16",
     "scipy>=1.5.2",
-    "simulariumio @ git+ssh://git@github.com/allen-cell-animated/simulariumio.git",
 ]
 
 extra_requirements = {
     "setup": setup_requirements,
     "test": test_requirements,
     "dev": dev_requirements,
+    "viz": viz_requirements,
     "all": [
         *requirements,
         *dev_requirements,
+        *viz_requirements
     ]
 }
 

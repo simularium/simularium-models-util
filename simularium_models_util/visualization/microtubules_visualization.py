@@ -9,7 +9,7 @@ import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData
-from .microtubules_util import MicrotubulesUtil
+from ..microtubules import MicrotubulesUtil
 
 
 class MicrotubulesVisualization():

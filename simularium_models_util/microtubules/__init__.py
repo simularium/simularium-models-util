@@ -3,4 +3,3 @@
 
 from .microtubules_simulation import MicrotubulesSimulation  # noqa: F401
 from .microtubules_util import MicrotubulesUtil  # noqa: F401
-from .microtubules_visualization import MicrotubulesVisualization  # noqa: F401

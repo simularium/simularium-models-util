@@ -4,10 +4,8 @@
 import pandas
 import argparse
 
-from simularium_models_util.kinesin import (
-    KinesinSimulation,
-    KinesinVisualization,
-)
+from simularium_models_util.kinesin import KinesinSimulation
+from simularium_models_util.visualization import KinesinVisualization
 
 
 def main():

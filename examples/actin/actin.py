@@ -4,10 +4,8 @@
 import pandas
 import argparse
 
-from simularium_models_util.actin import (
-    ActinSimulation,
-    ActinVisualization,
-)
+from simularium_models_util.actin import ActinSimulation
+from simularium_models_util.visualization import ActinVisualization
 
 
 def main():
