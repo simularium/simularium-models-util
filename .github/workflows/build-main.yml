@@ -16,14 +16,10 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.python-version }}
     - name: Setup MiniConda
       uses: conda-incubator/setup-miniconda@v2
       with:
@@ -49,28 +45,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
     - name: Setup MiniConda
       uses: conda-incubator/setup-miniconda@v2
       with:
         auto-update-conda: true
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.8
         channels: readdy/label/dev,conda-forge
     - name: Install Conda Deps
       shell: bash -l {0}
       run: |
         conda install readdy
     - name: Install Dependencies
+      shell: bash -l {0}
       run: |
         python -m pip install --upgrade pip
         pip install .[test]
     - name: Lint with flake8
+      shell: bash -l {0}
       run: |
         flake8 simularium_models_util --count --verbose --show-source --statistics
     - name: Check with black
+      shell: bash -l {0}
       run: |
         black --check simularium_models_util
 
@@ -81,25 +76,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
     - name: Setup MiniConda
       uses: conda-incubator/setup-miniconda@v2
       with:
         auto-update-conda: true
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.8
         channels: readdy/label/dev,conda-forge
     - name: Install Conda Deps
+      shell: bash -l {0}
       shell: bash -l {0}
       run: |
         conda install readdy
     - name: Install Dependencies
+      shell: bash -l {0}
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel
     - name: Build Package
+      shell: bash -l {0}
       run: |
         python setup.py sdist bdist_wheel
     - name: Publish to PyPI
