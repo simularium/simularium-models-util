@@ -8,6 +8,10 @@ from setuptools import find_packages, setup
 with open("README.md") as readme_file:
     readme = readme_file.read()
 
+viz_requirements = [
+    "simulariumio @ git+ssh://git@github.com/allen-cell-animated/simulariumio.git",
+]
+
 setup_requirements = [
     "pytest-runner>=5.2",
 ]
@@ -20,6 +24,7 @@ test_requirements = [
     "pytest>=5.4.3",
     "pytest-cov>=2.9.0",
     "pytest-raises>=0.11",
+    *viz_requirements,
 ]
 
 dev_requirements = [
@@ -35,10 +40,6 @@ dev_requirements = [
     "tox>=3.15.2",
     "twine>=3.1.1",
     "wheel>=0.34.2",
-]
-
-viz_requirements = [
-    "simulariumio @ git+ssh://git@github.com/allen-cell-animated/simulariumio.git",
 ]
 
 requirements = [
