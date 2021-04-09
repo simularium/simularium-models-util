@@ -40,6 +40,7 @@ dev_requirements = [
 requirements = [
     "numpy>=1.16",
     "scipy>=1.5.2",
+    "simulariumio @ git+ssh://git@github.com/allen-cell-animated/simulariumio.git",
 ]
 
 extra_requirements = {
