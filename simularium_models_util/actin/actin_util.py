@@ -9,15 +9,17 @@ from ..common import ReaddyUtil
 from .actin_generator import ActinGenerator
 from .actin_structure import ActinStructure
 from .fiber_data import FiberData
-from .arp_data import ArpData
 from .curve_point_data import CurvePointData
 
 
 parameters = {}
+
+
 def set_parameters(p):
     global parameters
     parameters = p
     return p
+
 
 class ActinUtil:
     def __init__(self, parameters):
@@ -63,38 +65,46 @@ class ActinUtil:
         (i.e. return 3 for type = "actin#ATP_1" and offset = -1)
         """
         pt = topology.particle_type_of_vertex(vertex)
-        if not "actin" in pt:
-            raise Exception(f"Failed to get actin number: {pt} is not actin\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+        if "actin" not in pt:
+            raise Exception(
+                f"Failed to get actin number: {pt} is not actin\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset)
 
     @staticmethod
     def get_all_polymer_actin_types(vertex_type):
         """
         get a list of all numbered versions of a type
-        (e.g. for "actin#ATP" return 
+        (e.g. for "actin#ATP" return
         ["actin#ATP_1", "actin#ATP_2", "actin#ATP_3"])
         """
         spacer = "_"
-        if not "#" in vertex_type:
+        if "#" not in vertex_type:
             spacer = "#"
-        return [f"{vertex_type}{spacer}1",
-                f"{vertex_type}{spacer}2",
-                f"{vertex_type}{spacer}3"]
+        return [
+            f"{vertex_type}{spacer}1",
+            f"{vertex_type}{spacer}2",
+            f"{vertex_type}{spacer}3",
+        ]
 
     @staticmethod
     def get_actin_rotation(positions):
         """
         get the difference in the actin's current orientation
         compared to the initial orientation as a rotation matrix
-        positions = [previous actin position, middle actin position, next actin position]
+        positions = [prev actin position, middle actin position, next actin position]
         """
         positions[0] = ReaddyUtil.get_non_periodic_boundary_position(
-            positions[1], positions[0], parameters["box_size"])
+            positions[1], positions[0], parameters["box_size"]
+        )
         positions[2] = ReaddyUtil.get_non_periodic_boundary_position(
-            positions[1], positions[2], parameters["box_size"])
+            positions[1], positions[2], parameters["box_size"]
+        )
         current_orientation = ReaddyUtil.get_orientation_from_positions(positions)
-        return np.matmul(current_orientation, np.linalg.inv(ActinStructure.orientation()))
+        return np.matmul(
+            current_orientation, np.linalg.inv(ActinStructure.orientation())
+        )
 
     @staticmethod
     def get_position_for_new_vertex(neighbor_positions, offset_vector):
@@ -127,7 +137,9 @@ class ActinUtil:
             else:
                 if max_edges <= 1:
                     return None, max_edges
-                return ActinUtil.get_prev_branch_actin(topology, neighbor.get(), n_id, max_edges-1)
+                return ActinUtil.get_prev_branch_actin(
+                    topology, neighbor.get(), n_id, max_edges - 1
+                )
         return None, max_edges
 
     @staticmethod
@@ -138,56 +150,80 @@ class ActinUtil:
         as well as the offset vector
         """
         v_arp2 = ReaddyUtil.get_neighbor_of_types(
-            topology, vertex, ["arp2", "arp2#branched"], [])
+            topology, vertex, ["arp2", "arp2#branched"], []
+        )
         offset_index = 0
         if v_arp2 is None:
             v_branch, edges = ActinUtil.get_prev_branch_actin(topology, vertex, None, 3)
             if v_branch is None:
-                raise Exception(f"Failed to set position: couldn't find arp2 or first branch actin\n"
-                    f"{ReaddyUtil.topology_to_string(topology)}")
+                raise Exception(
+                    "Failed to set position: couldn't find arp2 "
+                    f"or first branch actin\n{ReaddyUtil.topology_to_string(topology)}"
+                )
             offset_index = 3 - edges
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_branch, ["arp2", "arp2#branched"], [])
+                topology, v_branch, ["arp2", "arp2#branched"], []
+            )
             if v_arp2 is None:
-                raise Exception(f"Failed to set position: couldn't find arp2\n"
-                    f"{ReaddyUtil.topology_to_string(topology)}")
+                raise Exception(
+                    f"Failed to set position: couldn't find arp2\n"
+                    f"{ReaddyUtil.topology_to_string(topology)}"
+                )
         v_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"], [])
+            topology, v_arp2, ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"], []
+        )
         if v_arp3 is None:
-            raise Exception(f"Failed to set position: couldn't find arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
-        actin_types = (ActinUtil.get_all_polymer_actin_types("actin")
+            raise Exception(
+                f"Failed to set position: couldn't find arp3\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
+        actin_types = (
+            ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed")
-            + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP"))
+            + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
+        )
         v_actin_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp3, actin_types, [])
+            topology, v_arp3, actin_types, []
+        )
         if v_actin_arp3 is None:
-            raise Exception(f"Failed to set position: couldn't find actin_arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to set position: couldn't find actin_arp3\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp3, -1)
         actin_types = [f"actin#ATP_{n_pointed}", f"actin#{n_pointed}"]
         v_actin_arp2 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp3, actin_types, [])
+            topology, v_actin_arp3, actin_types, []
+        )
         if v_actin_arp2 is None:
-            raise Exception(f"Failed to set position: couldn't find actin_arp2\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to set position: couldn't find actin_arp2\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1)
         actin_types = [
-            f"actin#ATP_{n_pointed}", f"actin#{n_pointed}",
-            f"actin#pointed_ATP_{n_pointed}", f"actin#pointed_{n_pointed}"
+            f"actin#ATP_{n_pointed}",
+            f"actin#{n_pointed}",
+            f"actin#pointed_ATP_{n_pointed}",
+            f"actin#pointed_{n_pointed}",
         ]
         if n_pointed == 1:
             actin_types += ["actin#branch_1", "actin#branch_ATP_1"]
         v_prev = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp2, actin_types, [v_actin_arp3])
+            topology, v_actin_arp2, actin_types, [v_actin_arp3]
+        )
         if v_prev is None:
-            raise Exception("Failed to set position: couldn't find v_prev, "
-                f"actin_arp2 is {ReaddyUtil.vertex_to_string(topology, v_actin_arp2)} "
-                f"and actin_arp3 is {ReaddyUtil.vertex_to_string(topology, v_actin_arp3)}\n"
-                + str(ReaddyUtil.topology_to_string(topology)))
-        return ([v_prev, v_actin_arp2, v_actin_arp3],
-            ActinStructure.mother1_to_branch_actin_vectors()[offset_index])
+            raise Exception(
+                "Failed to set position: couldn't find v_prev, "
+                f"actin_arp2 is {ReaddyUtil.vertex_to_string(topology, v_actin_arp2)}, "
+                f"actin_arp3 is {ReaddyUtil.vertex_to_string(topology, v_actin_arp3)}\n"
+                + str(ReaddyUtil.topology_to_string(topology))
+            )
+        return (
+            [v_prev, v_actin_arp2, v_actin_arp3],
+            ActinStructure.mother1_to_branch_actin_vectors()[offset_index],
+        )
 
     @staticmethod
     def set_end_vertex_position(topology, recipe, v_new, barbed):
@@ -195,28 +231,48 @@ class ActinUtil:
         set the position of a new pointed or barbed vertex
         """
         vertices = []
-        offset_vector = (ActinStructure.mother1_to_mother3_vector() 
-                        if barbed else ActinStructure.mother1_to_mother_vector())
+        offset_vector = (
+            ActinStructure.mother1_to_mother3_vector()
+            if barbed
+            else ActinStructure.mother1_to_mother_vector()
+        )
         at_branch = False
-        vertices.append(ReaddyUtil.get_neighbor_of_type(
-            topology, v_new, "actin", False))
+        vertices.append(
+            ReaddyUtil.get_neighbor_of_type(topology, v_new, "actin", False)
+        )
         if vertices[0] is None:
-            vertices, offset_vector = ActinUtil.get_branch_orientation_vertices_and_offset(
-                topology, v_new)
+            (
+                vertices,
+                offset_vector,
+            ) = ActinUtil.get_branch_orientation_vertices_and_offset(topology, v_new)
             at_branch = True
         else:
-            vertices.append(ReaddyUtil.get_neighbor_of_type(
-                topology, vertices[0], "actin", False, [v_new]))
+            vertices.append(
+                ReaddyUtil.get_neighbor_of_type(
+                    topology, vertices[0], "actin", False, [v_new]
+                )
+            )
             if vertices[1] is None:
-                vertices, offset_vector = ActinUtil.get_branch_orientation_vertices_and_offset(
-                    topology, v_new)
+                (
+                    vertices,
+                    offset_vector,
+                ) = ActinUtil.get_branch_orientation_vertices_and_offset(
+                    topology, v_new
+                )
                 at_branch = True
             else:
-                vertices.append(ReaddyUtil.get_neighbor_of_type(
-                    topology, vertices[1], "actin", False, [vertices[0]]))
+                vertices.append(
+                    ReaddyUtil.get_neighbor_of_type(
+                        topology, vertices[1], "actin", False, [vertices[0]]
+                    )
+                )
                 if vertices[2] is None:
-                    vertices, offset_vector = ActinUtil.get_branch_orientation_vertices_and_offset(
-                        topology, v_new)
+                    (
+                        vertices,
+                        offset_vector,
+                    ) = ActinUtil.get_branch_orientation_vertices_and_offset(
+                        topology, v_new
+                    )
                     at_branch = True
         positions = []
         for v in vertices:
@@ -225,14 +281,14 @@ class ActinUtil:
             positions = positions[::-1]
         pos = ActinUtil.get_position_for_new_vertex(positions, offset_vector)
         if pos is None:
-            raise Exception(f"Failed to set position: couldn't calculate position\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to set position: couldn't calculate position\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.change_particle_position(v_new, pos)
 
     @staticmethod
-    def set_new_trimer_vertex_position(
-        topology, recipe, v_new, v_pointed, v_barbed
-    ):
+    def set_new_trimer_vertex_position(topology, recipe, v_new, v_pointed, v_barbed):
         """
         set the position of an actin monomer just added to a dimer to create a trimer
         """
@@ -242,12 +298,15 @@ class ActinUtil:
         v_barbed_to_pointed = pos_pointed - pos_barbed
         v_barbed_to_new = pos_new - pos_barbed
         current_angle = ReaddyUtil.get_angle_between_vectors(
-            v_barbed_to_pointed, v_barbed_to_new)
+            v_barbed_to_pointed, v_barbed_to_new
+        )
         angle = ActinStructure.actin_to_actin_angle() - current_angle
         axis = np.cross(v_barbed_to_pointed, v_barbed_to_new)
         pos = pos_barbed + ReaddyUtil.rotate(
-            ActinStructure.actin_to_actin_distance() * ReaddyUtil.normalize(v_barbed_to_new), 
-            axis, angle
+            ActinStructure.actin_to_actin_distance()
+            * ReaddyUtil.normalize(v_barbed_to_new),
+            axis,
+            angle,
         )
         recipe.change_particle_position(v_new, pos)
 
@@ -258,30 +317,41 @@ class ActinUtil:
         """
         set the position of new arp2/3 vertices
         """
-        actin_types = (ActinUtil.get_all_polymer_actin_types("actin")
+        actin_types = (
+            ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
-            + ["actin#branch_1", "actin#branch_ATP_1"])
+            + ["actin#branch_1", "actin#branch_ATP_1"]
+        )
         v1 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp2, actin_types, [v_actin_arp3])
+            topology, v_actin_arp2, actin_types, [v_actin_arp3]
+        )
         if v1 is None:
-            raise Exception(f"Failed to set position: couldn't find v1\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to set position: couldn't find v1\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         pos1 = ReaddyUtil.get_vertex_position(topology, v1)
         pos2 = ReaddyUtil.get_vertex_position(topology, v_actin_arp2)
         pos3 = ReaddyUtil.get_vertex_position(topology, v_actin_arp3)
         pos_arp2 = ActinUtil.get_position_for_new_vertex(
-            [pos1, pos2, pos3], ActinStructure.mother1_to_arp2_vector())
+            [pos1, pos2, pos3], ActinStructure.mother1_to_arp2_vector()
+        )
         if pos_arp2 is None:
-            raise Exception(f"Failed to set position of arp2: couldn't calculate position\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to set position of arp2: couldn't calculate position\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.change_particle_position(v_arp2, pos_arp2)
         pos_arp3 = ActinUtil.get_position_for_new_vertex(
-            [pos1, pos2, pos3], ActinStructure.mother1_to_arp3_vector())
+            [pos1, pos2, pos3], ActinStructure.mother1_to_arp3_vector()
+        )
         if pos_arp3 is None:
-            raise Exception(f"Failed to set position of arp3: couldn't calculate position\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to set position of arp3: couldn't calculate position\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.change_particle_position(v_arp3, pos_arp3)
 
     @staticmethod
@@ -291,7 +361,8 @@ class ActinUtil:
         and with or without a branch attached to the arp2
         """
         v_arp3s = ReaddyUtil.get_vertices_of_type(
-            topology, "arp3#ATP" if with_ATP else "arp3", True)
+            topology, "arp3#ATP" if with_ATP else "arp3", True
+        )
         if len(v_arp3s) < 1:
             if parameters["verbose"]:
                 state = "ATP" if with_ATP else "ADP"
@@ -300,7 +371,8 @@ class ActinUtil:
         v_arp2s = []
         for v_arp3 in v_arp3s:
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_arp3, ["arp2#branched" if with_branch else "arp2"], [])
+                topology, v_arp3, ["arp2#branched" if with_branch else "arp2"], []
+            )
             if v_arp2 is not None:
                 v_arp2s.append(v_arp2)
         if len(v_arp2s) < 1:
@@ -311,30 +383,40 @@ class ActinUtil:
         return random.choice(v_arp2s)
 
     @staticmethod
-    def add_random_linear_fibers(simulation, n_fibers, length = 20):
+    def add_random_linear_fibers(simulation, n_fibers, length=20):
         """
         add linear actin fibers of the given length
         """
-        positions = np.random.uniform(size=(n_fibers,3)) * parameters["box_size"] - parameters["box_size"] * 0.5
+        positions = (
+            np.random.uniform(size=(n_fibers, 3)) * parameters["box_size"]
+            - parameters["box_size"] * 0.5
+        )
         for fiber in range(n_fibers):
             direction = ReaddyUtil.get_random_unit_vector()
-            monomers = ActinGenerator.get_monomers({
-                0: FiberData(0, [
-                    CurvePointData(
-                        positions[fiber],
-                        direction, 
-                        np.array([1, 0, 0]), 
+            monomers = ActinGenerator.get_monomers(
+                {
+                    0: FiberData(
                         0,
-                    ),
-                    CurvePointData(
-                        positions[fiber] + length * direction,
-                        direction, 
-                        np.array([1, 0, 0]), 
-                        length,
-                    ),
-                ])
-            })
-            top = simulation.add_topology("Actin-Polymer", monomers[0][1], np.array(monomers[0][0]))
+                        [
+                            CurvePointData(
+                                positions[fiber],
+                                direction,
+                                np.array([1, 0, 0]),
+                                0,
+                            ),
+                            CurvePointData(
+                                positions[fiber] + length * direction,
+                                direction,
+                                np.array([1, 0, 0]),
+                                length,
+                            ),
+                        ],
+                    )
+                }
+            )
+            top = simulation.add_topology(
+                "Actin-Polymer", monomers[0][1], np.array(monomers[0][0])
+            )
             for e in monomers[0][2]:
                 top.get_graph().add_edge(e[0], e[1])
 
@@ -347,7 +429,9 @@ class ActinUtil:
         """
         fiber_monomers = ActinGenerator.get_monomers(fibers_data)
         for fiber in range(len(fiber_monomers)):
-            top = simulation.add_topology("Actin-Polymer", fiber_monomers[fiber][0], fiber_monomers[fiber][1])
+            top = simulation.add_topology(
+                "Actin-Polymer", fiber_monomers[fiber][0], fiber_monomers[fiber][1]
+            )
             for e in fiber_monomers[fiber][2]:
                 top.get_graph().add_edge(e[0], e[1])
 
@@ -357,7 +441,12 @@ class ActinUtil:
         add an actin dimer fiber
         """
         positions = np.array(
-            [[0, 0, 0], ActinStructure.actin_to_actin_distance() * ReaddyUtil.get_random_unit_vector()])
+            [
+                [0, 0, 0],
+                ActinStructure.actin_to_actin_distance()
+                * ReaddyUtil.get_random_unit_vector(),
+            ]
+        )
         types = ["actin#pointed_ATP_1", "actin#barbed_ATP_2"]
         top = simulation.add_topology("Actin-Dimer", types, position + positions)
         top.get_graph().add_edge(0, 1)
@@ -367,7 +456,10 @@ class ActinUtil:
         """
         add actin dimers
         """
-        positions = np.random.uniform(size=(n,3)) * parameters["box_size"] - parameters["box_size"] * 0.5
+        positions = (
+            np.random.uniform(size=(n, 3)) * parameters["box_size"]
+            - parameters["box_size"] * 0.5
+        )
         for p in range(len(positions)):
             ActinUtil.add_actin_dimer(positions[p], simulation)
 
@@ -376,21 +468,35 @@ class ActinUtil:
         """
         add free actin
         """
-        positions = np.random.uniform(size=(n,3)) * parameters["box_size"] - parameters["box_size"] * 0.5
+        positions = (
+            np.random.uniform(size=(n, 3)) * parameters["box_size"]
+            - parameters["box_size"] * 0.5
+        )
         for p in range(len(positions)):
             simulation.add_topology(
-                "Actin-Monomer", ["actin#free_ATP"], np.array([positions[p]]))
+                "Actin-Monomer", ["actin#free_ATP"], np.array([positions[p]])
+            )
 
     @staticmethod
     def add_arp23_dimers(n, simulation):
         """
         add arp2/3 dimers
         """
-        positions = np.random.uniform(size=(n,3)) * parameters["box_size"] - parameters["box_size"] * 0.5
+        positions = (
+            np.random.uniform(size=(n, 3)) * parameters["box_size"]
+            - parameters["box_size"] * 0.5
+        )
         for p in range(len(positions)):
-            top = simulation.add_topology("Arp23-Dimer", ["arp2", "arp3#ATP"],
-                np.array([positions[p], positions[p]
-                + 4. * ReaddyUtil.get_random_unit_vector()]))
+            top = simulation.add_topology(
+                "Arp23-Dimer",
+                ["arp2", "arp3#ATP"],
+                np.array(
+                    [
+                        positions[p],
+                        positions[p] + 4.0 * ReaddyUtil.get_random_unit_vector(),
+                    ]
+                ),
+            )
             top.get_graph().add_edge(0, 1)
 
     @staticmethod
@@ -398,7 +504,10 @@ class ActinUtil:
         """
         add free capping protein
         """
-        positions = np.random.uniform(size=(n,3)) * parameters["box_size"] - parameters["box_size"] * 0.5
+        positions = (
+            np.random.uniform(size=(n, 3)) * parameters["box_size"]
+            - parameters["box_size"] * 0.5
+        )
         for p in range(len(positions)):
             simulation.add_topology("Cap", ["cap"], np.array([positions[p]]))
 
@@ -410,16 +519,28 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Reverse Dimerize")
-        v_barbed = ReaddyUtil.get_first_vertex_of_types(topology,
-            ["actin#barbed_ATP_1", "actin#barbed_ATP_2", "actin#barbed_ATP_3",
-            "actin#barbed_1", "actin#barbed_2", "actin#barbed_3"])
+        v_barbed = ReaddyUtil.get_first_vertex_of_types(
+            topology,
+            [
+                "actin#barbed_ATP_1",
+                "actin#barbed_ATP_2",
+                "actin#barbed_ATP_3",
+                "actin#barbed_1",
+                "actin#barbed_2",
+                "actin#barbed_3",
+            ],
+        )
         if v_barbed is None:
-            raise Exception(f"Failed to find barbed end of dimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find barbed end of dimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_pointed = ReaddyUtil.get_first_neighbor(topology, v_barbed, [])
         if v_pointed is None:
-            raise Exception(f"Failed to find pointed end of dimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find pointed end of dimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.remove_edge(v_barbed, v_pointed)
         recipe.change_particle_type(v_barbed, "actin#free_ATP")
         recipe.change_particle_type(v_pointed, "actin#free_ATP")
@@ -434,24 +555,37 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Trimerize")
-        v_new = ReaddyUtil.get_first_vertex_of_types(topology,
-            ["actin#new", "actin#new_ATP"])
+        v_new = ReaddyUtil.get_first_vertex_of_types(
+            topology, ["actin#new", "actin#new_ATP"]
+        )
         if v_new is None:
-            raise Exception(f"Failed to find new vertex in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new vertex in trimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_neighbor1 = ReaddyUtil.get_first_neighbor(topology, v_new, [])
         if v_neighbor1 is None:
-            raise Exception(f"Failed to find first neighbor of new vertex in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find first neighbor of new vertex in trimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_neighbor2 = ReaddyUtil.get_first_neighbor(topology, v_neighbor1, [v_new])
         if v_neighbor2 is None:
-            raise Exception(f"Failed to find second neighbor of new vertex in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
-        ReaddyUtil.set_flags(topology, recipe, v_new,
+            raise Exception(
+                f"Failed to find second neighbor of new vertex in trimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
+        ReaddyUtil.set_flags(
+            topology,
+            recipe,
+            v_new,
             ["barbed", str(ActinUtil.get_actin_number(topology, v_neighbor1, 1))],
-            ["new"], True)
+            ["new"],
+            True,
+        )
         ActinUtil.set_new_trimer_vertex_position(
-            topology, recipe, v_new, v_neighbor2, v_neighbor1)
+            topology, recipe, v_new, v_neighbor2, v_neighbor1
+        )
         recipe.change_topology_type("Actin-Trimer")
         return recipe
 
@@ -463,16 +597,28 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Reverse Trimerize")
-        v_barbed = ReaddyUtil.get_first_vertex_of_types(topology,
-            ["actin#barbed_ATP_1", "actin#barbed_ATP_2", "actin#barbed_ATP_3",
-            "actin#barbed_1", "actin#barbed_2", "actin#barbed_3"])
+        v_barbed = ReaddyUtil.get_first_vertex_of_types(
+            topology,
+            [
+                "actin#barbed_ATP_1",
+                "actin#barbed_ATP_2",
+                "actin#barbed_ATP_3",
+                "actin#barbed_1",
+                "actin#barbed_2",
+                "actin#barbed_3",
+            ],
+        )
         if v_barbed is None:
-            raise Exception(f"Failed to find barbed end in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find barbed end in trimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_barbed, [])
         if v_neighbor is None:
-            raise Exception(f"Failed to find neighbor of barbed end in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find neighbor of barbed end in trimer\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.remove_edge(v_barbed, v_neighbor)
         recipe.change_particle_type(v_barbed, "actin#free_ATP")
         ReaddyUtil.set_flags(topology, recipe, v_neighbor, ["barbed"], [], True)
@@ -487,18 +633,28 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow Pointed")
-        v_new = ReaddyUtil.get_first_vertex_of_types(topology,
-            ["actin#new", "actin#new_ATP"])
+        v_new = ReaddyUtil.get_first_vertex_of_types(
+            topology, ["actin#new", "actin#new_ATP"]
+        )
         if v_new is None:
-            raise Exception(f"Failed to find new vertex at pointed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new vertex at pointed end\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_new, [])
         if v_neighbor is None:
-            raise Exception(f"Failed to find neighbor of new pointed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
-        ReaddyUtil.set_flags(topology, recipe, v_new,
+            raise Exception(
+                f"Failed to find neighbor of new pointed end\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
+        ReaddyUtil.set_flags(
+            topology,
+            recipe,
+            v_new,
             ["pointed", str(ActinUtil.get_actin_number(topology, v_neighbor, -1))],
-            ["new"], True)
+            ["new"],
+            True,
+        )
         recipe.change_topology_type("Actin-Polymer")
         ActinUtil.set_end_vertex_position(topology, recipe, v_new, False)
         return recipe
@@ -511,18 +667,28 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow Barbed")
-        v_new = ReaddyUtil.get_first_vertex_of_types(topology,
-            ["actin#new", "actin#new_ATP"])
+        v_new = ReaddyUtil.get_first_vertex_of_types(
+            topology, ["actin#new", "actin#new_ATP"]
+        )
         if v_new is None:
-            raise Exception(f"Failed to find new barbed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new barbed end\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_new, [])
         if v_neighbor is None:
-            raise Exception(f"Failed to find neighbor of new barbed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
-        ReaddyUtil.set_flags(topology, recipe, v_new,
+            raise Exception(
+                f"Failed to find neighbor of new barbed end\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
+        ReaddyUtil.set_flags(
+            topology,
+            recipe,
+            v_new,
             ["barbed", str(ActinUtil.get_actin_number(topology, v_neighbor, 1))],
-            ["new"], True)
+            ["new"],
+            True,
+        )
         ActinUtil.set_end_vertex_position(topology, recipe, v_new, True)
         recipe.change_topology_type("Actin-Polymer")
         return recipe
@@ -538,39 +704,49 @@ class ActinUtil:
             print("Bind Arp2/3")
         v_arp2, v_arp3 = ActinUtil.get_new_arp23(topology)
         if v_arp2 is None or v_arp3 is None:
-            raise Exception(f"Failed to find new arp2 and arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new arp2 and arp3\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_actin_barbed = ReaddyUtil.get_first_neighbor(topology, v_arp3, [v_arp2])
         if v_actin_barbed is None:
-            raise Exception(f"Failed to find new actin_arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new actin_arp3\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         # make sure arp3 binds to the barbed end neighbor of the actin bound to arp2
         n_pointed = ActinUtil.get_actin_number(topology, v_actin_barbed, -1)
-        actin_types = [f"actin#ATP_{n_pointed}", f"actin#{n_pointed}",
-            f"actin#pointed_ATP_{n_pointed}", f"actin#pointed_{n_pointed}"]
+        actin_types = [
+            f"actin#ATP_{n_pointed}",
+            f"actin#{n_pointed}",
+            f"actin#pointed_ATP_{n_pointed}",
+            f"actin#pointed_{n_pointed}",
+        ]
         if n_pointed == 1:
             actin_types += ["actin#branch_1", "actin#branch_ATP_1"]
         v_actin_pointed = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_barbed, actin_types, [])
+            topology, v_actin_barbed, actin_types, []
+        )
         if v_actin_pointed is not None:
             pointed_type = topology.particle_type_of_vertex(v_actin_pointed)
             if "pointed" in pointed_type or "branch" in pointed_type:
                 if parameters["verbose"]:
-                    print(f"Branch is starting exactly at a pointed end")
+                    print("Branch is starting exactly at a pointed end")
                 ActinUtil.cancel_branch_reaction(
-                    topology, recipe, v_actin_barbed, v_arp3)
+                    topology, recipe, v_actin_barbed, v_arp3
+                )
                 return recipe
         else:
             if parameters["verbose"]:
                 print(f"Couldn't find actin_arp2 with number {n_pointed}")
-            ActinUtil.cancel_branch_reaction(
-                topology, recipe, v_actin_barbed, v_arp3)
+            ActinUtil.cancel_branch_reaction(topology, recipe, v_actin_barbed, v_arp3)
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v_arp3, [], ["new"], True)
         recipe.add_edge(v_actin_pointed, v_arp2)
         recipe.change_topology_type("Actin-Polymer")
         ActinUtil.set_arp23_vertex_position(
-            topology, recipe, v_arp2, v_arp3, v_actin_pointed, v_actin_barbed)
+            topology, recipe, v_arp2, v_arp3, v_actin_pointed, v_actin_barbed
+        )
         return recipe
 
     @staticmethod
@@ -581,13 +757,17 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Start Branch")
-        v_new = ReaddyUtil.get_first_vertex_of_types(topology,
-            ["actin#new", "actin#new_ATP"])
+        v_new = ReaddyUtil.get_first_vertex_of_types(
+            topology, ["actin#new", "actin#new_ATP"]
+        )
         if v_new is None:
-            raise Exception(f"Failed to find new branch actin\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new branch actin\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         ReaddyUtil.set_flags(
-            topology, recipe, v_new, ["barbed", "1", "branch"], ["new"], True)
+            topology, recipe, v_new, ["barbed", "1", "branch"], ["new"], True
+        )
         recipe.change_topology_type("Actin-Polymer")
         ActinUtil.set_end_vertex_position(topology, recipe, v_new, True)
         return recipe
@@ -601,38 +781,54 @@ class ActinUtil:
         atp_state = "_ATP" if ATP else ""
         end_type = f"actin#{end_state}{atp_state}"
         v_end = ReaddyUtil.get_random_vertex_of_types(
-            topology, ActinUtil.get_all_polymer_actin_types(end_type))
+            topology, ActinUtil.get_all_polymer_actin_types(end_type)
+        )
         if v_end is None:
             if parameters["verbose"]:
                 print("Couldn't find end actin to remove")
             return False
         v_arp = ReaddyUtil.get_neighbor_of_types(
-            topology, v_end, ["arp3", "arp3#ATP", "arp2", "arp2#branched"], [])
+            topology, v_end, ["arp3", "arp3#ATP", "arp2", "arp2#branched"], []
+        )
         if v_arp is not None:
             if parameters["verbose"]:
                 print("Couldn't remove actin because a branch was attached")
             return False
         v_neighbor = ReaddyUtil.get_neighbor_of_types(
-            topology, v_end, 
+            topology,
+            v_end,
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
-            + ["actin#branch_1", "actin#branch_ATP_1"], [])
+            + ["actin#branch_1", "actin#branch_ATP_1"],
+            [],
+        )
         if v_neighbor is None:
             if parameters["verbose"]:
                 print("Couldn't find plain actin neighbor of actin to remove")
             return False
         if not barbed:
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_neighbor, ["arp2", "arp2#branched"], [])
+                topology, v_neighbor, ["arp2", "arp2#branched"], []
+            )
             if v_arp2 is not None:
                 if parameters["verbose"]:
-                    print("Couldn't remove actin because a branch was attached to its barbed neighbor")
+                    print(
+                        "Couldn't remove actin because a branch was attached "
+                        "to its barbed neighbor"
+                    )
                 return False
         recipe.remove_edge(v_end, v_neighbor)
         recipe.change_particle_type(
-            v_end, "actin#free" if not ATP else "actin#free_ATP")
-        ReaddyUtil.set_flags(topology, recipe, v_neighbor,
-            ["barbed"] if barbed else ["pointed"], [], True)
+            v_end, "actin#free" if not ATP else "actin#free_ATP"
+        )
+        ReaddyUtil.set_flags(
+            topology,
+            recipe,
+            v_neighbor,
+            ["barbed"] if barbed else ["pointed"],
+            [],
+            True,
+        )
         recipe.change_topology_type("Actin-Polymer#Shrinking")
         return True
 
@@ -644,7 +840,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Shrink pointed ATP")
-        if not do_shrink(topology, recipe, False, True):
+        if not ActinUtil.do_shrink(topology, recipe, False, True):
             recipe.change_topology_type("Actin-Polymer#Fail-Pointed-Shrink-ATP")
         return recipe
 
@@ -656,7 +852,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Shrink pointed ADP")
-        if not do_shrink(topology, recipe, False, False):
+        if not ActinUtil.do_shrink(topology, recipe, False, False):
             recipe.change_topology_type("Actin-Polymer#Fail-Pointed-Shrink-ADP")
         return recipe
 
@@ -668,7 +864,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Shrink barbed ATP")
-        if not do_shrink(topology, recipe, True, True):
+        if not ActinUtil.do_shrink(topology, recipe, True, True):
             recipe.change_topology_type("Actin-Polymer#Fail-Barbed-Shrink-ATP")
         return recipe
 
@@ -680,7 +876,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Shrink barbed ADP")
-        if not do_shrink(topology, recipe, True, False):
+        if not ActinUtil.do_shrink(topology, recipe, True, False):
             recipe.change_topology_type("Actin-Polymer#Fail-Barbed-Shrink-ADP")
         return recipe
 
@@ -723,10 +919,12 @@ class ActinUtil:
         if parameters["verbose"]:
             print("Hydrolyze Actin")
         v = ReaddyUtil.get_random_vertex_of_types(
-            topology, ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            topology,
+            ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
-            + ["actin#branch_barbed_ATP_1", "actin#branch_ATP_1"])
+            + ["actin#branch_barbed_ATP_1", "actin#branch_ATP_1"],
+        )
         if v is None:
             if parameters["verbose"]:
                 print("Couldn't find ATP-actin")
@@ -798,28 +996,38 @@ class ActinUtil:
             if parameters["verbose"]:
                 print(f"Couldn't find unbranched {state}-arp2")
             return recipe
-        actin_types = (ActinUtil.get_all_polymer_actin_types("actin")
+        actin_types = (
+            ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
-            + ["actin#branch_1", "actin#branch_ATP_1"])
+            + ["actin#branch_1", "actin#branch_ATP_1"]
+        )
         v_actin_arp2 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, actin_types, [])
+            topology, v_arp2, actin_types, []
+        )
         if v_actin_arp2 is None:
-            raise Exception(f"Failed to find actin_arp2\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find actin_arp2\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, ["arp3", "arp3#ATP"], [])
+            topology, v_arp2, ["arp3", "arp3#ATP"], []
+        )
         if v_arp3 is None:
-            raise Exception(f"Failed to find arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find arp3\n" f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         v_actin_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp3, actin_types, [])
+            topology, v_arp3, actin_types, []
+        )
         if v_actin_arp3 is None:
-            raise Exception(f"Failed to find actin_arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find actin_arp3\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.remove_edge(v_arp2, v_actin_arp2)
         recipe.remove_edge(v_arp3, v_actin_arp3)
         recipe.change_topology_type("Actin-Polymer#Shrinking")
@@ -832,7 +1040,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Remove Arp2/3 ATP")
-        do_arp23_unbind(topology, recipe, True)
+        ActinUtil.do_arp23_unbind(topology, recipe, True)
         return recipe
 
     @staticmethod
@@ -843,7 +1051,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Remove Arp2/3 ADP")
-        do_arp23_unbind(topology, recipe, False)
+        ActinUtil.do_arp23_unbind(topology, recipe, False)
         return recipe
 
     @staticmethod
@@ -858,24 +1066,30 @@ class ActinUtil:
                 print(f"Couldn't find arp2 with {state}")
             recipe.change_topology_type(f"Actin-Polymer#Fail-Debranch-{state}")
             return recipe
-        actin_types = ["actin#branch_1", "actin#branch_ATP_1", 
-                    "actin#branch_barbed_1", "actin#branch_barbed_ATP_1"]
-        v_actin1 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, actin_types, [])
+        actin_types = [
+            "actin#branch_1",
+            "actin#branch_ATP_1",
+            "actin#branch_barbed_1",
+            "actin#branch_barbed_ATP_1",
+        ]
+        v_actin1 = ReaddyUtil.get_neighbor_of_types(topology, v_arp2, actin_types, [])
         if v_actin1 is None:
-            raise Exception(f"Failed to find first branch actin\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find first branch actin\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.remove_edge(v_arp2, v_actin1)
         ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["branched"], True)
         pt_actin1 = topology.particle_type_of_vertex(v_actin1)
-        if "barbed" in pt_actin1: 
+        if "barbed" in pt_actin1:
             # branch is a monomer
             state = "_ATP" if "ATP" in pt_actin1 else ""
             recipe.change_particle_type(v_actin1, f"actin#free{state}")
-        else: 
+        else:
             # branch is a filament
-            ReaddyUtil.set_flags(topology, recipe, v_actin1,
-                ["pointed"], ["branch"], True)
+            ReaddyUtil.set_flags(
+                topology, recipe, v_actin1, ["pointed"], ["branch"], True
+            )
         recipe.change_topology_type("Actin-Polymer#Shrinking")
 
     @staticmethod
@@ -886,7 +1100,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Debranching ATP")
-        do_debranching(topology, recipe, True)
+        ActinUtil.do_debranching(topology, recipe, True)
         return recipe
 
     @staticmethod
@@ -897,7 +1111,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Debranching ADP")
-        do_debranching(topology, recipe, False)
+        ActinUtil.do_debranching(topology, recipe, False)
         return recipe
 
     @staticmethod
@@ -910,8 +1124,9 @@ class ActinUtil:
             print("Finish Cap Bind")
         v_new = ReaddyUtil.get_first_vertex_of_types(topology, ["cap#new"])
         if v_new is None:
-            raise Exception(f"Failed to find new cap\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find new cap\n" f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         ReaddyUtil.set_flags(topology, recipe, v_new, ["bound"], ["new"], True)
         recipe.change_topology_type("Actin-Polymer")
         return recipe
@@ -931,13 +1146,18 @@ class ActinUtil:
             recipe.change_topology_type("Actin-Polymer#Fail-Cap-Unbind")
             return recipe
         v_actin = ReaddyUtil.get_neighbor_of_types(
-            topology, v_cap, 
+            topology,
+            v_cap,
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
-            + ["actin#branch_1", "actin#branch_ATP_1"], [])
+            + ["actin#branch_1", "actin#branch_ATP_1"],
+            [],
+        )
         if v_actin is None:
-            raise Exception(f"Failed to find actin bound to cap\n"
-                f"{ReaddyUtil.topology_to_string(topology)}")
+            raise Exception(
+                f"Failed to find actin bound to cap\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
         recipe.remove_edge(v_cap, v_actin)
         ReaddyUtil.set_flags(topology, recipe, v_cap, [], ["bound"], True)
         ReaddyUtil.set_flags(topology, recipe, v_actin, ["barbed"], [], True)
@@ -1157,26 +1377,48 @@ class ActinUtil:
         """
         bond_length = ActinStructure.actin_to_actin_distance()
         util.add_polymer_bond_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            force_constant, bond_length, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            force_constant,
+            bond_length,
+            system,
         )
         util.add_bond(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
-            force_constant, bond_length, system
+            force_constant,
+            bond_length,
+            system,
         )
-        util.add_polymer_bond_1D( # temporary during growth reactions
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_",
-            "actin#barbed_", "actin#barbed_ATP_"], 0,
-            ["actin#new", "actin#new_ATP"], None,
-            force_constant, bond_length, system
-        )
-        util.add_bond( # temporary during growth reactions
-            ["actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1",],
+        util.add_polymer_bond_1D(  # temporary during growth reactions
+            [
+                "actin#",
+                "actin#ATP_",
+                "actin#pointed_",
+                "actin#pointed_ATP_",
+                "actin#barbed_",
+                "actin#barbed_ATP_",
+            ],
+            0,
             ["actin#new", "actin#new_ATP"],
-            force_constant, bond_length, system
+            None,
+            force_constant,
+            bond_length,
+            system,
+        )
+        util.add_bond(  # temporary during growth reactions
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+            ],
+            ["actin#new", "actin#new_ATP"],
+            force_constant,
+            bond_length,
+            system,
         )
 
     @staticmethod
@@ -1186,16 +1428,23 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_angle()
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], -1,
-            ["actin#", "actin#ATP_"], 0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            -1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            force_constant,
+            angle,
+            system,
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["actin#3", "actin#ATP_3", "actin#barbed_3", "actin#barbed_ATP_3"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
 
     @staticmethod
@@ -1205,18 +1454,26 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], -1,
-            ["actin#", "actin#ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 2,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            -1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            2,
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["actin#3", "actin#ATP_3"],
             ["actin#1", "actin#ATP_1", "actin#barbed_1", "actin#barbed_ATP_1"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
 
     @staticmethod
@@ -1224,27 +1481,44 @@ class ActinUtil:
         """
         add bonds between arp2, arp3, and actins
         """
-        util.add_polymer_bond_1D( # mother filament actin to arp2 bonds
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["arp2", "arp2#branched"], None,
-            force_constant, ActinStructure.arp2_to_mother_distance(), system
+        util.add_polymer_bond_1D(  # mother filament actin to arp2 bonds
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["arp2", "arp2#branched"],
+            None,
+            force_constant,
+            ActinStructure.arp2_to_mother_distance(),
+            system,
         )
-        util.add_polymer_bond_1D( # mother filament actin to arp3 bonds
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 0,
-            ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"], None,
-            force_constant, ActinStructure.arp3_to_mother_distance(), system
+        util.add_polymer_bond_1D(  # mother filament actin to arp3 bonds
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            0,
+            ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"],
+            None,
+            force_constant,
+            ActinStructure.arp3_to_mother_distance(),
+            system,
         )
-        util.add_bond( # arp2 to arp3 bonds
+        util.add_bond(  # arp2 to arp3 bonds
             ["arp2", "arp2#branched"],
             ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"],
-            force_constant, ActinStructure.arp2_to_arp3_distance(), system
+            force_constant,
+            ActinStructure.arp2_to_arp3_distance(),
+            system,
         )
-        util.add_bond( # arp2 to daughter filament actin bonds
+        util.add_bond(  # arp2 to daughter filament actin bonds
             ["arp2#branched"],
-            ["actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1",
-            "actin#new", "actin#new_ATP"],
-            force_constant, ActinStructure.arp2_to_daughter_distance(), system
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+                "actin#new",
+                "actin#new_ATP",
+            ],
+            force_constant,
+            ActinStructure.arp2_to_daughter_distance(),
+            system,
         )
 
     @staticmethod
@@ -1255,47 +1529,77 @@ class ActinUtil:
         util.add_angle(
             ["arp3", "arp3#ATP"],
             ["arp2#branched"],
-            ["actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1"],
-            force_constant, ActinStructure.arp3_arp2_daughter1_angle(), system
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+            ],
+            force_constant,
+            ActinStructure.arp3_arp2_daughter1_angle(),
+            system,
         )
         util.add_polymer_angle_1D(
-            ["arp2", "arp2#branched"], None,
-            ["actin#", "actin#ATP_"], 0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            force_constant, ActinStructure.arp2_daughter1_daughter2_angle(), system
+            ["arp2", "arp2#branched"],
+            None,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            force_constant,
+            ActinStructure.arp2_daughter1_daughter2_angle(),
+            system,
         )
         angle = ActinStructure.mother1_mother2_arp3_angle()
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["arp3", "arp3#ATP"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["arp3", "arp3#ATP"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["arp3", "arp3#ATP"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["arp3", "arp3#ATP"], None,
-            force_constant, ActinStructure.mother3_mother2_arp3_angle(), system
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["arp3", "arp3#ATP"],
+            None,
+            force_constant,
+            ActinStructure.mother3_mother2_arp3_angle(),
+            system,
         )
         angle = ActinStructure.mother0_mother1_arp2_angle()
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["arp2", "arp2#branched"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["arp2", "arp2#branched"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["arp2", "arp2#branched"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
 
     @staticmethod
@@ -1306,64 +1610,100 @@ class ActinUtil:
         # mother to arp
         angle = ActinStructure.mother4_mother3_mother2_arp3_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            ["actin#", "actin#ATP_"], 0,
-            ["actin#", "actin#ATP_"], -1,
-            ["arp3", "arp3#ATP"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            -1,
+            ["arp3", "arp3#ATP"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         angle = ActinStructure.mother_mother0_mother1_arp2_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], -1,
-            ["actin#", "actin#ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["arp2", "arp2#branched"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            -1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["arp2", "arp2#branched"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["actin#3", "actin#ATP_3"],
             ["arp2", "arp2#branched"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            ["actin#", "actin#ATP_"], 0,
-            ["arp3", "arp3#ATP"], None,
-            ["arp2#branched", "arp2"], None,
-            force_constant, ActinStructure.mother3_mother2_arp3_arp2_dihedral_angle(), system
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["arp3", "arp3#ATP"],
+            None,
+            ["arp2#branched", "arp2"],
+            None,
+            force_constant,
+            ActinStructure.mother3_mother2_arp3_arp2_dihedral_angle(),
+            system,
         )
         # arp ring
         angle = ActinStructure.mother1_mother2_arp3_arp2_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["arp3", "arp3#ATP"], None,
-            ["arp2", "arp2#branched"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["arp3", "arp3#ATP"],
+            None,
+            ["arp2", "arp2#branched"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["arp3", "arp3#ATP"],
             ["arp2", "arp2#branched"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
         angle = ActinStructure.arp2_mother1_mother2_arp3_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["arp2", "arp2#branched"], None,
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 1,
-            ["arp3", "arp3#ATP"], None,
-            force_constant, angle, system
+            ["arp2", "arp2#branched"],
+            None,
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            1,
+            ["arp3", "arp3#ATP"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["arp2", "arp2#branched"],
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
             ["arp3", "arp3#ATP"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
         # arp to daughter
         util.add_dihedral(
@@ -1371,8 +1711,8 @@ class ActinUtil:
             ["arp2#branched"],
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
-            force_constant, 
-            ActinStructure.arp3_arp2_daughter1_daughter2_dihedral_angle(), 
+            force_constant,
+            ActinStructure.arp3_arp2_daughter1_daughter2_dihedral_angle(),
             system,
         )
         util.add_dihedral(
@@ -1380,47 +1720,84 @@ class ActinUtil:
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["actin#3", "actin#ATP_3", "actin#barbed_3", "actin#barbed_ATP_3"],
-            force_constant, 
-            ActinStructure.arp2_daughter1_daughter2_daughter3_dihedral_angle(), 
+            force_constant,
+            ActinStructure.arp2_daughter1_daughter2_daughter3_dihedral_angle(),
             system,
         )
         # mother to daughter
         angle = ActinStructure.mother0_mother1_arp2_daughter1_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], -1,
-            ["actin#", "actin#ATP_"], 0,
-            ["arp2#branched"], None,
-            ["actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            -1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["arp2#branched"],
+            None,
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+            ],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["arp2#branched"],
-            ["actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1"],
-            force_constant, angle, system
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+            ],
+            force_constant,
+            angle,
+            system,
         )
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"], 0,
-            ["arp3", "arp3#ATP"], None,
-            ["arp2#branched"], None,
-            ["actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1"], None,
-            force_constant, ActinStructure.mother2_arp3_arp2_daughter1_dihedral_angle(), system
+            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            0,
+            ["arp3", "arp3#ATP"],
+            None,
+            ["arp2#branched"],
+            None,
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+            ],
+            None,
+            force_constant,
+            ActinStructure.mother2_arp3_arp2_daughter1_dihedral_angle(),
+            system,
         )
         util.add_dihedral(
-            ["actin#1", "actin#ATP_1", "actin#pointed_1", "actin#pointed_ATP_1",
-            "actin#branch_1", "actin#branch_ATP_1",
-            "actin#2", "actin#ATP_2", "actin#pointed_2", "actin#pointed_ATP_2",
-            "actin#3", "actin#ATP_3", "actin#pointed_3", "actin#pointed_ATP_3",],
+            [
+                "actin#1",
+                "actin#ATP_1",
+                "actin#pointed_1",
+                "actin#pointed_ATP_1",
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#2",
+                "actin#ATP_2",
+                "actin#pointed_2",
+                "actin#pointed_ATP_2",
+                "actin#3",
+                "actin#ATP_3",
+                "actin#pointed_3",
+                "actin#pointed_ATP_3",
+            ],
             ["arp2#branched"],
             ["actin#branch_1", "actin#branch_ATP_1"],
-            ["actin#2", "actin#ATP_2",
-            "actin#barbed_2", "actin#barbed_ATP_2"],
-            force_constant, 
-            ActinStructure.mother1_arp2_daughter1_daughter2_dihedral_angle(), 
+            ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
+            force_constant,
+            ActinStructure.mother1_arp2_daughter1_daughter2_dihedral_angle(),
             system,
         )
 
@@ -1430,9 +1807,13 @@ class ActinUtil:
         add capping protein to actin bonds
         """
         util.add_polymer_bond_1D(
-            ["actin#", "actin#ATP_"], 0,
-            ["cap#bound", "cap#new"], None,
-            force_constant, ActinStructure.actin_to_actin_distance() + 1.0, system
+            ["actin#", "actin#ATP_"],
+            0,
+            ["cap#bound", "cap#new"],
+            None,
+            force_constant,
+            ActinStructure.actin_to_actin_distance() + 1.0,
+            system,
         )
 
     @staticmethod
@@ -1442,16 +1823,23 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_angle()
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["cap#bound"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["cap#bound"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["cap#bound"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
 
     @staticmethod
@@ -1461,26 +1849,34 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"], -1,
-            ["actin#", "actin#ATP_"], 0,
-            ["actin#", "actin#ATP_"], 1,
-            ["cap#bound"], None,
-            force_constant, angle, system
+            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            -1,
+            ["actin#", "actin#ATP_"],
+            0,
+            ["actin#", "actin#ATP_"],
+            1,
+            ["cap#bound"],
+            None,
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2"],
             ["actin#3", "actin#ATP_3"],
             ["cap#bound"],
-            force_constant, angle, system
+            force_constant,
+            angle,
+            system,
         )
         util.add_dihedral(
             ["arp3", "arp3#ATP"],
             ["arp2#branched"],
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["cap#bound"],
-            force_constant, 
-            ActinStructure.arp3_arp2_daughter1_daughter2_dihedral_angle(), 
+            force_constant,
+            ActinStructure.arp3_arp2_daughter1_daughter2_dihedral_angle(),
             system,
         )
 
@@ -1490,27 +1886,73 @@ class ActinUtil:
         add repulsions
         """
         util.add_repulsion(
-            ["actin#pointed_1", "actin#pointed_ATP_1", "actin#pointed_2",
-            "actin#pointed_ATP_2", "actin#pointed_3", "actin#pointed_ATP_3",
-            "actin#1", "actin#ATP_1", "actin#2", "actin#ATP_2",
-            "actin#3", "actin#ATP_3",
-            "actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1",
-            "actin#barbed_1", "actin#barbed_ATP_1", "actin#barbed_2",
-            "actin#barbed_ATP_2", "actin#barbed_3", "actin#barbed_ATP_3",
-            "arp2", "arp2#branched", "arp3", "arp3#ATP", "cap", "cap#bound",
-            "actin#free", "actin#free_ATP"],
-            ["actin#pointed_1", "actin#pointed_ATP_1", "actin#pointed_2",
-            "actin#pointed_ATP_2", "actin#pointed_3", "actin#pointed_ATP_3",
-            "actin#1", "actin#ATP_1", "actin#2", "actin#ATP_2",
-            "actin#3", "actin#ATP_3",
-            "actin#branch_1", "actin#branch_ATP_1",
-            "actin#branch_barbed_1", "actin#branch_barbed_ATP_1",
-            "actin#barbed_1", "actin#barbed_ATP_1", "actin#barbed_2",
-            "actin#barbed_ATP_2", "actin#barbed_3", "actin#barbed_ATP_3",
-            "arp2", "arp2#branched", "arp3", "arp3#ATP", "cap", "cap#bound",
-            "actin#free", "actin#free_ATP"],
-            force_constant, ActinStructure.actin_to_actin_repulsion_distance(), system
+            [
+                "actin#pointed_1",
+                "actin#pointed_ATP_1",
+                "actin#pointed_2",
+                "actin#pointed_ATP_2",
+                "actin#pointed_3",
+                "actin#pointed_ATP_3",
+                "actin#1",
+                "actin#ATP_1",
+                "actin#2",
+                "actin#ATP_2",
+                "actin#3",
+                "actin#ATP_3",
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+                "actin#barbed_1",
+                "actin#barbed_ATP_1",
+                "actin#barbed_2",
+                "actin#barbed_ATP_2",
+                "actin#barbed_3",
+                "actin#barbed_ATP_3",
+                "arp2",
+                "arp2#branched",
+                "arp3",
+                "arp3#ATP",
+                "cap",
+                "cap#bound",
+                "actin#free",
+                "actin#free_ATP",
+            ],
+            [
+                "actin#pointed_1",
+                "actin#pointed_ATP_1",
+                "actin#pointed_2",
+                "actin#pointed_ATP_2",
+                "actin#pointed_3",
+                "actin#pointed_ATP_3",
+                "actin#1",
+                "actin#ATP_1",
+                "actin#2",
+                "actin#ATP_2",
+                "actin#3",
+                "actin#ATP_3",
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+                "actin#barbed_1",
+                "actin#barbed_ATP_1",
+                "actin#barbed_2",
+                "actin#barbed_ATP_2",
+                "actin#barbed_3",
+                "actin#barbed_ATP_3",
+                "arp2",
+                "arp2#branched",
+                "arp3",
+                "arp3#ATP",
+                "cap",
+                "cap#bound",
+                "actin#free",
+                "actin#free_ATP",
+            ],
+            force_constant,
+            ActinStructure.actin_to_actin_repulsion_distance(),
+            system,
         )
 
     @staticmethod
@@ -1519,9 +1961,11 @@ class ActinUtil:
         attach two monomers
         """
         system.topologies.add_spatial_reaction(
-            "Dimerize: Actin-Monomer(actin#free_ATP) + Actin-Monomer(actin#free_ATP) -> "
+            "Dimerize: "
+            "Actin-Monomer(actin#free_ATP) + Actin-Monomer(actin#free_ATP) -> "
             "Actin-Dimer(actin#pointed_ATP_1--actin#barbed_ATP_2)",
-            rate=rate, radius=reaction_distance
+            rate=rate,
+            radius=reaction_distance,
         )
 
     @staticmethod
@@ -1533,7 +1977,7 @@ class ActinUtil:
             "Reverse_Dimerize",
             topology_type="Actin-Dimer",
             reaction_function=ActinUtil.reaction_function_reverse_dimerize,
-            rate_function=ActinUtil.rate_function_reverse_dimerize
+            rate_function=ActinUtil.rate_function_reverse_dimerize,
         )
 
     @staticmethod
@@ -1541,17 +1985,19 @@ class ActinUtil:
         """
         attach a monomer to a dimer
         """
-        for i in range(1,4):
+        for i in range(1, 4):
             system.topologies.add_spatial_reaction(
-                f"Trimerize{i}: Actin-Dimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP) -> "
+                f"Trimerize{i}: "
+                f"Actin-Dimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP) -> "
                 f"Actin-Trimer#Growing(actin#ATP_{i}--actin#new_ATP)",
-                rate=rate, radius=reaction_distance
+                rate=rate,
+                radius=reaction_distance,
             )
         system.topologies.add_structural_reaction(
             "Finish_Trimerize",
             topology_type="Actin-Trimer#Growing",
             reaction_function=ActinUtil.reaction_function_finish_trimerize,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1563,7 +2009,7 @@ class ActinUtil:
             "Reverse_Trimerize",
             topology_type="Actin-Trimer",
             reaction_function=ActinUtil.reaction_function_reverse_trimerize,
-            rate_function=ActinUtil.rate_function_reverse_trimerize
+            rate_function=ActinUtil.rate_function_reverse_trimerize,
         )
 
     @staticmethod
@@ -1571,18 +2017,20 @@ class ActinUtil:
         """
         reversibly attach a monomer to a trimer
         """
-        for i in range(1,4):
+        for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_Nucleate_ATP{i}: "
-                f"Actin-Trimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP) -> "
-                f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
-                rate=rate_ATP, radius=reaction_distance
+                f"Actin-Trimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP)"
+                f" -> Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_Nucleate_ADP{i}: "
                 f"Actin-Trimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
 
     @staticmethod
@@ -1590,36 +2038,40 @@ class ActinUtil:
         """
         attach a monomer to the pointed end of a filament
         """
-        for i in range(1,4):
+        for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ATP1{i}: Actin-Polymer(actin#pointed_{i}) + "
                 "Actin-Monomer(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingPointed(actin#{i}--actin#new_ATP)",
-                rate=rate_ATP, radius=reaction_distance
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ATP2{i}: Actin-Polymer(actin#pointed_ATP_{i}) + "
                 "Actin-Monomer(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingPointed(actin#ATP_{i}--actin#new_ATP)",
-                rate=rate_ATP, radius=reaction_distance
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ADP1{i}: Actin-Polymer(actin#pointed_{i}) + "
                 "Actin-Monomer(actin#free) -> "
                 f"Actin-Polymer#GrowingPointed(actin#{i}--actin#new)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ADP2{i}: Actin-Polymer(actin#pointed_ATP_{i}) + "
                 "Actin-Monomer(actin#free) -> "
                 f"Actin-Polymer#GrowingPointed(actin#ATP_{i}--actin#new)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
         system.topologies.add_structural_reaction(
             "Finish_Pointed_Growth",
             topology_type="Actin-Polymer#GrowingPointed",
             reaction_function=ActinUtil.reaction_function_finish_pointed_grow,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1631,31 +2083,31 @@ class ActinUtil:
             "Pointed_Shrink_ATP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_pointed_shrink_ATP,
-            rate_function=ActinUtil.rate_function_pointed_shrink_ATP
+            rate_function=ActinUtil.rate_function_pointed_shrink_ATP,
         )
         system.topologies.add_structural_reaction(
             "Pointed_Shrink_ADP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_pointed_shrink_ADP,
-            rate_function=ActinUtil.rate_function_pointed_shrink_ADP
+            rate_function=ActinUtil.rate_function_pointed_shrink_ADP,
         )
         system.topologies.add_structural_reaction(
             "Fail_Pointed_Shrink_ATP",
             topology_type="Actin-Polymer#Fail-Pointed-Shrink-ATP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Fail_Pointed_Shrink_ADP",
             topology_type="Actin-Polymer#Fail-Pointed-Shrink-ADP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Cleanup_Shrink",
             topology_type="Actin-Polymer#Shrinking",
             reaction_function=ActinUtil.reaction_function_cleanup_shrink,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1663,60 +2115,68 @@ class ActinUtil:
         """
         attach a monomer to the barbed end of a filament
         """
-        for i in range(1,4):
+        for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ATP1{i}: Actin-Polymer(actin#barbed_{i}) + "
                 "Actin-Monomer(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new_ATP)",
-                rate=rate_ATP, radius=reaction_distance
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ATP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
                 "Actin-Monomer(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
-                rate=rate_ATP, radius=reaction_distance
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ADP1{i}: Actin-Polymer(actin#barbed_{i}) + "
                 "Actin-Monomer(actin#free) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ADP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
                 "Actin-Monomer(actin#free) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
         system.topologies.add_spatial_reaction(
             "Branch_Barbed_Growth_ATP1: Actin-Polymer(actin#branch_barbed_1) + "
             "Actin-Monomer(actin#free_ATP) -> "
             "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new_ATP)",
-            rate=rate_ATP, radius=reaction_distance
+            rate=rate_ATP,
+            radius=reaction_distance,
         )
         system.topologies.add_spatial_reaction(
             "Branch_Barbed_Growth_ATP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
             "Actin-Monomer(actin#free_ATP) -> "
             "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new_ATP)",
-            rate=rate_ATP, radius=reaction_distance
+            rate=rate_ATP,
+            radius=reaction_distance,
         )
         system.topologies.add_spatial_reaction(
             "Branch_Barbed_Growth_ADP1: Actin-Polymer(actin#branch_barbed_1) + "
             "Actin-Monomer(actin#free) -> "
             "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new)",
-            rate=rate_ADP, radius=reaction_distance
+            rate=rate_ADP,
+            radius=reaction_distance,
         )
         system.topologies.add_spatial_reaction(
             "Branch_Barbed_Growth_ADP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
             "Actin-Monomer(actin#free) -> "
             "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new)",
-            rate=rate_ADP, radius=reaction_distance
+            rate=rate_ADP,
+            radius=reaction_distance,
         )
         system.topologies.add_structural_reaction(
             "Finish_Barbed_growth",
             topology_type="Actin-Polymer#GrowingBarbed",
             reaction_function=ActinUtil.reaction_function_finish_barbed_grow,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1728,25 +2188,25 @@ class ActinUtil:
             "Barbed_Shrink_ATP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_barbed_shrink_ATP,
-            rate_function=ActinUtil.rate_function_barbed_shrink_ATP
+            rate_function=ActinUtil.rate_function_barbed_shrink_ATP,
         )
         system.topologies.add_structural_reaction(
             "Barbed_Shrink_ADP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_barbed_shrink_ADP,
-            rate_function=ActinUtil.rate_function_barbed_shrink_ADP
+            rate_function=ActinUtil.rate_function_barbed_shrink_ADP,
         )
         system.topologies.add_structural_reaction(
             "Fail_Barbed_Shrink_ATP",
             topology_type="Actin-Polymer#Fail-Barbed-Shrink-ATP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Fail_Barbed_Shrink_ADP",
             topology_type="Actin-Polymer#Fail-Barbed-Shrink-ADP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1758,25 +2218,25 @@ class ActinUtil:
             "Hydrolysis_Actin",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_hydrolyze_actin,
-            rate_function=ActinUtil.rate_function_hydrolyze_actin
+            rate_function=ActinUtil.rate_function_hydrolyze_actin,
         )
         system.topologies.add_structural_reaction(
             "Fail_Hydrolysis_Actin",
             topology_type="Actin-Polymer#Fail-Hydrolysis-Actin",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Hydrolysis_Arp",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_hydrolyze_arp,
-            rate_function=ActinUtil.rate_function_hydrolyze_arp
+            rate_function=ActinUtil.rate_function_hydrolyze_arp,
         )
         system.topologies.add_structural_reaction(
             "Fail_Hydrolysis_Arp",
             topology_type="Actin-Polymer#Fail-Hydrolysis-Arp",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1788,7 +2248,7 @@ class ActinUtil:
             "Nucleotide_Exchange_Actin",
             topology_type="Actin-Monomer",
             reaction_function=ActinUtil.reaction_function_nucleotide_exchange_actin,
-            rate_function=ActinUtil.rate_function_nucleotide_exchange_actin
+            rate_function=ActinUtil.rate_function_nucleotide_exchange_actin,
         )
 
     @staticmethod
@@ -1800,7 +2260,7 @@ class ActinUtil:
             "Nucleotide_Exchange_Arp",
             topology_type="Arp23-Dimer",
             reaction_function=ActinUtil.reaction_function_nucleotide_exchange_arp,
-            rate_function=ActinUtil.rate_function_nucleotide_exchange_arp
+            rate_function=ActinUtil.rate_function_nucleotide_exchange_arp,
         )
 
     @staticmethod
@@ -1808,44 +2268,52 @@ class ActinUtil:
         """
         add arp2/3 along filament to start a branch
         """
-        for i in range(1,4):
+        for i in range(1, 4):
             system.topologies.add_spatial_reaction(
-                f"Arp_Bind_ATP1{i}: Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3) -> "
+                f"Arp_Bind_ATP1{i}: "
+                "Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new)",
-                rate=rate_ATP, radius=reaction_distance
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
-                f"Arp_Bind_ATP2{i}: Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Arp_Bind_ATP2{i}: "
+                "Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new_ATP)",
-                rate=rate_ATP, radius=reaction_distance
+                rate=rate_ATP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
-                f"Arp_Bind_ADP1{i}: Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3) -> "
+                f"Arp_Bind_ADP1{i}: "
+                "Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
-                f"Arp_Bind_ADP2{i}: Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Arp_Bind_ADP2{i}: "
+                "Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new_ATP)",
-                rate=rate_ADP, radius=reaction_distance
+                rate=rate_ADP,
+                radius=reaction_distance,
             )
         system.topologies.add_structural_reaction(
             "Finish_Arp_Bind",
             topology_type="Actin-Polymer#Branching",
             reaction_function=ActinUtil.reaction_function_finish_arp_bind,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Cleanup_Fail_Arp_Bind_ATP",
             topology_type="Actin-Polymer#Fail-Branch-ATP",
             reaction_function=ActinUtil.reaction_function_cleanup_shrink,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Cleanup_Fail_Arp_Bind_ADP",
             topology_type="Actin-Polymer#Fail-Branch-ADP",
             reaction_function=ActinUtil.reaction_function_cleanup_shrink,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1857,25 +2325,25 @@ class ActinUtil:
             "Arp_Unbind_ATP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_arp23_unbind_ATP,
-            rate_function=ActinUtil.rate_function_arp23_unbind_ATP
+            rate_function=ActinUtil.rate_function_arp23_unbind_ATP,
         )
         system.topologies.add_structural_reaction(
             "Arp_Unbind_ADP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_arp23_unbind_ADP,
-            rate_function=ActinUtil.rate_function_arp23_unbind_ADP
+            rate_function=ActinUtil.rate_function_arp23_unbind_ADP,
         )
         system.topologies.add_structural_reaction(
             "Fail_Arp_Unbind_ATP",
             topology_type="Actin-Polymer#Fail-Arp-Unbind-ATP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Fail_Arp_Unbind_ADP",
             topology_type="Actin-Polymer#Fail-Arp-Unbind-ADP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1884,20 +2352,24 @@ class ActinUtil:
         add actin to arp2/3 to begin a branch
         """
         system.topologies.add_spatial_reaction(
-            "Barbed_Growth_Branch_ATP: Actin-Polymer(arp2) + Actin-Monomer(actin#free_ATP) -> "
+            "Barbed_Growth_Branch_ATP: "
+            "Actin-Polymer(arp2) + Actin-Monomer(actin#free_ATP) -> "
             "Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new_ATP)",
-            rate=rate_ATP, radius=reaction_distance
+            rate=rate_ATP,
+            radius=reaction_distance,
         )
         system.topologies.add_spatial_reaction(
-            "Barbed_Growth_Branch_ADP: Actin-Polymer(arp2) + Actin-Monomer(actin#free) -> "
+            "Barbed_Growth_Branch_ADP: "
+            "Actin-Polymer(arp2) + Actin-Monomer(actin#free) -> "
             "Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new)",
-            rate=rate_ADP, radius=reaction_distance
+            rate=rate_ADP,
+            radius=reaction_distance,
         )
         system.topologies.add_structural_reaction(
             "Nucleate_Branch",
             topology_type="Actin-Polymer#Branch-Nucleating",
             reaction_function=ActinUtil.reaction_function_finish_start_branch,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1909,25 +2381,25 @@ class ActinUtil:
             "Debranch_ATP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_debranching_ATP,
-            rate_function=ActinUtil.rate_function_debranching_ATP
+            rate_function=ActinUtil.rate_function_debranching_ATP,
         )
         system.topologies.add_structural_reaction(
             "Debranch_ADP",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_debranching_ADP,
-            rate_function=ActinUtil.rate_function_debranching_ADP
+            rate_function=ActinUtil.rate_function_debranching_ADP,
         )
         system.topologies.add_structural_reaction(
             "Fail_Debranch_ATP",
             topology_type="Actin-Polymer#Fail-Debranch-ATP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
         system.topologies.add_structural_reaction(
             "Fail_Debranch_ADP",
             topology_type="Actin-Polymer#Fail-Debranch-ADP",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1935,22 +2407,24 @@ class ActinUtil:
         """
         add capping protein to a barbed end to stop growth
         """
-        for i in range(1,4):
+        for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Cap_Bind1{i}: Actin-Polymer(actin#barbed_{i}) + Cap(cap) -> "
                 f"Actin-Polymer#Capping(actin#{i}--cap#new)",
-                rate=rate, radius=reaction_distance
+                rate=rate,
+                radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Cap_Bind2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + Cap(cap) -> "
                 f"Actin-Polymer#Capping(actin#ATP_{i}--cap#new)",
-                rate=rate, radius=reaction_distance
+                rate=rate,
+                radius=reaction_distance,
             )
         system.topologies.add_structural_reaction(
             "Finish_Cap-Bind",
             topology_type="Actin-Polymer#Capping",
             reaction_function=ActinUtil.reaction_function_finish_cap_bind,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -1962,11 +2436,11 @@ class ActinUtil:
             "Cap_Unbind",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_cap_unbind,
-            rate_function=ActinUtil.rate_function_cap_unbind
+            rate_function=ActinUtil.rate_function_cap_unbind,
         )
         system.topologies.add_structural_reaction(
             "Fail_Cap_Unbind",
             topology_type="Actin-Polymer#Fail-Cap-Unbind",
             reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity
+            rate_function=ReaddyUtil.rate_function_infinity,
         )

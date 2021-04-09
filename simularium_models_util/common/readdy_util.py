@@ -10,7 +10,7 @@ import os
 from shutil import rmtree
 
 
-class ReaddyUtil():
+class ReaddyUtil:
     def __init__(self):
         """
         Utilities used for Simularium ReaDDy models
@@ -32,15 +32,19 @@ class ReaddyUtil():
         """
         get the angle between two vectors in radians
         """
-        return np.arccos(np.clip(np.dot(ReaddyUtil.normalize(v1), ReaddyUtil.normalize(v2)), -1., 1.))
+        return np.arccos(
+            np.clip(
+                np.dot(ReaddyUtil.normalize(v1), ReaddyUtil.normalize(v2)), -1.0, 1.0
+            )
+        )
 
     @staticmethod
     def rotate(v, axis, angle):
         """
         rotate a vector around axis by angle (radians)
         """
-        rotation = linalg.expm(np.cross(np.eye(3), ReaddyUtil.normalize(axis)*angle))
-        return np.dot(rotation,np.copy(v))
+        rotation = linalg.expm(np.cross(np.eye(3), ReaddyUtil.normalize(axis) * angle))
+        return np.dot(rotation, np.copy(v))
 
     @staticmethod
     def get_rotation_matrix(v1, v2):
@@ -48,14 +52,14 @@ class ReaddyUtil():
         Cross the vectors and get a rotation matrix
         """
         v3 = np.cross(v2, v1)
-        return np.array([[v1[0], v2[0], v3[0]],
-                         [v1[1], v2[1], v3[1]],
-                         [v1[2], v2[2], v3[2]]])
+        return np.array(
+            [[v1[0], v2[0], v3[0]], [v1[1], v2[1], v3[1]], [v1[2], v2[2], v3[2]]]
+        )
 
     @staticmethod
     def get_orientation_from_positions(positions):
         """
-        orthonormalize and cross the vectors from position 2 
+        orthonormalize and cross the vectors from position 2
         to the other positions to get a basis local to position 2,
         positions = [position 1, position 2, position 3]
         """
@@ -79,7 +83,7 @@ class ReaddyUtil():
         """
         if v[0] == 0 and v[1] == 0:
             if v[2] == 0:
-                raise ValueError('zero vector')
+                raise ValueError("zero vector")
             return np.array([0, 1, 0])
         u = ReaddyUtil.normalize(np.array([-v[1], v[0], 0]))
         return ReaddyUtil.rotate(u, v, 2 * np.pi * random.random())
@@ -93,7 +97,9 @@ class ReaddyUtil():
         for vertex in topology.graph.get_vertices():
             result += f"{ReaddyUtil.vertex_to_string(topology, vertex)}\n"
             for neighbor in vertex:
-                result += f" -- {ReaddyUtil.vertex_to_string(topology, neighbor.get())}\n"
+                result += (
+                    f" -- {ReaddyUtil.vertex_to_string(topology, neighbor.get())}\n"
+                )
         return result
 
     @staticmethod
@@ -101,7 +107,12 @@ class ReaddyUtil():
         """
         get string with type and id for vertex
         """
-        return f"{topology.particle_type_of_vertex(vertex)} ({topology.particle_id_of_vertex(vertex)})"
+        return (
+            topology.particle_type_of_vertex(vertex)
+            + " ("
+            + topology.particle_id_of_vertex(vertex)
+            + ")"
+        )
 
     @staticmethod
     def get_non_periodic_boundary_position(pos1, pos2, box_size):
@@ -110,12 +121,12 @@ class ReaddyUtil():
         move the second position across the box (for positioning calculations)
         """
         for dim in range(3):
-            if abs(pos2[dim] - pos1[dim]) > box_size / 2.:
-                pos2[dim] -= pos2[dim]/abs(pos2[dim]) * box_size
+            if abs(pos2[dim] - pos1[dim]) > box_size / 2.0:
+                pos2[dim] -= pos2[dim] / abs(pos2[dim]) * box_size
         return pos2
 
     @staticmethod
-    def calculate_diffusionCoefficient(r0,eta,T):
+    def calculate_diffusionCoefficient(r0, eta, T):
         """
         calculates the theoretical diffusion constant of a spherical particle
             with radius r0[nm]
@@ -124,8 +135,12 @@ class ReaddyUtil():
 
             returns nm^2/s
         """
-        return ((1.38065*10**(-23) * T)/
-            (6*np.pi*eta*10**(-3)*r0*10**(-9))*10**18/10**9)
+        return (
+            (1.38065 * 10 ** (-23) * T)
+            / (6 * np.pi * eta * 10 ** (-3) * r0 * 10 ** (-9))
+            * 10 ** 18
+            / 10 ** 9
+        )
 
     @staticmethod
     def calculate_nParticles(C, dim):
@@ -136,7 +151,7 @@ class ReaddyUtil():
 
             returns unitless number
         """
-        return int(round(C * 1e-30 * 6.022e23 * np.power(dim, 3.)))
+        return int(round(C * 1e-30 * 6.022e23 * np.power(dim, 3.0)))
 
     @staticmethod
     def get_vertex_of_type(topology, vertex_type, exact_match):
@@ -145,8 +160,9 @@ class ReaddyUtil():
         """
         for vertex in topology.graph.get_vertices():
             pt = topology.particle_type_of_vertex(vertex)
-            if ((not exact_match and vertex_type in pt) or
-                (exact_match and pt == vertex_type)):
+            if (not exact_match and vertex_type in pt) or (
+                exact_match and pt == vertex_type
+            ):
                 return vertex
         return None
 
@@ -186,7 +202,7 @@ class ReaddyUtil():
 
     @staticmethod
     def get_neighbor_of_type(
-        topology, vertex, vertex_type, exact_match, exclude_vertices = []
+        topology, vertex, vertex_type, exact_match, exclude_vertices=[]
     ):
         """
         get the first neighboring vertex of type vertex_type
@@ -199,8 +215,9 @@ class ReaddyUtil():
                 continue
             v_neighbor = neighbor.get()
             pt = topology.particle_type_of_vertex(v_neighbor)
-            if ((not exact_match and vertex_type in pt) or
-                (exact_match and pt == vertex_type)):
+            if (not exact_match and vertex_type in pt) or (
+                exact_match and pt == vertex_type
+            ):
                 return v_neighbor
         return None
 
@@ -230,8 +247,9 @@ class ReaddyUtil():
         v = []
         for vertex in topology.graph.get_vertices():
             pt = topology.particle_type_of_vertex(vertex)
-            if ((not exact_match and vertex_type in pt) or
-                (exact_match and pt == vertex_type)):
+            if (not exact_match and vertex_type in pt) or (
+                exact_match and pt == vertex_type
+            ):
                 v.append(vertex)
         return v
 
@@ -244,8 +262,9 @@ class ReaddyUtil():
         for neighbor in vertex:
             v_neighbor = neighbor.get()
             pt = topology.particle_type_of_vertex(v_neighbor)
-            if ((not exact_match and vertex_type in pt) or
-                (exact_match and pt == vertex_type)):
+            if (not exact_match and vertex_type in pt) or (
+                exact_match and pt == vertex_type
+            ):
                 v.append(v_neighbor)
         return v
 
@@ -297,7 +316,7 @@ class ReaddyUtil():
                 pt = pt + ("_" if f > 0 else "#") + add_flags[f]
             recipe.change_particle_type(vertex, pt)
         else:
-            flag_string = pt[pt.index("#")+1:]
+            flag_string = pt[pt.index("#") + 1 :]
             flags = flag_string.split("_")
             polymer_indices = ""
             if "tubulin" in pt and len(flags) > 1:
@@ -310,15 +329,16 @@ class ReaddyUtil():
                 if flag not in flags:
                     flags.append(flag)
             if len(flags) < 1:
-                recipe.change_particle_type(vertex, pt[:pt.index("#")])
+                recipe.change_particle_type(vertex, pt[: pt.index("#")])
                 return
             flags.sort(reverse=reverse_sort)
             flag_string = ""
             for f in range(len(flags)):
                 flag_string = flag_string + ("_" if f > 0 else "") + flags[f]
-            particle_type = pt[:pt.index("#")]
+            particle_type = pt[: pt.index("#")]
             recipe.change_particle_type(
-                vertex, f"{particle_type}#{flag_string}{polymer_indices}")
+                vertex, f"{particle_type}#{flag_string}{polymer_indices}"
+            )
 
     @staticmethod
     def calculate_polymer_number(number, offset):
@@ -349,8 +369,9 @@ class ReaddyUtil():
         """
         check if references are the same vertex
         """
-        return (topology.particle_id_of_vertex(vertex1) ==
-            topology.particle_id_of_vertex(vertex2))
+        return topology.particle_id_of_vertex(
+            vertex1
+        ) == topology.particle_id_of_vertex(vertex2)
 
     @staticmethod
     def vertices_are_connected(topology, vertex1, vertex2):
@@ -369,7 +390,7 @@ class ReaddyUtil():
         """
         recipe = readdy.StructuralReactionRecipe(topology)
         tt = topology.type
-        recipe.change_topology_type(tt[:tt.index("#")])
+        recipe.change_topology_type(tt[: tt.index("#")])
         return recipe
 
     @staticmethod
@@ -410,7 +431,8 @@ class ReaddyUtil():
         for t in particle_types:
             types.append(
                 (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offset)))
-                if polymer_offset is not None else t
+                if polymer_offset is not None
+                else t
             )
         return types
 
@@ -427,9 +449,14 @@ class ReaddyUtil():
         types = []
         for t in particle_types:
             types.append(
-                (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offsets[0]))
-                + "_" + str(ReaddyUtil.calculate_polymer_number(y, polymer_offsets[1])))
-                if len(polymer_offsets) > 0 else t
+                (
+                    t
+                    + str(ReaddyUtil.calculate_polymer_number(x, polymer_offsets[0]))
+                    + "_"
+                    + str(ReaddyUtil.calculate_polymer_number(y, polymer_offsets[1]))
+                )
+                if len(polymer_offsets) > 0
+                else t
             )
         return types
 
@@ -438,8 +465,9 @@ class ReaddyUtil():
         """
         get a random unit vector
         """
-        return ReaddyUtil.normalize(np.array(
-            [random.random(), random.random(), random.random()]))
+        return ReaddyUtil.normalize(
+            np.array([random.random(), random.random(), random.random()])
+        )
 
     @staticmethod
     def get_random_boundary_position(box_size):
@@ -447,7 +475,7 @@ class ReaddyUtil():
         get a random position on one of the boundary faces
         """
         pos = box_size * np.random.uniform(size=(3)) - box_size / 2
-        face = random.randint(0,5)
+        face = random.randint(0, 5)
         if face == 0:
             pos[0] = -box_size / 2
         elif face == 1:
@@ -463,37 +491,17 @@ class ReaddyUtil():
         return pos
 
     @staticmethod
-    def create_particle(recipe, v_neighbor, monomer_type, box_size):
-        """
-        if keeping monomer concentrations constant, create a new free monomer
-        (or arp23 dimer) at the boundaries when one joins a topology
-        """
-        pos = ReaddyUtil.get_random_boundary_position(box_size)
-        recipe.append_particle([v_neighbor], f"{monomer_type}#temp", pos)
-        if monomer_type == "arp":
-            recipe.append_particle([v_neighbor], "arp#temp",
-                pos + 2 * arp23_radius * np.random.uniform(size=(3)))
-
-    @staticmethod
-    def create_destroyer(recipe, v_neighbor, monomer_type, box_size):
-        """
-        if keeping monomer concentrations constant, create a new particle
-        at the boundaries to destroy the next free particle
-        of a given type that touches it
-        """
-        pos = ReaddyUtil.get_random_boundary_position(box_size)
-        recipe.append_particle(
-            [v_neighbor], f"destroyer#{monomer_type}", pos)
-
-    @staticmethod
     def try_remove_edge(topology, recipe, vertex1, vertex2):
         """
         try to remove an edge
         """
         if not ReaddyUtil.vertices_are_connected(topology, vertex1, vertex2):
-            return False, ("Tried to remove non-existent edge! " +
-                ReaddyUtil.vertex_to_string(topology, vertex1) + " -- " +
-                ReaddyUtil.vertex_to_string(topology, vertex2))
+            return False, (
+                "Tried to remove non-existent edge! "
+                + ReaddyUtil.vertex_to_string(topology, vertex1)
+                + " -- "
+                + ReaddyUtil.vertex_to_string(topology, vertex2)
+            )
         recipe.remove_edge(vertex1, vertex2)
         return True, ""
 
@@ -509,7 +517,8 @@ class ReaddyUtil():
             for t2 in types2:
                 if (t1, t2) not in self.bond_pairs and (t2, t1) not in self.bond_pairs:
                     system.topologies.configure_harmonic_bond(
-                        t1, t2, force_const, bond_length)
+                        t1, t2, force_const, bond_length
+                    )
                     self.bond_pairs.append((t1, t2))
                     self.bond_pairs.append((t2, t1))
 
@@ -525,10 +534,14 @@ class ReaddyUtil():
         for t1 in types1:
             for t2 in types2:
                 for t3 in types3:
-                    if ((t1, t2, t3) not in self.angle_triples and
-                        (t3, t2, t1) not in self.angle_triples):
+                    if (t1, t2, t3) not in self.angle_triples and (
+                        t3,
+                        t2,
+                        t1,
+                    ) not in self.angle_triples:
                         system.topologies.configure_harmonic_angle(
-                            t1, t2, t3, force_const, angle)
+                            t1, t2, t3, force_const, angle
+                        )
                         self.angle_triples.append((t1, t2, t3))
                         self.angle_triples.append((t3, t2, t1))
 
@@ -546,13 +559,19 @@ class ReaddyUtil():
             for t2 in types2:
                 for t3 in types3:
                     for t4 in types4:
-                        if ((t1, t2, t3, t4) not in self.dihedral_quads and
-                            (t4, t3, t2, t1) not in self.dihedral_quads):
+                        if (t1, t2, t3, t4) not in self.dihedral_quads and (
+                            t4,
+                            t3,
+                            t2,
+                            t1,
+                        ) not in self.dihedral_quads:
                             system.topologies.configure_cosine_dihedral(
-                                t1, t2, t3, t4, force_const, 1., angle)
+                                t1, t2, t3, t4, force_const, 1.0, angle
+                            )
                             self.dihedral_quads.append((t1, t2, t3, t4))
                             system.topologies.configure_cosine_dihedral(
-                                t4, t3, t2, t1, force_const, 1., angle)
+                                t4, t3, t2, t1, force_const, 1.0, angle
+                            )
                             self.dihedral_quads.append((t4, t3, t2, t1))
 
     def add_repulsion(self, types1, types2, force_const, distance, system):
@@ -565,15 +584,25 @@ class ReaddyUtil():
         """
         for t1 in types1:
             for t2 in types2:
-                if (t1, t2) not in self.repulse_pairs and (t2, t1) not in self.repulse_pairs:
+                if (t1, t2) not in self.repulse_pairs and (
+                    t2,
+                    t1,
+                ) not in self.repulse_pairs:
                     system.potentials.add_harmonic_repulsion(
-                        t1, t2, force_const, distance)
+                        t1, t2, force_const, distance
+                    )
                     self.repulse_pairs.append((t1, t2))
                     self.repulse_pairs.append((t2, t1))
 
     def add_polymer_bond_1D(
-        self, particle_types1, polymer_offset1, particle_types2, polymer_offset2,
-        force_const, bond_length, system
+        self,
+        particle_types1,
+        polymer_offset1,
+        particle_types2,
+        polymer_offset2,
+        force_const,
+        bond_length,
+        system,
     ):
         """
         adds a bond between all polymer numbers
@@ -584,18 +613,36 @@ class ReaddyUtil():
             with force constant force_const
             and length bond_length [nm]
         """
-        for x in range(1,4):
+        for x in range(1, 4):
             self.add_bond(
-                (ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types1, x, polymer_offset1) 
-                if polymer_offset1 != None else particle_types1),
-                (ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types2, x, polymer_offset2) 
-                if polymer_offset2 != None else particle_types2),
-                force_const, bond_length, system
+                (
+                    ReaddyUtil.get_types_with_polymer_numbers_1D(
+                        particle_types1, x, polymer_offset1
+                    )
+                    if polymer_offset1 is not None
+                    else particle_types1
+                ),
+                (
+                    ReaddyUtil.get_types_with_polymer_numbers_1D(
+                        particle_types2, x, polymer_offset2
+                    )
+                    if polymer_offset2 is not None
+                    else particle_types2
+                ),
+                force_const,
+                bond_length,
+                system,
             )
 
     def add_polymer_bond_2D(
-        self, particle_types1, polymer_offsets1, particle_types2, polymer_offsets2,
-        force_const, bond_length, system
+        self,
+        particle_types1,
+        polymer_offsets1,
+        particle_types2,
+        polymer_offsets2,
+        force_const,
+        bond_length,
+        system,
     ):
         """
         adds a bond between all polymer numbers
@@ -606,19 +653,33 @@ class ReaddyUtil():
             with force constant force_const
             and length bond_length [nm]
         """
-        for x in range(1,4):
-            for y in range(1,4):
+        for x in range(1, 4):
+            for y in range(1, 4):
                 offsets1 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets1)
                 offsets2 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets2)
                 self.add_bond(
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types1, x, y, offsets1),
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types2, x, y, offsets2),
-                    force_const, bond_length, system
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types1, x, y, offsets1
+                    ),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types2, x, y, offsets2
+                    ),
+                    force_const,
+                    bond_length,
+                    system,
                 )
 
     def add_polymer_angle_1D(
-        self, particle_types1, polymer_offset1, particle_types2, polymer_offset2,
-        particle_types3, polymer_offset3, force_const, angle, system
+        self,
+        particle_types1,
+        polymer_offset1,
+        particle_types2,
+        polymer_offset2,
+        particle_types3,
+        polymer_offset3,
+        force_const,
+        angle,
+        system,
     ):
         """
         adds an angle between all polymer numbers
@@ -627,17 +688,33 @@ class ReaddyUtil():
             with force constant force_const
             and angle [radians]
         """
-        for x in range(1,4):
+        for x in range(1, 4):
             self.add_angle(
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types1, x, polymer_offset1),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types2, x, polymer_offset2),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types3, x, polymer_offset3),
-                force_const, angle, system
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types1, x, polymer_offset1
+                ),
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types2, x, polymer_offset2
+                ),
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types3, x, polymer_offset3
+                ),
+                force_const,
+                angle,
+                system,
             )
 
     def add_polymer_angle_2D(
-        self, particle_types1, polymer_offsets1, particle_types2, polymer_offsets2,
-        particle_types3, polymer_offsets3, force_const, angle, system
+        self,
+        particle_types1,
+        polymer_offsets1,
+        particle_types2,
+        polymer_offsets2,
+        particle_types3,
+        polymer_offsets3,
+        force_const,
+        angle,
+        system,
     ):
         """
         adds an angle between all polymer numbers
@@ -646,22 +723,39 @@ class ReaddyUtil():
             with force constant force_const
             and angle [radians]
         """
-        for x in range(1,4):
-            for y in range(1,4):
+        for x in range(1, 4):
+            for y in range(1, 4):
                 offsets1 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets1)
                 offsets2 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets2)
                 offsets3 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets3)
                 self.add_angle(
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types1, x, y, offsets1),
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types2, x, y, offsets2),
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types3, x, y, offsets3),
-                    force_const, angle, system
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types1, x, y, offsets1
+                    ),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types2, x, y, offsets2
+                    ),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types3, x, y, offsets3
+                    ),
+                    force_const,
+                    angle,
+                    system,
                 )
 
     def add_polymer_dihedral_1D(
-        self, particle_types1, polymer_offset1, particle_types2, polymer_offset2,
-        particle_types3, polymer_offset3, particle_types4, polymer_offset4, 
-        force_const, angle, system
+        self,
+        particle_types1,
+        polymer_offset1,
+        particle_types2,
+        polymer_offset2,
+        particle_types3,
+        polymer_offset3,
+        particle_types4,
+        polymer_offset4,
+        force_const,
+        angle,
+        system,
     ):
         """
         adds a cosine dihedral between all polymer numbers
@@ -670,44 +764,73 @@ class ReaddyUtil():
             with force constant force_const
             and angle [radians]
         """
-        for x in range(1,4):
+        for x in range(1, 4):
             self.add_dihedral(
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types1, x, polymer_offset1),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types2, x, polymer_offset2),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types3, x, polymer_offset3),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types4, x, polymer_offset4),
-                force_const, angle, system
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types1, x, polymer_offset1
+                ),
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types2, x, polymer_offset2
+                ),
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types3, x, polymer_offset3
+                ),
+                ReaddyUtil.get_types_with_polymer_numbers_1D(
+                    particle_types4, x, polymer_offset4
+                ),
+                force_const,
+                angle,
+                system,
             )
 
     def add_polymer_dihedral_2D(
-        self, particle_types1, polymer_offsets1, particle_types2, polymer_offsets2,
-        particle_types3, polymer_offsets3, particle_types4, polymer_offsets4,
-        force_const, angle, system
+        self,
+        particle_types1,
+        polymer_offsets1,
+        particle_types2,
+        polymer_offsets2,
+        particle_types3,
+        polymer_offsets3,
+        particle_types4,
+        polymer_offsets4,
+        force_const,
+        angle,
+        system,
     ):
-        '''
+        """
         adds a cosine dihedral between all polymer numbers
             with offsets polymer_offsets
             of types particle_types
             with force constant force_const
             and angle [radians]
-        '''
-        for x in range(1,4):
-            for y in range(1,4):
+        """
+        for x in range(1, 4):
+            for y in range(1, 4):
                 offsets1 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets1)
                 offsets2 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets2)
                 offsets3 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets3)
                 offsets4 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets4)
                 self.add_dihedral(
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types1, x, y, offsets1),
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types2, x, y, offsets2),
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types3, x, y, offsets3),
-                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types4, x, y, offsets4),
-                    force_const, angle, system
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types1, x, y, offsets1
+                    ),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types2, x, y, offsets2
+                    ),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types3, x, y, offsets3
+                    ),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(
+                        particle_types4, x, y, offsets4
+                    ),
+                    force_const,
+                    angle,
+                    system,
                 )
 
     @staticmethod
     def create_readdy_simulation(
-        system, n_cpu, sim_name = "", total_steps = 0, record=False, save_checkpoints=False
+        system, n_cpu, sim_name="", total_steps=0, record=False, save_checkpoints=False
     ):
         """
         Create the ReaDDy simulation
@@ -718,14 +841,14 @@ class ReaddyUtil():
             simulation.output_file = sim_name + ".h5"
             if os.path.exists(simulation.output_file):
                 os.remove(simulation.output_file)
-            recording_stride = max(int(total_steps / 1000.), 1)
+            recording_stride = max(int(total_steps / 1000.0), 1)
             simulation.record_trajectory(recording_stride)
             simulation.observe.topologies(recording_stride)
             simulation.observe.particles(recording_stride)
             simulation.observe.reaction_counts(1)
             simulation.progress_output_stride = recording_stride
         if save_checkpoints:
-            checkpoint_stride = max(int(total_steps / 10.), 1)
+            checkpoint_stride = max(int(total_steps / 10.0), 1)
             checkpoint_path = f"checkpoints/{sim_name}/"
             if os.path.exists(checkpoint_path):
                 rmtree(checkpoint_path)

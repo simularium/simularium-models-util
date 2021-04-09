@@ -6,6 +6,7 @@ class CurvePointData:
     """
     structure to store data for a point on a curve
     """
+
     position = None
     tangent = None
     arc_length = 0

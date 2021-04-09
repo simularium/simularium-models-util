@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import readdy
 import numpy as np
-import json
 import os
 import argparse
 
@@ -12,19 +10,19 @@ from simulariumio import MetaData, UnitData
 from ..microtubules import MicrotubulesUtil
 
 
-class MicrotubulesVisualization():
+class MicrotubulesVisualization:
     """
     visualize a microtubules trajectory in Simularium
     """
 
     @staticmethod
     def get_mapping_for_all_polymer_types(types_mapping):
-        '''
+        """
         creates a dictionary mapping particle type for all polymer types to a value
         for a dictionary of types and values
 
         returns dictionary mapping all types to values
-        '''
+        """
         result = {}
         for particle_type in types_mapping:
             types = MicrotubulesUtil.get_all_polymer_tubulin_types(particle_type)
@@ -34,20 +32,20 @@ class MicrotubulesVisualization():
 
     @staticmethod
     def visualize_microtubules(path_to_readdy_h5, box_size, plots):
-        '''
+        """
         visualize a microtubule trajectory in Simularium
-        '''
+        """
         # radii
-        tubulin_radius = 2.
+        tubulin_radius = 2.0
         radii = {
-            "tubulinA#GTP_" : tubulin_radius,
-            "tubulinA#GDP_" : tubulin_radius,
-            "tubulinB#GTP_" : tubulin_radius,
-            "tubulinB#GDP_" : tubulin_radius,
-            "tubulinA#GTP_bent_" : tubulin_radius,
-            "tubulinA#GDP_bent_" : tubulin_radius,
-            "tubulinB#GTP_bent_" : tubulin_radius,
-            "tubulinB#GDP_bent_" : tubulin_radius
+            "tubulinA#GTP_": tubulin_radius,
+            "tubulinA#GDP_": tubulin_radius,
+            "tubulinB#GTP_": tubulin_radius,
+            "tubulinB#GDP_": tubulin_radius,
+            "tubulinA#GTP_bent_": tubulin_radius,
+            "tubulinA#GDP_bent_": tubulin_radius,
+            "tubulinB#GTP_bent_": tubulin_radius,
+            "tubulinB#GDP_bent_": tubulin_radius,
         }
         radii = MicrotubulesVisualization.get_mapping_for_all_polymer_types(radii)
         radii["tubulinA#free"] = tubulin_radius
@@ -65,12 +63,26 @@ class MicrotubulesVisualization():
             "tubulinB#GDP_bent",
         }
         for group_type in group_types:
-            type_grouping[group_type] = MicrotubulesUtil.get_all_polymer_tubulin_types(group_type + "_")
+            type_grouping[group_type] = MicrotubulesUtil.get_all_polymer_tubulin_types(
+                group_type + "_"
+            )
         # types to ignore
         ignore_types = [
-            "site#out", "site#1", "site#1_GTP", "site#1_GDP", "site#1_detach",
-            "site#2", "site#2_GTP", "site#2_GDP", "site#2_detach", "site#3",
-            "site#4", "site#4_GTP", "site#4_GDP", "site#new", "site#remove"
+            "site#out",
+            "site#1",
+            "site#1_GTP",
+            "site#1_GDP",
+            "site#1_detach",
+            "site#2",
+            "site#2_GTP",
+            "site#2_GDP",
+            "site#2_detach",
+            "site#3",
+            "site#4",
+            "site#4_GTP",
+            "site#4_GDP",
+            "site#new",
+            "site#remove",
         ]
         # convert
         data = ReaddyData(
@@ -88,6 +100,7 @@ class MicrotubulesVisualization():
         )
         ReaddyConverter(data).write_JSON(path_to_readdy_h5)
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Parses a microtuble hdf5 (*.h5) trajectory file produced\
@@ -95,17 +108,21 @@ def main():
          visualization-data-format"
     )
     parser.add_argument(
-        "dir_path", help="the file path of the directory\
-         containing the trajectories to parse")
-    parser.add_argument(
-        "box_size", help="width of simulation cube")
+        "dir_path",
+        help="the file path of the directory\
+         containing the trajectories to parse",
+    )
+    parser.add_argument("box_size", help="width of simulation cube")
     args = parser.parse_args()
     dir_path = args.dir_path
     for file in os.listdir(dir_path):
         if file.endswith(".h5"):
             file_path = os.path.join(dir_path, file)
             print(f"visualize {file_path}")
-            MicrotubulesVisualization.visualize_microtubules(file_path, args.box_size, [])
+            MicrotubulesVisualization.visualize_microtubules(
+                file_path, args.box_size, []
+            )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

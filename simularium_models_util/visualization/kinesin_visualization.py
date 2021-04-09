@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import readdy
 import numpy as np
-import json
 import os
 import argparse
 
@@ -12,7 +10,7 @@ from simulariumio import MetaData, UnitData
 from ..microtubules import MicrotubulesUtil
 
 
-class KinesinVisualization():
+class KinesinVisualization:
     """
     visualize a kinesin trajectory in Simularium
     """
@@ -38,14 +36,14 @@ class KinesinVisualization():
         visualize a kinesin trajectory in Simularium
         """
         # radii
-        tubulin_radius = 2.
-        motor_radius = 2.
-        hips_radius = 1.
-        cargo_radius = 15.
+        tubulin_radius = 2.0
+        motor_radius = 2.0
+        hips_radius = 1.0
+        cargo_radius = 15.0
         radii = {
-            "tubulinA#" : tubulin_radius,
-            "tubulinB#" : tubulin_radius,
-            "tubulinB#bound_" : tubulin_radius
+            "tubulinA#": tubulin_radius,
+            "tubulinB#": tubulin_radius,
+            "tubulinB#bound_": tubulin_radius,
         }
         radii = KinesinVisualization.get_mapping_for_all_polymer_types(radii)
         radii["hips"] = hips_radius
@@ -62,7 +60,9 @@ class KinesinVisualization():
             "tubulinB#bound_",
         }
         for group_type in group_types:
-            type_grouping[group_type[:-1]] = MicrotubulesUtil.get_all_polymer_tubulin_types(group_type)
+            type_grouping[
+                group_type[:-1]
+            ] = MicrotubulesUtil.get_all_polymer_tubulin_types(group_type)
         # convert
         data = ReaddyData(
             meta_data=MetaData(
@@ -78,6 +78,7 @@ class KinesinVisualization():
         )
         ReaddyConverter(data).write_JSON(path_to_readdy_h5)
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Parses a kinesin hdf5 (*.h5) trajectory file produced\
@@ -85,10 +86,11 @@ def main():
          visualization-data-format"
     )
     parser.add_argument(
-        "dir_path", help="the file path of the directory\
-         containing the trajectories to parse")
-    parser.add_argument(
-        "box_size", help="width of simulation cube")
+        "dir_path",
+        help="the file path of the directory\
+         containing the trajectories to parse",
+    )
+    parser.add_argument("box_size", help="width of simulation cube")
     args = parser.parse_args()
     dir_path = args.dir_path
     for file in os.listdir(dir_path):
@@ -97,5 +99,6 @@ def main():
             print(f"visualize {file_path}")
             KinesinVisualization.visualize_kinesin(file_path, args.box_size, [])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

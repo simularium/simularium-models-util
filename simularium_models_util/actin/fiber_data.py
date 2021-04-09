@@ -4,11 +4,14 @@
 import numpy as np
 import math
 
+from ..common import ReaddyUtil
+
 
 class FiberData:
     """
     Fiber network data
     """
+
     fiber_id = -1
     points = []
     points_reversed = None
@@ -35,13 +38,15 @@ class FiberData:
         """
         get the current last point, the barbed end
         """
-        return self.points[len(self.points)-1]
+        return self.points[len(self.points) - 1]
 
     def direction(self):
         """
         get a normalized direction vector along the entire fiber
         """
-        return ReaddyUtil.normalize(self.barbed_point().position - self.pointed_point().position)
+        return ReaddyUtil.normalize(
+            self.barbed_point().position - self.pointed_point().position
+        )
 
     def reversed_points(self):
         """
@@ -53,7 +58,7 @@ class FiberData:
             self.points_reversed.reverse()
         return self.points_reversed
 
-    def get_index_of_curve_start_point(self, start_position, reverse = False):
+    def get_index_of_curve_start_point(self, start_position, reverse=False):
         """
         get the index of the first fiber point that defines
         a curve from the nearest position to the start_position
@@ -64,9 +69,11 @@ class FiberData:
         if len(self.points) == 2:
             return 0
         fiber_points = self.reversed_points() if reverse else self.points
-        for p in range(len(fiber_points)-2):
+        for p in range(len(fiber_points) - 2):
             d = np.linalg.norm(start_position - fiber_points[p].position)
-            arc_length = np.linalg.norm(fiber_points[p + 1].position - fiber_points[p].position)
+            arc_length = np.linalg.norm(
+                fiber_points[p + 1].position - fiber_points[p].position
+            )
             if d < arc_length:
                 return p
         return None
@@ -79,7 +86,7 @@ class FiberData:
             raise Exception("Fiber has less than 2 points!")
         closest_index = 0
         min_distance = math.inf
-        for p in range(len(self.points)-1):
+        for p in range(len(self.points) - 1):
             d = np.linalg.norm(position - self.points[p].position)
             if d < min_distance:
                 closest_index = p
@@ -96,11 +103,12 @@ class FiberData:
             return [closest_index, 1 - closest_index]
         if closest_index == 0:
             next_closest_index = 1
-        elif closest_index == len(self.points)-1:
-            next_closest_index = len(self.points)-2
+        elif closest_index == len(self.points) - 1:
+            next_closest_index = len(self.points) - 2
         else:
-            if (np.linalg.norm(position - self.points[closest_index+1].position) 
-                < np.linalg.norm(position - self.points[closest_index-1].position)):
+            if np.linalg.norm(
+                position - self.points[closest_index + 1].position
+            ) < np.linalg.norm(position - self.points[closest_index - 1].position):
                 next_closest_index = closest_index + 1
             else:
                 next_closest_index = closest_index - 1
@@ -111,7 +119,9 @@ class FiberData:
         get the nearest position on the fiber line to a given position
         """
         closest_ix = self.get_indices_of_closest_points(position)
-        fiber_dir = ReaddyUtil.normalize(self.points[closest_ix[1]].position - self.points[closest_ix[0]].position)
+        fiber_dir = ReaddyUtil.normalize(
+            self.points[closest_ix[1]].position - self.points[closest_ix[0]].position
+        )
         v = position - self.points[closest_ix[0]].position
         d = np.dot(v, fiber_dir)
         return self.points[closest_ix[0]].position + fiber_dir * d
@@ -120,8 +130,12 @@ class FiberData:
         """
         get the direction vector of the nearest segment of the fiber
         """
-        start_index = self.get_index_of_curve_start_point(self.get_nearest_position(position))
-        return ReaddyUtil.normalize(self.points[start_index + 1].position - self.points[start_index].position)
+        start_index = self.get_index_of_curve_start_point(
+            self.get_nearest_position(position)
+        )
+        return ReaddyUtil.normalize(
+            self.points[start_index + 1].position - self.points[start_index].position
+        )
 
     def get_first_segment_direction(self):
         """
