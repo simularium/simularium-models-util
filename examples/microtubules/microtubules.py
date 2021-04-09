@@ -14,8 +14,11 @@ def main():
     )
     parser.add_argument(
         "params_path", help="the file path of an excel file with parameters")
+    parser.add_argument(
+        "data_column", help="the column index for the parameter set to use")
     args = parser.parse_args()
-    parameters = pandas.read_excel(args.params_path, sheet_name="microtubules", usecols=[0, 1])
+    parameters = pandas.read_excel(
+        args.params_path, sheet_name="microtubules", usecols=[0, int(args.data_column)])
     parameters.set_index('name', inplace=True)
     parameters.transpose()
     run_name = list(parameters)[0]
@@ -24,7 +27,8 @@ def main():
     mt_simulation = MicrotubulesSimulation(parameters, True, True)
     mt_simulation.add_random_tubulin_dimers()
     mt_simulation.add_microtubule_seed()
-    mt_simulation.simulation.run(int(parameters["total_steps"]), parameters["timestep"])
+    mt_simulation.simulation.run(
+        int(parameters["total_steps"]), parameters["timestep"])
     MicrotubulesVisualization.visualize_microtubules(
         "{}.h5".format(parameters["name"]), parameters["box_size"], [])
 

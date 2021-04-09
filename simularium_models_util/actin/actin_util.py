@@ -2271,28 +2271,28 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ATP1{i}: "
-                "Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3) -> "
+                f"Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new)",
                 rate=rate_ATP,
                 radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ATP2{i}: "
-                "Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new_ATP)",
                 rate=rate_ATP,
                 radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ADP1{i}: "
-                "Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3) -> "
+                f"Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new)",
                 rate=rate_ADP,
                 radius=reaction_distance,
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ADP2{i}: "
-                "Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new_ATP)",
                 rate=rate_ADP,
                 radius=reaction_distance,
