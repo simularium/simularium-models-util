@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.actin.actin_structure &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.actin.actin_structure</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.actin.actin_structure</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+<span class="kn">from</span> <span class="nn">.fiber_data</span> <span class="kn">import</span> <span class="n">FiberData</span>
+<span class="kn">from</span> <span class="nn">.curve_point_data</span> <span class="kn">import</span> <span class="n">CurvePointData</span>
+
+
+<div class="viewcode-block" id="ActinStructure"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure">[docs]</a><span class="k">class</span> <span class="nc">ActinStructure</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Measurements are from Chimera:</span>
+<span class="sd">      - load PDB 7AQK as model #0</span>
+<span class="sd">      - duplicate it as model #1</span>
+<span class="sd">      - from command line run: `matchmaker #0:.k #1:.l`</span>
+<span class="sd">        to align copied second mother actin to original pointed mother actin</span>
+<span class="sd">      - run: `measure rotation #0 #1` to measure mother axis</span>
+<span class="sd">      - duplicate model #0 as model #3</span>
+<span class="sd">      - from command line run: `matchmaker #0:.h #3:.i`</span>
+<span class="sd">        to align copied second daughter actin to original first branch daughter actin</span>
+<span class="sd">      - run: `measure rotation #0 #3` to measure daughter axis</span>
+<span class="sd">      - run: `measure center #0:.[chain ID]` for a = arp3, b = arp2,</span>
+<span class="sd">        [h,i,j] = daughter actin, [k, l, m, n, o, p, q, r] = mother actin</span>
+<span class="sd">      - find these values in the output from the measure commands</span>
+<span class="sd">        (spatial values are multiplied by 0.1 from Angstroms to nm,</span>
+<span class="sd">        angle values are in degrees)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">arp3_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">29.275</span><span class="p">,</span> <span class="mf">27.535</span><span class="p">,</span> <span class="mf">23.944</span><span class="p">])</span>
+    <span class="n">arp2_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">28.087</span><span class="p">,</span> <span class="mf">30.872</span><span class="p">,</span> <span class="mf">26.657</span><span class="p">])</span>
+    <span class="n">mother_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">[</span><span class="mf">19.126</span><span class="p">,</span> <span class="mf">20.838</span><span class="p">,</span> <span class="mf">27.757</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">21.847</span><span class="p">,</span> <span class="mf">24.171</span><span class="p">,</span> <span class="mf">27.148</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">24.738</span><span class="p">,</span> <span class="mf">20.881</span><span class="p">,</span> <span class="mf">26.671</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">27.609</span><span class="p">,</span> <span class="mf">24.061</span><span class="p">,</span> <span class="mf">27.598</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">30.382</span><span class="p">,</span> <span class="mf">21.190</span><span class="p">,</span> <span class="mf">25.725</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">33.374</span><span class="p">,</span> <span class="mf">23.553</span><span class="p">,</span> <span class="mf">27.951</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">36.075</span><span class="p">,</span> <span class="mf">21.642</span><span class="p">,</span> <span class="mf">25.060</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">39.005</span><span class="p">,</span> <span class="mf">22.861</span><span class="p">,</span> <span class="mf">27.970</span><span class="p">],</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">daughter_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">[</span><span class="mf">29.821</span><span class="p">,</span> <span class="mf">33.088</span><span class="p">,</span> <span class="mf">23.356</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">30.476</span><span class="p">,</span> <span class="mf">36.034</span><span class="p">,</span> <span class="mf">26.528</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">30.897</span><span class="p">,</span> <span class="mf">38.584</span><span class="p">,</span> <span class="mf">23.014</span><span class="p">],</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">mother_axis_direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.99873035</span><span class="p">,</span> <span class="mf">0.01436705</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.04828331</span><span class="p">])</span>
+    <span class="n">mother_axis_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.00000000</span><span class="p">,</span> <span class="mf">22.186136822</span><span class="p">,</span> <span class="mf">28.273905592</span><span class="p">])</span>
+    <span class="n">daughter_axis_direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.31037692</span><span class="p">,</span> <span class="mf">0.94885799</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05774669</span><span class="p">])</span>
+    <span class="n">daughter_axis_point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">18.640140530</span><span class="p">,</span> <span class="mf">0.00000000</span><span class="p">,</span> <span class="mf">27.032325657</span><span class="p">])</span>
+    <span class="n">actin_to_actin_angle_degrees</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">167.44857939</span> <span class="o">+</span> <span class="mf">166.44837565</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">actin_to_actin_axis_distance</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.795019154</span> <span class="o">+</span> <span class="mf">2.811178372</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+<div class="viewcode-block" id="ActinStructure.actin_to_actin_axis_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_to_actin_axis_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_to_actin_axis_angle</span><span class="p">():</span>  <span class="c1"># was -2.91 rad</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_angle_degrees</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother_fiber</span><span class="p">():</span>
+        <span class="n">position0</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="n">position0</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_point</span>
+        <span class="n">d0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">)</span>
+        <span class="n">axis_position0</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_point</span> <span class="o">+</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span> <span class="o">*</span> <span class="n">d0</span>
+        <span class="p">)</span>
+        <span class="n">position1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">position1</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_point</span>
+        <span class="n">d1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">)</span>
+        <span class="n">axis_position1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_point</span> <span class="o">+</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span> <span class="o">*</span> <span class="n">d1</span>
+        <span class="p">)</span>
+        <span class="n">arc_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_position1</span> <span class="o">-</span> <span class="n">axis_position0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">FiberData</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="n">CurvePointData</span><span class="p">(</span><span class="n">axis_position0</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">CurvePointData</span><span class="p">(</span>
+                    <span class="n">axis_position1</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span> <span class="n">arc_length</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.actin_distance_from_axis"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_distance_from_axis">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_distance_from_axis</span><span class="p">():</span>  <span class="c1"># was 1.59 nm</span>
+        <span class="n">mother_fiber</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_fiber</span><span class="p">()</span>
+        <span class="n">axis_position</span> <span class="o">=</span> <span class="n">mother_fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ActinStructure.branch_positions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.branch_positions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">branch_positions</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the points on the mother and daughter axes that are closest to each other</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># find unit direction vector for line perpendicular to mother and daughter axes</span>
+        <span class="n">perpendicular</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_direction</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span>
+        <span class="p">)</span>
+        <span class="n">perpendicular</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">perpendicular</span><span class="p">)</span>
+        <span class="c1"># solve the system</span>
+        <span class="n">RHS</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_point</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_point</span>
+        <span class="n">LHS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span>
+                <span class="o">-</span><span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_direction</span><span class="p">,</span>
+                <span class="n">perpendicular</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">LHS</span><span class="p">,</span> <span class="n">RHS</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_point</span>
+            <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_point</span>
+            <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_direction</span><span class="p">,</span>
+        <span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother_branch_position"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother_branch_position">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother_branch_position</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">branch_positions</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.branch_shift"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.branch_shift">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">branch_shift</span><span class="p">():</span>  <span class="c1"># was -2.058923 nm</span>
+        <span class="n">branch_positions</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">branch_positions</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">branch_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">branch_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ActinStructure.branch_monomer_position"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.branch_monomer_position">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">branch_monomer_position</span><span class="p">(</span><span class="n">monomer_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the given monomer position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">monomer_type</span> <span class="o">==</span> <span class="s2">&quot;actin_arp2&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">monomer_type</span> <span class="o">==</span> <span class="s2">&quot;arp2&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="k">elif</span> <span class="n">monomer_type</span> <span class="o">==</span> <span class="s2">&quot;arp3&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># actin1</span>
+            <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.branch_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.branch_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">branch_angle</span><span class="p">():</span>  <span class="c1"># was 77 deg</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_direction</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.bound_arp_orientation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.bound_arp_orientation">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">bound_arp_orientation</span><span class="p">():</span>
+        <span class="n">actin_arp2_pos</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">actin_arp2_axis_pos</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_fiber</span><span class="p">()</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span>
+            <span class="n">actin_arp2_pos</span>
+        <span class="p">)</span>
+        <span class="n">v_actin_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">actin_arp2_pos</span> <span class="o">-</span> <span class="n">actin_arp2_axis_pos</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_orientation_from_vectors</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span> <span class="n">v_actin_arp2</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.nucleated_arp_orientation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.nucleated_arp_orientation">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">nucleated_arp_orientation</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_orientation_from_vectors</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_axis_direction</span><span class="p">,</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_axis_direction</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.actin_to_actin_distance"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_to_actin_distance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_to_actin_distance</span><span class="p">():</span>  <span class="c1"># was 4.27 nm</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                    <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">distances</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp2_to_mother_distance"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp2_to_mother_distance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp2_to_mother_distance</span><span class="p">():</span>  <span class="c1"># was 4.17 nm</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp3_to_mother_distance"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp3_to_mother_distance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp3_to_mother_distance</span><span class="p">():</span>  <span class="c1"># was 8.22 nm</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp2_to_arp3_distance"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp2_to_arp3_distance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp2_to_arp3_distance</span><span class="p">():</span>  <span class="c1"># was 4.18 nm</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp2_to_daughter_distance"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp2_to_daughter_distance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp2_to_daughter_distance</span><span class="p">():</span>  <span class="c1"># arp3 to daughter was 4.19 nm</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.actin_to_actin_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_to_actin_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_to_actin_angle</span><span class="p">():</span>  <span class="c1"># was 1.48 rad</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">v1</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">angles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">angles</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ActinStructure.actin_to_actin_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_to_actin_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_to_actin_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was 2.80 rad</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">v1</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+                <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">angles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">angles</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp3_arp2_daughter1_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp3_arp2_daughter1_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp3_arp2_daughter1_angle</span><span class="p">():</span>  <span class="c1"># was 1.43 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp2_daughter1_daughter2_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp2_daughter1_daughter2_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp2_daughter1_daughter2_angle</span><span class="p">():</span>  <span class="c1"># was 1.46 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_mother2_arp3_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_mother2_arp3_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_mother2_arp3_angle</span><span class="p">():</span>  <span class="c1"># was 2.15 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother3_mother2_arp3_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother3_mother2_arp3_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother3_mother2_arp3_angle</span><span class="p">():</span>  <span class="c1"># was 2.31 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother0_mother1_arp2_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother0_mother1_arp2_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother0_mother1_arp2_angle</span><span class="p">():</span>  <span class="c1"># was 0.91 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.actin_to_actin_repulsion_distance"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_to_actin_repulsion_distance">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_to_actin_repulsion_distance</span><span class="p">():</span>  <span class="c1"># was 4 nm</span>
+        <span class="k">return</span> <span class="mf">0.95</span> <span class="o">*</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_distance</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp3_arp2_daughter1_daughter2_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp3_arp2_daughter1_daughter2_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp3_arp2_daughter1_daughter2_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was 2.92 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp2_daughter1_daughter2_daughter3_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp2_daughter1_daughter2_daughter3_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp2_daughter1_daughter2_daughter3_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was 2.82 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_arp2_daughter1_daughter2_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_arp2_daughter1_daughter2_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_arp2_daughter1_daughter2_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was 2.76 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_mother2_arp3_arp2_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_mother2_arp3_arp2_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_mother2_arp3_arp2_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was 1.67 rad</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother0_mother1_arp2_daughter1_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother0_mother1_arp2_daughter1_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother0_mother1_arp2_daughter1_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was nothing</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother3_mother2_arp3_arp2_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother3_mother2_arp3_arp2_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother3_mother2_arp3_arp2_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was nothing</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother2_arp3_arp2_daughter1_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother2_arp3_arp2_daughter1_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother2_arp3_arp2_daughter1_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was nothing</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother_mother0_mother1_arp2_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother_mother0_mother1_arp2_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother_mother0_mother1_arp2_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was nothing</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.arp2_mother1_mother2_arp3_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.arp2_mother1_mother2_arp3_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">arp2_mother1_mother2_arp3_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was nothing</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother4_mother3_mother2_arp3_dihedral_angle"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother4_mother3_mother2_arp3_dihedral_angle">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother4_mother3_mother2_arp3_dihedral_angle</span><span class="p">():</span>  <span class="c1"># was nothing</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.orientation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.orientation">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">orientation</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_orientation</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_to_branch_actin_vectors"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_to_branch_actin_vectors">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_to_branch_actin_vectors</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+        <span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_to_arp3_vector"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_to_arp3_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_to_arp3_vector</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_to_arp2_vector"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_to_arp2_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_to_arp2_vector</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_to_mother3_vector"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_to_mother3_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_to_mother3_vector</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.mother1_to_mother_vector"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.mother1_to_mother_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">mother1_to_mother_vector</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

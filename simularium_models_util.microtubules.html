@@ -1,0 +1,793 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.microtubules package &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="simularium_models_util.visualization package" href="simularium_models_util.visualization.html" />
+    <link rel="prev" title="simularium_models_util.kinesin package" href="simularium_models_util.kinesin.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Package modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="simularium_models_util.html">simularium_models_util package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="simularium_models_util.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">simularium_models_util</a> &raquo;</li>
+        
+          <li><a href="simularium_models_util.html">simularium_models_util package</a> &raquo;</li>
+        
+      <li>simularium_models_util.microtubules package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/simularium_models_util.microtubules.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="simularium_models_util.visualization.html" class="btn btn-neutral float-right" title="simularium_models_util.visualization package" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="simularium_models_util.kinesin.html" class="btn btn-neutral float-left" title="simularium_models_util.kinesin package" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simularium-models-util-microtubules-package">
+<h1>simularium_models_util.microtubules package<a class="headerlink" href="#simularium-models-util-microtubules-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simularium_models_util.microtubules.microtubules_simulation">
+<span id="simularium-models-util-microtubules-microtubules-simulation-module"></span><h2>simularium_models_util.microtubules.microtubules_simulation module<a class="headerlink" href="#module-simularium_models_util.microtubules.microtubules_simulation" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">simularium_models_util.microtubules.microtubules_simulation.</span></code><code class="sig-name descname"><span class="pre">MicrotubulesSimulation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_checkpoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Creates a ReaDDy microtubules simulation</p>
+<p>Ref: <a class="reference external" href="http://jcb.rupress.org/content/jcb/217/8/2691/F7.large.jpg">http://jcb.rupress.org/content/jcb/217/8/2691/F7.large.jpg</a></p>
+<p>Params = Dict[str, float]
+keys:
+total_steps, timestep, box_size, temperature_C, viscosity,
+force_constant, grow_reaction_distance, attach_reaction_distance,
+n_cpu, tubulin_concentration, seed_n_rings, seed_n_frayed_rings_minus,
+seed_n_frayed_rings_plus, seed_position_offset_x, seed_position_offset_y,
+seed_position_offset_z, tubulin_radius, protofilament_growth_GTP_rate,
+protofilament_growth_GDP_rate, protofilament_shrink_GTP_rate,
+protofilament_shrink_GDP_rate, ring_attach_GTP_rate, ring_attach_GDP_rate,
+ring_detach_GTP_rate, ring_detach_GDP_rate, hydrolyze_rate, verbose</p>
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubule_seed">
+<code class="sig-name descname"><span class="pre">add_microtubule_seed</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation.add_microtubule_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubule_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a microtubule seed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubules_constraints">
+<code class="sig-name descname"><span class="pre">add_microtubules_constraints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation.add_microtubules_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubules_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add geometric constraints for connected microtubules particles,
+including bonds, angles, and repulsions, to the ReaDDy system</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubules_reactions">
+<code class="sig-name descname"><span class="pre">add_microtubules_reactions</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation.add_microtubules_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubules_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add reactions to the ReaDDy system</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubules_types">
+<code class="sig-name descname"><span class="pre">add_microtubules_types</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation.add_microtubules_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_microtubules_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add particle and topology types for microtubules particles
+to the ReaDDy system</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_random_tubulin_dimers">
+<code class="sig-name descname"><span class="pre">add_random_tubulin_dimers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation.add_random_tubulin_dimers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.add_random_tubulin_dimers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add randomly distributed tubulin dimers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.create_microtubules_system">
+<code class="sig-name descname"><span class="pre">create_microtubules_system</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_simulation.html#MicrotubulesSimulation.create_microtubules_system"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_simulation.MicrotubulesSimulation.create_microtubules_system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the ReaDDy system for microtubules
+including particle types, constraints, and reactions</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simularium_models_util.microtubules.microtubules_util">
+<span id="simularium-models-util-microtubules-microtubules-util-module"></span><h2>simularium_models_util.microtubules.microtubules_util module<a class="headerlink" href="#module-simularium_models_util.microtubules.microtubules_util" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">simularium_models_util.microtubules.microtubules_util.</span></code><code class="sig-name descname"><span class="pre">MicrotubulesUtil</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Utility functions for ReaDDy microtubules models</p>
+<p>Parameters need to be accessible in ReaDDy callbacks
+which can’t be instance methods, so parameters are global</p>
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_angles_between_tubulins">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_angles_between_tubulins</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_type_sets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_angles_between_tubulins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_angles_between_tubulins" title="Permalink to this definition">¶</a></dt>
+<dd><p>add angles between tubulins</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_attach_reaction">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_attach_reaction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_GTP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_GDP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reaction_distance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_attach_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_attach_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>attach protofilaments laterally</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_bent_site_angles">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_bent_site_angles</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_bent_site_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_bent_site_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>add angles between sites on bent tubulins</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_bent_site_bonds">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_bent_site_bonds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_bent_site_bonds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_bent_site_bonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>add bonds between sites on bent tubulins</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_bonds_between_tubulins">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_bonds_between_tubulins</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_bonds_between_tubulins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_bonds_between_tubulins" title="Permalink to this definition">¶</a></dt>
+<dd><p>add bonds between tubulins</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_detach_reaction">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_detach_reaction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_detach_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_detach_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>detach protofilaments laterally</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_edge_site_angles">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_edge_site_angles</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_edge_site_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_edge_site_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>add angles between sites at the edge between tube and bent tubulins</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_edges">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_edges</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">microtubule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_filaments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_rings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frayed_rings_plus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frayed_rings_minus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_edges" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>add edges to a microtubule topology</dt><dd><p>with n_filaments protofilaments
+and n_rings rings
+and n_frayed_rings_plus rings at + end with outward bend
+and n_frayed_rings_minus rings at - end with outward bend</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_growth_reaction">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_growth_reaction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_GTP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate_GDP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reaction_distance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_growth_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>add dimers to the ends of protofilaments</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_hydrolyze_reaction">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_hydrolyze_reaction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_hydrolyze_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_hydrolyze_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>hydrolyze GTP-tubulinB to GDP-tubulinB</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_microtubule">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_microtubule</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_rings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frayed_rings_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frayed_rings_plus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position_offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_GTP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_microtubule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_microtubule" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>add seed microtubule to the simulation</dt><dd><p>with n_filaments protofilaments
+and n_rings rings
+and n_frayed_rings_minus rings at - end with outward bend
+and n_frayed_rings_plus rings at + end with outward bend
+and position_offset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_polymer_repulsion">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_polymer_repulsion</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_polymer_repulsion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_polymer_repulsion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a pairwise repulsion between all polymer numbers</dt><dd><p>of types particle_types
+with force constant force_const
+with equilibrium distance [nm]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_polymer_topology_species">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_polymer_topology_species</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffCoeff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_polymer_topology_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_polymer_topology_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds topology species for all polymer numbers
+(“type1_1”, “type1_2”, “type1_3”, “type2_1”, … “type3_3”)</p>
+<blockquote>
+<div><p>for type particle_type
+with diffusion coefficient diffCoeff [nm^2/s]</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_shrink_reaction">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_shrink_reaction</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_shrink_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_shrink_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>separate dimers and oligomers from the ends
+of frayed protofilaments and oligomers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_dimers">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_tubulin_dimers</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_tubulin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_tubulin_dimers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_dimers" title="Permalink to this definition">¶</a></dt>
+<dd><p>add seed tubulin dimers to the simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_site_angles">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_tubulin_site_angles</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_tubulin_site_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_site_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>add angles between a tubulin and its sites</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_site_bonds">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_tubulin_site_bonds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_constant</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">util</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_tubulin_site_bonds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_site_bonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>add bonds between a tubulin and its sites</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_tubulin_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site1_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'site#new'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site2_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'site#new'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_tubulin_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a new particle attached to the tubulin for each site</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">add_tubulin_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffCoeff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.add_tubulin_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.add_tubulin_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>add tubulin topology and particle types to the system</p>
+<p>microtubules are 2D polymers and to encode polarity in each dimension,
+there are 3 x 3 = 9 polymer types. These are represented as “type#x_y”
+where x and y are both in [1,3]. spatially, the types are mapped like so:</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="simple">
+<dt>x_(y+1)</dt><dd><p>/</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>A ____/____ B
+/   /    /</p>
+</div></blockquote>
+<ul>
+<li><dl>
+<dt>end     (x-1)_y__/___x_y__/_____(x+1)_y     + end</dt><dd><blockquote>
+<div><blockquote>
+<div><p>/   /    /</p>
+</div></blockquote>
+<p>/___/____/</p>
+</div></blockquote>
+<dl>
+<dt>C     /     D</dt><dd><blockquote>
+<div><p>/</p>
+</div></blockquote>
+<p>x_(y-1)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.cancel_attach">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">cancel_attach</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sites</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.cancel_attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.cancel_attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>reverse an attach spatial reaction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.check_add_tubulin_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">check_add_tubulin_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site1_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'site#new'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site2_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'site#new'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.check_add_tubulin_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.check_add_tubulin_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if the tubulin should have sites added, if so add them</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.check_remove_tubulin_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">check_remove_tubulin_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin_crosslinked</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_tubulin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_crosslinked</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.check_remove_tubulin_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.check_remove_tubulin_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if the tubulin’s sites should be removed, if so remove them</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.connect_sites_between_tubulins">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">connect_sites_between_tubulins</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sites_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sites_plus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.connect_sites_between_tubulins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.connect_sites_between_tubulins" title="Permalink to this definition">¶</a></dt>
+<dd><p>add inter-tubulin edges between sites</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_grow1">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">do_grow1</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GTP_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.do_grow1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_grow1" title="Permalink to this definition">¶</a></dt>
+<dd><p>start adding a tubulin dimer to the end of a protofilament:
+add additional particles</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_grow2">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">do_grow2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.do_grow2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_grow2" title="Permalink to this definition">¶</a></dt>
+<dd><p>finish adding a tubulin dimer to the end of a protofilament:
+set types, positions, and edges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_shrink1">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">do_shrink1</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GTP_state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.do_shrink1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_shrink1" title="Permalink to this definition">¶</a></dt>
+<dd><p>start removing a tubulin dimer from the end of a protofilament:
+remove or detach particles, change particle types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.filament_is_crosslinked">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">filament_is_crosslinked</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.filament_is_crosslinked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.filament_is_crosslinked" title="Permalink to this definition">¶</a></dt>
+<dd><p>does the fragment starting at the given tubulin
+and going the given direction (-1 or 1) along a filament
+have any crosslinks to other filaments?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_all_polymer_tubulin_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_all_polymer_tubulin_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_all_polymer_tubulin_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_all_polymer_tubulin_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets a list of all polymer numbers
+(“type1_1”, “type1_2”, “type1_3”, “type2_1”, … “type3_3”)</p>
+<blockquote>
+<div><p>for type particle_type</p>
+<p>returns list of types</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_attaching_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_attaching_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_attaching_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_attaching_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the ring sites that just attached in a spatial reaction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_filament_lengths">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_filament_lengths</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin_plus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_filament_lengths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_filament_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the lengths of the filaments, cut off the larger one
+at one larger than the smaller</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_microtubule_positions_and_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_microtubule_positions_and_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_filaments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_rings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frayed_rings_plus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_frayed_rings_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frayed_angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_GTP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_microtubule_positions_and_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_microtubule_positions_and_types" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>get lists of positions and types for particles in a microtubule</dt><dd><p>with n_filaments protofilaments
+and n_rings rings
+and n_frayed_rings_plus rings at + end with outward bend
+and n_frayed_rings_minus rings at - end with outward bend
+and frayed_angle [radians] rotation of normal per bent tubulin
+and radius [nm]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_neighboring_tubulin">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_neighboring_tubulin</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_neighboring_tubulin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_neighboring_tubulin" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the next tubulin neighbor in the branch from site named direction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_new_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_new_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_new_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_new_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>get new site particles attached to a tubulin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_polymer_indices">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_polymer_indices</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_polymer_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_polymer_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the x and y polymer index for a particle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_polymer_offsets">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_polymer_offsets</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_polymer_offsets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_polymer_offsets" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the offsets between two particle’s polymer indices</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_random_tubulin_neighbors">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_random_tubulin_neighbors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types_include</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types_exclude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GTP_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_random_tubulin_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_random_tubulin_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a random pair of neighbor tubulins of the given types,
+GTP state, and polymer offsets</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_tubulin_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_tubulin_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_tubulin_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_tubulin_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the site particles attached to this tubulin vertex</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.increment_polymer_indices">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">increment_polymer_indices</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polymer_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.increment_polymer_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.increment_polymer_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>increment the x and y polymer index for a particle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.polymer_indices_to_string">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">polymer_indices_to_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polymer_indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.polymer_indices_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.polymer_indices_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the x and y polymer index for a particle</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_detach_ring">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">rate_function_detach_ring</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.rate_function_detach_ring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_detach_ring" title="Permalink to this definition">¶</a></dt>
+<dd><p>rate function for detaching protofilaments laterally
+at ring sites for GTP-tubulin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_hydrolyze">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">rate_function_hydrolyze</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.rate_function_hydrolyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_hydrolyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>rate function for hydrolyzing GTP to GDP in tubulin Bs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_shrink_GDP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">rate_function_shrink_GDP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.rate_function_shrink_GDP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_shrink_GDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>rate function for removing a GDP-tubulin dimer from the end of a protofilament</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_shrink_GTP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">rate_function_shrink_GTP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.rate_function_shrink_GTP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.rate_function_shrink_GTP" title="Permalink to this definition">¶</a></dt>
+<dd><p>rate function for removing a GTP-tubulin dimer from the end of a protofilament</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_attach">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_attach</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>attach tubulins laterally</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_detach1">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_detach1</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_detach1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_detach1" title="Permalink to this definition">¶</a></dt>
+<dd><p>add new sites in preparation to detach tubulins laterally</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_detach2">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_detach2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_detach2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_detach2" title="Permalink to this definition">¶</a></dt>
+<dd><p>detach tubulins laterally</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow1_GDP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_grow1_GDP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_grow1_GDP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow1_GDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>start adding a tubulin dimer to the end of a protofilament:
+add additional particles</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow1_GTP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_grow1_GTP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_grow1_GTP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow1_GTP" title="Permalink to this definition">¶</a></dt>
+<dd><p>start adding a tubulin dimer to the end of a protofilament:
+add additional particles</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow2_GDP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_grow2_GDP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_grow2_GDP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow2_GDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>finish adding a tubulin dimer to the end of a protofilament:
+set types, positions, and edges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow2_GTP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_grow2_GTP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_grow2_GTP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_grow2_GTP" title="Permalink to this definition">¶</a></dt>
+<dd><p>finish adding a tubulin dimer to the end of a protofilament:
+set types, positions, and edges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_hydrolyze">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_hydrolyze</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_hydrolyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_hydrolyze" title="Permalink to this definition">¶</a></dt>
+<dd><p>hydrolyze GTP to GDP in a random tubulin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_shrink2">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_shrink2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_shrink2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_shrink2" title="Permalink to this definition">¶</a></dt>
+<dd><p>finish removing a tubulin dimer from the end of a protofilament:
+change topology types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_shrink_GDP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_shrink_GDP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_shrink_GDP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_shrink_GDP" title="Permalink to this definition">¶</a></dt>
+<dd><p>start removing a tubulin dimer from the end of a protofilament:
+remove or detach particles, change particle types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_shrink_GTP">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_shrink_GTP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.reaction_function_shrink_GTP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.reaction_function_shrink_GTP" title="Permalink to this definition">¶</a></dt>
+<dd><p>start removing a tubulin dimer from the end of a protofilament:
+remove or detach particles, change particle types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.remove_bent_filament_site_bonds">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">remove_bent_filament_site_bonds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin_minus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin_plus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.remove_bent_filament_site_bonds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.remove_bent_filament_site_bonds" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove bonds between the sites of tubulin1 and tubulin2</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.remove_tubulin_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">remove_tubulin_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.remove_tubulin_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.remove_tubulin_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>emit a tubulin’s site particles</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.set_free">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">set_free</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulins</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.set_free"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.set_free" title="Permalink to this definition">¶</a></dt>
+<dd><p>emit each tubulin’s site particles and change its type to tubulin#free</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.setup_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">setup_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_new_sites</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tangent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_state_ring</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">site_state_filament</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.setup_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.setup_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>set positions, types, and intra-tubulin edges for new site particles</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.topology_is_microtubule">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">topology_is_microtubule</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.topology_is_microtubule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.topology_is_microtubule" title="Permalink to this definition">¶</a></dt>
+<dd><p>does the topology have tubulins with ring bonds?
+if so it has multiple protofilaments and is not just an oligomer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulin_has_sites">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">tubulin_has_sites</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.tubulin_has_sites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulin_has_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>does the tubulin have sites attached?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulin_is_crosslinked">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">tubulin_is_crosslinked</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.tubulin_is_crosslinked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulin_is_crosslinked" title="Permalink to this definition">¶</a></dt>
+<dd><p>is the tubulin connected to a neighbor on each ring side?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulin_is_not_crosslinked">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">tubulin_is_not_crosslinked</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tubulin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.tubulin_is_not_crosslinked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulin_is_not_crosslinked" title="Permalink to this definition">¶</a></dt>
+<dd><p>is the tubulin missing at least one ring side connection?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulins_can_attach">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">tubulins_can_attach</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tubulin_types</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.tubulins_can_attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.tubulins_can_attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if tubulins can attach laterally</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="simularium_models_util.microtubules.microtubules_util.set_parameters">
+<code class="sig-prename descclassname"><span class="pre">simularium_models_util.microtubules.microtubules_util.</span></code><code class="sig-name descname"><span class="pre">set_parameters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#set_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.set_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-simularium_models_util.microtubules">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simularium_models_util.microtubules" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

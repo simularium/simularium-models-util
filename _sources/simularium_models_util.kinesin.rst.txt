@@ -1,0 +1,29 @@
+simularium\_models\_util.kinesin package
+========================================
+
+Submodules
+----------
+
+simularium\_models\_util.kinesin.kinesin\_simulation module
+-----------------------------------------------------------
+
+.. automodule:: simularium_models_util.kinesin.kinesin_simulation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+simularium\_models\_util.kinesin.kinesin\_util module
+-----------------------------------------------------
+
+.. automodule:: simularium_models_util.kinesin.kinesin_util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: simularium_models_util.kinesin
+   :members:
+   :undoc-members:
+   :show-inheritance:

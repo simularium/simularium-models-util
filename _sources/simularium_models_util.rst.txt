@@ -1,0 +1,22 @@
+simularium\_models\_util package
+================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   simularium_models_util.actin
+   simularium_models_util.common
+   simularium_models_util.kinesin
+   simularium_models_util.microtubules
+   simularium_models_util.visualization
+
+Module contents
+---------------
+
+.. automodule:: simularium_models_util
+   :members:
+   :undoc-members:
+   :show-inheritance:

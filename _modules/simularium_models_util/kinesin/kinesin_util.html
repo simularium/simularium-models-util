@@ -1,0 +1,723 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.kinesin.kinesin_util &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.kinesin.kinesin_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.kinesin.kinesin_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">readdy</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+<span class="kn">from</span> <span class="nn">..microtubules.microtubules_util</span> <span class="kn">import</span> <span class="n">MicrotubulesUtil</span>
+
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="set_parameters"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.set_parameters">[docs]</a><span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">parameters</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">p</span>
+    <span class="k">return</span> <span class="n">p</span></div>
+
+
+<div class="viewcode-block" id="KinesinUtil"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil">[docs]</a><span class="k">class</span> <span class="nc">KinesinUtil</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Utility functions for ReaDDy kinesin models</span>
+
+<span class="sd">        Parameters need to be accessible in ReaDDy callbacks</span>
+<span class="sd">        which can&#39;t be instance methods, so parameters are global</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">set_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KinesinUtil.add_kinesin"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_kinesin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_kinesin</span><span class="p">(</span><span class="n">position_offset</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add a kinesin to the simulation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span>
+                <span class="c1"># [0., 30., 0.]</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;hips&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;motor#ADP&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;motor#ADP&quot;</span><span class="p">,</span>
+            <span class="c1"># &quot;cargo&quot;</span>
+        <span class="p">]</span>
+        <span class="n">kinesin</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span><span class="s2">&quot;Kinesin&quot;</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">kinesin</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.set_kinesin_state"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.set_kinesin_state">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">set_kinesin_state</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">from_motor_state</span><span class="p">,</span> <span class="n">to_motor_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        change the state of a motor and update the kinesin state to match</span>
+<span class="sd">            for a dictionary of types and radii [nm]</span>
+
+<span class="sd">            returns dictionary mapping all types to radii</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;motor&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Failed to find 2 motors, found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">motors</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">motor_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">motors</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+            <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">motors</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">]</span>
+        <span class="n">other_state</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">motors_in_from_state</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">from_motor_state</span> <span class="ow">in</span> <span class="n">motor_types</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">motors_in_from_state</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">motors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">other_state</span> <span class="o">=</span> <span class="n">motor_types</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">motor_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors_in_from_state</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find a motor in state </span><span class="si">{</span><span class="n">from_motor_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors_in_from_state</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">motor_to_set</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">motors_in_from_state</span><span class="p">)</span>
+            <span class="n">other_state</span> <span class="o">=</span> <span class="n">from_motor_state</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">motor_to_set</span> <span class="o">=</span> <span class="n">motors_in_from_state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">motor_to_set</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;motor#</span><span class="si">{</span><span class="n">to_motor_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;ADP&quot;</span> <span class="ow">in</span> <span class="n">to_motor_state</span> <span class="ow">and</span> <span class="s2">&quot;ADP&quot;</span> <span class="ow">in</span> <span class="n">other_state</span><span class="p">:</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#Releasing&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_states</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_motor_state</span><span class="p">,</span> <span class="n">other_state</span><span class="p">]</span>
+            <span class="n">new_states</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{</span><span class="n">new_states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">new_states</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">motor_to_set</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.reaction_function_motor_bind_tubulin"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.reaction_function_motor_bind_tubulin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reaction_function_motor_bind_tubulin</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        bind a kinesin motor in ADP state to a free tubulinB</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bind tubulin&quot;</span><span class="p">)</span>
+        <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">motor</span> <span class="o">=</span> <span class="n">KinesinUtil</span><span class="o">.</span><span class="n">set_kinesin_state</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="s2">&quot;new&quot;</span><span class="p">,</span> <span class="s2">&quot;apo&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">motor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to find new motor</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">tubulin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="s2">&quot;tubulinB#bound&quot;</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">tubulin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to find bound tubulin</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> ++ </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">tubulin_pos</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">)</span>
+        <span class="c1"># TODO calculate position offset from tubulin neighbors</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_position</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="n">tubulin_pos</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">recipe</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.reaction_function_motor_bind_ATP"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.reaction_function_motor_bind_ATP">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reaction_function_motor_bind_ATP</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set bound apo motor&#39;s state to ATP (and implicitly simulate ATP binding)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bind ATP&quot;</span><span class="p">)</span>
+        <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">motor</span> <span class="o">=</span> <span class="n">KinesinUtil</span><span class="o">.</span><span class="n">set_kinesin_state</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="s2">&quot;apo&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">motor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to find motor in apo state</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">recipe</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.reaction_function_motor_release_tubulin"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.reaction_function_motor_release_tubulin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reaction_function_motor_release_tubulin</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        release a bound motor from tubulin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Release tubulin&quot;</span><span class="p">)</span>
+        <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">motor</span> <span class="o">=</span> <span class="n">KinesinUtil</span><span class="o">.</span><span class="n">set_kinesin_state</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="s2">&quot;ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;ADP&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">motor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to find motor in ATP state</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">tubulin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="s2">&quot;tubulinB#bound&quot;</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">tubulin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to find bound tubulin</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot; -X- &quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="c1"># ReaddyUtil.set_flags(topology, recipe, tubulin, [], [&quot;bound&quot;]) # TODO fix bug</span>
+        <span class="c1"># workaround</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">tubulin</span><span class="p">)</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">tubulin</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;tubulinB#</span><span class="si">{</span><span class="n">pt</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">removed</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">try_remove_edge</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">removed</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">recipe</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.reaction_function_cleanup_release_tubulin"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.reaction_function_cleanup_release_tubulin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reaction_function_cleanup_release_tubulin</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        cleanup after releasing a bound motor from tubulin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">motors</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;motor&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">motors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Kinesin&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Microtubule&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cleaned up release tubulin&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">recipe</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.rate_function_motor_bind_ATP"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.rate_function_motor_bind_ATP">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rate_function_motor_bind_ATP</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        rate function for a motor binding ATP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;motor_bind_ATP_rate&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.rate_function_motor_release_tubulin"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.rate_function_motor_release_tubulin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rate_function_motor_release_tubulin</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        rate function for a bound motor releasing from tubulin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;motor_release_tubulin_rate&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_kinesin_bonds_and_repulsions"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_kinesin_bonds_and_repulsions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_kinesin_bonds_and_repulsions</span><span class="p">(</span><span class="n">motor_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add bonds between tubulins</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">necklinker_force_constant</span> <span class="o">=</span> <span class="mf">0.002</span> <span class="o">*</span> <span class="n">force_constant</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">([</span><span class="s2">&quot;hips&quot;</span><span class="p">],</span> <span class="n">motor_types</span><span class="p">,</span> <span class="n">necklinker_force_constant</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">([</span><span class="s2">&quot;hips&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;cargo&quot;</span><span class="p">],</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span><span class="n">motor_types</span><span class="p">,</span> <span class="n">motor_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">([</span><span class="s2">&quot;hips&quot;</span><span class="p">],</span> <span class="n">motor_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">([</span><span class="s2">&quot;hips&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;cargo&quot;</span><span class="p">],</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_tubulin_bonds_and_repulsions"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_tubulin_bonds_and_repulsions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_tubulin_bonds_and_repulsions</span><span class="p">(</span><span class="n">tubulin_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add bonds between tubulins</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_bond_2D</span><span class="p">(</span>  <span class="c1"># bonds between protofilaments</span>
+            <span class="n">tubulin_types</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tubulin_types</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">,</span> <span class="n">system</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_bond_2D</span><span class="p">(</span>  <span class="c1"># bonds between rings</span>
+            <span class="n">tubulin_types</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tubulin_types</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">system</span>
+        <span class="p">)</span>
+        <span class="n">all_tubulin_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tubulin_types</span><span class="p">)):</span>
+            <span class="n">all_tubulin_types</span> <span class="o">+=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_all_polymer_tubulin_types</span><span class="p">(</span>
+                <span class="n">tubulin_types</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">all_tubulin_types</span><span class="p">,</span> <span class="n">all_tubulin_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">system</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_kinesin_angles_and_dihedrals"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_kinesin_angles_and_dihedrals">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_kinesin_angles_and_dihedrals</span><span class="p">(</span><span class="n">tubulin_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add kinesin angles</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># angles from tubulins to bound motor</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;tubulinB#bound_&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;motor#apo&quot;</span><span class="p">,</span> <span class="s2">&quot;motor#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;motor#ADP&quot;</span><span class="p">],</span>
+            <span class="p">[],</span>
+            <span class="mf">1e32</span><span class="p">,</span>
+            <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span></div>
+        <span class="c1"># util.add_polymer_angle_2D(</span>
+        <span class="c1">#     tubulin_types, [1, 0],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#apo&quot;, &quot;motor#ATP&quot;, &quot;motor#ADP&quot;], [],</span>
+        <span class="c1">#     1e32, np.pi / 2., system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># util.add_polymer_angle_2D(</span>
+        <span class="c1">#     tubulin_types, [0, -1],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#apo&quot;, &quot;motor#ATP&quot;, &quot;motor#ADP&quot;], [],</span>
+        <span class="c1">#     1e32, 1.84, system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># util.add_polymer_angle_2D(</span>
+        <span class="c1">#     tubulin_types, [0, 1],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#apo&quot;, &quot;motor#ATP&quot;, &quot;motor#ADP&quot;], [],</span>
+        <span class="c1">#     1e32, 1.54, system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># # angle from bound tubulin to hips</span>
+        <span class="c1"># util.add_polymer_angle_2D(</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;], [],</span>
+        <span class="c1">#     [&quot;hips&quot;], [],</span>
+        <span class="c1">#     0.5 * force_constant, np.pi * 5./9., system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># # angle from bound motor to free motor through hips</span>
+        <span class="c1"># util.add_angle(</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;],</span>
+        <span class="c1">#     [&quot;hips&quot;],</span>
+        <span class="c1">#     [&quot;motor#ADP&quot;],</span>
+        <span class="c1">#     0.1 * force_constant, np.pi * 8./9., system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># # dihedrals from tubulins to hips</span>
+        <span class="c1"># util.add_polymer_dihedral_2D(</span>
+        <span class="c1">#     tubulin_types, [-1, 0],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;], [],</span>
+        <span class="c1">#     [&quot;hips&quot;], [],</span>
+        <span class="c1">#     1.5 * force_constant, np.pi * 17./18., system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># util.add_polymer_dihedral_2D(</span>
+        <span class="c1">#     tubulin_types, [1, 0],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;], [],</span>
+        <span class="c1">#     [&quot;hips&quot;], [],</span>
+        <span class="c1">#     1.5 * force_constant, np.pi / 18., system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># util.add_polymer_dihedral_2D(</span>
+        <span class="c1">#     tubulin_types, [0, -1],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;], [],</span>
+        <span class="c1">#     [&quot;hips&quot;], [],</span>
+        <span class="c1">#     1.5 * force_constant, 1.79, system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># util.add_polymer_dihedral_2D(</span>
+        <span class="c1">#     tubulin_types, [0, 1],</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;], [],</span>
+        <span class="c1">#     [&quot;hips&quot;], [],</span>
+        <span class="c1">#     1.5 * force_constant, 1.44, system</span>
+        <span class="c1"># )</span>
+        <span class="c1"># # dihedral from bound tubulin to free motor</span>
+        <span class="c1"># util.add_polymer_dihedral_2D(</span>
+        <span class="c1">#     [&quot;tubulinB#bound_&quot;], [0, 0],</span>
+        <span class="c1">#     [&quot;motor#ATP&quot;], [],</span>
+        <span class="c1">#     [&quot;hips&quot;], [],</span>
+        <span class="c1">#     [&quot;motor#ADP&quot;], [],</span>
+        <span class="c1">#     0.5 * force_constant, np.pi * 4./9., system</span>
+        <span class="c1"># )</span>
+
+<div class="viewcode-block" id="KinesinUtil.add_angles_between_tubulins"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_angles_between_tubulins">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_angles_between_tubulins</span><span class="p">(</span><span class="n">tubulin_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add angles between tubulins</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">1.75</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">1.40</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">1.40</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">1.75</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_2D</span><span class="p">(</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">2.67</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_motor_tubulin_interactions"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_motor_tubulin_interactions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_motor_tubulin_interactions</span><span class="p">(</span>
+        <span class="n">motor_types</span><span class="p">,</span> <span class="n">bound_tubulin_types</span><span class="p">,</span> <span class="n">tubulin_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add repulsions between motors and tubulins</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bound_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">bound_tubulin_types</span><span class="p">:</span>
+            <span class="n">bound_types</span> <span class="o">+=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_all_polymer_tubulin_types</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">all_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tubulin_types</span><span class="p">:</span>
+            <span class="n">all_types</span> <span class="o">+=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_all_polymer_tubulin_types</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span><span class="n">motor_types</span><span class="p">,</span> <span class="n">bound_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span><span class="n">motor_types</span><span class="p">,</span> <span class="n">all_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">system</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_motor_bind_tubulin_reaction"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_motor_bind_tubulin_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_motor_bind_tubulin_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">reaction_distance</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        bind a kinesin motor in ADP state to a free tubulinB</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># spatial reactions</span>
+        <span class="n">polymer_numbers</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_all_polymer_tubulin_types</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="c1"># kinesin_states = [&quot;ADP-apo&quot;, &quot;ADP-ATP&quot;]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">polymer_numbers</span><span class="p">:</span>
+            <span class="c1"># first motor binding</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+                <span class="s2">&quot;Bind_Tubulin#ADP-ADP</span><span class="si">{}</span><span class="s2">: Kinesin(motor#ADP) + Microtubule(tubulinB#</span><span class="si">{}</span><span class="s2">) -&gt; </span><span class="se">\</span>
+<span class="s2">                Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span>
+                <span class="p">),</span>
+                <span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="mf">4.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># # second motor binding</span>
+            <span class="c1"># for s in kinesin_states:</span>
+            <span class="c1">#     system.topologies.add_spatial_reaction(</span>
+            <span class="c1">#         &quot;Bind_Tubulin#{}{}: {}&quot;.format(s, i,</span>
+            <span class="c1">#         &quot;Microtubule-Kinesin#{}(motor#ADP) + {}&quot;.format(s,</span>
+            <span class="c1">#         &quot;Microtubule-Kinesin#{}(tubulinB#{}) -&gt; {}&quot;.format(s, n,</span>
+            <span class="c1">#         &quot;Microtubule-Kinesin#Binding(motor#new--{}&quot;.format(</span>
+            <span class="c1">#         &quot;tubulinB#bound_{}) [self=true]&quot;.format(n))))),</span>
+            <span class="c1">#         rate=rate, radius=4.+reaction_distance</span>
+            <span class="c1">#     )</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># structural reaction</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Finish_Bind_Tubulin&quot;</span><span class="p">,</span>
+            <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Microtubule-Kinesin#Binding&quot;</span><span class="p">,</span>
+            <span class="n">reaction_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">reaction_function_motor_bind_tubulin</span><span class="p">,</span>
+            <span class="n">rate_function</span><span class="o">=</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rate_function_infinity</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_motor_bind_ATP_reaction"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_motor_bind_ATP_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_motor_bind_ATP_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set bound apo motor&#39;s state to ATP (and implicitly simulate ATP binding)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kinesin_states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ADP-apo&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP-apo&quot;</span><span class="p">,</span> <span class="s2">&quot;apo-apo&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">kinesin_states</span><span class="p">:</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
+                <span class="s2">&quot;Bind_ATP#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="n">reaction_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">reaction_function_motor_bind_ATP</span><span class="p">,</span>
+                <span class="n">rate_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">rate_function_motor_bind_ATP</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinUtil.add_motor_release_tubulin_reaction"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_util.KinesinUtil.add_motor_release_tubulin_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_motor_release_tubulin_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        release a bound motor from tubulin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kinesin_states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ADP-ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP-ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP-apo&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">kinesin_states</span><span class="p">:</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
+                <span class="s2">&quot;Release_Tubulin#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="n">reaction_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">reaction_function_motor_release_tubulin</span><span class="p">,</span>
+                <span class="n">rate_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">rate_function_motor_release_tubulin</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Cleanup_Release_Tubulin&quot;</span><span class="p">,</span>
+            <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Microtubule-Kinesin#Releasing&quot;</span><span class="p">,</span>
+            <span class="n">reaction_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">reaction_function_cleanup_release_tubulin</span><span class="p">,</span>
+            <span class="n">rate_function</span><span class="o">=</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rate_function_infinity</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

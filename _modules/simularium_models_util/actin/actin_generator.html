@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.actin.actin_generator &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.actin.actin_generator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.actin.actin_generator</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+<span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span>
+
+
+<div class="viewcode-block" id="ActinGenerator"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator">[docs]</a><span class="k">class</span> <span class="nc">ActinGenerator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates positions, types, and edges for monomers in actin networks</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ActinGenerator.get_actin_number"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_actin_number">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the type number for an actin plus the given offset in range [-1, 1]</span>
+<span class="sd">        (i.e. return 3 for type = &quot;actin#ATP_1&quot; and offset = -1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Offset for actin number is not in [-1, 1]&quot;</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">actin_number</span> <span class="o">+</span> <span class="n">offset</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">-=</span> <span class="mi">3</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">3</span>
+        <span class="k">return</span> <span class="n">n</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.check_shift_branch_actin_numbers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.check_shift_branch_actin_numbers">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_shift_branch_actin_numbers</span><span class="p">(</span><span class="n">type_names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if the first actin&#39;s number is not 2,</span>
+<span class="sd">        shift the branch&#39;s actin numbers so that it is</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;2&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">type_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">type_names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">type_names</span><span class="p">)):</span>
+                <span class="n">new_n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">offset</span>
+                <span class="k">if</span> <span class="n">new_n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">new_n</span> <span class="o">-=</span> <span class="mi">3</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_names</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}{</span><span class="n">new_n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">type_names</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.get_actins_for_linear_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_actins_for_linear_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_actins_for_linear_fiber</span><span class="p">(</span>
+        <span class="n">fiber</span><span class="p">,</span>
+        <span class="n">start_normal</span><span class="p">,</span>
+        <span class="n">start_axis_pos</span><span class="p">,</span>
+        <span class="n">direction</span><span class="p">,</span>
+        <span class="n">offset_vector</span><span class="p">,</span>
+        <span class="n">pointed_actin_number</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get actin monomer data pointed to barbed for a fiber with no daughter branches</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">start_normal</span><span class="p">)</span>
+        <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">start_axis_pos</span><span class="p">))</span>
+        <span class="n">monomer_positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">monomer_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">monomer_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># get actin positions</span>
+        <span class="n">fiber_points</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">reversed_points</span><span class="p">()</span> <span class="k">if</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">fiber</span><span class="o">.</span><span class="n">points</span>
+        <span class="n">start_index</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_index_of_curve_start_point</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">,</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">actin_offset_from_axis</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_distance_from_axis</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">while</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_pos</span> <span class="o">-</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+                <span class="o">&gt;=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_distance</span>
+            <span class="p">):</span>
+                <span class="n">axis_pos</span> <span class="o">+=</span> <span class="p">(</span>
+                    <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_distance</span>
+                    <span class="o">*</span> <span class="n">direction</span>
+                    <span class="o">*</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tangent</span>
+                <span class="p">)</span>
+                <span class="n">normal</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span>
+                    <span class="n">normal</span><span class="p">,</span>
+                    <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tangent</span><span class="p">,</span>
+                    <span class="n">direction</span> <span class="o">*</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_angle</span><span class="p">(),</span>
+                <span class="p">)</span>
+                <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">axis_pos</span> <span class="o">+</span> <span class="n">actin_offset_from_axis</span> <span class="o">*</span> <span class="n">normal</span> <span class="o">+</span> <span class="n">offset_vector</span>
+                <span class="p">)</span>
+        <span class="c1"># get actin types and edges</span>
+        <span class="n">actin_number</span> <span class="o">=</span> <span class="n">pointed_actin_number</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)):</span>
+            <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">actin_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">monomer_types</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span><span class="p">,</span> <span class="n">actin_number</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.add_bound_arp_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.add_bound_arp_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_bound_arp_monomers</span><span class="p">(</span>
+        <span class="n">monomer_positions</span><span class="p">,</span>
+        <span class="n">monomer_types</span><span class="p">,</span>
+        <span class="n">monomer_edges</span><span class="p">,</span>
+        <span class="n">fiber</span><span class="p">,</span>
+        <span class="n">arp</span><span class="p">,</span>
+        <span class="n">mother_barbed_index</span><span class="p">,</span>
+        <span class="n">branch_indices</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add positions, types, and edges for a bound arp2 and arp3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">closest_actin_index</span> <span class="o">=</span> <span class="n">arp</span><span class="o">.</span><span class="n">get_closest_actin_index</span><span class="p">(</span>
+            <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">branch_indices</span><span class="p">,</span> <span class="n">mother_barbed_index</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">closest_actin_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span>
+        <span class="c1"># positions</span>
+        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">arp</span><span class="o">.</span><span class="n">get_bound_monomer_position</span><span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">],</span> <span class="n">fiber</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">arp</span><span class="o">.</span><span class="n">get_bound_monomer_position</span><span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">],</span> <span class="n">fiber</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># types</span>
+        <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;arp2&quot;</span><span class="p">)</span>
+        <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">)</span>
+        <span class="c1"># edges</span>
+        <span class="n">arp2_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
+        <span class="n">arp3_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">closest_actin_index</span><span class="p">,</span> <span class="n">arp2_index</span><span class="p">))</span>
+        <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">closest_actin_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">arp3_index</span><span class="p">))</span>
+        <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">arp2_index</span><span class="p">,</span> <span class="n">arp3_index</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.get_nucleated_arp_monomer_positions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_nucleated_arp_monomer_positions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_nucleated_arp_monomer_positions</span><span class="p">(</span><span class="n">mother_fiber</span><span class="p">,</span> <span class="n">nucleated_arp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get actin positions pointed to barbed for a branch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get ideal monomer positions near the arp</span>
+        <span class="n">monomer_positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">arp_mother_pos</span> <span class="o">=</span> <span class="n">mother_fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">nucleated_arp</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">v_mother</span> <span class="o">=</span> <span class="n">mother_fiber</span><span class="o">.</span><span class="n">get_nearest_segment_direction</span><span class="p">(</span><span class="n">nucleated_arp</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">v_daughter</span> <span class="o">=</span> <span class="n">nucleated_arp</span><span class="o">.</span><span class="n">daughter_fiber</span><span class="o">.</span><span class="n">get_nearest_segment_direction</span><span class="p">(</span>
+            <span class="n">nucleated_arp</span><span class="o">.</span><span class="n">position</span>
+        <span class="p">)</span>
+        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">arp_mother_pos</span>
+            <span class="o">+</span> <span class="n">nucleated_arp</span><span class="o">.</span><span class="n">get_local_nucleated_monomer_position</span><span class="p">(</span>
+                <span class="n">v_mother</span><span class="p">,</span> <span class="n">v_daughter</span><span class="p">,</span> <span class="s2">&quot;actin_arp2&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">arp_mother_pos</span>
+            <span class="o">+</span> <span class="n">nucleated_arp</span><span class="o">.</span><span class="n">get_local_nucleated_monomer_position</span><span class="p">(</span>
+                <span class="n">v_mother</span><span class="p">,</span> <span class="n">v_daughter</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">arp_mother_pos</span>
+            <span class="o">+</span> <span class="n">nucleated_arp</span><span class="o">.</span><span class="n">get_local_nucleated_monomer_position</span><span class="p">(</span>
+                <span class="n">v_mother</span><span class="p">,</span> <span class="n">v_daughter</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">arp_mother_pos</span>
+            <span class="o">+</span> <span class="n">nucleated_arp</span><span class="o">.</span><span class="n">get_local_nucleated_monomer_position</span><span class="p">(</span>
+                <span class="n">v_mother</span><span class="p">,</span> <span class="n">v_daughter</span><span class="p">,</span> <span class="s2">&quot;actin1&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># # rotate them to match the actual branch angle</span>
+        <span class="c1"># branch_angle = ReaddyUtil.get_angle_between_vectors(v_mother, v_daughter)</span>
+        <span class="c1"># branch_normal = ReaddyUtil.normalize(monomer_positions[0] - arp_mother_pos)</span>
+        <span class="c1"># for i in range(1,len(monomer_positions)):</span>
+        <span class="c1">#     monomer_positions[i] = Arp.rotate_position_to_match_branch_angle(</span>
+        <span class="c1">#         monomer_positions[i], branch_angle, arp_mother_pos, branch_normal)</span>
+        <span class="c1"># # translate them 2nm since the mother and daughter axes don&#39;t intersect</span>
+        <span class="c1"># v_branch_shift = ActinStructure.branch_shift() * ReaddyUtil.normalize(</span>
+        <span class="c1">#     monomer_positions[0] - arp_mother_pos)</span>
+        <span class="c1"># for i in range(len(monomer_positions)):</span>
+        <span class="c1">#     monomer_positions[i] = monomer_positions[i] + v_branch_shift</span>
+        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.get_monomers_for_branching_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_branching_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_monomers_for_branching_fiber</span><span class="p">(</span>
+        <span class="n">monomer_positions</span><span class="p">,</span>
+        <span class="n">monomer_types</span><span class="p">,</span>
+        <span class="n">monomer_edges</span><span class="p">,</span>
+        <span class="n">fiber</span><span class="p">,</span>
+        <span class="n">offset_vector</span><span class="p">,</span>
+        <span class="n">pointed_actin_number</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        recursively get all the monomer data for the given branching fiber</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">daughter_positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">daughter_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">daughter_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">current_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">branch_indices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">actin_number</span> <span class="o">=</span> <span class="n">pointed_actin_number</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">nucleated_arps</span><span class="p">)):</span>
+            <span class="n">arp</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">nucleated_arps</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+            <span class="c1"># add arp2, arp3, and daughter actin bound to arp3</span>
+            <span class="p">(</span>
+                <span class="n">fork_positions</span><span class="p">,</span>
+                <span class="n">v_branch_shift</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_nucleated_arp_monomer_positions</span><span class="p">(</span><span class="n">fiber</span><span class="p">,</span> <span class="n">arp</span><span class="p">)</span>
+            <span class="n">daughter_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">daughter_types</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">])</span>
+            <span class="n">daughter_edges</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+            <span class="c1"># add the rest of the daughter monomers on this branch</span>
+            <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">arp</span><span class="o">.</span><span class="n">daughter_fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="p">(</span>
+                <span class="n">branch_positions</span><span class="p">,</span>
+                <span class="n">branch_types</span><span class="p">,</span>
+                <span class="n">branch_edges</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_fiber</span><span class="p">(</span>
+                <span class="n">arp</span><span class="o">.</span><span class="n">daughter_fiber</span><span class="p">,</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">axis_pos</span><span class="p">),</span>
+                <span class="n">axis_pos</span><span class="p">,</span>
+                <span class="n">offset_vector</span> <span class="o">+</span> <span class="n">v_branch_shift</span><span class="p">,</span>
+                <span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">daughter_positions</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">branch_positions</span>
+            <span class="n">daughter_types</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">branch_types</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">branch_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">daughter_edges</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">branch_edges</span><span class="p">:</span>
+                    <span class="n">daughter_edges</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="c1"># get mother monomer positions toward pointed end</span>
+            <span class="n">actin_arp2_axis_pos</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">actin_arp2_normal</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+                <span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">actin_arp2_axis_pos</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># if this is the first nucleated arp</span>
+                <span class="c1"># get the rest of the fiber</span>
+                <span class="p">(</span>
+                    <span class="n">pointed_positions</span><span class="p">,</span>
+                    <span class="n">pointed_types</span><span class="p">,</span>
+                    <span class="n">pointed_edges</span><span class="p">,</span>
+                    <span class="n">actin_number</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
+                    <span class="n">fiber</span><span class="p">,</span>
+                    <span class="n">actin_arp2_normal</span><span class="p">,</span>
+                    <span class="n">actin_arp2_axis_pos</span><span class="p">,</span>
+                    <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">offset_vector</span><span class="p">,</span>
+                    <span class="n">actin_number</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">pointed_positions</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+                <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">pointed_positions</span>
+                <span class="n">pointed_types</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+                <span class="c1"># if fiber.mother_arp is not None:</span>
+                <span class="c1">#     pointed_types = ActinGenerator.check_shift_branch_actin_numbers(</span>
+                <span class="c1">#         pointed_types)</span>
+                <span class="c1">#     actin_number = int(pointed_types[len(pointed_types) - 1][-1]) + 1</span>
+                <span class="n">pointed_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#branch_ATP_</span><span class="si">{</span><span class="n">pointed_types</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">pointed_types</span>
+                <span class="n">monomer_edges</span> <span class="o">+=</span> <span class="n">pointed_edges</span>
+                <span class="n">current_index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pointed_positions</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pointed_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">current_index</span><span class="p">))</span>
+            <span class="c1"># add the actin monomer attached to the branch&#39;s arp2</span>
+            <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">actin_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">branch_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_index</span><span class="p">)</span>
+            <span class="c1"># get monomers pointed to barbed until next arp</span>
+            <span class="p">(</span>
+                <span class="n">barbed_positions</span><span class="p">,</span>
+                <span class="n">barbed_types</span><span class="p">,</span>
+                <span class="n">barbed_edges</span><span class="p">,</span>
+                <span class="n">actin_number</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
+                <span class="n">fiber</span><span class="p">,</span>
+                <span class="n">actin_arp2_normal</span><span class="p">,</span>
+                <span class="n">actin_arp2_axis_pos</span><span class="p">,</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="n">offset_vector</span><span class="p">,</span>
+                <span class="n">actin_number</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">barbed_positions</span>
+            <span class="n">barbed_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">barbed_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">barbed_types</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barbed_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_index</span><span class="p">,</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">barbed_edges</span><span class="p">)):</span>
+                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span>
+                        <span class="n">barbed_edges</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">,</span>
+                        <span class="n">barbed_edges</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">current_index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">barbed_positions</span><span class="p">)</span>
+        <span class="n">mother_barbed_index</span> <span class="o">=</span> <span class="n">current_index</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">daughter_positions</span><span class="p">)):</span>
+            <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">daughter_positions</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+            <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">daughter_types</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+            <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">branch_indices</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">current_index</span><span class="p">)</span>
+            <span class="p">)</span>  <span class="c1"># mother actin to arp2</span>
+            <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">branch_indices</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>  <span class="c1"># mother actin to arp3</span>
+            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">daughter_edges</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span>
+                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">))</span>
+            <span class="n">current_index</span> <span class="o">+=</span> <span class="n">branch_indices</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">)):</span>
+            <span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">,</span>
+                <span class="n">monomer_types</span><span class="p">,</span>
+                <span class="n">monomer_edges</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">add_bound_arp_monomers</span><span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">,</span>
+                <span class="n">monomer_types</span><span class="p">,</span>
+                <span class="n">monomer_edges</span><span class="p">,</span>
+                <span class="n">fiber</span><span class="p">,</span>
+                <span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">[</span><span class="n">a</span><span class="p">],</span>
+                <span class="n">mother_barbed_index</span><span class="p">,</span>
+                <span class="n">branch_indices</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.get_monomers_for_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_monomers_for_fiber</span><span class="p">(</span>
+        <span class="n">fiber</span><span class="p">,</span> <span class="n">start_normal</span><span class="p">,</span> <span class="n">start_axis_pos</span><span class="p">,</span> <span class="n">offset_vector</span><span class="p">,</span> <span class="n">pointed_actin_number</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        recursively get all the monomer data for the given fiber network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">monomer_positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">monomer_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">monomer_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">actin_number</span> <span class="o">=</span> <span class="n">pointed_actin_number</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">nucleated_arps</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># fiber has no branches</span>
+            <span class="p">(</span>
+                <span class="n">new_positions</span><span class="p">,</span>
+                <span class="n">new_types</span><span class="p">,</span>
+                <span class="n">new_edges</span><span class="p">,</span>
+                <span class="n">b</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
+                <span class="n">fiber</span><span class="p">,</span> <span class="n">start_normal</span><span class="p">,</span> <span class="n">start_axis_pos</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">offset_vector</span><span class="p">,</span> <span class="n">actin_number</span>
+            <span class="p">)</span>
+            <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">new_positions</span>
+            <span class="c1"># if fiber.mother_arp is not None:</span>
+            <span class="c1">#     new_types = ActinGenerator.check_shift_branch_actin_numbers(new_types)</span>
+            <span class="n">new_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">new_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">new_types</span>
+            <span class="n">monomer_edges</span> <span class="o">+=</span> <span class="n">new_edges</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">)):</span>
+                <span class="p">(</span>
+                    <span class="n">monomer_positions</span><span class="p">,</span>
+                    <span class="n">monomer_types</span><span class="p">,</span>
+                    <span class="n">monomer_edges</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">add_bound_arp_monomers</span><span class="p">(</span>
+                    <span class="n">monomer_positions</span><span class="p">,</span>
+                    <span class="n">monomer_types</span><span class="p">,</span>
+                    <span class="n">monomer_edges</span><span class="p">,</span>
+                    <span class="n">fiber</span><span class="p">,</span>
+                    <span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">[</span><span class="n">a</span><span class="p">],</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="p">[],</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># fiber has branches</span>
+            <span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">,</span>
+                <span class="n">monomer_types</span><span class="p">,</span>
+                <span class="n">monomer_edges</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_branching_fiber</span><span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">,</span>
+                <span class="n">monomer_types</span><span class="p">,</span>
+                <span class="n">monomer_edges</span><span class="p">,</span>
+                <span class="n">fiber</span><span class="p">,</span>
+                <span class="n">offset_vector</span><span class="p">,</span>
+                <span class="n">actin_number</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.get_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get all the monomer data for the (branched) fibers in fibers_data</span>
+
+<span class="sd">        fibers_data: List[FiberData]</span>
+<span class="sd">        (FiberData for mother fibers only, which should have</span>
+<span class="sd">        their daughters&#39; FiberData attached to their nucleated arps)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">fiber_data</span> <span class="ow">in</span> <span class="n">fibers_data</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">monomer_positions</span><span class="p">,</span>
+                <span class="n">monomer_types</span><span class="p">,</span>
+                <span class="n">edges</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_fiber</span><span class="p">(</span>
+                <span class="n">fiber_data</span><span class="p">,</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_perpendicular_vector</span><span class="p">(</span>
+                    <span class="n">fiber_data</span><span class="o">.</span><span class="n">get_first_segment_direction</span><span class="p">()</span>
+                <span class="p">),</span>
+                <span class="n">fiber_data</span><span class="o">.</span><span class="n">pointed_point</span><span class="p">()</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+                <span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">monomer_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#pointed_ATP_</span><span class="si">{</span><span class="n">monomer_types</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">monomer_types</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">),</span> <span class="n">edges</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

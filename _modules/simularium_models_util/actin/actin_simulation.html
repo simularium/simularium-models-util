@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.actin.actin_simulation &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.actin.actin_simulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.actin.actin_simulation</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">readdy</span>
+
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+<span class="kn">from</span> <span class="nn">.actin_util</span> <span class="kn">import</span> <span class="n">ActinUtil</span>
+
+
+<div class="viewcode-block" id="ActinSimulation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation">[docs]</a><span class="k">class</span> <span class="nc">ActinSimulation</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a ReaDDy branched actin simulation</span>
+
+<span class="sd">        Ref: http://jcb.rupress.org/content/jcb/180/5/887.full.pdf</span>
+
+<span class="sd">        Params = Dict[str, float]</span>
+<span class="sd">        keys:</span>
+<span class="sd">        total_steps, timestep, box_size, temperature_C, viscosity,</span>
+<span class="sd">        force_constant, reaction_distance, n_cpu, actin_concentration,</span>
+<span class="sd">        arp23_concentration, cap_concentration, seed_n_fibers, seed_fiber_length,</span>
+<span class="sd">        actin_radius, arp23_radius, cap_radius, dimerize_rate, dimerize_reverse_rate,</span>
+<span class="sd">        trimerize_rate, trimerize_reverse_rate, pointed_growth_ATP_rate,</span>
+<span class="sd">        pointed_growth_ADP_rate, pointed_shrink_ATP_rate,</span>
+<span class="sd">        pointed_shrink_ADP_rate, barbed_growth_ATP_rate,</span>
+<span class="sd">        barbed_growth_ADP_rate, nucleate_ATP_rate, nucleate_ADP_rate,</span>
+<span class="sd">        barbed_shrink_ATP_rate, barbed_shrink_ADP_rate, arp_bind_ATP_rate,</span>
+<span class="sd">        arp_bind_ADP_rate, arp_unbind_ATP_rate, arp_unbind_ADP_rate,</span>
+<span class="sd">        barbed_growth_branch_ATP_rate, barbed_growth_branch_ADP_rate,</span>
+<span class="sd">        debranching_ATP_rate, debranching_ADP_rate, cap_bind_rate,</span>
+<span class="sd">        cap_unbind_rate, hydrolysis_actin_rate, hydrolysis_arp_rate,</span>
+<span class="sd">        nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, verbose</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_actin_system</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">create_readdy_simulation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;n_cpu&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;total_steps&quot;</span><span class="p">],</span>
+            <span class="n">record</span><span class="p">,</span>
+            <span class="n">save_checkpoints</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ActinSimulation.create_actin_system"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.create_actin_system">[docs]</a>    <span class="k">def</span> <span class="nf">create_actin_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the ReaDDy system for actin</span>
+<span class="sd">        including particle types, constraints, and reactions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">ReactionDiffusionSystem</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_C&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">273.15</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_actin_types</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_actin_constraints</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_actin_reactions</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_actin_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_types">[docs]</a>    <span class="k">def</span> <span class="nf">add_actin_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add particle and topology types for actin particles</span>
+<span class="sd">        to the ReaDDy system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
+        <span class="n">viscosity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;viscosity&quot;</span><span class="p">]</span>
+        <span class="n">actin_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="n">arp23_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="n">cap_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_diffCoeff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">arp23_diffCoeff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">cap_diffCoeff</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_actin_constraints"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">add_actin_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add geometric constraints for connected actin particles,</span>
+<span class="sd">        including bonds, angles, and repulsions, to the ReaDDy system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">force_constant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">]</span>
+        <span class="n">util</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="p">()</span>
+        <span class="c1"># linear actin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_bonds_between_actins</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_filament_twist_angles</span><span class="p">(</span>
+            <span class="mi">10</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_filament_twist_dihedrals</span><span class="p">(</span>
+            <span class="mi">25</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+        <span class="p">)</span>
+        <span class="c1"># branch junction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_angles</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="c1"># capping protein</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="c1"># repulsions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_repulsions</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_actin_reactions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">add_actin_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add reactions to the ReaDDy system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actin_radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">]</span>
+        <span class="n">reaction_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reaction_distance&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_dimerize_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;dimerize_rate&quot;</span><span class="p">],</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_dimerize_reverse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;trimerize_rate&quot;</span><span class="p">],</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reverse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nucleate_ATP_rate&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nucleate_ADP_rate&quot;</span><span class="p">],</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_growth_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;pointed_growth_ATP_rate&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;pointed_growth_ADP_rate&quot;</span><span class="p">],</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_shrink_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_barbed_growth_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_ATP_rate&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_ADP_rate&quot;</span><span class="p">],</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_barbed_shrink_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_hydrolyze_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_nucleotide_exchange_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_nucleotide_exchange_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_bind_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp_bind_ATP_rate&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp_bind_ADP_rate&quot;</span><span class="p">],</span>
+            <span class="n">actin_radius</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_branch_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_branch_ATP_rate&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_branch_ADP_rate&quot;</span><span class="p">],</span>
+            <span class="n">actin_radius</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_debranch_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bind_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_bind_rate&quot;</span><span class="p">],</span>
+            <span class="n">actin_radius</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_random_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">add_random_monomers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add randomly distributed actin monomers, Arp2/3 dimers,</span>
+<span class="sd">        and capping protein according to concentrations and box size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_monomers</span><span class="p">(</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_nParticles</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_concentration&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_dimers</span><span class="p">(</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_nParticles</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_concentration&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_capping_protein</span><span class="p">(</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_nParticles</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_concentration&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_random_linear_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_linear_fibers">[docs]</a>    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add randomly distributed and oriented linear fibers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_random_linear_fibers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;seed_n_fibers&quot;</span><span class="p">]),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;seed_fiber_length&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_fibers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_fibers_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add fibers specified in a list of FiberData</span>
+
+<span class="sd">        fiber_data: List[FiberData]</span>
+<span class="sd">        (FiberData for mother fibers only, which should have</span>
+<span class="sd">        their daughters&#39; FiberData attached to their nucleated arps)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

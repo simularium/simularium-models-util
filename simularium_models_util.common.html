@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.common package &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="simularium_models_util.kinesin package" href="simularium_models_util.kinesin.html" />
+    <link rel="prev" title="simularium_models_util.actin package" href="simularium_models_util.actin.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Package modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="simularium_models_util.html">simularium_models_util package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="simularium_models_util.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">simularium_models_util</a> &raquo;</li>
+        
+          <li><a href="simularium_models_util.html">simularium_models_util package</a> &raquo;</li>
+        
+      <li>simularium_models_util.common package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/simularium_models_util.common.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="simularium_models_util.kinesin.html" class="btn btn-neutral float-right" title="simularium_models_util.kinesin package" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="simularium_models_util.actin.html" class="btn btn-neutral float-left" title="simularium_models_util.actin package" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simularium-models-util-common-package">
+<h1>simularium_models_util.common package<a class="headerlink" href="#simularium-models-util-common-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simularium_models_util.common.readdy_util">
+<span id="simularium-models-util-common-readdy-util-module"></span><h2>simularium_models_util.common.readdy_util module<a class="headerlink" href="#module-simularium_models_util.common.readdy_util" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">simularium_models_util.common.readdy_util.</span></code><code class="sig-name descname"><span class="pre">ReaddyUtil</span></code><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Utilities used for Simularium ReaDDy models</p>
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_angle">
+<code class="sig-name descname"><span class="pre">add_angle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_angle" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds an angle to the system (if it hasn’t been added already)</dt><dd><p>from each type in types1
+through each type in types2
+to each type in types3
+with force constant force_const
+and angle [radians]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_bond">
+<code class="sig-name descname"><span class="pre">add_bond</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_bond" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a bond to the system (if it hasn’t been added already)</dt><dd><p>from each type in types1
+to each type in types2
+with force constant force_const
+and length bond_length [nm]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_dihedral">
+<code class="sig-name descname"><span class="pre">add_dihedral</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_dihedral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_dihedral" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a cosine dihedral to the system (if it hasn’t been added already)</dt><dd><p>from each type in types1
+through each type in types2
+through each type in types3
+to each type in types4
+with force constant force_const
+and angle [radians]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_angle_1D">
+<code class="sig-name descname"><span class="pre">add_polymer_angle_1D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_polymer_angle_1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_angle_1D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds an angle between all polymer numbers</dt><dd><p>with offset polymer_offset
+of types particle_types
+with force constant force_const
+and angle [radians]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_angle_2D">
+<code class="sig-name descname"><span class="pre">add_polymer_angle_2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_polymer_angle_2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_angle_2D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds an angle between all polymer numbers</dt><dd><p>with offsets polymer_offsets
+of types particle_types
+with force constant force_const
+and angle [radians]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_bond_1D">
+<code class="sig-name descname"><span class="pre">add_polymer_bond_1D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_polymer_bond_1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_bond_1D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a bond between all polymer numbers</dt><dd><p>from types particle_types1
+with offset polymer_offset1
+to types particle_types2
+with offset polymer_offset2
+with force constant force_const
+and length bond_length [nm]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_bond_2D">
+<code class="sig-name descname"><span class="pre">add_polymer_bond_2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_polymer_bond_2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_bond_2D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a bond between all polymer numbers</dt><dd><p>from types particle_types1
+with offsets polymer_offsets1
+to types particle_types2
+with offsets polymer_offsets2
+with force constant force_const
+and length bond_length [nm]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_dihedral_1D">
+<code class="sig-name descname"><span class="pre">add_polymer_dihedral_1D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_polymer_dihedral_1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_dihedral_1D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a cosine dihedral between all polymer numbers</dt><dd><p>with offset polymer_offset
+of types particle_types
+with force constant force_const
+and angle [radians]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_dihedral_2D">
+<code class="sig-name descname"><span class="pre">add_polymer_dihedral_2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_types4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_polymer_dihedral_2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_dihedral_2D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a cosine dihedral between all polymer numbers</dt><dd><p>with offsets polymer_offsets
+of types particle_types
+with force constant force_const
+and angle [radians]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.add_repulsion">
+<code class="sig-name descname"><span class="pre">add_repulsion</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.add_repulsion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.add_repulsion" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>adds a pairwise repulsion to the system (if it hasn’t been added already)</dt><dd><p>between each type in types1
+and each type in types2
+with force constant force_const
+with equilibrium distance [nm]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.calculate_diffusionCoefficient">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calculate_diffusionCoefficient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.calculate_diffusionCoefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_diffusionCoefficient" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>calculates the theoretical diffusion constant of a spherical particle</dt><dd><p>with radius r0[nm]
+in a media with viscosity eta [cP]
+at temperature T [Kelvin]</p>
+<p>returns nm^2/s</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.calculate_nParticles">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calculate_nParticles</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.calculate_nParticles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_nParticles" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>calculates the number of particles for a species</dt><dd><p>at concentration C [uM]
+in cube container with dimensions dim [nm]</p>
+<p>returns unitless number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.calculate_polymer_number">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calculate_polymer_number</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.calculate_polymer_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_polymer_number" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>calculates the polymer number</dt><dd><p>from number
+by offset in [-2, 2]</p>
+<p>returns number in [1,3]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.clamp_polymer_offsets_2D">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">clamp_polymer_offsets_2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polymer_index_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.clamp_polymer_offsets_2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.clamp_polymer_offsets_2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>clamp offsets so y polymer offset is incremented
+if new x polymer index is not in [1,3]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.create_readdy_simulation">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">create_readdy_simulation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cpu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_checkpoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.create_readdy_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.create_readdy_simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the ReaDDy simulation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_angle_between_vectors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_angle_between_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the angle between two vectors in radians</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_first_neighbor">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_first_neighbor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_vertices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_first_neighbor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_first_neighbor" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the first neighboring vertex</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_first_vertex_of_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_first_vertex_of_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_types</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_first_vertex_of_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_first_vertex_of_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the first vertex with any of the given types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_neighbor_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_vertices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_neighbor_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the first neighboring vertex of type vertex_type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_neighbor_of_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_vertices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_neighbor_of_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the first neighboring vertex with any of the given types,
+excluding particles with the given ids</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbors_of_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_neighbors_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_neighbors_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbors_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>get all neighboring vertices with a given type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_non_periodic_boundary_position">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_non_periodic_boundary_position</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_non_periodic_boundary_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_non_periodic_boundary_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the distance between two positions is greater than box_size,
+move the second position across the box (for positioning calculations)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_orientation_from_positions">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_orientation_from_positions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_orientation_from_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_orientation_from_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>orthonormalize and cross the vectors from position 2
+to the other positions to get a basis local to position 2,
+positions = [position 1, position 2, position 3]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_orientation_from_vectors">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_orientation_from_vectors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_orientation_from_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_orientation_from_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>orthonormalize and cross the vectors to get a rotation matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_random_boundary_position">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_random_boundary_position</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_random_boundary_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_boundary_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a random position on one of the boundary faces</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_random_perpendicular_vector">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_random_perpendicular_vector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_random_perpendicular_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_perpendicular_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a random unit vector perpendicular to v</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_random_unit_vector">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_random_unit_vector</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_random_unit_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_unit_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a random unit vector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_random_vertex_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_random_vertex_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a random vertex with a given type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_random_vertex_of_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_types</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_random_vertex_of_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a random vertex with any of the given types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_rotation_matrix">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_rotation_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_rotation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_rotation_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cross the vectors and get a rotation matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_types_with_polymer_numbers_1D">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_types_with_polymer_numbers_1D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_types_with_polymer_numbers_1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_types_with_polymer_numbers_1D" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>creates a list of types with 1D polymer numbers</dt><dd><p>for each type in particle types
+at polymer number x
+with polymer_offset dx in [-2, 2]</p>
+<p>returns list of types</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_types_with_polymer_numbers_2D">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_types_with_polymer_numbers_2D</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polymer_offsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_types_with_polymer_numbers_2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_types_with_polymer_numbers_2D" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>creates a list of types with 2D polymer numbers</dt><dd><p>for each type in particle types
+at polymer number x_y
+with polymer_offsets [dx, dy] both in [-2, 2]</p>
+<p>returns list of types</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_of_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_vertex_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_vertex_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the first vertex with a given type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_position">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_vertex_position</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_vertex_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the position of a vertex</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_with_id">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_vertex_with_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_vertex_with_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_with_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the first vertex with a given id</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_vertices_of_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_vertices_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_match</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_vertices_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertices_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>get all vertices with a given type</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.normalize">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">normalize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>normalize a vector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.rate_function_infinity">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">rate_function_infinity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.rate_function_infinity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.rate_function_infinity" title="Permalink to this definition">¶</a></dt>
+<dd><p>rate function for a reaction that should trigger immediately
+whenever reactants are available</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.reaction_function_reset_state">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">reaction_function_reset_state</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.reaction_function_reset_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.reaction_function_reset_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>reaction function for removing flags from a topology</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.rotate">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">rotate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>rotate a vector around axis by angle (radians)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.set_flags">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">set_flags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_flags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_flags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse_sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.set_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.set_flags" title="Permalink to this definition">¶</a></dt>
+<dd><p>set flags on a vertex</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.topology_to_string">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">topology_to_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.topology_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.topology_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>get string with vertex types and ids in a topology</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.try_remove_edge">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">try_remove_edge</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.try_remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.try_remove_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>try to remove an edge</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.vertex_satisfies_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">vertex_satisfies_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vertex_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types_include</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types_exclude</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.vertex_satisfies_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.vertex_satisfies_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if vertex satisfies the type requirements</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.vertex_to_string">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">vertex_to_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.vertex_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.vertex_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>get string with type and id for vertex</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.vertices_are_connected">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">vertices_are_connected</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.vertices_are_connected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.vertices_are_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if the vertices share an edge</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.vertices_are_equal">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">vertices_are_equal</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.vertices_are_equal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.vertices_are_equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if references are the same vertex</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simularium_models_util.common">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simularium_models_util.common" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

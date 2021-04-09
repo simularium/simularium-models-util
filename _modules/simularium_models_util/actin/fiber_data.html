@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.actin.fiber_data &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.actin.fiber_data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.actin.fiber_data</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+
+
+<div class="viewcode-block" id="FiberData"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData">[docs]</a><span class="k">class</span> <span class="nc">FiberData</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fiber network data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fiber_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">points_reversed</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">mother_arp</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">nucleated_arps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">bound_arps</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fiber_id</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Fiber has less than 2 points!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fiber_id</span> <span class="o">=</span> <span class="n">fiber_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mother_arp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nucleated_arps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bound_arps</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="FiberData.pointed_point"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.pointed_point">[docs]</a>    <span class="k">def</span> <span class="nf">pointed_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the current first point, the pointed end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="FiberData.barbed_point"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.barbed_point">[docs]</a>    <span class="k">def</span> <span class="nf">barbed_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the current last point, the barbed end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="FiberData.direction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.direction">[docs]</a>    <span class="k">def</span> <span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a normalized direction vector along the entire fiber</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">barbed_point</span><span class="p">()</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pointed_point</span><span class="p">()</span><span class="o">.</span><span class="n">position</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="FiberData.reversed_points"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.reversed_points">[docs]</a>    <span class="k">def</span> <span class="nf">reversed_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create the points_reversed list if not already created</span>
+<span class="sd">        and return it</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_reversed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points_reversed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points_reversed</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points_reversed</span></div>
+
+<div class="viewcode-block" id="FiberData.get_index_of_curve_start_point"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.get_index_of_curve_start_point">[docs]</a>    <span class="k">def</span> <span class="nf">get_index_of_curve_start_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_position</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the index of the first fiber point that defines</span>
+<span class="sd">        a curve from the nearest position to the start_position</span>
+<span class="sd">        optionally starting from the barbed end of the fiber</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Fiber has less than 2 points!&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">fiber_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reversed_points</span><span class="p">()</span> <span class="k">if</span> <span class="n">reverse</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">start_position</span> <span class="o">-</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+            <span class="n">arc_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                <span class="n">fiber_points</span><span class="p">[</span><span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">arc_length</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">p</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="FiberData.get_index_of_closest_point"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.get_index_of_closest_point">[docs]</a>    <span class="k">def</span> <span class="nf">get_index_of_closest_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the index of the closest fiber point to the given position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Fiber has less than 2 points!&quot;</span><span class="p">)</span>
+        <span class="n">closest_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">min_distance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">min_distance</span><span class="p">:</span>
+                <span class="n">closest_index</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="n">min_distance</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">closest_index</span></div>
+
+<div class="viewcode-block" id="FiberData.get_indices_of_closest_points"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.get_indices_of_closest_points">[docs]</a>    <span class="k">def</span> <span class="nf">get_indices_of_closest_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the indices of the closest and next closest</span>
+<span class="sd">        fiber points to the given position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">closest_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_index_of_closest_point</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">closest_index</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">closest_index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">closest_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">next_closest_index</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">closest_index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">next_closest_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                <span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">closest_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+            <span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">closest_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">):</span>
+                <span class="n">next_closest_index</span> <span class="o">=</span> <span class="n">closest_index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_closest_index</span> <span class="o">=</span> <span class="n">closest_index</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">closest_index</span><span class="p">,</span> <span class="n">next_closest_index</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="FiberData.get_nearest_position"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.get_nearest_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_nearest_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the nearest position on the fiber line to a given position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">closest_ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_indices_of_closest_points</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">fiber_dir</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">closest_ix</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">closest_ix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span>
+        <span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">closest_ix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">fiber_dir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">closest_ix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">fiber_dir</span> <span class="o">*</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="FiberData.get_nearest_segment_direction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.get_nearest_segment_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_nearest_segment_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the direction vector of the nearest segment of the fiber</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_index_of_curve_start_point</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">start_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">start_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="FiberData.get_first_segment_direction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.fiber_data.FiberData.get_first_segment_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_first_segment_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the direction vector of the first segment of the fiber at the pointed end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

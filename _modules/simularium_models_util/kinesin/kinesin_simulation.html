@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.kinesin.kinesin_simulation &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.kinesin.kinesin_simulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.kinesin.kinesin_simulation</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">readdy</span>
+
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+<span class="kn">from</span> <span class="nn">..microtubules</span> <span class="kn">import</span> <span class="n">MicrotubulesUtil</span>
+<span class="kn">from</span> <span class="nn">.kinesin_util</span> <span class="kn">import</span> <span class="n">KinesinUtil</span>
+
+
+<div class="viewcode-block" id="KinesinSimulation"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation">[docs]</a><span class="k">class</span> <span class="nc">KinesinSimulation</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a ReaDDy kinesin simulation</span>
+
+<span class="sd">        Params = Dict[str, float]</span>
+<span class="sd">        keys:</span>
+<span class="sd">        total_steps, timestep, box_size, temperature_C, viscosity,</span>
+<span class="sd">        force_constant, grow_reaction_distance, attach_reaction_distance,</span>
+<span class="sd">        n_cpu, tubulin_concentration, seed_n_rings, seed_n_frayed_rings_minus,</span>
+<span class="sd">        seed_n_frayed_rings_plus, seed_position_offset_x, seed_position_offset_y,</span>
+<span class="sd">        seed_position_offset_z, tubulin_radius, protofilament_growth_GTP_rate,</span>
+<span class="sd">        protofilament_growth_GDP_rate, protofilament_shrink_GTP_rate,</span>
+<span class="sd">        protofilament_shrink_GDP_rate, ring_attach_GTP_rate, ring_attach_GDP_rate,</span>
+<span class="sd">        ring_detach_GTP_rate, ring_detach_GDP_rate, hydrolyze_rate, verbose</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span> <span class="o">=</span> <span class="n">KinesinUtil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_kinesin_system</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">create_readdy_simulation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;n_cpu&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;total_steps&quot;</span><span class="p">],</span>
+            <span class="n">record</span><span class="p">,</span>
+            <span class="n">save_checkpoints</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="KinesinSimulation.create_kinesin_system"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation.create_kinesin_system">[docs]</a>    <span class="k">def</span> <span class="nf">create_kinesin_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the ReaDDy system for kinesin</span>
+<span class="sd">        including particle types, constraints, and reactions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">ReactionDiffusionSystem</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_C&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">273.15</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">motor_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;motor#ADP&quot;</span><span class="p">,</span> <span class="s2">&quot;motor#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;motor#apo&quot;</span><span class="p">,</span> <span class="s2">&quot;motor#new&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tubulinA#&quot;</span><span class="p">,</span> <span class="s2">&quot;tubulinB#&quot;</span><span class="p">,</span> <span class="s2">&quot;tubulinB#bound_&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_kinesin_types</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_kinesin_constraints</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_kinesin_reactions</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KinesinSimulation.add_kinesin_types"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation.add_kinesin_types">[docs]</a>    <span class="k">def</span> <span class="nf">add_kinesin_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add particle and topology types for kinesin particles</span>
+<span class="sd">        to the ReaDDy system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temperature_K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
+        <span class="n">viscosity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;viscosity&quot;</span><span class="p">]</span>
+        <span class="n">hips_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;hips_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature_K</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="n">cargo_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cargo_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature_K</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="n">motor_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;motor_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature_K</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="n">tubulin_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;tubulin_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature_K</span>
+        <span class="p">)</span>  <span class="c1"># nm^2/s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Kinesin&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#ADP-ATP&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#ADP-apo&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#ATP-ATP&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#ATP-apo&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#apo-apo&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#Binding&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule-Kinesin#Releasing&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;hips&quot;</span><span class="p">,</span> <span class="n">hips_diffCoeff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;cargo&quot;</span><span class="p">,</span> <span class="n">cargo_diffCoeff</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">motor_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motor_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="n">motor_type</span><span class="p">,</span> <span class="n">motor_diffCoeff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Microtubule&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tubulin_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span><span class="p">:</span>
+            <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">add_polymer_topology_species</span><span class="p">(</span>
+                <span class="n">tubulin_type</span><span class="p">,</span> <span class="n">tubulin_diffCoeff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinSimulation.add_kinesin_constraints"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation.add_kinesin_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">add_kinesin_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add geometric constraints for connected kinesin particles,</span>
+<span class="sd">        including bonds, angles, and repulsions, to the ReaDDy system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">force_constant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">]</span>
+        <span class="n">microtubule_force_constant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;microtubules_force_constant&quot;</span><span class="p">]</span>
+        <span class="n">util</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_kinesin_bonds_and_repulsions</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">motor_types</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_kinesin_angles_and_dihedrals</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_tubulin_bonds_and_repulsions</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span><span class="p">,</span> <span class="n">microtubule_force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_angles_between_tubulins</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span><span class="p">,</span> <span class="n">microtubule_force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_motor_tubulin_interactions</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">motor_types</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tubulin_types</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="n">util</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinSimulation.add_kinesin_reactions"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation.add_kinesin_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">add_kinesin_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add reactions to the ReaDDy system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_motor_bind_tubulin_reaction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;motor_bind_tubulin_rate&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reaction_distance&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_motor_bind_ATP_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_motor_release_tubulin_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinSimulation.add_microtubule"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation.add_microtubule">[docs]</a>    <span class="k">def</span> <span class="nf">add_microtubule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a microtubule</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">add_microtubule</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;microtubule_n_rings&quot;</span><span class="p">]),</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="KinesinSimulation.add_kinesin"><a class="viewcode-back" href="../../../simularium_models_util.kinesin.html#simularium_models_util.kinesin.kinesin_simulation.KinesinSimulation.add_kinesin">[docs]</a>    <span class="k">def</span> <span class="nf">add_kinesin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a kinesin</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kinesin_util</span><span class="o">.</span><span class="n">add_kinesin</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;kinesin_position_x&quot;</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;kinesin_position_y&quot;</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;kinesin_position_z&quot;</span><span class="p">],</span>
+                <span class="p">]</span>
+            <span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

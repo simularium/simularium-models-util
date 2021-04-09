@@ -1,0 +1,1086 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>simularium_models_util.common.readdy_util &mdash; Simularium Models Util 0.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simularium Models Util
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../simularium_models_util.html">simularium_models_util package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.actin.html">simularium_models_util.actin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.common.html">simularium_models_util.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.kinesin.html">simularium_models_util.kinesin package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.microtubules.html">simularium_models_util.microtubules package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../simularium_models_util.visualization.html">simularium_models_util.visualization package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../simularium_models_util.html#module-simularium_models_util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simularium Models Util</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
+        
+      <li>simularium_models_util.common.readdy_util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simularium_models_util.common.readdy_util</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">linalg</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">readdy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">rmtree</span>
+
+
+<div class="viewcode-block" id="ReaddyUtil"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil">[docs]</a><span class="k">class</span> <span class="nc">ReaddyUtil</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Utilities used for Simularium ReaDDy models</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bond_pairs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angle_triples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repulse_pairs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="ReaddyUtil.normalize"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.normalize">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        normalize a vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">v</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_angle_between_vectors"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the angle between two vectors in radians</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">v2</span><span class="p">)),</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.rotate"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.rotate">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        rotate a vector around axis by angle (radians)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rotation</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">expm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="o">*</span> <span class="n">angle</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">v</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_rotation_matrix"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_rotation_matrix">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_rotation_matrix</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cross the vectors and get a rotation matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[[</span><span class="n">v1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v3</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v3</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">v1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">v3</span><span class="p">[</span><span class="mi">2</span><span class="p">]]]</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_orientation_from_positions"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_orientation_from_positions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_orientation_from_positions</span><span class="p">(</span><span class="n">positions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        orthonormalize and cross the vectors from position 2</span>
+<span class="sd">        to the other positions to get a basis local to position 2,</span>
+<span class="sd">        positions = [position 1, position 2, position 3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">v2</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v1</span><span class="p">))</span> <span class="o">*</span> <span class="n">v1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_rotation_matrix</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_orientation_from_vectors"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_orientation_from_vectors">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_orientation_from_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        orthonormalize and cross the vectors to get a rotation matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">v2</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v1</span><span class="p">))</span> <span class="o">*</span> <span class="n">v1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_rotation_matrix</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_random_perpendicular_vector"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_perpendicular_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_perpendicular_vector</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a random unit vector perpendicular to v</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;zero vector&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.topology_to_string"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.topology_to_string">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get string with vertex types and ids in a topology</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">topology</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2"> : </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot; -- </span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">())</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.vertex_to_string"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vertex_to_string">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get string with type and id for vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot; (&quot;</span>
+            <span class="o">+</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+            <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_non_periodic_boundary_position"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_non_periodic_boundary_position">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_non_periodic_boundary_position</span><span class="p">(</span><span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if the distance between two positions is greater than box_size,</span>
+<span class="sd">        move the second position across the box (for positioning calculations)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos1</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">:</span>
+                <span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">-=</span> <span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="o">*</span> <span class="n">box_size</span>
+        <span class="k">return</span> <span class="n">pos2</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.calculate_diffusionCoefficient"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_diffusionCoefficient">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_diffusionCoefficient</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculates the theoretical diffusion constant of a spherical particle</span>
+<span class="sd">            with radius r0[nm]</span>
+<span class="sd">            in a media with viscosity eta [cP]</span>
+<span class="sd">            at temperature T [Kelvin]</span>
+
+<span class="sd">            returns nm^2/s</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="mf">1.38065</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">23</span><span class="p">)</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+            <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">r0</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">))</span>
+            <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">18</span>
+            <span class="o">/</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.calculate_nParticles"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_nParticles">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_nParticles</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculates the number of particles for a species</span>
+<span class="sd">            at concentration C [uM]</span>
+<span class="sd">            in cube container with dimensions dim [nm]</span>
+
+<span class="sd">            returns unitless number</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">C</span> <span class="o">*</span> <span class="mf">1e-30</span> <span class="o">*</span> <span class="mf">6.022e23</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_vertex_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the first vertex with a given type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="n">vertex</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_first_vertex_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_first_vertex_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_first_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the first vertex with any of the given types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">vertex_types</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">vertex</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_vertex_with_id"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_with_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_vertex_with_id</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the first vertex with a given id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span> <span class="o">==</span> <span class="n">vertex_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">vertex</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_first_neighbor"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_first_neighbor">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the first neighboring vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exclude_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">exclude_vertices</span><span class="p">:</span>
+            <span class="n">exclude_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span> <span class="ow">in</span> <span class="n">exclude_ids</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">return</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_neighbor_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_neighbor_of_type</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="o">=</span><span class="p">[]</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the first neighboring vertex of type vertex_type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exclude_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">exclude_vertices</span><span class="p">:</span>
+            <span class="n">exclude_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span> <span class="ow">in</span> <span class="n">exclude_ids</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_neighbor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="n">v_neighbor</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_neighbor_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_neighbor_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the first neighboring vertex with any of the given types,</span>
+<span class="sd">        excluding particles with the given ids</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exclude_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">exclude_vertices</span><span class="p">:</span>
+            <span class="n">exclude_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span> <span class="ow">in</span> <span class="n">exclude_ids</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_neighbor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">vertex_types</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">v_neighbor</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_vertices_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertices_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get all vertices with a given type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
+            <span class="p">):</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_neighbors_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbors_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_neighbors_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get all neighboring vertices with a given type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex</span><span class="p">:</span>
+            <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_neighbor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
+            <span class="p">):</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_neighbor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_random_vertex_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a random vertex with a given type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vertices</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_random_vertex_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a random vertex with any of the given types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">vertex_types</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">+=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.vertex_satisfies_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vertex_satisfies_type">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">vertex_satisfies_type</span><span class="p">(</span><span class="n">vertex_type</span><span class="p">,</span> <span class="n">types_include</span><span class="p">,</span> <span class="n">types_exclude</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        check if vertex satisfies the type requirements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types_include</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vertex_type</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types_exclude</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">vertex_type</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.set_flags"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.set_flags">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">set_flags</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">add_flags</span><span class="p">,</span> <span class="n">remove_flags</span><span class="p">,</span> <span class="n">reverse_sort</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set flags on a vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;#&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">add_flags</span><span class="p">)):</span>
+                <span class="n">pt</span> <span class="o">=</span> <span class="n">pt</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="k">if</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">add_flags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">flag_string</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[</span><span class="n">pt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">flag_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+            <span class="n">polymer_indices</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="s2">&quot;tubulin&quot;</span> <span class="ow">in</span> <span class="n">pt</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">polymer_indices</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">flags</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">flags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">remove_flags</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+                    <span class="n">flags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">add_flags</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">flag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+                    <span class="n">flags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">pt</span><span class="p">[:</span> <span class="n">pt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)])</span>
+                <span class="k">return</span>
+            <span class="n">flags</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="n">reverse_sort</span><span class="p">)</span>
+            <span class="n">flag_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)):</span>
+                <span class="n">flag_string</span> <span class="o">=</span> <span class="n">flag_string</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="k">if</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">flags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+            <span class="n">particle_type</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[:</span> <span class="n">pt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)]</span>
+            <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span>
+                <span class="n">vertex</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">flag_string</span><span class="si">}{</span><span class="n">polymer_indices</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.calculate_polymer_number"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_polymer_number">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_polymer_number</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculates the polymer number</span>
+<span class="sd">            from number</span>
+<span class="sd">            by offset in [-2, 2]</span>
+
+<span class="sd">            returns number in [1,3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">number</span> <span class="o">+</span> <span class="n">offset</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">-=</span> <span class="mi">3</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">3</span>
+        <span class="k">return</span> <span class="n">n</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_vertex_position"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_position">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the position of a vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">position_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.vertices_are_equal"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vertices_are_equal">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">vertices_are_equal</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        check if references are the same vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span>
+            <span class="n">vertex1</span>
+        <span class="p">)</span> <span class="o">==</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">vertex2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.vertices_are_connected"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vertices_are_connected">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">vertices_are_connected</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        check if the vertices share an edge</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertices_are_equal</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">,</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.reaction_function_reset_state"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.reaction_function_reset_state">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reaction_function_reset_state</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        reaction function for removing flags from a topology</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">tt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">type</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="n">tt</span><span class="p">[:</span> <span class="n">tt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">recipe</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.rate_function_infinity"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.rate_function_infinity">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rate_function_infinity</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        rate function for a reaction that should trigger immediately</span>
+<span class="sd">        whenever reactants are available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1e30</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.clamp_polymer_offsets_2D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.clamp_polymer_offsets_2D">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">polymer_index_x</span><span class="p">,</span> <span class="n">polymer_offsets</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        clamp offsets so y polymer offset is incremented</span>
+<span class="sd">        if new x polymer index is not in [1,3]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">polymer_offsets</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">polymer_offsets</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">polymer_offsets</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">polymer_index_x</span> <span class="o">+</span> <span class="n">offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">offsets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">polymer_index_x</span> <span class="o">+</span> <span class="n">offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">offsets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">offsets</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_types_with_polymer_numbers_1D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_types_with_polymer_numbers_1D">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_types_with_polymer_numbers_1D</span><span class="p">(</span><span class="n">particle_types</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        creates a list of types with 1D polymer numbers</span>
+<span class="sd">            for each type in particle types</span>
+<span class="sd">            at polymer number x</span>
+<span class="sd">            with polymer_offset dx in [-2, 2]</span>
+
+<span class="sd">            returns list of types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">particle_types</span><span class="p">:</span>
+            <span class="n">types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="n">polymer_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="n">t</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">types</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_types_with_polymer_numbers_2D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_types_with_polymer_numbers_2D">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_types_with_polymer_numbers_2D</span><span class="p">(</span><span class="n">particle_types</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">polymer_offsets</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        creates a list of types with 2D polymer numbers</span>
+<span class="sd">            for each type in particle types</span>
+<span class="sd">            at polymer number x_y</span>
+<span class="sd">            with polymer_offsets [dx, dy] both in [-2, 2]</span>
+
+<span class="sd">            returns list of types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">particle_types</span><span class="p">:</span>
+            <span class="n">types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">t</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                    <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
+                    <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">polymer_offsets</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">polymer_offsets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="k">else</span> <span class="n">t</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">types</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_random_unit_vector"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_unit_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_unit_vector</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a random unit vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()])</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_random_boundary_position"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_boundary_position">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_random_boundary_position</span><span class="p">(</span><span class="n">box_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a random position on one of the boundary faces</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">box_size</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">-</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">face</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">face</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">pos</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.try_remove_edge"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.try_remove_edge">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">try_remove_edge</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        try to remove an edge</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertices_are_connected</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">(</span>
+                <span class="s2">&quot;Tried to remove non-existent edge! &quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex1</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot; -- &quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_bond"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_bond">[docs]</a>    <span class="k">def</span> <span class="nf">add_bond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types1</span><span class="p">,</span> <span class="n">types2</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">bond_length</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a bond to the system (if it hasn&#39;t been added already)</span>
+<span class="sd">            from each type in types1</span>
+<span class="sd">            to each type in types2</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and length bond_length [nm]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t1</span> <span class="ow">in</span> <span class="n">types1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">types2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_pairs</span> <span class="ow">and</span> <span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_pairs</span><span class="p">:</span>
+                    <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">configure_harmonic_bond</span><span class="p">(</span>
+                        <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">bond_length</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bond_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bond_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_angle"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_angle">[docs]</a>    <span class="k">def</span> <span class="nf">add_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types1</span><span class="p">,</span> <span class="n">types2</span><span class="p">,</span> <span class="n">types3</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds an angle to the system (if it hasn&#39;t been added already)</span>
+<span class="sd">            from each type in types1</span>
+<span class="sd">            through each type in types2</span>
+<span class="sd">            to each type in types3</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and angle [radians]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t1</span> <span class="ow">in</span> <span class="n">types1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">types2</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">t3</span> <span class="ow">in</span> <span class="n">types3</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_triples</span> <span class="ow">and</span> <span class="p">(</span>
+                        <span class="n">t3</span><span class="p">,</span>
+                        <span class="n">t2</span><span class="p">,</span>
+                        <span class="n">t1</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_triples</span><span class="p">:</span>
+                        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">configure_harmonic_angle</span><span class="p">(</span>
+                            <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">angle</span>
+                        <span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">angle_triples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">angle_triples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t3</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_dihedral"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_dihedral">[docs]</a>    <span class="k">def</span> <span class="nf">add_dihedral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types1</span><span class="p">,</span> <span class="n">types2</span><span class="p">,</span> <span class="n">types3</span><span class="p">,</span> <span class="n">types4</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a cosine dihedral to the system (if it hasn&#39;t been added already)</span>
+<span class="sd">            from each type in types1</span>
+<span class="sd">            through each type in types2</span>
+<span class="sd">            through each type in types3</span>
+<span class="sd">            to each type in types4</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and angle [radians]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t1</span> <span class="ow">in</span> <span class="n">types1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">types2</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">t3</span> <span class="ow">in</span> <span class="n">types3</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">t4</span> <span class="ow">in</span> <span class="n">types4</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t4</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span> <span class="ow">and</span> <span class="p">(</span>
+                            <span class="n">t4</span><span class="p">,</span>
+                            <span class="n">t3</span><span class="p">,</span>
+                            <span class="n">t2</span><span class="p">,</span>
+                            <span class="n">t1</span><span class="p">,</span>
+                        <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span><span class="p">:</span>
+                            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">configure_cosine_dihedral</span><span class="p">(</span>
+                                <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t4</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">angle</span>
+                            <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t4</span><span class="p">))</span>
+                            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">configure_cosine_dihedral</span><span class="p">(</span>
+                                <span class="n">t4</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">angle</span>
+                            <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t4</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_repulsion"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_repulsion">[docs]</a>    <span class="k">def</span> <span class="nf">add_repulsion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">types1</span><span class="p">,</span> <span class="n">types2</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a pairwise repulsion to the system (if it hasn&#39;t been added already)</span>
+<span class="sd">            between each type in types1</span>
+<span class="sd">            and each type in types2</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            with equilibrium distance [nm]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t1</span> <span class="ow">in</span> <span class="n">types1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">types2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">repulse_pairs</span> <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">t2</span><span class="p">,</span>
+                    <span class="n">t1</span><span class="p">,</span>
+                <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">repulse_pairs</span><span class="p">:</span>
+                    <span class="n">system</span><span class="o">.</span><span class="n">potentials</span><span class="o">.</span><span class="n">add_harmonic_repulsion</span><span class="p">(</span>
+                        <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="n">distance</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">repulse_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">repulse_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_polymer_bond_1D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_bond_1D">[docs]</a>    <span class="k">def</span> <span class="nf">add_polymer_bond_1D</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">particle_types1</span><span class="p">,</span>
+        <span class="n">polymer_offset1</span><span class="p">,</span>
+        <span class="n">particle_types2</span><span class="p">,</span>
+        <span class="n">polymer_offset2</span><span class="p">,</span>
+        <span class="n">force_const</span><span class="p">,</span>
+        <span class="n">bond_length</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a bond between all polymer numbers</span>
+<span class="sd">            from types particle_types1</span>
+<span class="sd">            with offset polymer_offset1</span>
+<span class="sd">            to types particle_types2</span>
+<span class="sd">            with offset polymer_offset2</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and length bond_length [nm]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                        <span class="n">particle_types1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset1</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">polymer_offset1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="n">particle_types1</span>
+                <span class="p">),</span>
+                <span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                        <span class="n">particle_types2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset2</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">polymer_offset2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="n">particle_types2</span>
+                <span class="p">),</span>
+                <span class="n">force_const</span><span class="p">,</span>
+                <span class="n">bond_length</span><span class="p">,</span>
+                <span class="n">system</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_polymer_bond_2D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_bond_2D">[docs]</a>    <span class="k">def</span> <span class="nf">add_polymer_bond_2D</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">particle_types1</span><span class="p">,</span>
+        <span class="n">polymer_offsets1</span><span class="p">,</span>
+        <span class="n">particle_types2</span><span class="p">,</span>
+        <span class="n">polymer_offsets2</span><span class="p">,</span>
+        <span class="n">force_const</span><span class="p">,</span>
+        <span class="n">bond_length</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a bond between all polymer numbers</span>
+<span class="sd">            from types particle_types1</span>
+<span class="sd">            with offsets polymer_offsets1</span>
+<span class="sd">            to types particle_types2</span>
+<span class="sd">            with offsets polymer_offsets2</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and length bond_length [nm]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+                <span class="n">offsets1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets1</span><span class="p">)</span>
+                <span class="n">offsets2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets2</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets1</span>
+                    <span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets2</span>
+                    <span class="p">),</span>
+                    <span class="n">force_const</span><span class="p">,</span>
+                    <span class="n">bond_length</span><span class="p">,</span>
+                    <span class="n">system</span><span class="p">,</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_polymer_angle_1D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_angle_1D">[docs]</a>    <span class="k">def</span> <span class="nf">add_polymer_angle_1D</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">particle_types1</span><span class="p">,</span>
+        <span class="n">polymer_offset1</span><span class="p">,</span>
+        <span class="n">particle_types2</span><span class="p">,</span>
+        <span class="n">polymer_offset2</span><span class="p">,</span>
+        <span class="n">particle_types3</span><span class="p">,</span>
+        <span class="n">polymer_offset3</span><span class="p">,</span>
+        <span class="n">force_const</span><span class="p">,</span>
+        <span class="n">angle</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds an angle between all polymer numbers</span>
+<span class="sd">            with offset polymer_offset</span>
+<span class="sd">            of types particle_types</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and angle [radians]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_angle</span><span class="p">(</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset1</span>
+                <span class="p">),</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset2</span>
+                <span class="p">),</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset3</span>
+                <span class="p">),</span>
+                <span class="n">force_const</span><span class="p">,</span>
+                <span class="n">angle</span><span class="p">,</span>
+                <span class="n">system</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_polymer_angle_2D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_angle_2D">[docs]</a>    <span class="k">def</span> <span class="nf">add_polymer_angle_2D</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">particle_types1</span><span class="p">,</span>
+        <span class="n">polymer_offsets1</span><span class="p">,</span>
+        <span class="n">particle_types2</span><span class="p">,</span>
+        <span class="n">polymer_offsets2</span><span class="p">,</span>
+        <span class="n">particle_types3</span><span class="p">,</span>
+        <span class="n">polymer_offsets3</span><span class="p">,</span>
+        <span class="n">force_const</span><span class="p">,</span>
+        <span class="n">angle</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds an angle between all polymer numbers</span>
+<span class="sd">            with offsets polymer_offsets</span>
+<span class="sd">            of types particle_types</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and angle [radians]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+                <span class="n">offsets1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets1</span><span class="p">)</span>
+                <span class="n">offsets2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets2</span><span class="p">)</span>
+                <span class="n">offsets3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets3</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_angle</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets1</span>
+                    <span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets2</span>
+                    <span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets3</span>
+                    <span class="p">),</span>
+                    <span class="n">force_const</span><span class="p">,</span>
+                    <span class="n">angle</span><span class="p">,</span>
+                    <span class="n">system</span><span class="p">,</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_polymer_dihedral_1D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_dihedral_1D">[docs]</a>    <span class="k">def</span> <span class="nf">add_polymer_dihedral_1D</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">particle_types1</span><span class="p">,</span>
+        <span class="n">polymer_offset1</span><span class="p">,</span>
+        <span class="n">particle_types2</span><span class="p">,</span>
+        <span class="n">polymer_offset2</span><span class="p">,</span>
+        <span class="n">particle_types3</span><span class="p">,</span>
+        <span class="n">polymer_offset3</span><span class="p">,</span>
+        <span class="n">particle_types4</span><span class="p">,</span>
+        <span class="n">polymer_offset4</span><span class="p">,</span>
+        <span class="n">force_const</span><span class="p">,</span>
+        <span class="n">angle</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a cosine dihedral between all polymer numbers</span>
+<span class="sd">            with offset polymer_offset</span>
+<span class="sd">            of types particle_types</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and angle [radians]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset1</span>
+                <span class="p">),</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset2</span>
+                <span class="p">),</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset3</span>
+                <span class="p">),</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_1D</span><span class="p">(</span>
+                    <span class="n">particle_types4</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">polymer_offset4</span>
+                <span class="p">),</span>
+                <span class="n">force_const</span><span class="p">,</span>
+                <span class="n">angle</span><span class="p">,</span>
+                <span class="n">system</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.add_polymer_dihedral_2D"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.add_polymer_dihedral_2D">[docs]</a>    <span class="k">def</span> <span class="nf">add_polymer_dihedral_2D</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">particle_types1</span><span class="p">,</span>
+        <span class="n">polymer_offsets1</span><span class="p">,</span>
+        <span class="n">particle_types2</span><span class="p">,</span>
+        <span class="n">polymer_offsets2</span><span class="p">,</span>
+        <span class="n">particle_types3</span><span class="p">,</span>
+        <span class="n">polymer_offsets3</span><span class="p">,</span>
+        <span class="n">particle_types4</span><span class="p">,</span>
+        <span class="n">polymer_offsets4</span><span class="p">,</span>
+        <span class="n">force_const</span><span class="p">,</span>
+        <span class="n">angle</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        adds a cosine dihedral between all polymer numbers</span>
+<span class="sd">            with offsets polymer_offsets</span>
+<span class="sd">            of types particle_types</span>
+<span class="sd">            with force constant force_const</span>
+<span class="sd">            and angle [radians]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+                <span class="n">offsets1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets1</span><span class="p">)</span>
+                <span class="n">offsets2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets2</span><span class="p">)</span>
+                <span class="n">offsets3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets3</span><span class="p">)</span>
+                <span class="n">offsets4</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">clamp_polymer_offsets_2D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">polymer_offsets4</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets1</span>
+                    <span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets2</span>
+                    <span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types3</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets3</span>
+                    <span class="p">),</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_types_with_polymer_numbers_2D</span><span class="p">(</span>
+                        <span class="n">particle_types4</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">offsets4</span>
+                    <span class="p">),</span>
+                    <span class="n">force_const</span><span class="p">,</span>
+                    <span class="n">angle</span><span class="p">,</span>
+                    <span class="n">system</span><span class="p">,</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.create_readdy_simulation"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.create_readdy_simulation">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_readdy_simulation</span><span class="p">(</span>
+        <span class="n">system</span><span class="p">,</span> <span class="n">n_cpu</span><span class="p">,</span> <span class="n">sim_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">total_steps</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the ReaDDy simulation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">simulation</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">simulation</span><span class="p">(</span><span class="s2">&quot;CPU&quot;</span><span class="p">)</span>
+        <span class="n">simulation</span><span class="o">.</span><span class="n">kernel_configuration</span><span class="o">.</span><span class="n">n_threads</span> <span class="o">=</span> <span class="n">n_cpu</span>
+        <span class="k">if</span> <span class="n">record</span><span class="p">:</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">sim_name</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">output_file</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="n">recording_stride</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total_steps</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">record_trajectory</span><span class="p">(</span><span class="n">recording_stride</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">observe</span><span class="o">.</span><span class="n">topologies</span><span class="p">(</span><span class="n">recording_stride</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">observe</span><span class="o">.</span><span class="n">particles</span><span class="p">(</span><span class="n">recording_stride</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">observe</span><span class="o">.</span><span class="n">reaction_counts</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">progress_output_stride</span> <span class="o">=</span> <span class="n">recording_stride</span>
+        <span class="k">if</span> <span class="n">save_checkpoints</span><span class="p">:</span>
+            <span class="n">checkpoint_stride</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">total_steps</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;checkpoints/</span><span class="si">{</span><span class="n">sim_name</span><span class="si">}</span><span class="s2">/&quot;</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">):</span>
+                <span class="n">rmtree</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+            <span class="n">simulation</span><span class="o">.</span><span class="n">make_checkpoints</span><span class="p">(</span><span class="n">checkpoint_stride</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">simulation</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Blair Lyons.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
