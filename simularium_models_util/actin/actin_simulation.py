@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import readdy
-import os
-from shutil import rmtree
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
@@ -36,7 +34,9 @@ class ActinSimulation:
         self.parameters = parameters
         self.actin_util = ActinUtil(self.parameters)
         self.create_actin_system()
-        self.create_actin_simulation(record, save_checkpoints)
+        self.simulation = ReaddyUtil.create_readdy_simulation(
+            self.system, self.parameters["n_cpu"], self.parameters["name"], 
+            self.parameters["total_steps"], record, save_checkpoints)
 
     def create_actin_system(self):
         """
@@ -159,29 +159,6 @@ class ActinSimulation:
             actin_radius + self.parameters["cap_radius"] + reaction_distance
         )
         self.actin_util.add_cap_unbind_reaction(self.system)
-
-    def create_actin_simulation(self, record=False, save_checkpoints=False):
-        """
-        Create the ReaDDy simulation for actin
-        """
-        self.simulation = self.system.simulation("CPU")
-        self.simulation.kernel_configuration.n_threads = self.parameters["n_cpu"]
-        if record:
-            self.simulation.output_file = "{}.h5".format(self.parameters["name"])
-            if os.path.exists(self.simulation.output_file):
-                os.remove(self.simulation.output_file)
-            recording_stride = max(int(self.parameters["total_steps"] / 1000.), 1)
-            self.simulation.record_trajectory(recording_stride)
-            self.simulation.observe.topologies(recording_stride)
-            self.simulation.observe.particles(recording_stride)
-            self.simulation.observe.reaction_counts(1)
-            self.simulation.progress_output_stride = recording_stride
-        if save_checkpoints:
-            checkpoint_stride = max(int(self.parameters["total_steps"] / 10.), 1)
-            checkpoint_path = "checkpoints/{}/".format(self.parameters["name"])
-            if os.path.exists(checkpoint_path):
-                rmtree(checkpoint_path)
-            self.simulation.make_checkpoints(checkpoint_stride, checkpoint_path, 0)
 
     def add_random_monomers(self):
         """

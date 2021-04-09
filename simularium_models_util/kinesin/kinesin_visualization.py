@@ -9,27 +9,13 @@ import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData
+from ..microtubules import MicrotubulesUtil
 
 
 class KinesinVisualization():
     """
     visualize a kinesin trajectory in Simularium
     """
-
-    @staticmethod
-    def get_all_polymer_types(particle_type):
-        """
-        gets a list of all polymer numbers
-        ("type1_1", "type1_2", "type1_3", "type2_1", ... "type3_3")
-        for type particle_type
-
-        returns list of types
-        """
-        result = []
-        for x in range(1,4):
-            for y in range(1,4):
-                result.append("{}{}_{}".format(particle_type, x, y))
-        return result
 
     @staticmethod
     def get_mapping_for_all_polymer_types(types_mapping):
@@ -41,7 +27,7 @@ class KinesinVisualization():
         """
         result = {}
         for particle_type in types_mapping:
-            types = KinesinVisualization.get_all_polymer_types(particle_type)
+            types = MicrotubulesUtil.get_all_polymer_tubulin_types(particle_type)
             for t in types:
                 result[t] = types_mapping[particle_type]
         return result
@@ -76,7 +62,7 @@ class KinesinVisualization():
             "tubulinB#bound_",
         }
         for group_type in group_types:
-            type_grouping[group_type[:-1]] = KinesinVisualization.get_all_polymer_types(group_type)
+            type_grouping[group_type[:-1]] = MicrotubulesUtil.get_all_polymer_tubulin_types(group_type)
         # convert
         data = ReaddyData(
             meta_data=MetaData(
@@ -108,7 +94,7 @@ def main():
     for file in os.listdir(dir_path):
         if file.endswith(".h5"):
             file_path = os.path.join(dir_path, file)
-            print("visualize {}".format(file_path))
+            print(f"visualize {file_path}")
             KinesinVisualization.visualize_kinesin(file_path, args.box_size, [])
 
 if __name__ == '__main__':

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import readdy
 import math
@@ -100,7 +103,7 @@ class MicrotubulesUtil:
         """
         get the x and y polymer index for a particle
         """
-        return "_{}_{}".format(polymer_indices[0], polymer_indices[1])
+        return f"_{polymer_indices[0]}_{polymer_indices[1]}"
 
     @staticmethod
     def increment_polymer_indices(polymer_indices, polymer_offsets):
@@ -232,10 +235,8 @@ class MicrotubulesUtil:
         for tubulin in tubulins:
             if not MicrotubulesUtil.remove_tubulin_sites(topology, recipe, tubulin):
                 return False
-            recipe.change_particle_type(
-                tubulin, "tubulin{}#free".format(
-                    "A" if "A" in topology.particle_type_of_vertex(tubulin)
-                    else "B"))
+            tub_type = "A" if "A" in topology.particle_type_of_vertex(tubulin) else "B"
+            recipe.change_particle_type(tubulin, f"tubulin{tub_type}#free")
         return True
 
     @staticmethod
@@ -383,12 +384,10 @@ class MicrotubulesUtil:
         """
         recipe.change_particle_type(v_new_sites[0], "site#out")
         recipe.change_particle_position(v_new_sites[0], position + normal)
-        recipe.change_particle_type(v_new_sites[1], "site#1{}".format(
-            site_state_ring))
+        recipe.change_particle_type(v_new_sites[1], f"site#1{site_state_ring}")
         recipe.change_particle_position(v_new_sites[1], position + side)
         recipe.add_edge(v_new_sites[0], v_new_sites[1]) # edge to site#out
-        recipe.change_particle_type(v_new_sites[2], "site#2{}".format(
-            site_state_ring))
+        recipe.change_particle_type(v_new_sites[2], f"site#2{site_state_ring}")
         recipe.change_particle_position(v_new_sites[2], position - side)
         recipe.add_edge(v_new_sites[0], v_new_sites[2]) # edge to site#out
         recipe.change_particle_type(v_new_sites[3], "site#3")
@@ -396,8 +395,7 @@ class MicrotubulesUtil:
         recipe.add_edge(v_new_sites[0], v_new_sites[3]) # edge to site#out
         recipe.add_edge(v_new_sites[1], v_new_sites[3]) # edge to site#1
         recipe.add_edge(v_new_sites[2], v_new_sites[3]) # edge to site#2
-        recipe.change_particle_type(v_new_sites[4], "site#4{}".format(
-            site_state_filament))
+        recipe.change_particle_type(v_new_sites[4], f"site#4{site_state_filament}")
         recipe.change_particle_position(v_new_sites[4], position + tangent)
         recipe.add_edge(v_new_sites[0], v_new_sites[4]) # edge to site#out
         recipe.add_edge(v_new_sites[1], v_new_sites[4]) # edge to site#1
@@ -427,7 +425,7 @@ class MicrotubulesUtil:
         result = []
         for x in range(1,4):
             for y in range(1,4):
-                result.append("{}{}_{}".format(particle_type, x, y))
+                result.append(f"{particle_type}{x}_{y}")
         return result
 
     @staticmethod
@@ -445,7 +443,7 @@ class MicrotubulesUtil:
     @staticmethod
     def get_microtubule_positions_and_types(
         n_filaments, n_rings, n_frayed_rings_plus,
-        n_frayed_rings_minus, frayed_angle, radius
+        n_frayed_rings_minus, frayed_angle, radius, use_GTP=True
     ):
         """
         get lists of positions and types for particles in a microtubule
@@ -497,27 +495,27 @@ class MicrotubulesUtil:
                 edge = (n_frayed_rings > 0 and
                     (ring == n_frayed_rings_minus or
                     ring == n_rings-1 - n_frayed_rings_plus))
-                types.append("tubulin{}#{}_{}{}_{}".format(
-                    "A" if ring % 2 == 0 else "B", GTP_state,
-                    "bent_" if bent else "", number1, number2))
+                tub_type = "A" if ring % 2 == 0 else "B"
+                bent_type = "bent_" if bent else ""
+                tub_GTP_state = GTP_state + "_" if use_GTP else ""
+                types.append(f"tubulin{tub_type}#{tub_GTP_state}{bent_type}{number1}_{number2}")
                 i += 1
                 if bent or edge: # needs site scaffolds
                     types.append("site#out")
                     i += 1
                     positions.append(pos + 1.5 * normal)
-                    types.append("site#1{}".format(
-                        "_{}".format(GTP_state) if not edge else ""))
+                    site_state = f"_{GTP_state}" if not edge else ""
+                    types.append(f"site#1{site_state}")
                     i += 1
                     positions.append(pos - 1.5 * side)
-                    types.append("site#2{}".format("_{}".format(
-                        GTP_state) if not edge else ""))
+                    types.append(f"site#2{site_state}")
                     i += 1
                     positions.append(pos + 1.5 * side)
                     types.append("site#3")
                     i += 1
                     positions.append(pos - 1.5 * tangent)
-                    types.append("site#4{}".format("_{}".format(
-                        GTP_state) if ring == n_rings-1 else ""))
+                    site_state = f"_{GTP_state}" if ring == n_rings-1 else ""
+                    types.append(f"site#4{site_state}")
                     i += 1
                     positions.append(pos + 1.5 * tangent)
                     tangent = ReaddyUtil.rotate(
@@ -600,7 +598,7 @@ class MicrotubulesUtil:
     @staticmethod
     def add_microtubule(
         n_rings, n_frayed_rings_minus, n_frayed_rings_plus,
-        position_offset, simulation
+        position_offset, simulation, use_GTP=True
     ):
         """
         add seed microtubule to the simulation
@@ -611,8 +609,8 @@ class MicrotubulesUtil:
             and position_offset
         """
         if n_rings - (n_frayed_rings_minus + n_frayed_rings_plus) < 2:
-            raise Exception("Too many frayed rings, {}".format(
-                "protofilaments will not form a microtubule"))
+            raise Exception("Too many frayed rings, "
+                "protofilaments will not form a microtubule")
         n_filaments = 13
         frayed_angle = np.deg2rad(10.)
         max_frayed_rings = math.floor((360. + frayed_angle / 2.) / frayed_angle)
@@ -620,7 +618,7 @@ class MicrotubulesUtil:
         n_frayed_rings_plus = min(max_frayed_rings, n_frayed_rings_plus)
         positions, types = MicrotubulesUtil.get_microtubule_positions_and_types(
             n_filaments, n_rings, n_frayed_rings_plus, n_frayed_rings_minus,
-            frayed_angle, 10.86)
+            frayed_angle, 10.86, use_GTP)
         microtubule = simulation.add_topology("Microtubule", types,
             positions + position_offset)
         MicrotubulesUtil.add_edges(microtubule, n_filaments, n_rings,
@@ -715,7 +713,7 @@ class MicrotubulesUtil:
                             + ReaddyUtil.topology_to_string(topology))
         MicrotubulesUtil.add_tubulin_sites(topology, recipe, v_newB)
         MicrotubulesUtil.add_tubulin_sites(topology, recipe, v_newA)
-        recipe.change_topology_type("Microtubule#Growing2-{}".format(GTP_state))
+        recipe.change_topology_type(f"Microtubule#Growing2-{GTP_state}")
         return recipe
 
     @staticmethod
@@ -794,8 +792,8 @@ class MicrotubulesUtil:
         pos_newA = pos_endB + 4. * tangent
         polymer_indicesA = MicrotubulesUtil.increment_polymer_indices(MicrotubulesUtil.get_polymer_indices(
             topology.particle_type_of_vertex(v_endB)), [1, 0])
-        recipe.change_particle_type(v_newA, "tubulinA#GTP_bent{}".format(
-            MicrotubulesUtil.polymer_indices_to_string(polymer_indicesA)))
+        recipe.change_particle_type(
+            v_newA, f"tubulinA#GTP_bent{MicrotubulesUtil.polymer_indices_to_string(polymer_indicesA)}")
         recipe.change_particle_position(v_newA, pos_newA)
         MicrotubulesUtil.setup_sites(topology, recipe, v_new_sitesA,
             pos_newA, side, normal, tangent, "_GTP", "")
@@ -805,8 +803,8 @@ class MicrotubulesUtil:
         normal = ReaddyUtil.rotate(np.copy(normal), side, np.deg2rad(10.))
         pos_newB = pos_newA + 4. * tangent
         polymer_indicesB = MicrotubulesUtil.increment_polymer_indices(polymer_indicesA, [1, 0])
-        recipe.change_particle_type(v_newB, "tubulinB#GTP_bent{}".format(
-            MicrotubulesUtil.polymer_indices_to_string(polymer_indicesB)))
+        recipe.change_particle_type(
+            v_newB, f"tubulinB#GTP_bent{MicrotubulesUtil.polymer_indices_to_string(polymer_indicesB)}")
         recipe.change_particle_position(v_newB, pos_newB)
         MicrotubulesUtil.setup_sites(topology, recipe, v_new_sitesB,
             pos_newB, side, normal, tangent, "_GTP", "_GTP")
@@ -842,8 +840,7 @@ class MicrotubulesUtil:
         tubulins = MicrotubulesUtil.get_random_tubulin_neighbors(
             topology, [["B#","bent"], ["A#","bent"]], [[], []], GTP_state, [1, 0])
         if tubulins is None:
-            recipe.change_topology_type("{}#Fail-Shrink-{}".format(
-                topology.type, GTP_state))
+            recipe.change_topology_type(f"{topology.type}#Fail-Shrink-{GTP_state}")
             if parameters["verbose"]:
                 print("Shrink cancelled: Couldn't find "
                     "2 bent tubulin vertices to separate")
@@ -851,8 +848,7 @@ class MicrotubulesUtil:
         # are both fragments crosslinked to other filaments?
         if (MicrotubulesUtil.filament_is_crosslinked(topology, tubulins[0], -1) and
             MicrotubulesUtil.filament_is_crosslinked(topology, tubulins[1], 1)):
-            recipe.change_topology_type("{}#Fail-Shrink-{}".format(
-                topology.type, GTP_state))
+            recipe.change_topology_type(f"{topology.type}#Fail-Shrink-{GTP_state}")
             if parameters["verbose"]:
                 print("Shrink cancelled: both fragments "
                     f"(starting at {ReaddyUtil.vertex_to_string(topology, tubulins[0])} "
@@ -891,7 +887,7 @@ class MicrotubulesUtil:
             raise Exception(message + "\n" + ReaddyUtil.topology_to_string(topology))
         # make the new plus end reactive
         if not is_dimer[0]:
-            recipe.change_particle_type(site4, "site#4_{}".format(GTP_state))
+            recipe.change_particle_type(site4, f"site#4_{GTP_state}")
         # remove sites from the new minus end of the second fragment
         # if it's not a dimer and it and its plus neighbor
         # are both fully attached laterally
@@ -1027,7 +1023,7 @@ class MicrotubulesUtil:
                     topology, detaching_tubulins[i], [-1 if j == 0 else 1, 0])
                 if neighbor_tubulin is not None:
                     MicrotubulesUtil.check_add_tubulin_sites(topology, recipe, neighbor_tubulin)
-        recipe.change_topology_type("Microtubule#Detaching-{}".format(GTP_state))
+        recipe.change_topology_type(f"Microtubule#Detaching-{GTP_state}")
         return recipe
 
     @staticmethod
@@ -1120,10 +1116,8 @@ class MicrotubulesUtil:
                         if sites[j][1] is None or sites[j][2] is None:
                             raise Exception("A ring site was None!\n" 
                                             + ReaddyUtil.topology_to_string(topology))
-                        recipe.change_particle_type(sites[j][1], "site#1{}".format(
-                            site_state_ring))
-                        recipe.change_particle_type(sites[j][2], "site#2{}".format(
-                            site_state_ring))
+                        recipe.change_particle_type(sites[j][1], f"site#1{site_state_ring}")
+                        recipe.change_particle_type(sites[j][2], f"site#2{site_state_ring}")
                 if (j > 0 and (sites[j-1] is not None and sites[j] is not None) and
                     (added_sites[j-1] or added_sites[j])):
                     MicrotubulesUtil.connect_sites_between_tubulins(
@@ -1658,15 +1652,13 @@ class MicrotubulesUtil:
         add dimers to the ends of protofilaments
         """
         system.topologies.add_spatial_reaction(
-            "Start_Grow_GTP: Microtubule(site#4_GTP) + {}".format(
-            "Dimer(tubulinA#free) -> {}".format(
-            "Microtubule#Growing1-GTP(site#4--tubulinA#free)")),
+            "Start_Grow_GTP: Microtubule(site#4_GTP) + Dimer(tubulinA#free) -> "
+            "Microtubule#Growing1-GTP(site#4--tubulinA#free)",
             rate=rate_GTP, radius=0.5+reaction_distance
         )
         system.topologies.add_spatial_reaction(
-            "Start_Grow_GDP: Microtubule(site#4_GDP) + {}".format(
-            "Dimer(tubulinA#free) -> {}".format(
-            "Microtubule#Growing1-GDP(site#4--tubulinA#free)")),
+            "Start_Grow_GDP: Microtubule(site#4_GDP) + Dimer(tubulinA#free) -> "
+            "Microtubule#Growing1-GDP(site#4--tubulinA#free)",
             rate=rate_GDP, radius=0.5+reaction_distance
         )
         system.topologies.add_structural_reaction(
@@ -1761,27 +1753,23 @@ class MicrotubulesUtil:
         attach protofilaments laterally
         """
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GTP1: Microtubule(site#1_GTP) + {}".format(
-            "Microtubule(site#2_GTP) -> {}".format(
-            "Microtubule#Attaching(site#1--site#2) [self=true]")),
+            "Start_Attach_GTP1: Microtubule(site#1_GTP) + Microtubule(site#2_GTP) -> "
+            "Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GTP, radius=1.+reaction_distance
         )
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GTP2: Microtubule(site#1_GTP) + {}".format(
-            "Microtubule(site#2_GDP) -> {}".format(
-            "Microtubule#Attaching(site#1--site#2) [self=true]")),
+            "Start_Attach_GTP2: Microtubule(site#1_GTP) + Microtubule(site#2_GDP) -> "
+            "Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GTP, radius=1.+reaction_distance
         )
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GTP3: Microtubule(site#1_GDP) + {}".format(
-            "Microtubule(site#2_GTP) -> {}".format(
-            "Microtubule#Attaching(site#1--site#2) [self=true]")),
+            "Start_Attach_GTP3: Microtubule(site#1_GDP) + Microtubule(site#2_GTP) -> "
+            "Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GTP, radius=1.+reaction_distance
         )
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GDP: Microtubule(site#1_GDP) + {}".format(
-            "Microtubule(site#2_GDP) -> {}".format(
-            "Microtubule#Attaching(site#1--site#2) [self=true]")),
+            "Start_Attach_GDP: Microtubule(site#1_GDP) + Microtubule(site#2_GDP) -> "
+            "Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GDP, radius=1.+reaction_distance
         )
         system.topologies.add_structural_reaction(

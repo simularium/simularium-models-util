@@ -3,8 +3,6 @@
 
 import numpy as np
 import readdy
-import os
-from shutil import rmtree
 
 from ..common import ReaddyUtil
 from .microtubules_util import MicrotubulesUtil
@@ -31,7 +29,9 @@ class MicrotubulesSimulation:
         self.parameters = parameters
         self.microtubules_util = MicrotubulesUtil(self.parameters)
         self.create_microtubules_system()
-        self.create_microtubules_simulation(record, save_checkpoints)
+        self.simulation = ReaddyUtil.create_readdy_simulation(
+            self.system, self.parameters["n_cpu"], self.parameters["name"], 
+            self.parameters["total_steps"], record, save_checkpoints)
 
     def create_microtubules_system(self):
         """
@@ -101,29 +101,6 @@ class MicrotubulesSimulation:
         self.microtubules_util.add_detach_reaction(self.system)
         self.microtubules_util.add_hydrolyze_reaction(self.system)
         self.system.reactions.add("Cleanup_Sites: site#remove ->", rate=1e30)
-
-    def create_microtubules_simulation(self, record=False, save_checkpoints=False):
-        """
-        Create the ReaDDy simulation for microtubules
-        """
-        self.simulation = self.system.simulation("CPU")
-        self.simulation.kernel_configuration.n_threads = self.parameters["n_cpu"]
-        if record:
-            self.simulation.output_file = "{}.h5".format(self.parameters["name"])
-            if os.path.exists(self.simulation.output_file):
-                os.remove(self.simulation.output_file)
-            recording_stride = max(int(self.parameters["total_steps"] / 1000.), 1)
-            self.simulation.record_trajectory(recording_stride)
-            self.simulation.observe.topologies(recording_stride)
-            self.simulation.observe.particles(recording_stride)
-            self.simulation.observe.reaction_counts(1)
-            self.simulation.progress_output_stride = recording_stride
-        if save_checkpoints:
-            checkpoint_stride = max(int(self.parameters["total_steps"] / 10.), 1)
-            checkpoint_path = "checkpoints/{}/".format(self.parameters["name"])
-            if os.path.exists(checkpoint_path):
-                rmtree(checkpoint_path)
-            self.simulation.make_checkpoints(checkpoint_stride, checkpoint_path, 0)
 
     def add_microtubule_seed(self):
         """

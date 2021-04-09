@@ -114,7 +114,7 @@ def main():
     for file in os.listdir(dir_path):
         if file.endswith(".h5"):
             file_path = os.path.join(dir_path, file)
-            print("visualize {}".format(file_path))
+            print(f"visualize {file_path}")
             ActinVisualization.visualize_actin(file_path, args.box_size, [])
 
 if __name__ == '__main__':

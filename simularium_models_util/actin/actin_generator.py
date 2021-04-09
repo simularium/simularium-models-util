@@ -75,7 +75,7 @@ class ActinGenerator:
         # get actin types and edges
         actin_number = pointed_actin_number
         for i in range(len(monomer_positions)):
-            monomer_types.append("actin#ATP_{}".format(actin_number))
+            monomer_types.append(f"actin#ATP_{actin_number}")
             actin_number = ActinGenerator.get_actin_number(actin_number, 1)
             if len(monomer_positions) > 1 and i < len(monomer_positions) - 1:
                 monomer_edges.append((i, i + 1))
@@ -191,7 +191,7 @@ class ActinGenerator:
                     monomer_edges.append((current_index - 1, current_index))
             # add the actin monomer attached to the branch's arp2
             monomer_positions.append(fork_positions[0])
-            monomer_types.append("actin#ATP_{}".format(actin_number))
+            monomer_types.append(f"actin#ATP_{actin_number}")
             actin_number = ActinGenerator.get_actin_number(actin_number, 1)
             branch_indices.append(current_index)
             # get monomers pointed to barbed until next arp

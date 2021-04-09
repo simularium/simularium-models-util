@@ -9,27 +9,13 @@ import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData
+from .microtubules_util import MicrotubulesUtil
 
 
 class MicrotubulesVisualization():
     """
     visualize a microtubules trajectory in Simularium
     """
-
-    @staticmethod
-    def get_all_polymer_types(particle_type):
-        '''
-        gets a list of all polymer numbers
-        ("type1_1", "type1_2", "type1_3", "type2_1", ... "type3_3")
-        for type particle_type
-
-        returns list of types
-        '''
-        result = []
-        for x in range(1,4):
-            for y in range(1,4):
-                result.append("{}{}_{}".format(particle_type, x, y))
-        return result
 
     @staticmethod
     def get_mapping_for_all_polymer_types(types_mapping):
@@ -41,7 +27,7 @@ class MicrotubulesVisualization():
         '''
         result = {}
         for particle_type in types_mapping:
-            types = MicrotubulesVisualization.get_all_polymer_types(particle_type)
+            types = MicrotubulesUtil.get_all_polymer_tubulin_types(particle_type)
             for t in types:
                 result[t] = types_mapping[particle_type]
         return result
@@ -79,7 +65,7 @@ class MicrotubulesVisualization():
             "tubulinB#GDP_bent",
         }
         for group_type in group_types:
-            type_grouping[group_type] = MicrotubulesVisualization.get_all_polymer_types(group_type + "_")
+            type_grouping[group_type] = MicrotubulesUtil.get_all_polymer_tubulin_types(group_type + "_")
         # types to ignore
         ignore_types = [
             "site#out", "site#1", "site#1_GTP", "site#1_GDP", "site#1_detach",
@@ -118,7 +104,7 @@ def main():
     for file in os.listdir(dir_path):
         if file.endswith(".h5"):
             file_path = os.path.join(dir_path, file)
-            print("visualize {}".format(file_path))
+            print(f"visualize {file_path}")
             MicrotubulesVisualization.visualize_microtubules(file_path, args.box_size, [])
 
 if __name__ == '__main__':

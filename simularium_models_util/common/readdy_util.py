@@ -6,6 +6,8 @@ import numpy as np
 import scipy.linalg as linalg
 import random
 import readdy
+import os
+from shutil import rmtree
 
 
 class ReaddyUtil():
@@ -47,8 +49,8 @@ class ReaddyUtil():
         """
         v3 = np.cross(v2, v1)
         return np.array([[v1[0], v2[0], v3[0]],
-                        [v1[1], v2[1], v3[1]],
-                        [v1[2], v2[2], v3[2]]])
+                         [v1[1], v2[1], v3[1]],
+                         [v1[2], v2[2], v3[2]]])
 
     @staticmethod
     def get_orientation_from_positions(positions):
@@ -99,8 +101,7 @@ class ReaddyUtil():
         """
         get string with type and id for vertex
         """
-        return "{} ({})".format(topology.particle_type_of_vertex(vertex),
-                        topology.particle_id_of_vertex(vertex))
+        return f"{topology.particle_type_of_vertex(vertex)} ({topology.particle_id_of_vertex(vertex)})"
 
     @staticmethod
     def get_non_periodic_boundary_position(pos1, pos2, box_size):
@@ -111,7 +112,6 @@ class ReaddyUtil():
         for dim in range(3):
             if abs(pos2[dim] - pos1[dim]) > box_size / 2.:
                 pos2[dim] -= pos2[dim]/abs(pos2[dim]) * box_size
-
         return pos2
 
     @staticmethod
@@ -255,7 +255,6 @@ class ReaddyUtil():
         get a random vertex with a given type
         """
         vertices = ReaddyUtil.get_vertices_of_type(topology, vertex_type, exact_match)
-
         if len(vertices) == 0:
             return None
         return random.choice(vertices)
@@ -295,14 +294,14 @@ class ReaddyUtil():
         pt = topology.particle_type_of_vertex(vertex)
         if "#" not in pt:
             for f in range(len(add_flags)):
-                pt = "{}{}{}".format(pt, "_" if f > 0 else "#", add_flags[f])
+                pt = pt + ("_" if f > 0 else "#") + add_flags[f]
             recipe.change_particle_type(vertex, pt)
         else:
             flag_string = pt[pt.index("#")+1:]
             flags = flag_string.split("_")
             polymer_indices = ""
             if "tubulin" in pt and len(flags) > 1:
-                polymer_indices = "_{}_{}".format(flags[-2], flags[-1])
+                polymer_indices = f"_{flags[-2]}_{flags[-1]}"
                 flags = flags[:-2]
             for flag in remove_flags:
                 if flag in flags:
@@ -316,10 +315,10 @@ class ReaddyUtil():
             flags.sort(reverse=reverse_sort)
             flag_string = ""
             for f in range(len(flags)):
-                flag_string = "{}{}{}".format(
-                    flag_string, "_" if f > 0 else "", flags[f])
-            recipe.change_particle_type(vertex,
-                "{}#{}{}".format(pt[:pt.index("#")], flag_string, polymer_indices))
+                flag_string = flag_string + ("_" if f > 0 else "") + flags[f]
+            particle_type = pt[:pt.index("#")]
+            recipe.change_particle_type(
+                vertex, f"{particle_type}#{flag_string}{polymer_indices}")
 
     @staticmethod
     def calculate_polymer_number(number, offset):
@@ -369,10 +368,8 @@ class ReaddyUtil():
         reaction function for removing flags from a topology
         """
         recipe = readdy.StructuralReactionRecipe(topology)
-
         tt = topology.type
         recipe.change_topology_type(tt[:tt.index("#")])
-
         return recipe
 
     @staticmethod
@@ -391,14 +388,12 @@ class ReaddyUtil():
         """
         if len(polymer_offsets) < 2:
             return polymer_offsets
-
         offsets = copy.deepcopy(polymer_offsets)
         if offsets[0] != 0:
             if polymer_index_x + offsets[0] < 1:
                 offsets[1] -= 1
             elif polymer_index_x + offsets[0] > 3:
                 offsets[1] += 1
-
         return offsets
 
     @staticmethod
@@ -413,9 +408,10 @@ class ReaddyUtil():
         """
         types = []
         for t in particle_types:
-            types.append("{}{}".format(t,
-                ReaddyUtil.calculate_polymer_number(x, polymer_offset))
-            if polymer_offset is not None else t)
+            types.append(
+                (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offset)))
+                if polymer_offset is not None else t
+            )
         return types
 
     @staticmethod
@@ -430,10 +426,11 @@ class ReaddyUtil():
         """
         types = []
         for t in particle_types:
-            types.append("{}{}_{}".format(t,
-                ReaddyUtil.calculate_polymer_number(x, polymer_offsets[0]),
-                ReaddyUtil.calculate_polymer_number(y, polymer_offsets[1]))
-            if len(polymer_offsets) > 0 else t)
+            types.append(
+                (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offsets[0]))
+                + "_" + str(ReaddyUtil.calculate_polymer_number(y, polymer_offsets[1])))
+                if len(polymer_offsets) > 0 else t
+            )
         return types
 
     @staticmethod
@@ -472,7 +469,7 @@ class ReaddyUtil():
         (or arp23 dimer) at the boundaries when one joins a topology
         """
         pos = ReaddyUtil.get_random_boundary_position(box_size)
-        recipe.append_particle([v_neighbor], "{}#temp".format(monomer_type), pos)
+        recipe.append_particle([v_neighbor], f"{monomer_type}#temp", pos)
         if monomer_type == "arp":
             recipe.append_particle([v_neighbor], "arp#temp",
                 pos + 2 * arp23_radius * np.random.uniform(size=(3)))
@@ -486,7 +483,7 @@ class ReaddyUtil():
         """
         pos = ReaddyUtil.get_random_boundary_position(box_size)
         recipe.append_particle(
-            [v_neighbor], "destroyer#{}".format(monomer_type), pos)
+            [v_neighbor], f"destroyer#{monomer_type}", pos)
 
     @staticmethod
     def try_remove_edge(topology, recipe, vertex1, vertex2):
@@ -494,10 +491,9 @@ class ReaddyUtil():
         try to remove an edge
         """
         if not ReaddyUtil.vertices_are_connected(topology, vertex1, vertex2):
-            return False, "Tried to remove non-existent edge! {} -- {}".format(
-                ReaddyUtil.vertex_to_string(topology, vertex1),
+            return False, ("Tried to remove non-existent edge! " +
+                ReaddyUtil.vertex_to_string(topology, vertex1) + " -- " +
                 ReaddyUtil.vertex_to_string(topology, vertex2))
-
         recipe.remove_edge(vertex1, vertex2)
         return True, ""
 
@@ -512,7 +508,6 @@ class ReaddyUtil():
         for t1 in types1:
             for t2 in types2:
                 if (t1, t2) not in self.bond_pairs and (t2, t1) not in self.bond_pairs:
-
                     system.topologies.configure_harmonic_bond(
                         t1, t2, force_const, bond_length)
                     self.bond_pairs.append((t1, t2))
@@ -532,7 +527,6 @@ class ReaddyUtil():
                 for t3 in types3:
                     if ((t1, t2, t3) not in self.angle_triples and
                         (t3, t2, t1) not in self.angle_triples):
-
                         system.topologies.configure_harmonic_angle(
                             t1, t2, t3, force_const, angle)
                         self.angle_triples.append((t1, t2, t3))
@@ -554,7 +548,6 @@ class ReaddyUtil():
                     for t4 in types4:
                         if ((t1, t2, t3, t4) not in self.dihedral_quads and
                             (t4, t3, t2, t1) not in self.dihedral_quads):
-
                             system.topologies.configure_cosine_dihedral(
                                 t1, t2, t3, t4, force_const, 1., angle)
                             self.dihedral_quads.append((t1, t2, t3, t4))
@@ -573,7 +566,6 @@ class ReaddyUtil():
         for t1 in types1:
             for t2 in types2:
                 if (t1, t2) not in self.repulse_pairs and (t2, t1) not in self.repulse_pairs:
-
                     system.potentials.add_harmonic_repulsion(
                         t1, t2, force_const, distance)
                     self.repulse_pairs.append((t1, t2))
@@ -686,3 +678,56 @@ class ReaddyUtil():
                 ReaddyUtil.get_types_with_polymer_numbers_1D(particle_types4, x, polymer_offset4),
                 force_const, angle, system
             )
+
+    def add_polymer_dihedral_2D(
+        self, particle_types1, polymer_offsets1, particle_types2, polymer_offsets2,
+        particle_types3, polymer_offsets3, particle_types4, polymer_offsets4,
+        force_const, angle, system
+    ):
+        '''
+        adds a cosine dihedral between all polymer numbers
+            with offsets polymer_offsets
+            of types particle_types
+            with force constant force_const
+            and angle [radians]
+        '''
+        for x in range(1,4):
+            for y in range(1,4):
+                offsets1 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets1)
+                offsets2 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets2)
+                offsets3 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets3)
+                offsets4 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets4)
+                self.add_dihedral(
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types1, x, y, offsets1),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types2, x, y, offsets2),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types3, x, y, offsets3),
+                    ReaddyUtil.get_types_with_polymer_numbers_2D(particle_types4, x, y, offsets4),
+                    force_const, angle, system
+                )
+
+    @staticmethod
+    def create_readdy_simulation(
+        system, n_cpu, sim_name = "", total_steps = 0, record=False, save_checkpoints=False
+    ):
+        """
+        Create the ReaDDy simulation
+        """
+        simulation = system.simulation("CPU")
+        simulation.kernel_configuration.n_threads = n_cpu
+        if record:
+            simulation.output_file = sim_name + ".h5"
+            if os.path.exists(simulation.output_file):
+                os.remove(simulation.output_file)
+            recording_stride = max(int(total_steps / 1000.), 1)
+            simulation.record_trajectory(recording_stride)
+            simulation.observe.topologies(recording_stride)
+            simulation.observe.particles(recording_stride)
+            simulation.observe.reaction_counts(1)
+            simulation.progress_output_stride = recording_stride
+        if save_checkpoints:
+            checkpoint_stride = max(int(total_steps / 10.), 1)
+            checkpoint_path = f"checkpoints/{sim_name}/"
+            if os.path.exists(checkpoint_path):
+                rmtree(checkpoint_path)
+            simulation.make_checkpoints(checkpoint_stride, checkpoint_path, 0)
+        return simulation
