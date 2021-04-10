@@ -394,28 +394,26 @@ class ActinUtil:
         for fiber in range(n_fibers):
             direction = ReaddyUtil.get_random_unit_vector()
             monomers = ActinGenerator.get_monomers(
-                {
-                    0: FiberData(
+                [
+                    FiberData(
                         0,
                         [
                             CurvePointData(
                                 positions[fiber],
                                 direction,
-                                np.array([1, 0, 0]),
                                 0,
                             ),
                             CurvePointData(
                                 positions[fiber] + length * direction,
                                 direction,
-                                np.array([1, 0, 0]),
                                 length,
                             ),
                         ],
-                    )
-                }
+                    ),
+                ]
             )
             top = simulation.add_topology(
-                "Actin-Polymer", monomers[0][1], np.array(monomers[0][0])
+                "Actin-Polymer", monomers[0][0], np.array(monomers[0][1])
             )
             for e in monomers[0][2]:
                 top.get_graph().add_edge(e[0], e[1])
