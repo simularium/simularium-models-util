@@ -327,7 +327,7 @@ class ActinStructure:
 
     @staticmethod
     def orientation():
-        return ReaddyUtil.get_orientation(
+        return ReaddyUtil.get_orientation_from_positions(
             [
                 ActinStructure.mother_positions[2],
                 ActinStructure.mother_positions[3],
