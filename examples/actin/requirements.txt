@@ -1,3 +1,0 @@
-simularium_models_util[viz] @ git+https://github.com/allen-cell-animated/simularium-models-util.git
-pandas>=1.1.0
-openpyxl>=3.0
