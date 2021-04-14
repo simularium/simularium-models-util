@@ -27,7 +27,9 @@ def main():
     parameters.transpose()
     run_name = list(parameters)[0]
     parameters = parameters[run_name]
-    parameters["name"] = args.model_name + "_" + run_name
+    if not os.path.exists("outputs/"):
+        os.mkdir("outputs/")
+    parameters["name"] = "outputs/" + args.model_name + "_" + run_name
     actin_simulation = ActinSimulation(parameters, True, True)
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
