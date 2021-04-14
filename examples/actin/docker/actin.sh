@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "************ start"
 # copy parameter file
 case ${SIMULATION_TYPE} in
 	AWS)
@@ -18,20 +19,27 @@ case ${SIMULATION_TYPE} in
 	;;
 esac
 
+echo "************ pre run"
 # Run the model
 python actin.py input.xlsx $PARAMS_COL_INDEX ${PARAM_SET_NAME}
 EXIT_CODE=$?
+echo "************ post run"
 
 # Save output files
 if [ $EXIT_CODE -eq 0 ]
 then
 	case ${SIMULATION_TYPE} in
 		AWS)
-			aws s3 cp . $OUTPUT_FILE_PATH --recursive --exclude "*" --include "*.h5, *.simularium"
-		;;
+			aws s3 cp . $OUTPUT_FILE_PATH --recursive --exclude "*" --include "*.h5" --exclude "*/*"
+			aws s3 cp . $OUTPUT_FILE_PATH --recursive --exclude "*" --include "*.simularium" --exclude "*/*"
+            aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
+        ;;
 		LOCAL)
 			cp *.h5 $OUTPUT_FILE_PATH
 			cp *.simularium $OUTPUT_FILE_PATH
+			cp checkpoints "${OUTPUT_FILE_PATH}" -r
 		;;
 	esac
 fi
+
+echo "************ end"
