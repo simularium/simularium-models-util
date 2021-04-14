@@ -849,7 +849,7 @@ class ReaddyUtil:
             simulation.progress_output_stride = recording_stride
         if save_checkpoints:
             checkpoint_stride = max(int(total_steps / 10.0), 1)
-            checkpoint_path = f"checkpoints/{sim_name}/"
+            checkpoint_path = f"checkpoints/{os.path.basename(sim_name)}/"
             if os.path.exists(checkpoint_path):
                 rmtree(checkpoint_path)
             simulation.make_checkpoints(checkpoint_stride, checkpoint_path, 0)
