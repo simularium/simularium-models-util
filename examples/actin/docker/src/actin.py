@@ -6,11 +6,11 @@ import sys
 import pandas
 import argparse
 import psutil
-from time import sleep
 
 from simularium_models_util.actin import ActinSimulation
 from simularium_models_util.visualization import ActinVisualization
 from simularium_models_util import RepeatedTimer
+
 
 def report_memory_usage():
     print(f"RAM percent used: {psutil.virtual_memory()[2]}")
@@ -38,7 +38,7 @@ def main():
     actin_simulation = ActinSimulation(parameters, True, True)
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
-    rt = RepeatedTimer(1, report_memory_usage)
+    rt = RepeatedTimer(600, report_memory_usage) # every 10 min
     try:
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])

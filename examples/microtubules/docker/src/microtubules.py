@@ -5,10 +5,15 @@ import os
 import sys
 import pandas
 import argparse
+import psutil
 
 from simularium_models_util.microtubules import MicrotubulesSimulation
 from simularium_models_util.visualization import MicrotubulesVisualization
+from simularium_models_util import RepeatedTimer
 
+
+def report_memory_usage():
+    print(f"RAM percent used: {psutil.virtual_memory()[2]}")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -33,10 +38,14 @@ def main():
     mt_simulation = MicrotubulesSimulation(parameters, True, True)
     mt_simulation.add_random_tubulin_dimers()
     mt_simulation.add_microtubule_seed()
-    mt_simulation.simulation.run(
-        int(parameters["total_steps"]), parameters["timestep"])
-    MicrotubulesVisualization.visualize_microtubules(
-        "{}.h5".format(parameters["name"]), parameters["box_size"], [])
+    rt = RepeatedTimer(600, report_memory_usage) # every 10 min
+    try:
+        mt_simulation.simulation.run(
+            int(parameters["total_steps"]), parameters["timestep"])
+        MicrotubulesVisualization.visualize_microtubules(
+            "{}.h5".format(parameters["name"]), parameters["box_size"], [])
+    finally:
+        rt.stop()
     sys.exit(0)
 
 
