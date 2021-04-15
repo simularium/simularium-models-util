@@ -1,14 +1,14 @@
 {
-    "jobDefinitionName": "blairl_readdy-actin-v1-actin1",
+    "jobDefinitionName": "blairl_readdy-kinesin-v1-template",
     "type": "container",
     "containerProperties": {
-        "image": "108503617402.dkr.ecr.us-west-2.amazonaws.com/blairl/readdy-actin",
+        "image": "108503617402.dkr.ecr.us-west-2.amazonaws.com/blairl/readdy-kinesin",
         "vcpus": 4,
-        "memory": 7000,
+        "memory": 1000,
         "environment": [
             {"name": "SIMULATION_TYPE", "value": "AWS"},
             {"name": "S3_INPUT_URL", "value": "s3://readdy-working-bucket/"},
-            {"name": "PARAM_SET_NAME", "value": "actin1"}
+            {"name": "PARAM_SET_NAME", "value": "template"}
         ],
         "jobRoleArn": "arn:aws:iam::108503617402:role/BatchJobRole"
     }

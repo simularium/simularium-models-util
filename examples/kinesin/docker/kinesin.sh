@@ -27,9 +27,15 @@ if [ $EXIT_CODE -eq 0 ]
 then
 	case ${SIMULATION_TYPE} in
 		AWS)
-			aws s3 cp . $OUTPUT_FILE_PATH --recursive --exclude "*" --include "*.h5, *.simularium"
-		;;
+            aws s3 sync ./outputs $OUTPUT_FILE_PATH
+            aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
+        ;;
 		LOCAL)
+            ls -a
+			cp checkpoints "${OUTPUT_FILE_PATH}" -r
+            cd outputs
+            echo "outputs/"
+            ls -a
 			cp *.h5 $OUTPUT_FILE_PATH
 			cp *.simularium $OUTPUT_FILE_PATH
 		;;

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo "************ start"
 # copy parameter file
 case ${SIMULATION_TYPE} in
 	AWS)
@@ -19,11 +18,9 @@ case ${SIMULATION_TYPE} in
 	;;
 esac
 
-echo "************ pre run"
 # Run the model
 python actin.py input.xlsx $PARAMS_COL_INDEX ${PARAM_SET_NAME}
 EXIT_CODE=$?
-echo "************ finished run"
 
 # Save output files
 if [ $EXIT_CODE -eq 0 ]

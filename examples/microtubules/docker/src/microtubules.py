@@ -27,7 +27,9 @@ def main():
     parameters.transpose()
     run_name = list(parameters)[0]
     parameters = parameters[run_name]
-    parameters["name"] = args.model_name + "_" + run_name
+    if not os.path.exists("outputs/"):
+        os.mkdir("outputs/")
+    parameters["name"] = "outputs/" + args.model_name + "_" + run_name
     mt_simulation = MicrotubulesSimulation(parameters, True, True)
     mt_simulation.add_random_tubulin_dimers()
     mt_simulation.add_microtubule_seed()
