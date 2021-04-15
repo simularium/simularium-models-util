@@ -31,11 +31,8 @@ then
             aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
         ;;
 		LOCAL)
-            ls -a
 			cp checkpoints "${OUTPUT_FILE_PATH}" -r
             cd outputs
-            echo "outputs/"
-            ls -a
 			cp *.h5 $OUTPUT_FILE_PATH
 			cp *.simularium $OUTPUT_FILE_PATH
 		;;
