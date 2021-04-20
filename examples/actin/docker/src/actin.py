@@ -12,8 +12,13 @@ from simularium_models_util.visualization import ActinVisualization
 from simularium_models_util import RepeatedTimer
 
 
-def report_memory_usage():
-    print(f"RAM percent used: {psutil.virtual_memory()[2]}")
+def report_hardware_usage():
+    avg_load =  [x / psutil.cpu_count() * 100 for x in psutil.getloadavg()]
+    print(f"AVG load: {avg_load[0]} last min, {avg_load[1]} last 5 min, {avg_load[2]} last 15 min\n"
+          f"RAM % used: {psutil.virtual_memory()[2]}\n"
+          f"CPU % used: {psutil.cpu_percent()}\n"
+          f"Disk % used: {psutil.disk_usage('/').percent}\n")
+          
 
 def main():
     parser = argparse.ArgumentParser(
@@ -38,7 +43,7 @@ def main():
     actin_simulation = ActinSimulation(parameters, True, True)
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
-    rt = RepeatedTimer(600, report_memory_usage) # every 10 min
+    rt = RepeatedTimer(300, report_hardware_usage) # every 5 min
     try:
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])
