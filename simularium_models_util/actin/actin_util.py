@@ -1059,8 +1059,8 @@ class ActinUtil:
         """
         v_arp2 = ActinUtil.get_random_arp2(topology, with_ATP, True)
         if v_arp2 is None:
+            state = "ATP" if with_ATP else "ADP"
             if parameters["verbose"]:
-                state = "ATP" if with_ATP else "ADP"
                 print(f"Couldn't find arp2 with {state}")
             recipe.change_topology_type(f"Actin-Polymer#Fail-Debranch-{state}")
             return recipe
