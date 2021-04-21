@@ -1243,8 +1243,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_random_arp2</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">with_ATP</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;ATP&quot;</span> <span class="k">if</span> <span class="n">with_ATP</span> <span class="k">else</span> <span class="s2">&quot;ADP&quot;</span>
             <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;ATP&quot;</span> <span class="k">if</span> <span class="n">with_ATP</span> <span class="k">else</span> <span class="s2">&quot;ADP&quot;</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find arp2 with </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actin-Polymer#Fail-Debranch-</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
