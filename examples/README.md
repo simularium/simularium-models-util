@@ -10,22 +10,24 @@ To run a docker container (named `readdy-actin-test`) using the image LOCALLY:<b
 `docker run -v [path to this dir]/[model]/:/working/ -e SIMULATION_TYPE='LOCAL' -e PARAM_SET_NAME='template' -e JOB_ARRAY_INDEX=0 --name readdy-actin-test readdy-actin:v1.0`
 
 To run on AWS Batch:<br/>
-1. If this is the first time, set up your access keys. Go to AWS IAM console and download keys for your user as json. To set up your keys, use `aws configure`
+1. If this is the first time, install the AWS command line tools, use `pip install awscli`
 
-2. In the AWS ECR console, create a repository (in this example called `blairl/readdy-actin`)
+2. If this is the first time, set up your access keys. Go to AWS IAM console and download keys for your user as json. To set up your keys, use `aws configure`
 
-2. Log in to ECR/Docker:<br/>`aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 108503617402.dkr.ecr.us-west-2.amazonaws.com`
+3. In the AWS ECR console, create a repository (in this example called `blairl/readdy-actin`)
 
-3. Add the repo's 'latest' tag to docker image:<br/>
+4. Log in to ECR/Docker:<br/>`aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 108503617402.dkr.ecr.us-west-2.amazonaws.com`
+
+5. Add the repo's 'latest' tag to docker image:<br/>
 `docker tag readdy-actin:v1.0 108503617402.dkr.ecr.us-west-2.amazonaws.com/blairl/readdy-actin:latest`
 
-4. Push the docker image to the repo in ECR:<br/>
+6. Push the docker image to the repo in ECR:<br/>
 `docker push 108503617402.dkr.ecr.us-west-2.amazonaws.com/blairl/readdy-actin:latest`
 
-5. Create a job definition in AWS Batch:<br/>
+7. Create a job definition in AWS Batch:<br/>
 `aws batch register-job-definition --cli-input-json file://[path to this dir]/[model]/[model]_job_definition.json`
 
-6. Upload the parameters sheet (e.g. `template.xlsx`) to AWS S3 (or do this in the AWS S3 console):<br/>
+8. Upload the parameters sheet (e.g. `template.xlsx`) to AWS S3 (or do this in the AWS S3 console):<br/>
 `aws s3 cp [path to this dir]/[model]/template.xlsx s3://readdy-working-bucket/parameters/template.xlsx`
 
-7. Go to the AWS Batch console and submit a new job.
+9. Go to the AWS Batch console and submit a new job.
