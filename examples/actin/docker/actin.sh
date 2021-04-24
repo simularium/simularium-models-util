@@ -5,7 +5,7 @@ case ${SIMULATION_TYPE} in
 	AWS)
 		INPUT_FILE_PATH="${S3_INPUT_URL}parameters/"
 		OUTPUT_FILE_PATH="${S3_INPUT_URL}outputs/"
-        PARAMS_COL_INDEX=$AWS_BATCH_JOB_ARRAY_INDEX:-0}
+        PARAMS_COL_INDEX=${AWS_BATCH_JOB_ARRAY_INDEX:-0}
 		INPUT_FILE_NAME="${PARAM_SET_NAME}.xlsx"
 		aws s3 cp $INPUT_FILE_PATH$INPUT_FILE_NAME input.xlsx
 	;;
@@ -20,9 +20,10 @@ esac
 LOCAL_LOGS_PATH="logs/${PARAM_SET_NAME}_${PARAMS_COL_INDEX}_logs.txt"
 mkdir ./logs
 touch $LOCAL_LOGS_PATH
+PARAMS_COL_INDEX=$((${PARAMS_COL_INDEX} + 1))
 
 # Run the model
-python actin.py input.xlsx $((${PARAMS_COL_INDEX} + 1)) ${PARAM_SET_NAME} > $LOCAL_LOGS_PATH
+python actin.py input.xlsx $PARAMS_COL_INDEX $PARAM_SET_NAME > $LOCAL_LOGS_PATH
 EXIT_CODE=$?
 
 # Save output files

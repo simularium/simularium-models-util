@@ -7,7 +7,7 @@ To build the docker image (named `readdy-actin` and tagged `v1.0`):<br/>
 `docker build -t readdy-actin:v1.0 ./`
 
 To run a docker container (named `readdy-actin-test`) using the image LOCALLY:<br/>
-`docker run -v [path to this dir]/[model]/:/working/ -e SIMULATION_TYPE='LOCAL' -e PARAM_SET_NAME='template' -e JOB_ARRAY_INDEX=0 --name readdy-actin-test readdy-actin:v1.0`
+`docker run --rm -v [path to this dir]/[model]/:/working/ -e SIMULATION_TYPE='LOCAL' -e PARAM_SET_NAME='template' -e JOB_ARRAY_INDEX=0 --name readdy-actin-test readdy-actin:v1.0`
 
 To run on AWS Batch:<br/>
 1. If this is the first time, install the AWS command line tools, use `pip install awscli`
