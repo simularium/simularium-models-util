@@ -17,27 +17,6 @@ class ActinVisualization:
     """
 
     @staticmethod
-    def generate_plots(path_to_readdy_h5, box_size):
-        """
-        Use the ActinAnalyzer to generate plots of observables
-        """
-        analyzer = ActinAnalyzer(path_to_readdy_h5, box_size)
-        bound_actin_ratio = analyzer.analyze_ratio_of_filamentous_to_total_actin()
-        ATP_actin_ratio = analyzer.analyze_ratio_of_ATP_actin_to_total_actin()
-        daughter_ratio = analyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin()
-        mother_lengths = analyzer.analyze_mother_filament_lengths()
-        daughter_lengths = analyzer.analyze_daughter_filament_lengths()
-        bound_arp_ratio = analyzer.analyze_ratio_of_bound_to_total_arp23()
-        capped_ratio = analyzer.analyze_ratio_of_capped_ends_to_total_ends()
-        branch_angles = analyzer.analyze_branch_angles()
-        short_helix_pitches = analyzer.analyze_short_helix_pitches()
-        long_helix_pitches = analyzer.analyze_long_helix_pitches()
-        straightness = analyzer.analyze_filament_straightness()
-        reactions = analyzer.analyze_all_reaction_events_over_time()
-        free_actin = analyzer.analyze_free_actin_concentration_over_time()
-        # TODO compose into plots
-
-    @staticmethod
     def visualize_actin(path_to_readdy_h5, box_size, plots):
         """
         visualize an actin trajectory in Simularium
