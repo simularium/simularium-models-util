@@ -85,12 +85,16 @@ class ActinStructure:
         )
 
     @staticmethod
-    def actin_distance_from_axis():  # was 1.59 nm
+    def vector_to_axis(): 
         mother_fiber = ActinStructure.mother_fiber()
         axis_position = mother_fiber.get_nearest_position(
-            ActinStructure.mother_positions[0]
+            ActinStructure.mother_positions[3]
         )
-        return np.linalg.norm(axis_position - ActinStructure.mother_positions[0])
+        return axis_position - ActinStructure.mother_positions[3]
+
+    @staticmethod
+    def actin_distance_from_axis():  # was 1.59 nm
+        return np.linalg.norm(ActinStructure.vector_to_axis())
 
     @staticmethod
     def branch_positions():

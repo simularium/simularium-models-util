@@ -7,6 +7,7 @@ import scipy.linalg as linalg
 import random
 import readdy
 import os
+import sys
 from shutil import rmtree
 
 
@@ -28,15 +29,17 @@ class ReaddyUtil:
         return v / np.linalg.norm(v)
 
     @staticmethod
-    def get_angle_between_vectors(v1, v2):
+    def get_angle_between_vectors(v1, v2, in_degrees=False):
         """
-        get the angle between two vectors in radians
+        get the angle between two vectors 
+        in radians unless in_degrees is True
         """
-        return np.arccos(
+        result = np.arccos(
             np.clip(
                 np.dot(ReaddyUtil.normalize(v1), ReaddyUtil.normalize(v2)), -1.0, 1.0
             )
         )
+        return result if not in_degrees else np.rad2deg(result)
 
     @staticmethod
     def rotate(v, axis, angle):
@@ -152,6 +155,17 @@ class ReaddyUtil:
             returns unitless number
         """
         return int(round(C * 1e-30 * 6.022e23 * np.power(dim, 3.0)))
+
+    @staticmethod
+    def calculate_concentration(n, dim):
+        """
+        calculates the concentration for a species
+            with number of particles n
+            in cube container with dimensions dim [nm]
+
+            returns concentration [uM]
+        """
+        return n / (1e-30 * 6.022e23 * np.power(dim, 3.))
 
     @staticmethod
     def get_vertex_of_type(topology, vertex_type, exact_match):
@@ -854,3 +868,123 @@ class ReaddyUtil:
                 rmtree(checkpoint_path)
             simulation.make_checkpoints(checkpoint_stride, checkpoint_path, 0)
         return simulation
+
+    @staticmethod
+    def shape_frame_edge_data(time_index, topology_records):
+        """
+        Get all the edges at the given time index as (particle1 id, particle2 id)
+        """
+        result = []
+        for top in topology_records[time_index]:
+            for e1, e2 in top.edges:
+                if e1 <= e2:
+                    ix1 = top.particles[e1]
+                    ix2 = top.particles[e2]
+                    result.append((ix1, ix2))
+        return result
+
+    @staticmethod
+    def shape_frame_particle_data(time_index, topology_records, ids, types, positions, traj):
+        """
+        Get a dictionary mapping particle id to data for each particle:
+            [particle id] : (particle type, list of neighbor particle ids, particle position)
+        """
+        edges = ReaddyUtil.shape_frame_edge_data(time_index, topology_records)
+        result = {}
+        for p in range(len(ids[time_index])):
+            p_id = ids[time_index][p]
+            p_type = traj.species_name(types[time_index][p])
+            p_pos = positions[time_index][p]
+            neighbor_ids = []
+            for edge in edges:
+                if p_id == edge[0]:
+                    neighbor_ids.append(edge[1])
+                elif p_id == edge[1]:
+                    neighbor_ids.append(edge[0])
+            result[p_id] = (p_type, neighbor_ids, np.array([p_pos[0], p_pos[1], p_pos[2]]))
+        return result
+
+    @staticmethod
+    def shape_particle_data(min_time, max_time, time_inc, times, topology_records, ids, types, positions, traj):
+        """
+        For each time point, get a dictionary mapping particle id to data for each particle
+        """
+        result = []
+        for t in range(len(times)):
+            if t >= min_time and t <= max_time and t % time_inc == 0:
+                result.append(ReaddyUtil.shape_frame_particle_data(
+                    t, topology_records, ids, types, positions, traj))
+                sys.stdout.write('\r')
+                p = 100. * (t + 1) / float(max_time - min_time)
+                sys.stdout.write("Shaping data for analysis [{}{}] {}%".format(
+                    '='*int(round(p)), ' '*int(100. - round(p)), round(10. * p) / 10.))
+                sys.stdout.flush()
+        return result
+
+    @staticmethod
+    def vector_is_invalid(v):
+        """
+        check if any of a 3D vector's components are NaN
+        """
+        return math.isnan(v[0]) or math.isnan(v[1]) or math.isnan(v[2])
+
+    @staticmethod
+    def analyze_frame_get_count_of_topologies_of_type(time_index, topology_type, topology_records, traj):
+        """
+        Get the number of topologies of a given type at the given time index
+        """
+        result = 0
+        for top in topology_records[time_index]:
+            if traj.topology_type_name(top.type) == topology_type:
+                result += 1
+        return result
+
+    @staticmethod
+    def analyze_frame_get_ids_for_types(particle_types, frame_particle_data):
+        """
+        Get a list of ids for all the particles with particle type 
+        in the given list of types in the given frame of data
+        """
+        result = []
+        for p_id in frame_particle_data:
+            if frame_particle_data[p_id][0] in particle_types:
+                result.append(p_id)
+        return result
+
+    @staticmethod
+    def analyze_frame_get_id_for_neighbor_of_types(particle_id, neighbor_types, frame_particle_data, exclude_ids=[]):
+        """
+        Get the id for the first neighbor with one of the neighbor_types 
+        in the given frame of data
+        """
+        for n_id in frame_particle_data[particle_id][1]:
+            if n_id in exclude_ids:
+                continue
+            nt = frame_particle_data[n_id][0]
+            if nt in neighbor_types:
+                return n_id
+        return None
+
+    @staticmethod
+    def analyze_frame_get_chain_of_types(
+        start_particle_id, neighbor_types, frame_particle_data, chain_length=0, last_particle_id=None, result=[]
+    ):
+        """
+        Starting from the particle with start_particle_id,
+        get ids for a chain of particles with neighbor_types in the given frame of data,
+        avoiding the particle with last_particle_id,
+        if chain_length = 0, return entire chain
+        """
+        n_id = ReaddyUtil.analyze_frame_get_id_for_neighbor_of_types(
+            start_particle_id, neighbor_types, frame_particle_data, 
+            [last_particle_id] if last_particle_id is not None else []
+        )
+        if n_id is None:
+            return result
+        result.append(n_id)
+        if chain_length == 1:
+            return result
+        return ReaddyUtil.analyze_frame_get_chain_of_types(
+            n_id, neighbor_types, frame_particle_data, 
+            chain_length - 1 if chain_length > 0 else 0, start_particle_id, result
+        )
