@@ -107,20 +107,36 @@ class ActinUtil:
         )
 
     @staticmethod
-    def get_position_for_new_vertex(neighbor_positions, offset_vector):
+    def get_actin_axis_position(positions):
         """
-        get the offset vector in the local space for the actin at neighbor_positions[1]
-        neighbor_positions = [
+        get the position on the filament axis closest to an actin
+        positions = [
             previous actin position,
             middle actin position,
             next actin position
         ]
         """
-        rotation = ActinUtil.get_actin_rotation(neighbor_positions)
+        rotation = ActinUtil.get_actin_rotation(positions)
+        if rotation is None:
+            return None
+        vector_to_axis_local = np.squeeze(np.array(np.dot(rotation, ActinStructure.vector_to_axis())))
+        return positions[1] + vector_to_axis_local
+
+    @staticmethod
+    def get_position_for_new_vertex(positions, offset_vector):
+        """
+        get the offset vector in the local space for the actin at positions[1]
+        positions = [
+            previous actin position,
+            middle actin position,
+            next actin position
+        ]
+        """
+        rotation = ActinUtil.get_actin_rotation(positions)
         if rotation is None:
             return None
         vector_to_new_pos = np.squeeze(np.array(np.dot(rotation, offset_vector)))
-        return (neighbor_positions[1] + vector_to_new_pos).tolist()
+        return (positions[1] + vector_to_new_pos).tolist()
 
     @staticmethod
     def get_prev_branch_actin(topology, vertex, last_vertex_id, max_edges):
