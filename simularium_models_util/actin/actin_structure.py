@@ -85,7 +85,7 @@ class ActinStructure:
         )
 
     @staticmethod
-    def vector_to_axis(): 
+    def vector_to_axis():
         mother_fiber = ActinStructure.mother_fiber()
         axis_position = mother_fiber.get_nearest_position(
             ActinStructure.mother_positions[3]

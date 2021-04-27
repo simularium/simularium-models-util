@@ -2276,14 +2276,14 @@ class MicrotubulesUtil:
         add dimers to the ends of protofilaments
         """
         system.topologies.add_spatial_reaction(
-            "Start_Grow_GTP: Microtubule(site#4_GTP) + Dimer(tubulinA#free) -> "
-            "Microtubule#Growing1-GTP(site#4--tubulinA#free)",
+            "Start_Grow_GTP: Microtubule(site#4_GTP) + Dimer(tubulinA#free) -> \
+            Microtubule#Growing1-GTP(site#4--tubulinA#free)",
             rate=rate_GTP,
             radius=0.5 + reaction_distance,
         )
         system.topologies.add_spatial_reaction(
-            "Start_Grow_GDP: Microtubule(site#4_GDP) + Dimer(tubulinA#free) -> "
-            "Microtubule#Growing1-GDP(site#4--tubulinA#free)",
+            "Start_Grow_GDP: Microtubule(site#4_GDP) + Dimer(tubulinA#free) -> \
+            Microtubule#Growing1-GDP(site#4--tubulinA#free)",
             rate=rate_GDP,
             radius=0.5 + reaction_distance,
         )
@@ -2379,26 +2379,26 @@ class MicrotubulesUtil:
         attach protofilaments laterally
         """
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GTP1: Microtubule(site#1_GTP) + Microtubule(site#2_GTP) -> "
-            "Microtubule#Attaching(site#1--site#2) [self=true]",
+            "Start_Attach_GTP1: Microtubule(site#1_GTP) + Microtubule(site#2_GTP) -> \
+            Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GTP,
             radius=1.0 + reaction_distance,
         )
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GTP2: Microtubule(site#1_GTP) + Microtubule(site#2_GDP) -> "
-            "Microtubule#Attaching(site#1--site#2) [self=true]",
+            "Start_Attach_GTP2: Microtubule(site#1_GTP) + Microtubule(site#2_GDP) -> \
+            Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GTP,
             radius=1.0 + reaction_distance,
         )
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GTP3: Microtubule(site#1_GDP) + Microtubule(site#2_GTP) -> "
-            "Microtubule#Attaching(site#1--site#2) [self=true]",
+            "Start_Attach_GTP3: Microtubule(site#1_GDP) + Microtubule(site#2_GTP) -> \
+            Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GTP,
             radius=1.0 + reaction_distance,
         )
         system.topologies.add_spatial_reaction(
-            "Start_Attach_GDP: Microtubule(site#1_GDP) + Microtubule(site#2_GDP) -> "
-            "Microtubule#Attaching(site#1--site#2) [self=true]",
+            "Start_Attach_GDP: Microtubule(site#1_GDP) + Microtubule(site#2_GDP) -> \
+            Microtubule#Attaching(site#1--site#2) [self=true]",
             rate=rate_GDP,
             radius=1.0 + reaction_distance,
         )

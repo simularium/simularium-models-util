@@ -43,7 +43,7 @@ def main():
         kinesin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])
         KinesinVisualization.visualize_kinesin(
-            "{}.h5".format(parameters["name"]), parameters["box_size"], [])
+            f"{parameters["name"]}.h5", parameters["box_size"], [])
     finally:
         rt.stop()
     sys.exit(0)

@@ -119,10 +119,9 @@ class KinesinUtil:
             )
         if parameters["verbose"]:
             print(
-                "{} ++ {}".format(
-                    ReaddyUtil.vertex_to_string(topology, motor),
-                    ReaddyUtil.vertex_to_string(topology, tubulin),
-                )
+                ReaddyUtil.vertex_to_string(topology, motor)
+                + " ++ "
+                + ReaddyUtil.vertex_to_string(topology, tubulin)
             )
         tubulin_pos = ReaddyUtil.get_vertex_position(topology, tubulin)
         # TODO calculate position offset from tubulin neighbors
@@ -432,22 +431,21 @@ class KinesinUtil:
         for n in polymer_numbers:
             # first motor binding
             system.topologies.add_spatial_reaction(
-                "Bind_Tubulin#ADP-ADP{}: Kinesin(motor#ADP) + Microtubule(tubulinB#{}) -> \
-                Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_{})".format(
-                    i, n, n
-                ),
+                f"Bind_Tubulin#ADP-ADP{i}: Kinesin(motor#ADP) + Microtubule(tubulinB#{n}) -> \
+                Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_{n})",
                 rate=rate,
                 radius=4.0 + reaction_distance,
             )
             # # second motor binding
             # for s in kinesin_states:
             #     system.topologies.add_spatial_reaction(
-            #         "Bind_Tubulin#{}{}: {}".format(s, i,
-            #         "Microtubule-Kinesin#{}(motor#ADP) + {}".format(s,
-            #         "Microtubule-Kinesin#{}(tubulinB#{}) -> {}".format(s, n,
-            #         "Microtubule-Kinesin#Binding(motor#new--{}".format(
-            #         "tubulinB#bound_{}) [self=true]".format(n))))),
-            #         rate=rate, radius=4.+reaction_distance
+            #         f"Bind_Tubulin#{s}{i}: \
+            #         Microtubule-Kinesin#{s}(motor#ADP) + \
+            #         Microtubule-Kinesin#{s}(tubulinB#{n}) -> \
+            #         Microtubule-Kinesin#Binding(motor#new--\
+            #         tubulinB#bound_{n}) [self=true]",
+            #         rate=rate,
+            #         radius=4.0 + reaction_distance,
             #     )
             i += 1
         # structural reaction
@@ -466,8 +464,8 @@ class KinesinUtil:
         kinesin_states = ["ADP-apo", "ATP-apo", "apo-apo"]
         for state in kinesin_states:
             system.topologies.add_structural_reaction(
-                "Bind_ATP#{}".format(state),
-                topology_type="Microtubule-Kinesin#{}".format(state),
+                f"Bind_ATP#{state}",
+                topology_type=f"Microtubule-Kinesin#{state}",
                 reaction_function=KinesinUtil.reaction_function_motor_bind_ATP,
                 rate_function=KinesinUtil.rate_function_motor_bind_ATP,
             )
@@ -480,8 +478,8 @@ class KinesinUtil:
         kinesin_states = ["ADP-ATP", "ATP-ATP", "ATP-apo"]
         for state in kinesin_states:
             system.topologies.add_structural_reaction(
-                "Release_Tubulin#{}".format(state),
-                topology_type="Microtubule-Kinesin#{}".format(state),
+                f"Release_Tubulin#{state}",
+                topology_type=f"Microtubule-Kinesin#{state}",
                 reaction_function=KinesinUtil.reaction_function_motor_release_tubulin,
                 rate_function=KinesinUtil.rate_function_motor_release_tubulin,
             )
