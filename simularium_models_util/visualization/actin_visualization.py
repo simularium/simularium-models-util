@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import os
-import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import MetaData, UnitData
-
+from simulariumio import MetaData, UnitData, ScatterPlotData
 from ..actin import ActinAnalyzer
 
 
@@ -15,6 +12,46 @@ class ActinVisualization:
     """
     visualize an actin trajectory in Simularium
     """
+
+    @staticmethod
+    def get_bound_actin_plot(analyzer):
+        """
+        Add a plot of percent actin in filaments
+        """
+        return ScatterPlotData(
+            title="Filamentous actin",
+            xaxis_title="Time (ns)",
+            yaxis_title="Bound actin (%)",
+            xtrace=analyzer.times,
+            ytraces={
+                "Bound actin": 100.0
+                * np.array(analyzer.analyze_ratio_of_filamentous_to_total_actin()),
+            },
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def generate_plots(path_to_readdy_h5, box_size):
+        """
+        Use an ActinAnalyzer to generate plots of observables
+        """
+        analyzer = ActinAnalyzer(path_to_readdy_h5, box_size)
+        return [
+            ActinVisualization.get_bound_actin_plot(analyzer),
+        ]
+        # ATP_actin_ratio = analyzer.analyze_ratio_of_ATP_actin_to_total_actin()
+        # daughter_ratio = analyzer.analyze_ratio_of_daughter_filament_actin
+        # _to_total_filamentous_actin()
+        # mother_lengths = analyzer.analyze_mother_filament_lengths()
+        # daughter_lengths = analyzer.analyze_daughter_filament_lengths()
+        # bound_arp_ratio = analyzer.analyze_ratio_of_bound_to_total_arp23()
+        # capped_ratio = analyzer.analyze_ratio_of_capped_ends_to_total_ends()
+        # branch_angles = analyzer.analyze_branch_angles()
+        # short_helix_pitches = analyzer.analyze_short_helix_pitches()
+        # long_helix_pitches = analyzer.analyze_long_helix_pitches()
+        # straightness = analyzer.analyze_filament_straightness()
+        # reactions = analyzer.analyze_all_reaction_events_over_time()
+        # free_actin = analyzer.analyze_free_actin_concentration_over_time()
 
     @staticmethod
     def visualize_actin(path_to_readdy_h5, box_size, plots):
@@ -89,8 +126,6 @@ class ActinVisualization:
             "actin#branch_barbed": ["actin#branch_barbed_1"],
             "actin#branch_barbed_ATP": ["actin#branch_barbed_ATP_1"],
         }
-        # plots
-        plots.append(ActinVisualization.generate_plots(path_to_readdy_h5, box_size))
         # convert
         data = ReaddyData(
             meta_data=MetaData(
@@ -106,28 +141,3 @@ class ActinVisualization:
         )
         converter = ReaddyConverter(data)
         converter.write_JSON(path_to_readdy_h5)
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="Parses an actin hdf5 (*.h5) trajectory file produced\
-         by the ReaDDy software and converts it into the Simularium\
-         visualization-data-format"
-    )
-    parser.add_argument(
-        "dir_path",
-        help="the file path of the directory\
-         containing the trajectories to parse",
-    )
-    parser.add_argument("box_size", help="width of simulation cube")
-    args = parser.parse_args()
-    dir_path = args.dir_path
-    for file in os.listdir(dir_path):
-        if file.endswith(".h5"):
-            file_path = os.path.join(dir_path, file)
-            print(f"visualize {file_path}")
-            ActinVisualization.visualize_actin(file_path, args.box_size, plots)
-
-
-if __name__ == "__main__":
-    main()
