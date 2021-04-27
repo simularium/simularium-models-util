@@ -4,6 +4,14 @@ simularium\_models\_util.actin package
 Submodules
 ----------
 
+simularium\_models\_util.actin.actin\_analyzer module
+-----------------------------------------------------
+
+.. automodule:: simularium_models_util.actin.actin_analyzer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simularium\_models\_util.actin.actin\_generator module
 ------------------------------------------------------
 

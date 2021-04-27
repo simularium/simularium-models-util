@@ -268,13 +268,17 @@
             <span class="p">],</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinStructure.actin_distance_from_axis"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_distance_from_axis">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">actin_distance_from_axis</span><span class="p">():</span>  <span class="c1"># was 1.59 nm</span>
+<div class="viewcode-block" id="ActinStructure.vector_to_axis"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.vector_to_axis">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">vector_to_axis</span><span class="p">():</span> 
         <span class="n">mother_fiber</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_fiber</span><span class="p">()</span>
         <span class="n">axis_position</span> <span class="o">=</span> <span class="n">mother_fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span>
-            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">axis_position</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinStructure.actin_distance_from_axis"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.actin_distance_from_axis">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_distance_from_axis</span><span class="p">():</span>  <span class="c1"># was 1.59 nm</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ActinStructure</span><span class="o">.</span><span class="n">vector_to_axis</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="ActinStructure.branch_positions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_structure.ActinStructure.branch_positions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">branch_positions</span><span class="p">():</span>

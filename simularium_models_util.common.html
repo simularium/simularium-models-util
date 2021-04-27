@@ -336,6 +336,46 @@ with equilibrium distance [nm]</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_chain_of_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">analyze_frame_get_chain_of_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chain_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_particle_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.analyze_frame_get_chain_of_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_chain_of_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starting from the particle with start_particle_id,
+get ids for a chain of particles with neighbor_types in the given frame of data,
+avoiding the particle with last_particle_id,
+if chain_length = 0, return entire chain</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_count_of_topologies_of_type">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">analyze_frame_get_count_of_topologies_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.analyze_frame_get_count_of_topologies_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_count_of_topologies_of_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of topologies of a given type at the given time index</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_id_for_neighbor_of_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">analyze_frame_get_id_for_neighbor_of_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.analyze_frame_get_id_for_neighbor_of_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_id_for_neighbor_of_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the id for the first neighbor with one of the neighbor_types
+in the given frame of data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_ids_for_types">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">analyze_frame_get_ids_for_types</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.analyze_frame_get_ids_for_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_ids_for_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of ids for all the particles with particle type
+in the given list of types in the given frame of data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.calculate_concentration">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calculate_concentration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.calculate_concentration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_concentration" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>calculates the concentration for a species</dt><dd><p>with number of particles n
+in cube container with dimensions dim [nm]</p>
+<p>returns concentration [uM]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="simularium_models_util.common.readdy_util.ReaddyUtil.calculate_diffusionCoefficient">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calculate_diffusionCoefficient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.calculate_diffusionCoefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_diffusionCoefficient" title="Permalink to this definition">¶</a></dt>
 <dd><dl>
@@ -384,8 +424,9 @@ if new x polymer index is not in [1,3]</p>
 
 <dl class="py method">
 <dt id="simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_angle_between_vectors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_angle_between_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors" title="Permalink to this definition">¶</a></dt>
-<dd><p>get the angle between two vectors in radians</p>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_angle_between_vectors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_angle_between_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the angle between two vectors
+in radians unless in_degrees is True</p>
 </dd></dl>
 
 <dl class="py method">
@@ -556,6 +597,27 @@ whenever reactants are available</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_edge_data">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">shape_frame_edge_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_edge_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_edge_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the edges at the given time index as (particle1 id, particle2 id)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">shape_frame_particle_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_particle_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Get a dictionary mapping particle id to data for each particle:</dt><dd><p>[particle id] : (particle type, list of neighbor particle ids, particle position)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">shape_particle_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_particle_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each time point, get a dictionary mapping particle id to data for each particle</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="simularium_models_util.common.readdy_util.ReaddyUtil.topology_to_string">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">topology_to_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.topology_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.topology_to_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>get string with vertex types and ids in a topology</p>
@@ -565,6 +627,12 @@ whenever reactants are available</p>
 <dt id="simularium_models_util.common.readdy_util.ReaddyUtil.try_remove_edge">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">try_remove_edge</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.try_remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.try_remove_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>try to remove an edge</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.common.readdy_util.ReaddyUtil.vector_is_invalid">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">vector_is_invalid</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.vector_is_invalid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.vector_is_invalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if any of a 3D vector’s components are NaN</p>
 </dd></dl>
 
 <dl class="py method">
