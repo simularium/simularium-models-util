@@ -28,8 +28,7 @@ class ActinAnalyzer:
             0, self.times.shape[0], 1, self.times, self.topology_records, 
             self.ids, self.types, self.positions, self.traj
         )
-        if analyze_reactions:
-            self.reaction_times, self.reactions = self.traj.read_observable_reaction_counts()
+        self.reactions = None
 
     @staticmethod
     def _free_actin_types():
@@ -567,6 +566,8 @@ class ActinAnalyzer:
         """
         Get a list of the number of times a set of ReaDDy reactions has happened by each time step
         """
+        if self.reactions is None:
+            reaction_times, self.reactions = self.traj.read_observable_reaction_counts()
         readdy_reactions = ActinAnalyzer._total_reactions()[total_reaction_name]
         result = []
         for reaction_name in readdy_reactions[0]:
