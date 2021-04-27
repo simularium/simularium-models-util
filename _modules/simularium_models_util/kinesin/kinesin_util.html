@@ -303,10 +303,9 @@
             <span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> ++ </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">),</span>
-                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">),</span>
-                <span class="p">)</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot; ++ &quot;</span>
+                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="n">tubulin_pos</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">)</span>
         <span class="c1"># TODO calculate position offset from tubulin neighbors</span>
@@ -616,22 +615,21 @@
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">polymer_numbers</span><span class="p">:</span>
             <span class="c1"># first motor binding</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-                <span class="s2">&quot;Bind_Tubulin#ADP-ADP</span><span class="si">{}</span><span class="s2">: Kinesin(motor#ADP) + Microtubule(tubulinB#</span><span class="si">{}</span><span class="s2">) -&gt; </span><span class="se">\</span>
-<span class="s2">                Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">n</span>
-                <span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;Bind_Tubulin#ADP-ADP</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Kinesin(motor#ADP) + Microtubule(tubulinB#</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">) -&gt; </span><span class="se">\</span>
+<span class="s2">                Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="mf">4.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="c1"># # second motor binding</span>
             <span class="c1"># for s in kinesin_states:</span>
             <span class="c1">#     system.topologies.add_spatial_reaction(</span>
-            <span class="c1">#         &quot;Bind_Tubulin#{}{}: {}&quot;.format(s, i,</span>
-            <span class="c1">#         &quot;Microtubule-Kinesin#{}(motor#ADP) + {}&quot;.format(s,</span>
-            <span class="c1">#         &quot;Microtubule-Kinesin#{}(tubulinB#{}) -&gt; {}&quot;.format(s, n,</span>
-            <span class="c1">#         &quot;Microtubule-Kinesin#Binding(motor#new--{}&quot;.format(</span>
-            <span class="c1">#         &quot;tubulinB#bound_{}) [self=true]&quot;.format(n))))),</span>
-            <span class="c1">#         rate=rate, radius=4.+reaction_distance</span>
+            <span class="c1">#         f&quot;Bind_Tubulin#{s}{i}: \</span>
+            <span class="c1">#         Microtubule-Kinesin#{s}(motor#ADP) + \</span>
+            <span class="c1">#         Microtubule-Kinesin#{s}(tubulinB#{n}) -&gt; \</span>
+            <span class="c1">#         Microtubule-Kinesin#Binding(motor#new--\</span>
+            <span class="c1">#         tubulinB#bound_{n}) [self=true]&quot;,</span>
+            <span class="c1">#         rate=rate,</span>
+            <span class="c1">#         radius=4.0 + reaction_distance,</span>
             <span class="c1">#     )</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="c1"># structural reaction</span>
@@ -650,8 +648,8 @@
         <span class="n">kinesin_states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ADP-apo&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP-apo&quot;</span><span class="p">,</span> <span class="s2">&quot;apo-apo&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">kinesin_states</span><span class="p">:</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
-                <span class="s2">&quot;Bind_ATP#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
-                <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;Bind_ATP#</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">topology_type</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">reaction_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">reaction_function_motor_bind_ATP</span><span class="p">,</span>
                 <span class="n">rate_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">rate_function_motor_bind_ATP</span><span class="p">,</span>
             <span class="p">)</span></div>
@@ -664,8 +662,8 @@
         <span class="n">kinesin_states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ADP-ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP-ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;ATP-apo&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">kinesin_states</span><span class="p">:</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
-                <span class="s2">&quot;Release_Tubulin#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
-                <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;Release_Tubulin#</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">topology_type</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Microtubule-Kinesin#</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">reaction_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">reaction_function_motor_release_tubulin</span><span class="p">,</span>
                 <span class="n">rate_function</span><span class="o">=</span><span class="n">KinesinUtil</span><span class="o">.</span><span class="n">rate_function_motor_release_tubulin</span><span class="p">,</span>
             <span class="p">)</span>

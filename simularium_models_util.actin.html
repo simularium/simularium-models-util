@@ -201,8 +201,114 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="simularium-models-util-actin-actin-analyzer-module">
-<h2>simularium_models_util.actin.actin_analyzer module<a class="headerlink" href="#simularium-models-util-actin-actin-analyzer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-simularium_models_util.actin.actin_analyzer">
+<span id="simularium-models-util-actin-actin-analyzer-module"></span><h2>simularium_models_util.actin.actin_analyzer module<a class="headerlink" href="#module-simularium_models_util.actin.actin_analyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">simularium_models_util.actin.actin_analyzer.</span></code><code class="sig-name descname"><span class="pre">ActinAnalyzer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyze_reactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Load data from a ReaDDy trajectory</p>
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_all_reaction_events_over_time">
+<code class="sig-name descname"><span class="pre">analyze_all_reaction_events_over_time</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_all_reaction_events_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_all_reaction_events_over_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a dictionary of lists of the number of times
+a set of ReaDDy reactions has happened by each time step
+for each total reaction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_over_time">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">analyze_average_over_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_average_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_over_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the average per time frame of the given data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_branch_angles">
+<code class="sig-name descname"><span class="pre">analyze_branch_angles</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_branch_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_branch_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the angles between mother and daughter filaments
+at each branch point in each frame of the trajectory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_daughter_filament_lengths">
+<code class="sig-name descname"><span class="pre">analyze_daughter_filament_lengths</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_daughter_filament_lengths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_daughter_filament_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the length of daughter filaments in each frame of the trajectory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_filament_straightness">
+<code class="sig-name descname"><span class="pre">analyze_filament_straightness</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_filament_straightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_filament_straightness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the distances from each actin axis position
+to the ideal axis position on each filament in each frame of the trajectory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_free_actin_concentration_over_time">
+<code class="sig-name descname"><span class="pre">analyze_free_actin_concentration_over_time</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_free_actin_concentration_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_free_actin_concentration_over_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the concentration of free actin at each step</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_long_helix_pitches">
+<code class="sig-name descname"><span class="pre">analyze_long_helix_pitches</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_long_helix_pitches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_long_helix_pitches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the pitch of long helices between all actins
+on each filament in each frame of the trajectory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_mother_filament_lengths">
+<code class="sig-name descname"><span class="pre">analyze_mother_filament_lengths</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_mother_filament_lengths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_mother_filament_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the length of mother filaments in each frame of the trajectory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_ATP_actin_to_total_actin">
+<code class="sig-name descname"><span class="pre">analyze_ratio_of_ATP_actin_to_total_actin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_ratio_of_ATP_actin_to_total_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_ATP_actin_to_total_actin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the ratio of ATP-actin to total actin in filaments over time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23">
+<code class="sig-name descname"><span class="pre">analyze_ratio_of_bound_to_total_arp23</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the ratio of bound to total arp2/3 complexes over time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends">
+<code class="sig-name descname"><span class="pre">analyze_ratio_of_capped_ends_to_total_ends</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the ratio of barbed ends capped
+with capping protein to all barbed ends over time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin">
+<code class="sig-name descname"><span class="pre">analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the ratio
+[daughter filament actin] / [filamentous actin] over time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin">
+<code class="sig-name descname"><span class="pre">analyze_ratio_of_filamentous_to_total_actin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the ratio of actin in filaments to total actin over time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_events_over_time">
+<code class="sig-name descname"><span class="pre">analyze_reaction_events_over_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_reaction_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_reaction_events_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_events_over_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the number of times a set
+of ReaDDy reactions has happened by each time step</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_short_helix_pitches">
+<code class="sig-name descname"><span class="pre">analyze_short_helix_pitches</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_short_helix_pitches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_short_helix_pitches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the pitch of short helices between all actins
+on each filament in each frame of the trajectory</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-simularium_models_util.actin.actin_generator">
 <span id="simularium-models-util-actin-actin-generator-module"></span><h2>simularium_models_util.actin.actin_generator module<a class="headerlink" href="#module-simularium_models_util.actin.actin_generator" title="Permalink to this headline">¶</a></h2>
@@ -1462,8 +1568,8 @@ and return it</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-simularium_models_util.actin">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simularium_models_util.actin" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

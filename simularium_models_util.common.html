@@ -606,7 +606,7 @@ whenever reactants are available</p>
 <dt id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">shape_frame_particle_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_particle_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
-<dt>Get a dictionary mapping particle id to data for each particle:</dt><dd><p>[particle id] : (particle type, list of neighbor particle ids, particle position)</p>
+<dt>Get a dictionary mapping particle id to data for each particle:</dt><dd><p>[id] : (type, list of neighbor ids, position)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -614,7 +614,8 @@ whenever reactants are available</p>
 <dl class="py method">
 <dt id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">shape_particle_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_particle_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>For each time point, get a dictionary mapping particle id to data for each particle</p>
+<dd><p>For each time point, get a dictionary mapping particle id
+to data for each particle</p>
 </dd></dl>
 
 <dl class="py method">

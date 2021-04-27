@@ -193,6 +193,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">rmtree</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 
 <div class="viewcode-block" id="ReaddyUtil"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil">[docs]</a><span class="k">class</span> <span class="nc">ReaddyUtil</span><span class="p">:</span>
@@ -215,7 +216,7 @@
 <div class="viewcode-block" id="ReaddyUtil.get_angle_between_vectors"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">in_degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        get the angle between two vectors </span>
+<span class="sd">        get the angle between two vectors</span>
 <span class="sd">        in radians unless in_degrees is True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span>
@@ -349,7 +350,7 @@
 
 <span class="sd">            returns concentration [uM]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1e-30</span> <span class="o">*</span> <span class="mf">6.022e23</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mf">3.</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1e-30</span> <span class="o">*</span> <span class="mf">6.022e23</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_vertex_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
@@ -1068,10 +1069,12 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.shape_frame_particle_data"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">shape_frame_particle_data</span><span class="p">(</span><span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">shape_frame_particle_data</span><span class="p">(</span>
+        <span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a dictionary mapping particle id to data for each particle:</span>
-<span class="sd">            [particle id] : (particle type, list of neighbor particle ids, particle position)</span>
+<span class="sd">            [id] : (type, list of neighbor ids, position)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_frame_edge_data</span><span class="p">(</span><span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1085,23 +1088,46 @@
                     <span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                 <span class="k">elif</span> <span class="n">p_id</span> <span class="o">==</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
                     <span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">result</span><span class="p">[</span><span class="n">p_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_type</span><span class="p">,</span> <span class="n">neighbor_ids</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p_pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]]))</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">p_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">p_type</span><span class="p">,</span>
+                <span class="n">neighbor_ids</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p_pos</span><span class="p">[</span><span class="mi">2</span><span class="p">]]),</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.shape_particle_data"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">shape_particle_data</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">,</span> <span class="n">time_inc</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">shape_particle_data</span><span class="p">(</span>
+        <span class="n">min_time</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="p">,</span>
+        <span class="n">time_inc</span><span class="p">,</span>
+        <span class="n">times</span><span class="p">,</span>
+        <span class="n">topology_records</span><span class="p">,</span>
+        <span class="n">ids</span><span class="p">,</span>
+        <span class="n">types</span><span class="p">,</span>
+        <span class="n">positions</span><span class="p">,</span>
+        <span class="n">traj</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        For each time point, get a dictionary mapping particle id to data for each particle</span>
+<span class="sd">        For each time point, get a dictionary mapping particle id</span>
+<span class="sd">        to data for each particle</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">min_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">max_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">%</span> <span class="n">time_inc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_frame_particle_data</span><span class="p">(</span>
-                    <span class="n">t</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span><span class="p">))</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_time</span> <span class="o">-</span> <span class="n">min_time</span><span class="p">)</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Shaping data for analysis [</span><span class="si">{}{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span> <span class="s1">&#39; &#39;</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="mf">100.</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span> <span class="nb">round</span><span class="p">(</span><span class="mf">10.</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10.</span><span class="p">))</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_frame_particle_data</span><span class="p">(</span>
+                        <span class="n">t</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_time</span> <span class="o">-</span> <span class="n">min_time</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="s2">&quot;Shaping data for analysis [</span><span class="si">{}{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
+                        <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
+                        <span class="nb">round</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -1113,7 +1139,9 @@
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.analyze_frame_get_count_of_topologies_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_count_of_topologies_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">analyze_frame_get_count_of_topologies_of_type</span><span class="p">(</span><span class="n">time_index</span><span class="p">,</span> <span class="n">topology_type</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">traj</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">analyze_frame_get_count_of_topologies_of_type</span><span class="p">(</span>
+        <span class="n">time_index</span><span class="p">,</span> <span class="n">topology_type</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">traj</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the number of topologies of a given type at the given time index</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1126,7 +1154,7 @@
 <div class="viewcode-block" id="ReaddyUtil.analyze_frame_get_ids_for_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_ids_for_types">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">analyze_frame_get_ids_for_types</span><span class="p">(</span><span class="n">particle_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a list of ids for all the particles with particle type </span>
+<span class="sd">        Get a list of ids for all the particles with particle type</span>
 <span class="sd">        in the given list of types in the given frame of data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1136,9 +1164,11 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.analyze_frame_get_id_for_neighbor_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_id_for_neighbor_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">analyze_frame_get_id_for_neighbor_of_types</span><span class="p">(</span><span class="n">particle_id</span><span class="p">,</span> <span class="n">neighbor_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">exclude_ids</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="k">def</span> <span class="nf">analyze_frame_get_id_for_neighbor_of_types</span><span class="p">(</span>
+        <span class="n">particle_id</span><span class="p">,</span> <span class="n">neighbor_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">exclude_ids</span><span class="o">=</span><span class="p">[]</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the id for the first neighbor with one of the neighbor_types </span>
+<span class="sd">        Get the id for the first neighbor with one of the neighbor_types</span>
 <span class="sd">        in the given frame of data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">n_id</span> <span class="ow">in</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">particle_id</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
@@ -1151,7 +1181,12 @@
 
 <div class="viewcode-block" id="ReaddyUtil.analyze_frame_get_chain_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.analyze_frame_get_chain_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">analyze_frame_get_chain_of_types</span><span class="p">(</span>
-        <span class="n">start_particle_id</span><span class="p">,</span> <span class="n">neighbor_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">chain_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">last_particle_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">start_particle_id</span><span class="p">,</span>
+        <span class="n">neighbor_types</span><span class="p">,</span>
+        <span class="n">frame_particle_data</span><span class="p">,</span>
+        <span class="n">chain_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">last_particle_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">result</span><span class="o">=</span><span class="p">[],</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Starting from the particle with start_particle_id,</span>
@@ -1160,8 +1195,10 @@
 <span class="sd">        if chain_length = 0, return entire chain</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">n_id</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_id_for_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">start_particle_id</span><span class="p">,</span> <span class="n">neighbor_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> 
-            <span class="p">[</span><span class="n">last_particle_id</span><span class="p">]</span> <span class="k">if</span> <span class="n">last_particle_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+            <span class="n">start_particle_id</span><span class="p">,</span>
+            <span class="n">neighbor_types</span><span class="p">,</span>
+            <span class="n">frame_particle_data</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">last_particle_id</span><span class="p">]</span> <span class="k">if</span> <span class="n">last_particle_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[],</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">n_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span>
@@ -1169,8 +1206,12 @@
         <span class="k">if</span> <span class="n">chain_length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">result</span>
         <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_chain_of_types</span><span class="p">(</span>
-            <span class="n">n_id</span><span class="p">,</span> <span class="n">neighbor_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> 
-            <span class="n">chain_length</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">chain_length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="n">start_particle_id</span><span class="p">,</span> <span class="n">result</span>
+            <span class="n">n_id</span><span class="p">,</span>
+            <span class="n">neighbor_types</span><span class="p">,</span>
+            <span class="n">frame_particle_data</span><span class="p">,</span>
+            <span class="n">chain_length</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">chain_length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">start_particle_id</span><span class="p">,</span>
+            <span class="n">result</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
