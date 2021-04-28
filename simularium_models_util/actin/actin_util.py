@@ -89,17 +89,17 @@ class ActinUtil:
         ]
 
     @staticmethod
-    def get_actin_rotation(positions):
+    def get_actin_rotation(positions, box_size):
         """
         get the difference in the actin's current orientation
         compared to the initial orientation as a rotation matrix
         positions = [prev actin position, middle actin position, next actin position]
         """
         positions[0] = ReaddyUtil.get_non_periodic_boundary_position(
-            positions[1], positions[0], parameters["box_size"]
+            positions[1], positions[0], box_size
         )
         positions[2] = ReaddyUtil.get_non_periodic_boundary_position(
-            positions[1], positions[2], parameters["box_size"]
+            positions[1], positions[2], box_size
         )
         current_orientation = ReaddyUtil.get_orientation_from_positions(positions)
         return np.matmul(
@@ -107,7 +107,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def get_actin_axis_position(positions):
+    def get_actin_axis_position(positions, box_size):
         """
         get the position on the filament axis closest to an actin
         positions = [
@@ -116,7 +116,7 @@ class ActinUtil:
             next actin position
         ]
         """
-        rotation = ActinUtil.get_actin_rotation(positions)
+        rotation = ActinUtil.get_actin_rotation(positions, box_size)
         if rotation is None:
             return None
         vector_to_axis_local = np.squeeze(
@@ -134,7 +134,7 @@ class ActinUtil:
             next actin position
         ]
         """
-        rotation = ActinUtil.get_actin_rotation(positions)
+        rotation = ActinUtil.get_actin_rotation(positions, parameters["box_size"])
         if rotation is None:
             return None
         vector_to_new_pos = np.squeeze(np.array(np.dot(rotation, offset_vector)))

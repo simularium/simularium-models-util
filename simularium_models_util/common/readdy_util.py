@@ -124,10 +124,11 @@ class ReaddyUtil:
         if the distance between two positions is greater than box_size,
         move the second position across the box (for positioning calculations)
         """
+        result = np.copy(pos2)
         for dim in range(3):
             if abs(pos2[dim] - pos1[dim]) > box_size / 2.0:
-                pos2[dim] -= pos2[dim] / abs(pos2[dim]) * box_size
-        return pos2
+                result[dim] -= pos2[dim] / abs(pos2[dim]) * box_size
+        return result
 
     @staticmethod
     def calculate_diffusionCoefficient(r0, eta, T):
@@ -927,7 +928,9 @@ class ReaddyUtil:
         For each time point, get a dictionary mapping particle id
         to data for each particle
         """
+        print("Shaping data for analysis...")
         result = []
+        new_times = []
         for t in range(len(times)):
             if t >= min_time and t <= max_time and t % time_inc == 0:
                 result.append(
@@ -935,17 +938,8 @@ class ReaddyUtil:
                         t, topology_records, ids, types, positions, traj
                     )
                 )
-                sys.stdout.write("\r")
-                p = 100.0 * (t + 1) / float(max_time - min_time)
-                sys.stdout.write(
-                    "Shaping data for analysis [{}{}] {}%".format(
-                        "=" * int(round(p)),
-                        " " * int(100.0 - round(p)),
-                        round(10.0 * p) / 10.0,
-                    )
-                )
-                sys.stdout.flush()
-        return result
+                new_times.append(times[t])
+        return result, np.array(new_times)
 
     @staticmethod
     def vector_is_invalid(v):
