@@ -7,7 +7,6 @@ import scipy.linalg as linalg
 import random
 import readdy
 import os
-import sys
 from shutil import rmtree
 import math
 

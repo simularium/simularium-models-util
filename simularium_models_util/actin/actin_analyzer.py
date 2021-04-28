@@ -2,13 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import math
-import sys
 import numpy as np
 import readdy
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
-from .actin_structure import ActinStructure
 
 
 class ActinAnalyzer:
@@ -210,13 +208,14 @@ class ActinAnalyzer:
     @staticmethod
     def _frame_all_filaments(frame_particle_data):
         """
-        Get a list of mother and daughter filaments 
+        Get a list of mother and daughter filaments
         in the given frame of data,
         each filament is a list of the actin ids in the filament
         in order from pointed to barbed end
         """
-        return (ActinAnalyzer._frame_mother_filaments(frame_particle_data) 
-                + ActinAnalyzer._frame_daughter_filaments(frame_particle_data))
+        return ActinAnalyzer._frame_mother_filaments(
+            frame_particle_data
+        ) + ActinAnalyzer._frame_daughter_filaments(frame_particle_data)
 
     def analyze_ratio_of_filamentous_to_total_actin(self):
         """
@@ -262,7 +261,7 @@ class ActinAnalyzer:
                 result.append(1.0)
         return np.array(result)
 
-    def analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin(self):
+    def analyze_ratio_of_daughter_to_total_filamentous_actin(self):
         """
         Get a list of the ratio
         [daughter filament actin] / [filamentous actin] over time
@@ -376,19 +375,17 @@ class ActinAnalyzer:
             positions.append(frame_particle_data[actin_ids[i]][2])
         return ActinUtil.get_actin_axis_position(positions, box_size)
 
-    @staticmethod 
+    @staticmethod
     def neighbor_types_to_string(particle_id, frame_particle_data):
-        """
-        """
+        """ """
         result = ""
         for neighbor_id in frame_particle_data[particle_id][1]:
             result += frame_particle_data[neighbor_id][0] + ", "
         return result[:-2]
 
-    @staticmethod 
+    @staticmethod
     def positions_to_string(particle_ids, box_size, frame_particle_data):
-        """
-        """
+        """ """
         positions = []
         for i in range(3):
             positions.append(frame_particle_data[particle_ids[i]][2])
@@ -425,7 +422,10 @@ class ActinAnalyzer:
             if actin1_id is None:
                 raise Exception(
                     "Failed to parse branch point: couldn't find branch actin\n\
-                    arp2 neighbor types are: " + ActinAnalyzer.neighbor_types_to_string(arp2_id, frame_particle_data)
+                    arp2 neighbor types are: "
+                    + ActinAnalyzer.neighbor_types_to_string(
+                        arp2_id, frame_particle_data
+                    )
                 )
             branch_actins = ReaddyUtil.analyze_frame_get_chain_of_types(
                 actin1_id, actin_types, frame_particle_data, 3, arp2_id, [actin1_id]
@@ -439,7 +439,10 @@ class ActinAnalyzer:
             if actin_arp2_id is None:
                 raise Exception(
                     "Failed to parse branch point: failed to find actin_arp2\n\
-                    arp2 neighbor types are: " + ActinAnalyzer.neighbor_types_to_string(arp2_id, frame_particle_data)
+                    arp2 neighbor types are: "
+                    + ActinAnalyzer.neighbor_types_to_string(
+                        arp2_id, frame_particle_data
+                    )
                 )
             n = ReaddyUtil.calculate_polymer_number(
                 int(frame_particle_data[actin_arp2_id][0][-1:]), 1
@@ -458,8 +461,14 @@ class ActinAnalyzer:
             if actin_arp3_id is None:
                 raise Exception(
                     "Failed to parse branch point: failed to find actin_arp3\n\
-                    actin_arp2 neighbor types are: " + ActinAnalyzer.neighbor_types_to_string(actin_arp2_id, frame_particle_data)
-                    + "\narp2 neighbor types are: " + ActinAnalyzer.neighbor_types_to_string(arp2_id, frame_particle_data)
+                    actin_arp2 neighbor types are: "
+                    + ActinAnalyzer.neighbor_types_to_string(
+                        actin_arp2_id, frame_particle_data
+                    )
+                    + "\narp2 neighbor types are: "
+                    + ActinAnalyzer.neighbor_types_to_string(
+                        arp2_id, frame_particle_data
+                    )
                 )
             main_actins = ReaddyUtil.analyze_frame_get_chain_of_types(
                 actin_arp3_id,
@@ -492,8 +501,10 @@ class ActinAnalyzer:
                 pos_to_string = "None" if main_pos1 is None else main_pos1
                 raise Exception(
                     f"Failed to get axis position for mother actin 1, \
-                    pos = {pos_to_string}\ntried to use positions: " 
-                    + ActinAnalyzer.positions_to_string(actin_ids, box_size, frame_particle_data)
+                    pos = {pos_to_string}\ntried to use positions: "
+                    + ActinAnalyzer.positions_to_string(
+                        actin_ids, box_size, frame_particle_data
+                    )
                 )
             actin_ids = [branch[1], branch[2], branch[3]]
             main_pos2 = ActinAnalyzer._get_axis_position_for_actin(
@@ -503,8 +514,10 @@ class ActinAnalyzer:
                 pos_to_string = "None" if main_pos2 is None else main_pos2
                 raise Exception(
                     f"Failed to get axis position for mother actin 2\
-                    pos = {pos_to_string}\ntried to use positions: " 
-                    + ActinAnalyzer.positions_to_string(actin_ids, box_size, frame_particle_data)
+                    pos = {pos_to_string}\ntried to use positions: "
+                    + ActinAnalyzer.positions_to_string(
+                        actin_ids, box_size, frame_particle_data
+                    )
                 )
             actin_ids = [branch[4], branch[5], branch[6]]
             v_main = ReaddyUtil.normalize(main_pos2 - main_pos1)
@@ -515,8 +528,10 @@ class ActinAnalyzer:
                 pos_to_string = "None" if branch_pos1 is None else branch_pos1
                 raise Exception(
                     f"Failed to get axis position for daughter actin 1\
-                    pos = {pos_to_string}\ntried to use positions: " 
-                    + ActinAnalyzer.positions_to_string(actin_ids, box_size, frame_particle_data)
+                    pos = {pos_to_string}\ntried to use positions: "
+                    + ActinAnalyzer.positions_to_string(
+                        actin_ids, box_size, frame_particle_data
+                    )
                 )
             actin_ids = [branch[5], branch[6], branch[7]]
             branch_pos2 = ActinAnalyzer._get_axis_position_for_actin(
@@ -526,8 +541,10 @@ class ActinAnalyzer:
                 pos_to_string = "None" if branch_pos2 is None else branch_pos2
                 raise Exception(
                     f"Failed to get axis position for daughter actin 2\
-                    pos = {pos_to_string}\ntried to use positions: " 
-                    + ActinAnalyzer.positions_to_string(actin_ids, box_size, frame_particle_data)
+                    pos = {pos_to_string}\ntried to use positions: "
+                    + ActinAnalyzer.positions_to_string(
+                        actin_ids, box_size, frame_particle_data
+                    )
                 )
             v_branch = ReaddyUtil.normalize(branch_pos2 - branch_pos1)
             result.append(ReaddyUtil.get_angle_between_vectors(v_main, v_branch, True))
@@ -558,18 +575,30 @@ class ActinAnalyzer:
             frame_particle_data, actin1_ids, box_size
         )
         if actin1_axis_pos is None or ReaddyUtil.vector_is_invalid(actin1_axis_pos):
-            raise Exception("Failed to get axis position for actin 1\n\
-                    tried to use positions: " + ActinAnalyzer.positions_to_string(actin1_ids, box_size, frame_particle_data))
+            raise Exception(
+                "Failed to get axis position for actin 1\n\
+                    tried to use positions: "
+                + ActinAnalyzer.positions_to_string(
+                    actin1_ids, box_size, frame_particle_data
+                )
+            )
         v1 = ReaddyUtil.normalize(actin1_axis_pos - actin1_pos)
         actin2_pos = frame_particle_data[actin2_ids[1]][2]
         actin2_axis_pos = ActinAnalyzer._get_axis_position_for_actin(
             frame_particle_data, actin2_ids, box_size
         )
         if actin2_axis_pos is None or ReaddyUtil.vector_is_invalid(actin2_axis_pos):
-            raise Exception("Failed to get axis position for actin 2\n\
-                    tried to use positions: " + ActinAnalyzer.positions_to_string(actin2_ids, box_size, frame_particle_data))
+            raise Exception(
+                "Failed to get axis position for actin 2\n\
+                    tried to use positions: "
+                + ActinAnalyzer.positions_to_string(
+                    actin2_ids, box_size, frame_particle_data
+                )
+            )
         v2 = ReaddyUtil.normalize(actin2_axis_pos - actin2_pos)
-        actin2_axis_pos = ReaddyUtil.get_non_periodic_boundary_position(actin1_axis_pos, actin2_axis_pos, box_size)
+        actin2_axis_pos = ReaddyUtil.get_non_periodic_boundary_position(
+            actin1_axis_pos, actin2_axis_pos, box_size
+        )
         length = np.linalg.norm(actin2_axis_pos - actin1_axis_pos)
         angle = ReaddyUtil.get_angle_between_vectors(v1, v2, True)
         return (360.0 / angle) * length
@@ -680,10 +709,15 @@ class ActinAnalyzer:
                 )
                 if axis_pos is None or ReaddyUtil.vector_is_invalid(axis_pos):
                     raise Exception(
-                        f"Failed to get axis position for actin in filament\n\
-                        tried to use positions: " + ActinAnalyzer.positions_to_string(actin_ids, box_size, frame_particle_data)
+                        "Failed to get axis position for actin in filament\n"
+                        "tried to use positions: "
+                        + ActinAnalyzer.positions_to_string(
+                            actin_ids, box_size, frame_particle_data
+                        )
                     )
-                axis_pos = ReaddyUtil.get_non_periodic_boundary_position(last_pos, axis_pos, box_size)
+                axis_pos = ReaddyUtil.get_non_periodic_boundary_position(
+                    last_pos, axis_pos, box_size
+                )
                 positions.append(axis_pos)
                 last_pos = axis_pos
             if len(positions) > 2:

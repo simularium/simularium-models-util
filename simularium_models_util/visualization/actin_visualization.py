@@ -8,7 +8,7 @@ from simulariumio import MetaData, UnitData, ScatterPlotData
 from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
 
-TIMESTEP = 0.1 #ns
+TIMESTEP = 0.1  # ns
 
 
 class ActinVisualization:
@@ -55,14 +55,14 @@ class ActinVisualization:
         """
         Add a plot of percent filamentous actin in daughter filaments
         """
+        result = analyzer.analyze_ratio_of_daughter_to_total_filamentous_actin()
         return ScatterPlotData(
             title="Filamentous actin in branches",
             xaxis_title="Time (µs)",
             yaxis_title="Daughter actin (%)",
             xtrace=analyzer.times,
             ytraces={
-                "Daughter actin": 100.0
-                * analyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin(),
+                "Daughter actin": 100.0 * result,
             },
             render_mode="lines",
         )
@@ -79,7 +79,8 @@ class ActinVisualization:
             xtrace=analyzer.times,
             ytraces={
                 "Average length": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_mother_filament_lengths()),
+                    analyzer.analyze_mother_filament_lengths()
+                ),
             },
             render_mode="lines",
         )
@@ -96,7 +97,8 @@ class ActinVisualization:
             xtrace=analyzer.times,
             ytraces={
                 "Average length": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_daughter_filament_lengths()),
+                    analyzer.analyze_daughter_filament_lengths()
+                ),
             },
             render_mode="lines",
         )
@@ -151,8 +153,8 @@ class ActinVisualization:
             ytraces={
                 "Ideal": np.array(analyzer.times.shape[0] * [70.9]),
                 "Mean": mean,
-                "Mean - std" : mean - stddev,
-                "Mean + std" : mean + stddev,
+                "Mean - std": mean - stddev,
+                "Mean + std": mean + stddev,
             },
             render_mode="lines",
         )
@@ -172,10 +174,12 @@ class ActinVisualization:
             ytraces={
                 "Ideal short pitch": np.array(analyzer.times.shape[0] * [5.9]),
                 "Mean short pitch": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_short_helix_pitches()),
+                    analyzer.analyze_short_helix_pitches()
+                ),
                 "Ideal long pitch": np.array(analyzer.times.shape[0] * [72]),
                 "Mean long pitch": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_long_helix_pitches()),
+                    analyzer.analyze_long_helix_pitches()
+                ),
             },
             render_mode="lines",
         )
@@ -226,7 +230,7 @@ class ActinVisualization:
         analyzer = ActinAnalyzer(path_to_readdy_h5, box_size, stride)
         analyzer.times = TIMESTEP * 1e-3 * analyzer.times
         return {
-            "scatter" : [
+            "scatter": [
                 ActinVisualization.get_bound_actin_plot(analyzer),
                 ActinVisualization.get_ATP_actin_plot(analyzer),
                 ActinVisualization.get_daughter_actin_plot(analyzer),
@@ -238,7 +242,7 @@ class ActinVisualization:
                 ActinVisualization.get_helix_pitch_plot(analyzer),
                 ActinVisualization.get_filament_straightness_plot(analyzer),
             ],
-            "histogram" : [],
+            "histogram": [],
         }
         # reactions = analyzer.analyze_all_reaction_events_over_time()
         # free_actin = analyzer.analyze_free_actin_concentration_over_time()
@@ -322,7 +326,7 @@ class ActinVisualization:
                 box_size=np.array([box_size, box_size, box_size]),
             ),
             # assume 1e3 recorded steps
-            timestep=TIMESTEP * total_steps * 1e-3, 
+            timestep=TIMESTEP * total_steps * 1e-3,
             path_to_readdy_h5=path_to_readdy_h5,
             radii=radii,
             type_grouping=type_grouping,
@@ -333,10 +337,12 @@ class ActinVisualization:
         for plot_type in plots:
             for plot in plots[plot_type]:
                 converter.add_plot(plot, plot_type)
-        filtered_data = converter.filter_data([
-            MultiplyTimeFilter(
-                multiplier=1e-3,
-                apply_to_plots=False,
-            ),
-        ])
+        filtered_data = converter.filter_data(
+            [
+                MultiplyTimeFilter(
+                    multiplier=1e-3,
+                    apply_to_plots=False,
+                ),
+            ]
+        )
         converter.write_external_JSON(filtered_data, path_to_readdy_h5)
