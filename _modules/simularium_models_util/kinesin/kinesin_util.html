@@ -615,19 +615,20 @@
         <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">polymer_numbers</span><span class="p">:</span>
             <span class="c1"># first motor binding</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Bind_Tubulin#ADP-ADP</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Kinesin(motor#ADP) + Microtubule(tubulinB#</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">) -&gt; </span><span class="se">\</span>
-<span class="s2">                Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;Bind_Tubulin#ADP-ADP</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Kinesin(motor#ADP) + Microtubule(tubulinB#</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Microtubule-Kinesin#Binding(motor#new--tubulinB#bound_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="mf">4.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="c1"># # second motor binding</span>
             <span class="c1"># for s in kinesin_states:</span>
             <span class="c1">#     system.topologies.add_spatial_reaction(</span>
-            <span class="c1">#         f&quot;Bind_Tubulin#{s}{i}: \</span>
-            <span class="c1">#         Microtubule-Kinesin#{s}(motor#ADP) + \</span>
-            <span class="c1">#         Microtubule-Kinesin#{s}(tubulinB#{n}) -&gt; \</span>
-            <span class="c1">#         Microtubule-Kinesin#Binding(motor#new--\</span>
-            <span class="c1">#         tubulinB#bound_{n}) [self=true]&quot;,</span>
+            <span class="c1">#         f&quot;Bind_Tubulin#{s}{i}: &quot;</span>
+            <span class="c1">#         f&quot;Microtubule-Kinesin#{s}(motor#ADP) + &quot;</span>
+            <span class="c1">#         f&quot;Microtubule-Kinesin#{s}(tubulinB#{n}) -&gt; &quot;</span>
+            <span class="c1">#         &quot;Microtubule-Kinesin#Binding(motor#new--&quot;</span>
+            <span class="c1">#         f&quot;tubulinB#bound_{n}) [self=true]&quot;,</span>
             <span class="c1">#         rate=rate,</span>
             <span class="c1">#         radius=4.0 + reaction_distance,</span>
             <span class="c1">#     )</span>

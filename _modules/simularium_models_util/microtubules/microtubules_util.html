@@ -2460,14 +2460,14 @@
 <span class="sd">        add dimers to the ends of protofilaments</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Start_Grow_GTP: Microtubule(site#4_GTP) + Dimer(tubulinA#free) -&gt; </span><span class="se">\</span>
-<span class="s2">            Microtubule#Growing1-GTP(site#4--tubulinA#free)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Start_Grow_GTP: Microtubule(site#4_GTP) + Dimer(tubulinA#free) -&gt; &quot;</span>
+            <span class="s2">&quot;Microtubule#Growing1-GTP(site#4--tubulinA#free)&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">rate_GTP</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Start_Grow_GDP: Microtubule(site#4_GDP) + Dimer(tubulinA#free) -&gt; </span><span class="se">\</span>
-<span class="s2">            Microtubule#Growing1-GDP(site#4--tubulinA#free)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Start_Grow_GDP: Microtubule(site#4_GDP) + Dimer(tubulinA#free) -&gt; &quot;</span>
+            <span class="s2">&quot;Microtubule#Growing1-GDP(site#4--tubulinA#free)&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">rate_GDP</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
         <span class="p">)</span>
@@ -2563,26 +2563,26 @@
 <span class="sd">        attach protofilaments laterally</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Start_Attach_GTP1: Microtubule(site#1_GTP) + Microtubule(site#2_GTP) -&gt; </span><span class="se">\</span>
-<span class="s2">            Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Start_Attach_GTP1: Microtubule(site#1_GTP) + Microtubule(site#2_GTP) -&gt; &quot;</span>
+            <span class="s2">&quot;Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">rate_GTP</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Start_Attach_GTP2: Microtubule(site#1_GTP) + Microtubule(site#2_GDP) -&gt; </span><span class="se">\</span>
-<span class="s2">            Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Start_Attach_GTP2: Microtubule(site#1_GTP) + Microtubule(site#2_GDP) -&gt; &quot;</span>
+            <span class="s2">&quot;Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">rate_GTP</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Start_Attach_GTP3: Microtubule(site#1_GDP) + Microtubule(site#2_GTP) -&gt; </span><span class="se">\</span>
-<span class="s2">            Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Start_Attach_GTP3: Microtubule(site#1_GDP) + Microtubule(site#2_GTP) -&gt; &quot;</span>
+            <span class="s2">&quot;Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">rate_GTP</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Start_Attach_GDP: Microtubule(site#1_GDP) + Microtubule(site#2_GDP) -&gt; </span><span class="se">\</span>
-<span class="s2">            Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Start_Attach_GDP: Microtubule(site#1_GDP) + Microtubule(site#2_GDP) -&gt; &quot;</span>
+            <span class="s2">&quot;Microtubule#Attaching(site#1--site#2) [self=true]&quot;</span><span class="p">,</span>
             <span class="n">rate</span><span class="o">=</span><span class="n">rate_GDP</span><span class="p">,</span>
             <span class="n">radius</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
         <span class="p">)</span>
