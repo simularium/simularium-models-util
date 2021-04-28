@@ -4,7 +4,7 @@ then open the Docker app in Applications/ and give it privileged access.
 
 To build the docker image (named `readdy-actin` and tagged `v1.0`):<br/>
 `cd [path to this dir]/[model]/docker`<br/>
-`docker build -t readdy-actin:v1.0 ./`
+`docker build --no-cache -t readdy-actin:v1.0 ./`
 
 To run a docker container (named `readdy-actin-test`) using the image LOCALLY:<br/>
 `docker run --rm -v [path to this dir]/[model]/:/working/ -e SIMULATION_TYPE='LOCAL' -e PARAM_SET_NAME='template' -e JOB_ARRAY_INDEX=0 --name readdy-actin-test readdy-actin:v1.0`

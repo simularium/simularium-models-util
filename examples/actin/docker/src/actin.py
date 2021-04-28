@@ -48,9 +48,9 @@ def main():
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])
         plots = ActinVisualization.generate_plots(
-            f"{parameters["name"]}.h5", parameters["box_size"])
+            parameters["name"] + ".h5", parameters["box_size"])
         ActinVisualization.visualize_actin(
-            f"{parameters["name"]}.h5", parameters["box_size"], parameters["total_steps"], plots)
+            parameters["name"] + ".h5", parameters["box_size"], parameters["total_steps"], plots)
     finally:
         rt.stop()
     sys.exit(0)

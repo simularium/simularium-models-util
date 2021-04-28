@@ -43,7 +43,7 @@ def main():
         mt_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])
         MicrotubulesVisualization.visualize_microtubules(
-            f"{parameters["name"]}.h5", parameters["box_size"], [])
+            parameters["name"] + ".h5", parameters["box_size"], [])
     finally:
         rt.stop()
     sys.exit(0)
