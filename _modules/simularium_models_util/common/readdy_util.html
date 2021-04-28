@@ -308,10 +308,11 @@
 <span class="sd">        if the distance between two positions is greater than box_size,</span>
 <span class="sd">        move the second position across the box (for positioning calculations)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">pos2</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos1</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">:</span>
-                <span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">-=</span> <span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="o">*</span> <span class="n">box_size</span>
-        <span class="k">return</span> <span class="n">pos2</span></div>
+                <span class="n">result</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">-=</span> <span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">/</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pos2</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="o">*</span> <span class="n">box_size</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.calculate_diffusionCoefficient"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_diffusionCoefficient">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">calculate_diffusionCoefficient</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">eta</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
@@ -1111,7 +1112,9 @@
 <span class="sd">        For each time point, get a dictionary mapping particle id</span>
 <span class="sd">        to data for each particle</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shaping data for analysis...&quot;</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">new_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">min_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">max_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">%</span> <span class="n">time_inc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -1119,17 +1122,8 @@
                         <span class="n">t</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_time</span> <span class="o">-</span> <span class="n">min_time</span><span class="p">)</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                    <span class="s2">&quot;Shaping data for analysis [</span><span class="si">{}{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-                        <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-                        <span class="nb">round</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+                <span class="n">new_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_times</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.vector_is_invalid"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vector_is_invalid">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">vector_is_invalid</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>

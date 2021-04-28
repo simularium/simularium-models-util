@@ -205,7 +205,7 @@
 <span id="simularium-models-util-actin-actin-analyzer-module"></span><h2>simularium_models_util.actin.actin_analyzer module<a class="headerlink" href="#module-simularium_models_util.actin.actin_analyzer" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">simularium_models_util.actin.actin_analyzer.</span></code><code class="sig-name descname"><span class="pre">ActinAnalyzer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyze_reactions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">simularium_models_util.actin.actin_analyzer.</span></code><code class="sig-name descname"><span class="pre">ActinAnalyzer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Load data from a ReaDDy trajectory</p>
 <dl class="py method">
@@ -306,6 +306,22 @@ of ReaDDy reactions has happened by each time step</p>
 <dd><p>Get a list of the pitch of short helices between all actins
 on each filament in each frame of the trajectory</p>
 </dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_stddev_over_time">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">analyze_stddev_over_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_stddev_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_stddev_over_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the std deviation per time frame of the given data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.neighbor_types_to_string">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">neighbor_types_to_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.neighbor_types_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.neighbor_types_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.positions_to_string">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">positions_to_string</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.positions_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.positions_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1031,7 +1047,7 @@ actin#2      actin#1   ||   actin#3      actin#2</p>
 
 <dl class="py method">
 <dt id="simularium_models_util.actin.actin_util.ActinUtil.get_actin_axis_position">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_actin_axis_position</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_axis_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_axis_position" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_actin_axis_position</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_axis_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_axis_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>get the position on the filament axis closest to an actin
 positions = [</p>
 <blockquote>
@@ -1051,7 +1067,7 @@ next actin position</p>
 
 <dl class="py method">
 <dt id="simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_actin_rotation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_actin_rotation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>get the difference in the actin’s current orientation
 compared to the initial orientation as a rotation matrix
 positions = [prev actin position, middle actin position, next actin position]</p>

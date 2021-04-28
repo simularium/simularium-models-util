@@ -192,10 +192,11 @@
 
 <span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 <span class="kn">from</span> <span class="nn">.actin_util</span> <span class="kn">import</span> <span class="n">ActinUtil</span>
+<span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span>
 
 
 <div class="viewcode-block" id="ActinAnalyzer"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">ActinAnalyzer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_file_path</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">analyze_reactions</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_file_path</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load data from a ReaDDy trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -208,10 +209,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span>
         <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">read_observable_particles</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_particle_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_particle_data</span><span class="p">(</span>
             <span class="mi">0</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="mi">1</span><span class="p">,</span>
+            <span class="n">stride</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">topology_records</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span>
@@ -220,6 +221,32 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ActinAnalyzer.analyze_average_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_average_over_time</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a list of the average per time frame of the given data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">frame_sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">t</span><span class="p">]:</span>
+                <span class="n">frame_sum</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_sum</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinAnalyzer.analyze_stddev_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_stddev_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_stddev_over_time</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a list of the std deviation per time frame of the given data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">data_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data_arr</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_free_actin_types</span><span class="p">():</span>
@@ -364,6 +391,17 @@
             <span class="n">frame_particle_data</span><span class="p">,</span>
         <span class="p">)</span>
 
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_frame_all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a list of mother and daughter filaments </span>
+<span class="sd">        in the given frame of data,</span>
+<span class="sd">        each filament is a list of the actin ids in the filament</span>
+<span class="sd">        in order from pointed to barbed end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_mother_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span> 
+                <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_daughter_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">))</span>
+
 <div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_filamentous_to_total_actin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the ratio of actin in filaments to total actin over time</span>
@@ -384,7 +422,7 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filamentous_actin</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">free_actin</span> <span class="o">+</span> <span class="n">filamentous_actin</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_ATP_actin_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_ATP_actin_to_total_actin">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_ATP_actin_to_total_actin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -406,7 +444,7 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ATP_actin</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">ADP_actin</span> <span class="o">+</span> <span class="n">ATP_actin</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_daughter_filament_actin_to_total_filamentous_actin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -419,19 +457,19 @@
             <span class="n">mother_filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_mother_filaments</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">mother_filament</span> <span class="ow">in</span> <span class="n">mother_filaments</span><span class="p">[</span><span class="n">t</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">mother_filament</span> <span class="ow">in</span> <span class="n">mother_filaments</span><span class="p">:</span>
                 <span class="n">mother_actin</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mother_filament</span><span class="p">)</span>
             <span class="n">daughter_actin</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">daughter_filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_daughter_filaments</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">daughter_filament</span> <span class="ow">in</span> <span class="n">daughter_filaments</span><span class="p">[</span><span class="n">t</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">daughter_filament</span> <span class="ow">in</span> <span class="n">daughter_filaments</span><span class="p">:</span>
                 <span class="n">daughter_actin</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">daughter_filament</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">mother_actin</span> <span class="o">+</span> <span class="n">daughter_actin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">daughter_actin</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">mother_actin</span> <span class="o">+</span> <span class="n">daughter_actin</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_mother_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_mother_filament_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_mother_filament_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -446,13 +484,6 @@
             <span class="k">for</span> <span class="n">filament</span> <span class="ow">in</span> <span class="n">mother_filaments</span><span class="p">:</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
-
-<div class="viewcode-block" id="ActinAnalyzer.analyze_average_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">analyze_average_over_time</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a list of the average per time frame of the given data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_daughter_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_daughter_filament_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_daughter_filament_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -488,7 +519,7 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bound_arp23</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">free_arp23</span> <span class="o">+</span> <span class="n">bound_arp23</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_capped_ends_to_total_ends</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -516,18 +547,42 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">capped_ends</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">growing_ends</span> <span class="o">+</span> <span class="n">capped_ends</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_axis_position_for_actin</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_axis_position_for_actin</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the position on the filament axis closest to an actin</span>
 <span class="sd">        actin_ids = [previous actin id, this actin id, next actin id]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
             <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">2</span><span class="p">])</span>
-        <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_axis_position</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_axis_position</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">box_size</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ActinAnalyzer.neighbor_types_to_string"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.neighbor_types_to_string">[docs]</a>    <span class="nd">@staticmethod</span> 
+    <span class="k">def</span> <span class="nf">neighbor_types_to_string</span><span class="p">(</span><span class="n">particle_id</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">neighbor_id</span> <span class="ow">in</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">particle_id</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">neighbor_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinAnalyzer.positions_to_string"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.positions_to_string">[docs]</a>    <span class="nd">@staticmethod</span> 
+    <span class="k">def</span> <span class="nf">positions_to_string</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span>
+                <span class="n">positions</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">positions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">box_size</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_frame_branch_ids</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">):</span>
@@ -553,26 +608,25 @@
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">actin1_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s2">&quot;couldn&#39;t parse branch point: failed to find branch actin&quot;</span>
+                    <span class="s2">&quot;Failed to parse branch point: couldn&#39;t find branch actin</span><span class="se">\n\</span>
+<span class="s2">                    arp2 neighbor types are: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span><span class="n">arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="n">branch_actins</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_chain_of_types</span><span class="p">(</span>
                 <span class="n">actin1_id</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">arp2_id</span><span class="p">,</span> <span class="p">[</span><span class="n">actin1_id</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">branch_actins</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;couldn&#39;t parse branch point: only found </span><span class="se">\</span>
-<span class="s2">                        </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">branch_actins</span><span class="p">)</span><span class="si">}</span><span class="s2"> daughter actins&quot;</span>
-                <span class="p">)</span>
+                <span class="c1"># not enough daughter actins to measure branch</span>
                 <span class="k">continue</span>
             <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_id_for_neighbor_of_types</span><span class="p">(</span>
                 <span class="n">arp2_id</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">actin1_id</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">actin_arp2_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s2">&quot;couldn&#39;t parse branch point: failed to find actin_arp2&quot;</span>
+                    <span class="s2">&quot;Failed to parse branch point: failed to find actin_arp2</span><span class="se">\n\</span>
+<span class="s2">                    arp2 neighbor types are: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span><span class="n">arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="n">n</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span>
-                <span class="nb">int</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="nb">int</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="mi">1</span>
             <span class="p">)</span>
             <span class="n">actin_arp3_types</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="sa">f</span><span class="s2">&quot;actin#</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -587,7 +641,9 @@
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">actin_arp3_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s2">&quot;couldn&#39;t parse branch point: failed to find actin_arp3&quot;</span>
+                    <span class="s2">&quot;Failed to parse branch point: failed to find actin_arp3</span><span class="se">\n\</span>
+<span class="s2">                    actin_arp2 neighbor types are: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span><span class="n">actin_arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">arp2 neighbor types are: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span><span class="n">arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="n">main_actins</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_chain_of_types</span><span class="p">(</span>
                 <span class="n">actin_arp3_id</span><span class="p">,</span>
@@ -598,15 +654,13 @@
                 <span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">,</span> <span class="n">actin_arp3_id</span><span class="p">],</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">main_actins</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;couldn&#39;t parse branch point: only found </span><span class="se">\</span>
-<span class="s2">                    </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">main_actins</span><span class="p">)</span><span class="si">}</span><span class="s2"> mother actins&quot;</span>
-                <span class="p">)</span>
+                <span class="c1"># not enough mother actins to measure branch</span>
+                <span class="k">continue</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">main_actins</span> <span class="o">+</span> <span class="n">branch_actins</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_frame_branch_angles</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_frame_branch_angles</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the angle between mother and daughter filament</span>
 <span class="sd">        at each branch point in the given frame of the trajectory</span>
@@ -614,27 +668,51 @@
         <span class="n">branch_ids</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_branch_ids</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="n">branch_ids</span><span class="p">:</span>
+            <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
             <span class="n">main_pos1</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">main_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">main_pos1</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to axis position for mother actin 1&quot;</span><span class="p">)</span>
+                <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">main_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">main_pos1</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to get axis position for mother actin 1, </span><span class="se">\</span>
+<span class="s2">                    pos = </span><span class="si">{</span><span class="n">pos_to_string</span><span class="si">}</span><span class="se">\n</span><span class="s2">tried to use positions: &quot;</span> 
+                    <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
             <span class="n">main_pos2</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">main_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">main_pos2</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to axis position for mother actin 2&quot;</span><span class="p">)</span>
+                <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">main_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">main_pos2</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to get axis position for mother actin 2</span><span class="se">\</span>
+<span class="s2">                    pos = </span><span class="si">{</span><span class="n">pos_to_string</span><span class="si">}</span><span class="se">\n</span><span class="s2">tried to use positions: &quot;</span> 
+                    <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">6</span><span class="p">]]</span>
             <span class="n">v_main</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">main_pos2</span> <span class="o">-</span> <span class="n">main_pos1</span><span class="p">)</span>
             <span class="n">branch_pos1</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">6</span><span class="p">]]</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">branch_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">branch_pos1</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to axis position for daughter actin 1&quot;</span><span class="p">)</span>
+                <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">branch_pos1</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to get axis position for daughter actin 1</span><span class="se">\</span>
+<span class="s2">                    pos = </span><span class="si">{</span><span class="n">pos_to_string</span><span class="si">}</span><span class="se">\n</span><span class="s2">tried to use positions: &quot;</span> 
+                    <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">7</span><span class="p">]]</span>
             <span class="n">branch_pos2</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">7</span><span class="p">]]</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">branch_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">branch_pos2</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to axis position for daughter actin 2&quot;</span><span class="p">)</span>
+                <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">branch_pos2</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Failed to get axis position for daughter actin 2</span><span class="se">\</span>
+<span class="s2">                    pos = </span><span class="si">{</span><span class="n">pos_to_string</span><span class="si">}</span><span class="se">\n</span><span class="s2">tried to use positions: &quot;</span> 
+                    <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="n">v_branch</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">branch_pos2</span> <span class="o">-</span> <span class="n">branch_pos1</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v_main</span><span class="p">,</span> <span class="n">v_branch</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span>
@@ -647,7 +725,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">)):</span>
             <span class="n">branch_angles</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_branch_angles</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch_angles</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -661,22 +739,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actin1_pos</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin1_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">actin1_axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin1_ids</span>
+            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin1_ids</span><span class="p">,</span> <span class="n">box_size</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">actin1_axis_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">actin1_axis_pos</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to axis position for actin 1&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to get axis position for actin 1</span><span class="se">\n\</span>
+<span class="s2">                    tried to use positions: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin1_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">))</span>
         <span class="n">v1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">actin1_axis_pos</span> <span class="o">-</span> <span class="n">actin1_pos</span><span class="p">)</span>
         <span class="n">actin2_pos</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin2_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">actin2_axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin2_ids</span>
+            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin2_ids</span><span class="p">,</span> <span class="n">box_size</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">actin2_axis_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">actin2_axis_pos</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to axis position for actin 2&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to get axis position for actin 2</span><span class="se">\n\</span>
+<span class="s2">                    tried to use positions: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin2_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">))</span>
         <span class="n">v2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">actin2_axis_pos</span> <span class="o">-</span> <span class="n">actin2_pos</span><span class="p">)</span>
+        <span class="n">actin2_axis_pos</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span><span class="n">actin1_axis_pos</span><span class="p">,</span> <span class="n">actin2_axis_pos</span><span class="p">,</span> <span class="n">box_size</span><span class="p">)</span>
         <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">actin2_axis_pos</span> <span class="o">-</span> <span class="n">actin1_axis_pos</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;filament crossed periodic boundary, skipping pitch calculation&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="mf">360.0</span> <span class="o">/</span> <span class="n">angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">length</span>
 
@@ -687,7 +765,7 @@
 <span class="sd">        for a given frame of data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
+        <span class="n">filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">filament</span> <span class="ow">in</span> <span class="n">filaments</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">):</span>
                 <span class="n">short_pitch</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_calculate_pitch</span><span class="p">(</span>
@@ -707,7 +785,7 @@
 <span class="sd">        for a given frame of data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
+        <span class="n">filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">filament</span> <span class="ow">in</span> <span class="n">filaments</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">):</span>
                 <span class="n">long_pitch</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_calculate_pitch</span><span class="p">(</span>
@@ -775,24 +853,21 @@
 <span class="sd">        if the filament axis was a straight line</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
+        <span class="n">filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_all_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">filament</span> <span class="ow">in</span> <span class="n">filaments</span><span class="p">:</span>
             <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">last_pos</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">2</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
                 <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                    <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
+                    <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">axis_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s2">&quot;Failed to axis position for actin[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">] on filament </span><span class="si">{</span><span class="n">filament</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Failed to get axis position for actin in filament</span><span class="se">\n\</span>
+<span class="s2">                        tried to use positions: &quot;</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">positions_to_string</span><span class="p">(</span><span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">)</span>
                     <span class="p">)</span>
-                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_pos</span> <span class="o">-</span> <span class="n">last_pos</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">box_size</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span>
-                        <span class="s2">&quot;filament crossed periodic boundary, </span><span class="se">\</span>
-<span class="s2">                        skipping straightness calculation&quot;</span>
-                    <span class="p">)</span>
-                    <span class="k">continue</span>
+                <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span><span class="n">last_pos</span><span class="p">,</span> <span class="n">axis_pos</span><span class="p">,</span> <span class="n">box_size</span><span class="p">)</span>
                 <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">)</span>
                 <span class="n">last_pos</span> <span class="o">=</span> <span class="n">axis_pos</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -938,7 +1013,7 @@
             <span class="k">return</span> <span class="s2">&quot;structural_topology_reactions&quot;</span>
         <span class="k">if</span> <span class="n">readdy_reaction_name</span> <span class="ow">in</span> <span class="n">reactions</span><span class="p">[</span><span class="s2">&quot;spatial_topology_reactions&quot;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="s2">&quot;spatial_topology_reactions&quot;</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;couldn&#39;t find reaction named </span><span class="si">{</span><span class="n">readdy_reaction_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to find reaction named </span><span class="si">{</span><span class="n">readdy_reaction_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_readdy_reaction_events_over_time</span><span class="p">(</span>
@@ -984,24 +1059,13 @@
 <span class="sd">        a set of ReaDDy reactions has happened by each time step</span>
 <span class="sd">        for each total reaction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analyzing reactions...&quot;</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">total_reactions</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_total_reactions</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">total_reaction_name</span> <span class="ow">in</span> <span class="n">total_reactions</span><span class="p">:</span>
             <span class="n">result</span><span class="p">[</span><span class="n">total_reaction_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyze_reaction_events_over_time</span><span class="p">(</span>
                 <span class="n">total_reaction_name</span>
             <span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">total_reactions</span><span class="p">))</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                <span class="s2">&quot;Analyzing reactions [</span><span class="si">{}{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-                    <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="mf">100.0</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span>
-                    <span class="nb">round</span><span class="p">(</span><span class="mf">10.0</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_free_actin_concentration_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_free_actin_concentration_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_free_actin_concentration_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1020,7 +1084,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
