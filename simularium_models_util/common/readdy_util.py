@@ -1030,18 +1030,22 @@ class ReaddyUtil:
         """
         Read reaction counts per frame from a ReaDDy trajectory
         and create a DataFrame with the number of times each
-        ReaDDy reaction and total set of reactions has happened 
+        ReaDDy reaction and total set of reactions has happened
         by each time step / stride
         """
         print("Loading reactions...")
         reaction_times, readdy_reactions = trajectory.read_observable_reaction_counts()
         flat_readdy_reactions = {}
         for rxn_type in readdy_reactions:
-            flat_readdy_reactions = dict(flat_readdy_reactions, **readdy_reactions[rxn_type])
+            flat_readdy_reactions = dict(
+                flat_readdy_reactions, **readdy_reactions[rxn_type]
+            )
         reaction_names = list(np.column_stack(flat_readdy_reactions)[0])
         reaction_data = np.column_stack([x for x in flat_readdy_reactions.values()])
         interval = int((reaction_data.shape[0] - 1) * stride / float(recorded_steps))
-        reaction_data = np.sum(reaction_data[:-1].reshape(-1, interval, len(reaction_names)), axis=1)
+        reaction_data = np.sum(
+            reaction_data[:-1].reshape(-1, interval, len(reaction_names)), axis=1
+        )
         reactions_df = pd.DataFrame(reaction_data, columns=reaction_names)
         for total_rxn_name in total_reactions_mapping:
             if total_rxn_name in reactions_df:

@@ -45,6 +45,7 @@ dev_requirements = [
 requirements = [
     "numpy>=1.16",
     "scipy>=1.5.2",
+    "pandas>=1.0",
 ]
 
 extra_requirements = {

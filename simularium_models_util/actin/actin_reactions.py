@@ -4,15 +4,15 @@
 
 ACTIN_REACTIONS = {
     "Dimers": (
-        ["Dimerize"], 
+        ["Dimerize"],
         ["Reverse_Dimerize"],
     ),
     "Trimers": (
-        ["Trimerize1", "Trimerize2", "Trimerize3"], 
+        ["Trimerize1", "Trimerize2", "Trimerize3"],
         ["Reverse_Trimerize"],
     ),
     "Trimerize": (
-        ["Trimerize1", "Trimerize2", "Trimerize3"], 
+        ["Trimerize1", "Trimerize2", "Trimerize3"],
         [],
     ),
     "Barbed growth ATP": (
@@ -70,35 +70,35 @@ ACTIN_REACTIONS = {
         [],
     ),
     "Pointed shrink ATP": (
-        ["Pointed_Shrink_ATP"], 
+        ["Pointed_Shrink_ATP"],
         ["Fail_Pointed_Shrink_ATP"],
     ),
     "Pointed shrink ADP": (
-        ["Pointed_Shrink_ADP"], 
+        ["Pointed_Shrink_ADP"],
         ["Fail_Pointed_Shrink_ADP"],
     ),
     "Barbed shrink ATP": (
-        ["Barbed_Shrink_ATP"], 
+        ["Barbed_Shrink_ATP"],
         ["Fail_Barbed_Shrink_ATP"],
     ),
     "Barbed shrink ADP": (
-        ["Barbed_Shrink_ADP"], 
+        ["Barbed_Shrink_ADP"],
         ["Fail_Barbed_Shrink_ADP"],
     ),
     "Hydrolyze actin": (
-        ["Hydrolysis_Actin"], 
+        ["Hydrolysis_Actin"],
         ["Fail_Hydrolysis_Actin"],
     ),
     "Hydrolyze arp": (
-        ["Hydrolysis_Arp"], 
+        ["Hydrolysis_Arp"],
         ["Fail_Hydrolysis_Arp"],
     ),
     "Nucleotide exchange actin": (
-        ["Nucleotide_Exchange_Actin"], 
+        ["Nucleotide_Exchange_Actin"],
         [],
     ),
     "Nucleotide exchange arp": (
-        ["Nucleotide_Exchange_Arp"], 
+        ["Nucleotide_Exchange_Arp"],
         [],
     ),
     "Arp2/3 bind ATP": (
@@ -124,27 +124,27 @@ ACTIN_REACTIONS = {
         ["Cleanup_Fail_Arp_Bind_ADP"],
     ),
     "Arp2 unbind ATP": (
-        ["Arp_Unbind_ATP"], 
+        ["Arp_Unbind_ATP"],
         ["Fail_Arp_Unbind_ATP"],
     ),
     "Arp2 unbind ADP": (
-        ["Arp_Unbind_ADP"], 
+        ["Arp_Unbind_ADP"],
         ["Fail_Arp_Unbind_ADP"],
     ),
     "Branch ATP": (
-        ["Barbed_Growth_Branch_ATP"], 
+        ["Barbed_Growth_Branch_ATP"],
         [],
     ),
     "Branch ADP": (
-        ["Barbed_Growth_Branch_ADP"], 
+        ["Barbed_Growth_Branch_ADP"],
         [],
     ),
     "Debranch ATP": (
-        ["Debranch_ATP"], 
+        ["Debranch_ATP"],
         ["Fail_Debranch_ATP"],
     ),
     "Debranch ADP": (
-        ["Debranch_ADP"], 
+        ["Debranch_ADP"],
         ["Fail_Debranch_ADP"],
     ),
     "Cap bind": (
@@ -159,7 +159,7 @@ ACTIN_REACTIONS = {
         [],
     ),
     "Cap unbind": (
-        ["Cap_Unbind"], 
+        ["Cap_Unbind"],
         ["Fail_Cap_Unbind"],
     ),
 }

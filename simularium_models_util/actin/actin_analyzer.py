@@ -1,17 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import math
 import numpy as np
 import readdy
-import pandas as pd
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
 from .actin_reactions import ACTIN_REACTIONS
 
 
-TIMESTEP = 0.1 #ns
+TIMESTEP = 0.1  # ns
 
 
 class ActinAnalyzer:
@@ -41,9 +39,10 @@ class ActinAnalyzer:
             self.positions,
             self.traj,
         )
-        self.times = TIMESTEP / 1e3 * self.times # index --> microseconds
+        self.times = TIMESTEP / 1e3 * self.times  # index --> microseconds
         self.reactions = ReaddyUtil.load_reactions(
-            self.traj, self.stride, ACTIN_REACTIONS, recorded_steps)
+            self.traj, self.stride, ACTIN_REACTIONS, recorded_steps
+        )
         self.time_inc_s = self.times[-1] * (TIMESTEP / 1e9) * (stride / len(self.times))
 
     def analyze_reaction_rate_over_time(self, reaction_name):
@@ -54,7 +53,9 @@ class ActinAnalyzer:
         if reaction_name not in self.reactions:
             print(f"Couldn't find reaction: {reaction_name}")
             return None
-        return np.insert(self.reactions[reaction_name].to_numpy() / self.time_inc_s, 0, 0.0)
+        return np.insert(
+            self.reactions[reaction_name].to_numpy() / self.time_inc_s, 0, 0.0
+        )
 
     @staticmethod
     def analyze_average_over_time(data):
@@ -530,8 +531,8 @@ class ActinAnalyzer:
             if main_pos1 is None or ReaddyUtil.vector_is_invalid(main_pos1):
                 pos_to_string = "None" if main_pos1 is None else main_pos1
                 raise Exception(
-                    f"Failed to get axis position for mother actin 1, "
-                    "pos = {pos_to_string}\ntried to use positions: "
+                    "Failed to get axis position for mother actin 1, "
+                    f"pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -543,8 +544,8 @@ class ActinAnalyzer:
             if main_pos2 is None or ReaddyUtil.vector_is_invalid(main_pos2):
                 pos_to_string = "None" if main_pos2 is None else main_pos2
                 raise Exception(
-                    f"Failed to get axis position for mother actin 2"
-                    "pos = {pos_to_string}\ntried to use positions: "
+                    "Failed to get axis position for mother actin 2"
+                    f"pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -557,8 +558,8 @@ class ActinAnalyzer:
             if branch_pos1 is None or ReaddyUtil.vector_is_invalid(branch_pos1):
                 pos_to_string = "None" if branch_pos1 is None else branch_pos1
                 raise Exception(
-                    f"Failed to get axis position for daughter actin 1"
-                    "pos = {pos_to_string}\ntried to use positions: "
+                    "Failed to get axis position for daughter actin 1"
+                    f"pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -570,8 +571,8 @@ class ActinAnalyzer:
             if branch_pos2 is None or ReaddyUtil.vector_is_invalid(branch_pos2):
                 pos_to_string = "None" if branch_pos2 is None else branch_pos2
                 raise Exception(
-                    f"Failed to get axis position for daughter actin 2"
-                    "pos = {pos_to_string}\ntried to use positions: "
+                    "Failed to get axis position for daughter actin 2"
+                    f"pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )

@@ -7,31 +7,30 @@ from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData, ScatterPlotData
 from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
-from ..actin.actin_reactions import ACTIN_REACTIONS
 
 TIMESTEP = 0.1  # ns
 SPECIES_COUNT_RXNS = ["Dimers", "Trimers"]
 POLYMERIZATION_RXNS = [
-    "Barbed growth ATP", 
-    "Barbed growth ADP", 
-    "Pointed growth ATP", 
+    "Barbed growth ATP",
+    "Barbed growth ADP",
+    "Pointed growth ATP",
     "Pointed growth ADP",
 ]
 DEPOLYMERIZATION_RXNS = [
-    "Pointed shrink ATP", 
+    "Pointed shrink ATP",
     "Pointed shrink ADP",
     "Barbed shrink ATP",
     "Barbed shrink ADP",
 ]
 GROWTH_REACTIONS = [
     "Dimerize",
-    "Trimerize", 
-    "Barbed growth ATP", 
-    "Barbed growth ADP", 
-    "Pointed growth ATP", 
-    "Pointed growth ADP", 
+    "Trimerize",
+    "Barbed growth ATP",
+    "Barbed growth ADP",
+    "Pointed growth ATP",
+    "Pointed growth ADP",
     "Branch ATP",
-    "Branch ADP"
+    "Branch ADP",
 ]
 
 
@@ -57,7 +56,7 @@ class ActinVisualization:
                 * analyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin(),
                 "Arp2/3 in filaments": 100.0
                 * analyzer.analyze_ratio_of_bound_to_total_arp23(),
-                "Actin in daughter filaments": 100.0 
+                "Actin in daughter filaments": 100.0
                 * analyzer.analyze_ratio_of_daughter_to_total_actin(),
             },
             render_mode="lines",
@@ -107,7 +106,7 @@ class ActinVisualization:
     @staticmethod
     def get_polymerization_reactions_plot(analyzer):
         """
-        Add a plot of cumulative reaction events over time 
+        Add a plot of cumulative reaction events over time
         for each total polymerization reaction over time
         """
         ytraces = {}
@@ -127,7 +126,7 @@ class ActinVisualization:
     @staticmethod
     def get_depolymerization_reactions_plot(analyzer):
         """
-        Add a plot of cumulative reaction events over time 
+        Add a plot of cumulative reaction events over time
         for each total polymerization reaction over time
         """
         ytraces = {}
@@ -232,7 +231,7 @@ class ActinVisualization:
     @staticmethod
     def get_actin_growth_reactions_vs_concentration_plot(analyzer):
         """
-        Add a plot of cumulative reaction events over time 
+        Add a plot of cumulative reaction events over time
         for each total polymerization reaction over time
         """
         ytraces = {}
@@ -262,7 +261,9 @@ class ActinVisualization:
                 ActinVisualization.get_avg_length_plot(analyzer),
                 ActinVisualization.get_polymerization_reactions_plot(analyzer),
                 ActinVisualization.get_depolymerization_reactions_plot(analyzer),
-                ActinVisualization.get_actin_growth_reactions_vs_concentration_plot(analyzer),
+                ActinVisualization.get_actin_growth_reactions_vs_concentration_plot(
+                    analyzer
+                ),
                 ActinVisualization.get_capped_ends_plot(analyzer),
                 ActinVisualization.get_branch_angle_plot(analyzer),
                 ActinVisualization.get_helix_pitch_plot(analyzer),
