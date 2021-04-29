@@ -4,9 +4,14 @@
 import math
 import numpy as np
 import readdy
+import pandas as pd
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
+from .actin_reactions import ACTIN_REACTIONS
+
+
+TIMESTEP = 0.1 #ns
 
 
 class ActinAnalyzer:
@@ -15,6 +20,7 @@ class ActinAnalyzer:
         Load data from a ReaDDy trajectory
         """
         self.box_size = box_size
+        self.stride = stride
         self.traj = readdy.Trajectory(h5_file_path)
         self.times, self.topology_records = self.traj.read_observable_topologies()
         (
@@ -23,10 +29,11 @@ class ActinAnalyzer:
             self.ids,
             self.positions,
         ) = self.traj.read_observable_particles()
+        recorded_steps = len(self.times) - 1
         self.particle_data, self.times = ReaddyUtil.shape_particle_data(
             0,
             self.times.shape[0],
-            stride,
+            self.stride,
             self.times,
             self.topology_records,
             self.ids,
@@ -34,7 +41,20 @@ class ActinAnalyzer:
             self.positions,
             self.traj,
         )
-        self.reactions = None
+        self.times = TIMESTEP / 1e3 * self.times # index --> microseconds
+        self.reactions = ReaddyUtil.load_reactions(
+            self.traj, self.stride, ACTIN_REACTIONS, recorded_steps)
+        self.time_inc_s = self.times[-1] * (TIMESTEP / 1e9) * (stride / len(self.times))
+
+    def analyze_reaction_rate_over_time(self, reaction_name):
+        """
+        Get a list of the reaction rate per second
+        at each analyzed timestep of the given reaction
+        """
+        if reaction_name not in self.reactions:
+            print(f"Couldn't find reaction: {reaction_name}")
+            return None
+        return np.insert(self.reactions[reaction_name].to_numpy() / self.time_inc_s, 0, 0.0)
 
     @staticmethod
     def analyze_average_over_time(data):
@@ -127,7 +147,7 @@ class ActinAnalyzer:
         )
 
     @staticmethod
-    def _ATP_actin_types():
+    def _filamentous_ATP_actin_types():
         """
         Get all the types for actins with ATP bound
         """
@@ -141,7 +161,7 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def _ADP_actin_types():
+    def _filamentous_ADP_actin_types():
         """
         Get all the types for actins with ADP bound
         """
@@ -239,49 +259,58 @@ class ActinAnalyzer:
                 result.append(0)
         return np.array(result)
 
-    def analyze_ratio_of_ATP_actin_to_total_actin(self):
+    def analyze_ratio_of_bound_ATP_actin_to_total_actin(self):
         """
-        Get a list of the ratio of ATP-actin to total actin in filaments over time
+        Get a list of the ratio of bound ATP-actin to total actin over time
         """
         result = []
         for t in range(len(self.particle_data)):
             ATP_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._ATP_actin_types(), self.particle_data[t]
+                    ActinAnalyzer._filamentous_ATP_actin_types(), self.particle_data[t]
                 )
             )
-            ADP_actin = len(
+            free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._ADP_actin_types(), self.particle_data[t]
+                    ActinAnalyzer._free_actin_types(), self.particle_data[t]
                 )
             )
-            if ADP_actin + ATP_actin > 0:
-                result.append(ATP_actin / float(ADP_actin + ATP_actin))
+            filamentous_actin = len(
+                ReaddyUtil.analyze_frame_get_ids_for_types(
+                    ActinAnalyzer._filamentous_actin_types(), self.particle_data[t]
+                )
+            )
+            if free_actin + filamentous_actin > 0:
+                result.append(ATP_actin / float(free_actin + filamentous_actin))
             else:
                 result.append(1.0)
         return np.array(result)
 
-    def analyze_ratio_of_daughter_to_total_filamentous_actin(self):
+    def analyze_ratio_of_daughter_to_total_actin(self):
         """
         Get a list of the ratio
-        [daughter filament actin] / [filamentous actin] over time
+        [daughter filament actin] / [total actin] over time
         """
         result = []
         for t in range(len(self.particle_data)):
-            mother_actin = 0
-            mother_filaments = ActinAnalyzer._frame_mother_filaments(
-                self.particle_data[t]
-            )
-            for mother_filament in mother_filaments:
-                mother_actin += len(mother_filament)
             daughter_actin = 0
             daughter_filaments = ActinAnalyzer._frame_daughter_filaments(
                 self.particle_data[t]
             )
             for daughter_filament in daughter_filaments:
                 daughter_actin += len(daughter_filament)
-            if mother_actin + daughter_actin > 0:
-                result.append(daughter_actin / float(mother_actin + daughter_actin))
+            free_actin = len(
+                ReaddyUtil.analyze_frame_get_ids_for_types(
+                    ActinAnalyzer._free_actin_types(), self.particle_data[t]
+                )
+            )
+            filamentous_actin = len(
+                ReaddyUtil.analyze_frame_get_ids_for_types(
+                    ActinAnalyzer._filamentous_actin_types(), self.particle_data[t]
+                )
+            )
+            if free_actin + filamentous_actin > 0:
+                result.append(daughter_actin / float(free_actin + filamentous_actin))
             else:
                 result.append(0)
         return np.array(result)
@@ -322,13 +351,13 @@ class ActinAnalyzer:
         for t in range(len(self.particle_data)):
             bound_arp23 = 0
             free_arp23 = 0
-            arp3_ids = ReaddyUtil.analyze_frame_get_ids_for_types(
-                ["arp3", "arp3#branched"], self.particle_data[t]
+            arp2_ids = ReaddyUtil.analyze_frame_get_ids_for_types(
+                ["arp2", "arp2#branched"], self.particle_data[t]
             )
-            for arp3_id in arp3_ids:
-                if len(self.particle_data[t][arp3_id][1]) > 1:
+            for arp2_id in arp2_ids:
+                if len(self.particle_data[t][arp2_id][1]) > 1:
                     bound_arp23 += 1
-                if len(self.particle_data[t][arp3_id][1]) <= 1:
+                if len(self.particle_data[t][arp2_id][1]) <= 1:
                     free_arp23 += 1
             if free_arp23 + bound_arp23 > 0:
                 result.append(bound_arp23 / float(free_arp23 + bound_arp23))
@@ -420,13 +449,14 @@ class ActinAnalyzer:
                 arp2_id, ActinAnalyzer._branch_actin_types(), frame_particle_data
             )
             if actin1_id is None:
-                raise Exception(
-                    "Failed to parse branch point: couldn't find branch actin\n\
-                    arp2 neighbor types are: "
+                print(
+                    "Failed to parse branch point: couldn't find branch actin\n"
+                    "arp2 neighbor types are: "
                     + ActinAnalyzer.neighbor_types_to_string(
                         arp2_id, frame_particle_data
                     )
                 )
+                continue
             branch_actins = ReaddyUtil.analyze_frame_get_chain_of_types(
                 actin1_id, actin_types, frame_particle_data, 3, arp2_id, [actin1_id]
             )
@@ -438,8 +468,8 @@ class ActinAnalyzer:
             )
             if actin_arp2_id is None:
                 raise Exception(
-                    "Failed to parse branch point: failed to find actin_arp2\n\
-                    arp2 neighbor types are: "
+                    "Failed to parse branch point: failed to find actin_arp2\n"
+                    "arp2 neighbor types are: "
                     + ActinAnalyzer.neighbor_types_to_string(
                         arp2_id, frame_particle_data
                     )
@@ -460,8 +490,8 @@ class ActinAnalyzer:
             )
             if actin_arp3_id is None:
                 raise Exception(
-                    "Failed to parse branch point: failed to find actin_arp3\n\
-                    actin_arp2 neighbor types are: "
+                    "Failed to parse branch point: failed to find actin_arp3\n"
+                    "actin_arp2 neighbor types are: "
                     + ActinAnalyzer.neighbor_types_to_string(
                         actin_arp2_id, frame_particle_data
                     )
@@ -500,8 +530,8 @@ class ActinAnalyzer:
             if main_pos1 is None or ReaddyUtil.vector_is_invalid(main_pos1):
                 pos_to_string = "None" if main_pos1 is None else main_pos1
                 raise Exception(
-                    f"Failed to get axis position for mother actin 1, \
-                    pos = {pos_to_string}\ntried to use positions: "
+                    f"Failed to get axis position for mother actin 1, "
+                    "pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -513,8 +543,8 @@ class ActinAnalyzer:
             if main_pos2 is None or ReaddyUtil.vector_is_invalid(main_pos2):
                 pos_to_string = "None" if main_pos2 is None else main_pos2
                 raise Exception(
-                    f"Failed to get axis position for mother actin 2\
-                    pos = {pos_to_string}\ntried to use positions: "
+                    f"Failed to get axis position for mother actin 2"
+                    "pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -527,8 +557,8 @@ class ActinAnalyzer:
             if branch_pos1 is None or ReaddyUtil.vector_is_invalid(branch_pos1):
                 pos_to_string = "None" if branch_pos1 is None else branch_pos1
                 raise Exception(
-                    f"Failed to get axis position for daughter actin 1\
-                    pos = {pos_to_string}\ntried to use positions: "
+                    f"Failed to get axis position for daughter actin 1"
+                    "pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -540,8 +570,8 @@ class ActinAnalyzer:
             if branch_pos2 is None or ReaddyUtil.vector_is_invalid(branch_pos2):
                 pos_to_string = "None" if branch_pos2 is None else branch_pos2
                 raise Exception(
-                    f"Failed to get axis position for daughter actin 2\
-                    pos = {pos_to_string}\ntried to use positions: "
+                    f"Failed to get axis position for daughter actin 2"
+                    "pos = {pos_to_string}\ntried to use positions: "
                     + ActinAnalyzer.positions_to_string(
                         actin_ids, box_size, frame_particle_data
                     )
@@ -576,8 +606,8 @@ class ActinAnalyzer:
         )
         if actin1_axis_pos is None or ReaddyUtil.vector_is_invalid(actin1_axis_pos):
             raise Exception(
-                "Failed to get axis position for actin 1\n\
-                    tried to use positions: "
+                "Failed to get axis position for actin 1\n"
+                "tried to use positions: "
                 + ActinAnalyzer.positions_to_string(
                     actin1_ids, box_size, frame_particle_data
                 )
@@ -589,8 +619,8 @@ class ActinAnalyzer:
         )
         if actin2_axis_pos is None or ReaddyUtil.vector_is_invalid(actin2_axis_pos):
             raise Exception(
-                "Failed to get axis position for actin 2\n\
-                    tried to use positions: "
+                "Failed to get axis position for actin 2\n"
+                "tried to use positions: "
                 + ActinAnalyzer.positions_to_string(
                     actin2_ids, box_size, frame_particle_data
                 )
@@ -742,185 +772,9 @@ class ActinAnalyzer:
             result.append(straightness)
         return result
 
-    @staticmethod
-    def _total_reactions():
-        """
-        [total reaction name] : (readdy reactions to add, readdy reactions to subtract)
-        """
-        return {
-            "dimerize": (["Dimerize"], []),
-            "rev dimerize": (["Reverse_Dimerize"], ["Fail_Reverse_Dimerize"]),
-            "trimerize": (["Trimerize1", "Trimerize2", "Trimerize3"], []),
-            "rev trimerize": (["Reverse_Trimerize"], ["Fail_Reverse_Trimerize"]),
-            "pointed growth ATP": (
-                [
-                    "Pointed_Growth_ATP11",
-                    "Pointed_Growth_ATP12",
-                    "Pointed_Growth_ATP13",
-                    "Pointed_Growth_ATP21",
-                    "Pointed_Growth_ATP22",
-                    "Pointed_Growth_ATP23",
-                ],
-                [],
-            ),
-            "pointed growth ADP": (
-                [
-                    "Pointed_Growth_ADP11",
-                    "Pointed_Growth_ADP12",
-                    "Pointed_Growth_ADP13",
-                    "Pointed_Growth_ADP21",
-                    "Pointed_Growth_ADP22",
-                    "Pointed_Growth_ADP23",
-                ],
-                [],
-            ),
-            "pointed shrink ATP": (["Pointed_Shrink_ATP"], ["Fail_Pointed_Shrink_ATP"]),
-            "pointed shrink ADP": (["Pointed_Shrink_ADP"], ["Fail_Pointed_Shrink_ADP"]),
-            "barbed growth ATP": (
-                [
-                    "Barbed_Growth_ATP11",
-                    "Barbed_Growth_ATP12",
-                    "Barbed_Growth_ATP13",
-                    "Barbed_Growth_ATP21",
-                    "Barbed_Growth_ATP22",
-                    "Barbed_Growth_ATP23",
-                    "Barbed_Growth_Nucleate_ATP1",
-                    "Barbed_Growth_Nucleate_ATP2",
-                    "Barbed_Growth_Nucleate_ATP3",
-                    "Barbed_Growth_Branch_ATP",
-                ],
-                [],
-            ),
-            "barbed growth ADP": (
-                [
-                    "Barbed_Growth_ADP11",
-                    "Barbed_Growth_ADP12",
-                    "Barbed_Growth_ADP13",
-                    "Barbed_Growth_ADP21",
-                    "Barbed_Growth_ADP22",
-                    "Barbed_Growth_ADP23",
-                    "Barbed_Growth_Nucleate_ADP1",
-                    "Barbed_Growth_Nucleate_ADP2",
-                    "Barbed_Growth_Nucleate_ADP3",
-                    "Barbed_Growth_Branch_ADP",
-                ],
-                [],
-            ),
-            "barbed shrink ATP": (["Barbed_Shrink_ATP"], ["Fail_Barbed_Shrink_ATP"]),
-            "barbed shrink ADP": (["Barbed_Shrink_ADP"], ["Fail_Barbed_Shrink_ADP"]),
-            "hydrolyze actin": (["Hydrolysis_Actin"], ["Fail_Hydrolysis_Actin"]),
-            "hydrolyze arp": (["Hydrolysis_Arp"], ["Fail_Hydrolysis_Arp"]),
-            "nucleotide exchange actin": (["Nucleotide_Exchange_Actin"], []),
-            "nucleotide exchange arp": (["Nucleotide_Exchange_Arp"], []),
-            "arp2/3 bind ATP": (
-                [
-                    "Arp_Bind_ATP11",
-                    "Arp_Bind_ATP12",
-                    "Arp_Bind_ATP13",
-                    "Arp_Bind_ATP21",
-                    "Arp_Bind_ATP22",
-                    "Arp_Bind_ATP23",
-                ],
-                ["Fail_Arp_Bind_ATP"],
-            ),
-            "arp2/3 bind ADP": (
-                [
-                    "Arp_Bind_ADP11",
-                    "Arp_Bind_ADP12",
-                    "Arp_Bind_ADP13",
-                    "Arp_Bind_ADP21",
-                    "Arp_Bind_ADP22",
-                    "Arp_Bind_ADP23",
-                ],
-                ["Fail_Arp_Bind_ADP"],
-            ),
-            "debranch ATP": (["Debranch_ATP"], ["Fail_Debranch_ATP"]),
-            "debranch ADP": (["Debranch_ADP"], ["Fail_Debranch_ADP"]),
-            "arp2 unbind ATP": (["Arp_Unbind_ATP"], ["Fail_Arp_Unbind_ATP"]),
-            "arp2 unbind ADP": (["Arp_Unbind_ADP"], ["Fail_Arp_Unbind_ADP"]),
-            "cap bind": (
-                [
-                    "Cap_Bind11",
-                    "Cap_Bind12",
-                    "Cap_Bind13",
-                    "Cap_Bind21",
-                    "Cap_Bind22",
-                    "Cap_Bind23",
-                ],
-                [],
-            ),
-            "cap unbind": (["Cap_Unbind"], ["Fail_Cap_Unbind"]),
-        }
-
-    @staticmethod
-    def _get_reaction_type(readdy_reaction_name, reactions):
-        """
-        Get the type of ReaDDy reaction for a ReaDDy reaction name
-        """
-        if readdy_reaction_name in reactions["reactions"]:
-            return "reactions"
-        if readdy_reaction_name in reactions["structural_topology_reactions"]:
-            return "structural_topology_reactions"
-        if readdy_reaction_name in reactions["spatial_topology_reactions"]:
-            return "spatial_topology_reactions"
-        raise Exception(f"Failed to find reaction named {readdy_reaction_name}")
-
-    @staticmethod
-    def _get_readdy_reaction_events_over_time(
-        readdy_reaction_name, multiplier, stride, result, reactions
-    ):
-        """
-        Get a list of the number of times a ReaDDy reaction
-        has happened by each time step
-        """
-        reaction_type = ActinAnalyzer._get_reaction_type(readdy_reaction_name)
-        count = 0
-        for t in range(len(reactions[reaction_type][readdy_reaction_name])):
-            count += multiplier * reactions[reaction_type][readdy_reaction_name][t]
-            if t % stride == 0:
-                i = int(math.floor(t / float(stride)))
-                if len(result) < i + 1:
-                    result.append(0)
-                result[i] += count
-        return result
-
-    def analyze_reaction_events_over_time(self, total_reaction_name):
-        """
-        Get a list of the number of times a set
-        of ReaDDy reactions has happened by each time step
-        """
-        if self.reactions is None:
-            reaction_times, self.reactions = self.traj.read_observable_reaction_counts()
-        readdy_reactions = ActinAnalyzer._total_reactions()[total_reaction_name]
-        result = []
-        for reaction_name in readdy_reactions[0]:
-            result = ActinAnalyzer._get_readdy_reaction_events_over_time(
-                reaction_name, 1, 1, result, self.reactions
-            )
-        for reaction_name in readdy_reactions[1]:
-            result = ActinAnalyzer._get_readdy_reaction_events_over_time(
-                reaction_name, -1, 1, result, self.reactions
-            )
-        return result
-
-    def analyze_all_reaction_events_over_time(self):
-        """
-        Get a dictionary of lists of the number of times
-        a set of ReaDDy reactions has happened by each time step
-        for each total reaction
-        """
-        print("Analyzing reactions...")
-        result = {}
-        total_reactions = ActinAnalyzer._total_reactions()
-        for total_reaction_name in total_reactions:
-            result[total_reaction_name] = self.analyze_reaction_events_over_time(
-                total_reaction_name
-            )
-        return result
-
     def analyze_free_actin_concentration_over_time(self):
         """
-        Get a list of the concentration of free actin at each step
+        Get an array of the concentration of free actin at each step
         """
         result = []
         for t in range(len(self.particle_data)):

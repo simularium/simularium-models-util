@@ -9,6 +9,7 @@ import readdy
 import os
 from shutil import rmtree
 import math
+import pandas as pd
 
 
 class ReaddyUtil:
@@ -925,7 +926,8 @@ class ReaddyUtil:
     ):
         """
         For each time point, get a dictionary mapping particle id
-        to data for each particle
+        to data for each particle:
+            [id] : (type, list of neighbor ids, position)
         """
         print("Shaping data for analysis...")
         result = []
@@ -1022,3 +1024,31 @@ class ReaddyUtil:
             start_particle_id,
             result,
         )
+
+    @staticmethod
+    def load_reactions(trajectory, stride, total_reactions_mapping, recorded_steps=1e3):
+        """
+        Read reaction counts per frame from a ReaDDy trajectory
+        and create a DataFrame with the number of times each
+        ReaDDy reaction and total set of reactions has happened 
+        by each time step / stride
+        """
+        print("Loading reactions...")
+        reaction_times, readdy_reactions = trajectory.read_observable_reaction_counts()
+        flat_readdy_reactions = {}
+        for rxn_type in readdy_reactions:
+            flat_readdy_reactions = dict(flat_readdy_reactions, **readdy_reactions[rxn_type])
+        reaction_names = list(np.column_stack(flat_readdy_reactions)[0])
+        reaction_data = np.column_stack([x for x in flat_readdy_reactions.values()])
+        interval = int((reaction_data.shape[0] - 1) * stride / float(recorded_steps))
+        reaction_data = np.sum(reaction_data[:-1].reshape(-1, interval, len(reaction_names)), axis=1)
+        reactions_df = pd.DataFrame(reaction_data, columns=reaction_names)
+        for total_rxn_name in total_reactions_mapping:
+            if total_rxn_name in reactions_df:
+                continue
+            reactions_df[total_rxn_name] = 0.0
+            for rxn_name in total_reactions_mapping[total_rxn_name][0]:
+                reactions_df[total_rxn_name] += reactions_df[rxn_name]
+            for rxn_name in total_reactions_mapping[total_rxn_name][1]:
+                reactions_df[total_rxn_name] += -1 * reactions_df[rxn_name]
+        return reactions_df

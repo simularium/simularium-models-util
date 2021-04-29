@@ -7,8 +7,32 @@ from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData, ScatterPlotData
 from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
+from ..actin.actin_reactions import ACTIN_REACTIONS
 
 TIMESTEP = 0.1  # ns
+SPECIES_COUNT_RXNS = ["Dimers", "Trimers"]
+POLYMERIZATION_RXNS = [
+    "Barbed growth ATP", 
+    "Barbed growth ADP", 
+    "Pointed growth ATP", 
+    "Pointed growth ADP",
+]
+DEPOLYMERIZATION_RXNS = [
+    "Pointed shrink ATP", 
+    "Pointed shrink ADP",
+    "Barbed shrink ATP",
+    "Barbed shrink ADP",
+]
+GROWTH_REACTIONS = [
+    "Dimerize",
+    "Trimerize", 
+    "Barbed growth ATP", 
+    "Barbed growth ADP", 
+    "Pointed growth ATP", 
+    "Pointed growth ADP", 
+    "Branch ATP",
+    "Branch ADP"
+]
 
 
 class ActinVisualization:
@@ -17,86 +41,63 @@ class ActinVisualization:
     """
 
     @staticmethod
-    def get_bound_actin_plot(analyzer):
+    def get_bound_monomers_plot(analyzer):
         """
         Add a plot of percent actin in filaments
         """
         return ScatterPlotData(
-            title="Filamentous actin",
+            title="Monomers over time",
             xaxis_title="Time (µs)",
-            yaxis_title="Bound actin (%)",
+            yaxis_title="Monomers (%)",
             xtrace=analyzer.times,
             ytraces={
-                "Bound actin": 100.0
+                "Actin in filaments": 100.0
                 * analyzer.analyze_ratio_of_filamentous_to_total_actin(),
+                "ATP-Actin in filaments ATP": 100.0
+                * analyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin(),
+                "Arp2/3 in filaments": 100.0
+                * analyzer.analyze_ratio_of_bound_to_total_arp23(),
+                "Actin in daughter filaments": 100.0 
+                * analyzer.analyze_ratio_of_daughter_to_total_actin(),
             },
             render_mode="lines",
         )
 
     @staticmethod
-    def get_ATP_actin_plot(analyzer):
+    def get_dimers_trimers_plot(analyzer):
         """
-        Add a plot of percent actin with ATP bound (vs ADP)
+        Add a plot of number of dimer and trimer complexes over time
         """
+        ytraces = {}
+        for total_rxn_name in SPECIES_COUNT_RXNS:
+            rate = analyzer.reactions[total_rxn_name].to_numpy()
+            ytraces[total_rxn_name] = np.zeros(rate.shape[0] + 1)
+            for t in range(len(rate) + 1):
+                ytraces[total_rxn_name][t] = np.sum(rate[:t])
         return ScatterPlotData(
-            title="Actin nucleotide state",
+            title="Actin dimers and trimers",
             xaxis_title="Time (µs)",
-            yaxis_title="ATP actin (%)",
+            yaxis_title="Number of complexes",
             xtrace=analyzer.times,
-            ytraces={
-                "ATP actin": 100.0
-                * analyzer.analyze_ratio_of_ATP_actin_to_total_actin(),
-            },
+            ytraces=ytraces,
             render_mode="lines",
         )
 
     @staticmethod
-    def get_daughter_actin_plot(analyzer):
+    def get_avg_length_plot(analyzer):
         """
-        Add a plot of percent filamentous actin in daughter filaments
-        """
-        result = analyzer.analyze_ratio_of_daughter_to_total_filamentous_actin()
-        return ScatterPlotData(
-            title="Filamentous actin in branches",
-            xaxis_title="Time (µs)",
-            yaxis_title="Daughter actin (%)",
-            xtrace=analyzer.times,
-            ytraces={
-                "Daughter actin": 100.0 * result,
-            },
-            render_mode="lines",
-        )
-
-    @staticmethod
-    def get_avg_mother_length_plot(analyzer):
-        """
-        Add a plot of average mother filament length
+        Add a plot of average mother and daughter filament length
         """
         return ScatterPlotData(
-            title="Average length of mother filaments",
+            title="Average length of filaments",
             xaxis_title="Time (µs)",
             yaxis_title="Average length (nm)",
             xtrace=analyzer.times,
             ytraces={
-                "Average length": ActinAnalyzer.analyze_average_over_time(
+                "Mother filaments": ActinAnalyzer.analyze_average_over_time(
                     analyzer.analyze_mother_filament_lengths()
                 ),
-            },
-            render_mode="lines",
-        )
-
-    @staticmethod
-    def get_avg_daughter_length_plot(analyzer):
-        """
-        Add a plot of average daughter filament length
-        """
-        return ScatterPlotData(
-            title="Average length of daughter filaments",
-            xaxis_title="Time (µs)",
-            yaxis_title="Average length (nm)",
-            xtrace=analyzer.times,
-            ytraces={
-                "Average length": ActinAnalyzer.analyze_average_over_time(
+                "Daughter filaments": ActinAnalyzer.analyze_average_over_time(
                     analyzer.analyze_daughter_filament_lengths()
                 ),
             },
@@ -104,19 +105,42 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def get_bound_arp_plot(analyzer):
+    def get_polymerization_reactions_plot(analyzer):
         """
-        Add a plot of percent arp in filaments
+        Add a plot of cumulative reaction events over time 
+        for each total polymerization reaction over time
         """
+        ytraces = {}
+        for total_rxn_name in POLYMERIZATION_RXNS:
+            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+            if rxn_rate is not None:
+                ytraces[total_rxn_name] = rxn_rate
         return ScatterPlotData(
-            title="Bound arp2/3 complexes",
+            title="Polymerization reaction rates",
             xaxis_title="Time (µs)",
-            yaxis_title="Bound arp2/3 (%)",
+            yaxis_title="Rate (s\u207B\u00B9)",
             xtrace=analyzer.times,
-            ytraces={
-                "Bound arp2/3": 100.0
-                * analyzer.analyze_ratio_of_bound_to_total_arp23(),
-            },
+            ytraces=ytraces,
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def get_depolymerization_reactions_plot(analyzer):
+        """
+        Add a plot of cumulative reaction events over time 
+        for each total polymerization reaction over time
+        """
+        ytraces = {}
+        for total_rxn_name in DEPOLYMERIZATION_RXNS:
+            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+            if rxn_rate is not None:
+                ytraces[total_rxn_name] = rxn_rate
+        return ScatterPlotData(
+            title="Depolymerization reaction rates",
+            xaxis_title="Time (µs)",
+            yaxis_title="Rate (s\u207B\u00B9)",
+            xtrace=analyzer.times,
+            ytraces=ytraces,
             render_mode="lines",
         )
 
@@ -205,22 +229,25 @@ class ActinVisualization:
             render_mode="lines",
         )
 
-    # @staticmethod
-    # def get_bound_actin_plot(analyzer):
-    #     """
-    #     Add a plot of percent actin in filaments
-    #     """
-    #     return ScatterPlotData(
-    #         title="Filamentous actin",
-    #         xaxis_title="Time (µs)",
-    #         yaxis_title="Bound actin (%)",
-    #         xtrace=analyzer.times,
-    #         ytraces={
-    #             "Bound actin": 100.0
-    #             * analyzer.analyze_ratio_of_filamentous_to_total_actin(),
-    #         },
-    #         render_mode="lines",
-    #     )
+    @staticmethod
+    def get_actin_growth_reactions_vs_concentration_plot(analyzer):
+        """
+        Add a plot of cumulative reaction events over time 
+        for each total polymerization reaction over time
+        """
+        ytraces = {}
+        for total_rxn_name in GROWTH_REACTIONS:
+            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+            if rxn_rate is not None:
+                ytraces[total_rxn_name] = rxn_rate
+        return ScatterPlotData(
+            title="Actin growth vs concentration",
+            xaxis_title="[Actin] µM",
+            yaxis_title="Rate (s\u207B\u00B9)",
+            xtrace=analyzer.analyze_free_actin_concentration_over_time(),
+            ytraces=ytraces,
+            render_mode="lines",
+        )
 
     @staticmethod
     def generate_plots(path_to_readdy_h5, box_size, stride=1):
@@ -228,15 +255,14 @@ class ActinVisualization:
         Use an ActinAnalyzer to generate plots of observables
         """
         analyzer = ActinAnalyzer(path_to_readdy_h5, box_size, stride)
-        analyzer.times = TIMESTEP * 1e-3 * analyzer.times
         return {
             "scatter": [
-                ActinVisualization.get_bound_actin_plot(analyzer),
-                ActinVisualization.get_ATP_actin_plot(analyzer),
-                ActinVisualization.get_daughter_actin_plot(analyzer),
-                ActinVisualization.get_avg_mother_length_plot(analyzer),
-                ActinVisualization.get_avg_daughter_length_plot(analyzer),
-                ActinVisualization.get_bound_arp_plot(analyzer),
+                ActinVisualization.get_bound_monomers_plot(analyzer),
+                ActinVisualization.get_dimers_trimers_plot(analyzer),
+                ActinVisualization.get_avg_length_plot(analyzer),
+                ActinVisualization.get_polymerization_reactions_plot(analyzer),
+                ActinVisualization.get_depolymerization_reactions_plot(analyzer),
+                ActinVisualization.get_actin_growth_reactions_vs_concentration_plot(analyzer),
                 ActinVisualization.get_capped_ends_plot(analyzer),
                 ActinVisualization.get_branch_angle_plot(analyzer),
                 ActinVisualization.get_helix_pitch_plot(analyzer),
@@ -244,8 +270,6 @@ class ActinVisualization:
             ],
             "histogram": [],
         }
-        # reactions = analyzer.analyze_all_reaction_events_over_time()
-        # free_actin = analyzer.analyze_free_actin_concentration_over_time()
 
     @staticmethod
     def visualize_actin(path_to_readdy_h5, box_size, total_steps, plots={}):
@@ -336,7 +360,10 @@ class ActinVisualization:
         converter = ReaddyConverter(data)
         for plot_type in plots:
             for plot in plots[plot_type]:
-                converter.add_plot(plot, plot_type)
+                try:
+                    converter.add_plot(plot, plot_type)
+                except:
+                    raise Exception(plot["title"])
         filtered_data = converter.filter_data(
             [
                 MultiplyTimeFilter(

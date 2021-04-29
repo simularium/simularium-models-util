@@ -2050,6 +2050,75 @@ class ActinUtil:
             )
 
     @staticmethod
+    def add_barbed_growth_reaction(system, rate_ATP, rate_ADP, reaction_distance):
+        """
+        attach a monomer to the barbed end of a filament
+        """
+        for i in range(1, 4):
+            system.topologies.add_spatial_reaction(
+                f"Barbed_Growth_ATP1{i}: Actin-Polymer(actin#barbed_{i}) + "
+                "Actin-Monomer(actin#free_ATP) -> "
+                f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new_ATP)",
+                rate=rate_ATP,
+                radius=reaction_distance,
+            )
+            system.topologies.add_spatial_reaction(
+                f"Barbed_Growth_ATP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
+                "Actin-Monomer(actin#free_ATP) -> "
+                f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
+                rate=rate_ATP,
+                radius=reaction_distance,
+            )
+            system.topologies.add_spatial_reaction(
+                f"Barbed_Growth_ADP1{i}: Actin-Polymer(actin#barbed_{i}) + "
+                "Actin-Monomer(actin#free) -> "
+                f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new)",
+                rate=rate_ADP,
+                radius=reaction_distance,
+            )
+            system.topologies.add_spatial_reaction(
+                f"Barbed_Growth_ADP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
+                "Actin-Monomer(actin#free) -> "
+                f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new)",
+                rate=rate_ADP,
+                radius=reaction_distance,
+            )
+        system.topologies.add_spatial_reaction(
+            "Branch_Barbed_Growth_ATP1: Actin-Polymer(actin#branch_barbed_1) + "
+            "Actin-Monomer(actin#free_ATP) -> "
+            "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new_ATP)",
+            rate=rate_ATP,
+            radius=reaction_distance,
+        )
+        system.topologies.add_spatial_reaction(
+            "Branch_Barbed_Growth_ATP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
+            "Actin-Monomer(actin#free_ATP) -> "
+            "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new_ATP)",
+            rate=rate_ATP,
+            radius=reaction_distance,
+        )
+        system.topologies.add_spatial_reaction(
+            "Branch_Barbed_Growth_ADP1: Actin-Polymer(actin#branch_barbed_1) + "
+            "Actin-Monomer(actin#free) -> "
+            "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new)",
+            rate=rate_ADP,
+            radius=reaction_distance,
+        )
+        system.topologies.add_spatial_reaction(
+            "Branch_Barbed_Growth_ADP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
+            "Actin-Monomer(actin#free) -> "
+            "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new)",
+            rate=rate_ADP,
+            radius=reaction_distance,
+        )
+        system.topologies.add_structural_reaction(
+            "Finish_Barbed_growth",
+            topology_type="Actin-Polymer#GrowingBarbed",
+            reaction_function=ActinUtil.reaction_function_finish_barbed_grow,
+            rate_function=ReaddyUtil.rate_function_infinity,
+        )
+
+    @staticmethod
     def add_pointed_growth_reaction(system, rate_ATP, rate_ADP, reaction_distance):
         """
         attach a monomer to the pointed end of a filament
@@ -2123,75 +2192,6 @@ class ActinUtil:
             "Cleanup_Shrink",
             topology_type="Actin-Polymer#Shrinking",
             reaction_function=ActinUtil.reaction_function_cleanup_shrink,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-
-    @staticmethod
-    def add_barbed_growth_reaction(system, rate_ATP, rate_ADP, reaction_distance):
-        """
-        attach a monomer to the barbed end of a filament
-        """
-        for i in range(1, 4):
-            system.topologies.add_spatial_reaction(
-                f"Barbed_Growth_ATP1{i}: Actin-Polymer(actin#barbed_{i}) + "
-                "Actin-Monomer(actin#free_ATP) -> "
-                f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new_ATP)",
-                rate=rate_ATP,
-                radius=reaction_distance,
-            )
-            system.topologies.add_spatial_reaction(
-                f"Barbed_Growth_ATP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
-                "Actin-Monomer(actin#free_ATP) -> "
-                f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
-                rate=rate_ATP,
-                radius=reaction_distance,
-            )
-            system.topologies.add_spatial_reaction(
-                f"Barbed_Growth_ADP1{i}: Actin-Polymer(actin#barbed_{i}) + "
-                "Actin-Monomer(actin#free) -> "
-                f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new)",
-                rate=rate_ADP,
-                radius=reaction_distance,
-            )
-            system.topologies.add_spatial_reaction(
-                f"Barbed_Growth_ADP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
-                "Actin-Monomer(actin#free) -> "
-                f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new)",
-                rate=rate_ADP,
-                radius=reaction_distance,
-            )
-        system.topologies.add_spatial_reaction(
-            "Branch_Barbed_Growth_ATP1: Actin-Polymer(actin#branch_barbed_1) + "
-            "Actin-Monomer(actin#free_ATP) -> "
-            "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new_ATP)",
-            rate=rate_ATP,
-            radius=reaction_distance,
-        )
-        system.topologies.add_spatial_reaction(
-            "Branch_Barbed_Growth_ATP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
-            "Actin-Monomer(actin#free_ATP) -> "
-            "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new_ATP)",
-            rate=rate_ATP,
-            radius=reaction_distance,
-        )
-        system.topologies.add_spatial_reaction(
-            "Branch_Barbed_Growth_ADP1: Actin-Polymer(actin#branch_barbed_1) + "
-            "Actin-Monomer(actin#free) -> "
-            "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new)",
-            rate=rate_ADP,
-            radius=reaction_distance,
-        )
-        system.topologies.add_spatial_reaction(
-            "Branch_Barbed_Growth_ADP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
-            "Actin-Monomer(actin#free) -> "
-            "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new)",
-            rate=rate_ADP,
-            radius=reaction_distance,
-        )
-        system.topologies.add_structural_reaction(
-            "Finish_Barbed_growth",
-            topology_type="Actin-Polymer#GrowingBarbed",
-            reaction_function=ActinUtil.reaction_function_finish_barbed_grow,
             rate_function=ReaddyUtil.rate_function_infinity,
         )
 
