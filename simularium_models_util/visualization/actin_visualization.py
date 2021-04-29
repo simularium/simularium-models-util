@@ -356,14 +356,12 @@ class ActinVisualization:
             type_grouping=type_grouping,
             time_units=UnitData("µs"),
             spatial_units=UnitData("nm"),
+            plots=[],
         )
         converter = ReaddyConverter(data)
         for plot_type in plots:
             for plot in plots[plot_type]:
-                try:
-                    converter.add_plot(plot, plot_type)
-                except:
-                    raise Exception(plot["title"])
+                converter.add_plot(plot, plot_type)
         filtered_data = converter.filter_data(
             [
                 MultiplyTimeFilter(

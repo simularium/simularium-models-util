@@ -48,7 +48,7 @@ def main():
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])
         plots = ActinVisualization.generate_plots(
-            parameters["name"] + ".h5", parameters["box_size"])
+            parameters["name"] + ".h5", parameters["box_size"], 10)
         ActinVisualization.visualize_actin(
             parameters["name"] + ".h5", parameters["box_size"], parameters["total_steps"], plots)
     finally:
