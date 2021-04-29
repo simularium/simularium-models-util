@@ -2233,6 +2233,75 @@
                 <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
             <span class="p">)</span></div>
 
+<div class="viewcode-block" id="ActinUtil.add_barbed_growth_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_barbed_growth_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_barbed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">rate_ATP</span><span class="p">,</span> <span class="n">rate_ADP</span><span class="p">,</span> <span class="n">reaction_distance</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        attach a monomer to the barbed end of a filament</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ATP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
+                <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new_ATP)&quot;</span><span class="p">,</span>
+                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ATP2</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
+                <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new_ATP)&quot;</span><span class="p">,</span>
+                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ADP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
+                <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new)&quot;</span><span class="p">,</span>
+                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ADP2</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
+                <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new)&quot;</span><span class="p">,</span>
+                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Branch_Barbed_Growth_ATP1: Actin-Polymer(actin#branch_barbed_1) + &quot;</span>
+            <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
+            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new_ATP)&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Branch_Barbed_Growth_ATP2: Actin-Polymer(actin#branch_barbed_ATP_1) + &quot;</span>
+            <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
+            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new_ATP)&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Branch_Barbed_Growth_ADP1: Actin-Polymer(actin#branch_barbed_1) + &quot;</span>
+            <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
+            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new)&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Branch_Barbed_Growth_ADP2: Actin-Polymer(actin#branch_barbed_ATP_1) + &quot;</span>
+            <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
+            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new)&quot;</span><span class="p">,</span>
+            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
+            <span class="s2">&quot;Finish_Barbed_growth&quot;</span><span class="p">,</span>
+            <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed&quot;</span><span class="p">,</span>
+            <span class="n">reaction_function</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">reaction_function_finish_barbed_grow</span><span class="p">,</span>
+            <span class="n">rate_function</span><span class="o">=</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rate_function_infinity</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
 <div class="viewcode-block" id="ActinUtil.add_pointed_growth_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_pointed_growth_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_pointed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">rate_ATP</span><span class="p">,</span> <span class="n">rate_ADP</span><span class="p">,</span> <span class="n">reaction_distance</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2307,75 +2376,6 @@
             <span class="s2">&quot;Cleanup_Shrink&quot;</span><span class="p">,</span>
             <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Actin-Polymer#Shrinking&quot;</span><span class="p">,</span>
             <span class="n">reaction_function</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">reaction_function_cleanup_shrink</span><span class="p">,</span>
-            <span class="n">rate_function</span><span class="o">=</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rate_function_infinity</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="ActinUtil.add_barbed_growth_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_barbed_growth_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_barbed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">rate_ATP</span><span class="p">,</span> <span class="n">rate_ADP</span><span class="p">,</span> <span class="n">reaction_distance</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        attach a monomer to the barbed end of a filament</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ATP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
-                <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new_ATP)&quot;</span><span class="p">,</span>
-                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ATP2</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
-                <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new_ATP)&quot;</span><span class="p">,</span>
-                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ADP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
-                <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new)&quot;</span><span class="p">,</span>
-                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ADP2</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
-                <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new)&quot;</span><span class="p">,</span>
-                <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Branch_Barbed_Growth_ATP1: Actin-Polymer(actin#branch_barbed_1) + &quot;</span>
-            <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
-            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new_ATP)&quot;</span><span class="p">,</span>
-            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
-            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Branch_Barbed_Growth_ATP2: Actin-Polymer(actin#branch_barbed_ATP_1) + &quot;</span>
-            <span class="s2">&quot;Actin-Monomer(actin#free_ATP) -&gt; &quot;</span>
-            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new_ATP)&quot;</span><span class="p">,</span>
-            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ATP</span><span class="p">,</span>
-            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Branch_Barbed_Growth_ADP1: Actin-Polymer(actin#branch_barbed_1) + &quot;</span>
-            <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
-            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new)&quot;</span><span class="p">,</span>
-            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
-            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Branch_Barbed_Growth_ADP2: Actin-Polymer(actin#branch_barbed_ATP_1) + &quot;</span>
-            <span class="s2">&quot;Actin-Monomer(actin#free) -&gt; &quot;</span>
-            <span class="s2">&quot;Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new)&quot;</span><span class="p">,</span>
-            <span class="n">rate</span><span class="o">=</span><span class="n">rate_ADP</span><span class="p">,</span>
-            <span class="n">radius</span><span class="o">=</span><span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
-            <span class="s2">&quot;Finish_Barbed_growth&quot;</span><span class="p">,</span>
-            <span class="n">topology_type</span><span class="o">=</span><span class="s2">&quot;Actin-Polymer#GrowingBarbed&quot;</span><span class="p">,</span>
-            <span class="n">reaction_function</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">reaction_function_finish_barbed_grow</span><span class="p">,</span>
             <span class="n">rate_function</span><span class="o">=</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rate_function_infinity</span><span class="p">,</span>
         <span class="p">)</span></div>
 

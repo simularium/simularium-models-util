@@ -20,6 +20,14 @@ simularium\_models\_util.actin.actin\_generator module
    :undoc-members:
    :show-inheritance:
 
+simularium\_models\_util.actin.actin\_reactions module
+------------------------------------------------------
+
+.. automodule:: simularium_models_util.actin.actin_reactions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simularium\_models\_util.actin.actin\_simulation module
 -------------------------------------------------------
 
