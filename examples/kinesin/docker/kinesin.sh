@@ -29,14 +29,16 @@ EXIT_CODE=$?
 # Save output files
 if [ $EXIT_CODE -eq 0 ]
 then
-	# results if succeeded
+	# results and logs if succeeded
 	case ${SIMULATION_TYPE} in
 		AWS)
             aws s3 sync ./outputs $OUTPUT_FILE_PATH
             aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
+            aws s3 sync ./logs "${OUTPUT_FILE_PATH}logs/"
         ;;
 		LOCAL)
 			cp checkpoints $OUTPUT_FILE_PATH -r
+			cp $LOCAL_LOGS_PATH $OUTPUT_FILE_PATH
             cd outputs
 			cp *.h5 $OUTPUT_FILE_PATH
 			cp *.simularium $OUTPUT_FILE_PATH
