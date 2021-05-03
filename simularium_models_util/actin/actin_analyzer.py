@@ -43,7 +43,7 @@ class ActinAnalyzer:
         self.reactions = ReaddyUtil.load_reactions(
             self.traj, self.stride, ACTIN_REACTIONS, recorded_steps
         )
-        self.time_inc_s = self.times[-1] * (TIMESTEP / 1e9) * (stride / len(self.times))
+        self.time_inc_s = self.times[-1] * 1e-6 / (len(self.times) - 1)
 
     def analyze_reaction_rate_over_time(self, reaction_name):
         """
@@ -452,10 +452,10 @@ class ActinAnalyzer:
             if actin1_id is None:
                 print(
                     "Failed to parse branch point: couldn't find branch actin\n"
-                    "arp2 neighbor types are: "
+                    + frame_particle_data[arp2_id][0] + " neighbor types are: ["
                     + ActinAnalyzer.neighbor_types_to_string(
                         arp2_id, frame_particle_data
-                    )
+                    ) + "]"
                 )
                 continue
             branch_actins = ReaddyUtil.analyze_frame_get_chain_of_types(
@@ -470,10 +470,10 @@ class ActinAnalyzer:
             if actin_arp2_id is None:
                 raise Exception(
                     "Failed to parse branch point: failed to find actin_arp2\n"
-                    "arp2 neighbor types are: "
+                    + frame_particle_data[arp2_id][0] + " neighbor types are: ["
                     + ActinAnalyzer.neighbor_types_to_string(
                         arp2_id, frame_particle_data
-                    )
+                    ) + "]"
                 )
             n = ReaddyUtil.calculate_polymer_number(
                 int(frame_particle_data[actin_arp2_id][0][-1:]), 1
@@ -492,14 +492,14 @@ class ActinAnalyzer:
             if actin_arp3_id is None:
                 raise Exception(
                     "Failed to parse branch point: failed to find actin_arp3\n"
-                    "actin_arp2 neighbor types are: "
+                    + frame_particle_data[actin_arp2_id][0] + " neighbor types are: ["
                     + ActinAnalyzer.neighbor_types_to_string(
                         actin_arp2_id, frame_particle_data
-                    )
-                    + "\narp2 neighbor types are: "
+                    ) + "]\n"
+                    + frame_particle_data[arp2_id][0] + " neighbor types are: ["
                     + ActinAnalyzer.neighbor_types_to_string(
                         arp2_id, frame_particle_data
-                    )
+                    ) + "]"
                 )
             main_actins = ReaddyUtil.analyze_frame_get_chain_of_types(
                 actin_arp3_id,

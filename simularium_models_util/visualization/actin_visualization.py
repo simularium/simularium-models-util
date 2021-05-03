@@ -52,7 +52,7 @@ class ActinVisualization:
             ytraces={
                 "Actin in filaments": 100.0
                 * analyzer.analyze_ratio_of_filamentous_to_total_actin(),
-                "ATP-Actin in filaments ATP": 100.0
+                "ATP-Actin in filaments": 100.0
                 * analyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin(),
                 "Arp2/3 in filaments": 100.0
                 * analyzer.analyze_ratio_of_bound_to_total_arp23(),
@@ -144,6 +144,26 @@ class ActinVisualization:
         )
 
     @staticmethod
+    def get_actin_growth_reactions_vs_concentration_plot(analyzer):
+        """
+        Add a plot of cumulative reaction events over time
+        for each total polymerization reaction over time
+        """
+        ytraces = {}
+        for total_rxn_name in GROWTH_REACTIONS:
+            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+            if rxn_rate is not None:
+                ytraces[total_rxn_name] = rxn_rate
+        return ScatterPlotData(
+            title="Actin growth vs concentration",
+            xaxis_title="[Actin] (µM)",
+            yaxis_title="Rate (s\u207B\u00B9)",
+            xtrace=analyzer.analyze_free_actin_concentration_over_time(),
+            ytraces=ytraces,
+            render_mode="lines",
+        )
+
+    @staticmethod
     def get_capped_ends_plot(analyzer):
         """
         Add a plot of percent barbed ends that are capped
@@ -225,26 +245,6 @@ class ActinVisualization:
                     )
                 ),
             },
-            render_mode="lines",
-        )
-
-    @staticmethod
-    def get_actin_growth_reactions_vs_concentration_plot(analyzer):
-        """
-        Add a plot of cumulative reaction events over time
-        for each total polymerization reaction over time
-        """
-        ytraces = {}
-        for total_rxn_name in GROWTH_REACTIONS:
-            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
-            if rxn_rate is not None:
-                ytraces[total_rxn_name] = rxn_rate
-        return ScatterPlotData(
-            title="Actin growth vs concentration",
-            xaxis_title="[Actin] µM",
-            yaxis_title="Rate (s\u207B\u00B9)",
-            xtrace=analyzer.analyze_free_actin_concentration_over_time(),
-            ytraces=ytraces,
             render_mode="lines",
         )
 
