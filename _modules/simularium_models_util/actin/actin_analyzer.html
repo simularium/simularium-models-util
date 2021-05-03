@@ -227,7 +227,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">load_reactions</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="n">ACTIN_REACTIONS</span><span class="p">,</span> <span class="n">recorded_steps</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time_inc_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">TIMESTEP</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">stride</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_inc_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_reaction_rate_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_rate_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_reaction_rate_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -636,10 +636,10 @@
             <span class="k">if</span> <span class="n">actin1_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span>
                     <span class="s2">&quot;Failed to parse branch point: couldn&#39;t find branch actin</span><span class="se">\n</span><span class="s2">&quot;</span>
-                    <span class="s2">&quot;arp2 neighbor types are: &quot;</span>
+                    <span class="o">+</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; neighbor types are: [&quot;</span>
                     <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span>
                         <span class="n">arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span>
-                    <span class="p">)</span>
+                    <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
                 <span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">branch_actins</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_chain_of_types</span><span class="p">(</span>
@@ -654,10 +654,10 @@
             <span class="k">if</span> <span class="n">actin_arp2_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                     <span class="s2">&quot;Failed to parse branch point: failed to find actin_arp2</span><span class="se">\n</span><span class="s2">&quot;</span>
-                    <span class="s2">&quot;arp2 neighbor types are: &quot;</span>
+                    <span class="o">+</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; neighbor types are: [&quot;</span>
                     <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span>
                         <span class="n">arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span>
-                    <span class="p">)</span>
+                    <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
                 <span class="p">)</span>
             <span class="n">n</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span>
                 <span class="nb">int</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="mi">1</span>
@@ -676,14 +676,14 @@
             <span class="k">if</span> <span class="n">actin_arp3_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                     <span class="s2">&quot;Failed to parse branch point: failed to find actin_arp3</span><span class="se">\n</span><span class="s2">&quot;</span>
-                    <span class="s2">&quot;actin_arp2 neighbor types are: &quot;</span>
+                    <span class="o">+</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; neighbor types are: [&quot;</span>
                     <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span>
                         <span class="n">actin_arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span>
-                    <span class="p">)</span>
-                    <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">arp2 neighbor types are: &quot;</span>
+                    <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="o">+</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; neighbor types are: [&quot;</span>
                     <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">neighbor_types_to_string</span><span class="p">(</span>
                         <span class="n">arp2_id</span><span class="p">,</span> <span class="n">frame_particle_data</span>
-                    <span class="p">)</span>
+                    <span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
                 <span class="p">)</span>
             <span class="n">main_actins</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_chain_of_types</span><span class="p">(</span>
                 <span class="n">actin_arp3_id</span><span class="p">,</span>

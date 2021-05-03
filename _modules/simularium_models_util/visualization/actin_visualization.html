@@ -236,7 +236,7 @@
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;Actin in filaments&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
                 <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_filamentous_to_total_actin</span><span class="p">(),</span>
-                <span class="s2">&quot;ATP-Actin in filaments ATP&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
+                <span class="s2">&quot;ATP-Actin in filaments&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
                 <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_bound_ATP_actin_to_total_actin</span><span class="p">(),</span>
                 <span class="s2">&quot;Arp2/3 in filaments&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
                 <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_bound_to_total_arp23</span><span class="p">(),</span>
@@ -327,6 +327,26 @@
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
+<div class="viewcode-block" id="ActinVisualization.get_actin_growth_reactions_vs_concentration_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_actin_growth_reactions_vs_concentration_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_actin_growth_reactions_vs_concentration_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a plot of cumulative reaction events over time</span>
+<span class="sd">        for each total polymerization reaction over time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ytraces</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">GROWTH_REACTIONS</span><span class="p">:</span>
+            <span class="n">rxn_rate</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_reaction_rate_over_time</span><span class="p">(</span><span class="n">total_rxn_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rxn_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ytraces</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rxn_rate</span>
+        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actin growth vs concentration&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;[Actin] (µM)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Rate (s</span><span class="se">\u207B\u00B9</span><span class="s2">)&quot;</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_free_actin_concentration_over_time</span><span class="p">(),</span>
+            <span class="n">ytraces</span><span class="o">=</span><span class="n">ytraces</span><span class="p">,</span>
+            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
 <div class="viewcode-block" id="ActinVisualization.get_capped_ends_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_capped_ends_plot">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_capped_ends_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -409,26 +429,6 @@
                     <span class="p">)</span>
                 <span class="p">),</span>
             <span class="p">},</span>
-            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="ActinVisualization.get_actin_growth_reactions_vs_concentration_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_actin_growth_reactions_vs_concentration_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_actin_growth_reactions_vs_concentration_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a plot of cumulative reaction events over time</span>
-<span class="sd">        for each total polymerization reaction over time</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ytraces</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">GROWTH_REACTIONS</span><span class="p">:</span>
-            <span class="n">rxn_rate</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_reaction_rate_over_time</span><span class="p">(</span><span class="n">total_rxn_name</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">rxn_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ytraces</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rxn_rate</span>
-        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Actin growth vs concentration&quot;</span><span class="p">,</span>
-            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;[Actin] µM&quot;</span><span class="p">,</span>
-            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Rate (s</span><span class="se">\u207B\u00B9</span><span class="s2">)&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_free_actin_concentration_over_time</span><span class="p">(),</span>
-            <span class="n">ytraces</span><span class="o">=</span><span class="n">ytraces</span><span class="p">,</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
