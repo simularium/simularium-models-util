@@ -47,10 +47,15 @@ def main():
     try:
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"])
-        plots = ActinVisualization.generate_plots(
-            parameters["name"] + ".h5", parameters["box_size"], 10)
-        ActinVisualization.visualize_actin(
-            parameters["name"] + ".h5", parameters["box_size"], parameters["total_steps"], plots)
+        try:
+            plots = ActinVisualization.generate_plots(
+                parameters["name"] + ".h5", parameters["box_size"], 10)
+            ActinVisualization.visualize_actin(
+                parameters["name"] + ".h5", parameters["box_size"], parameters["total_steps"], plots)
+        except:
+            print("Failed viz!!!!!!!!!!")
+            report_hardware_usage()
+            sys.exit(88888888)
     finally:
         rt.stop()
     sys.exit(0)

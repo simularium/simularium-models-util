@@ -27,9 +27,10 @@ python actin.py input.xlsx $PARAMS_COL_INDEX $PARAM_SET_NAME > $LOCAL_LOGS_PATH
 EXIT_CODE=$?
 
 # Save output files
-if [ $EXIT_CODE -eq 0 ]
+if [ $EXIT_CODE -eq 0 ] || [ $EXIT_CODE -eq 88888888 ]
 then
-	# results and logs if succeeded
+	# if totally succeeded, or if simulation succeeded and visualization failed
+	# results, checkpoints, and logs
 	case ${SIMULATION_TYPE} in
 		AWS)
             aws s3 sync ./outputs $OUTPUT_FILE_PATH
@@ -45,12 +46,14 @@ then
 		;;
 	esac
 else
-	# logs in case of error
+	# logs and checkpoints in case of error
 	case ${SIMULATION_TYPE} in
 		AWS)
+            aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
             aws s3 sync ./logs "${OUTPUT_FILE_PATH}logs/"
         ;;
 		LOCAL)
+			cp checkpoints $OUTPUT_FILE_PATH -r
 			cp $LOCAL_LOGS_PATH $OUTPUT_FILE_PATH
 		;;
 	esac
