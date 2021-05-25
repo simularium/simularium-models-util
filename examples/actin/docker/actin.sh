@@ -28,18 +28,37 @@ EXIT_CODE=$?
 
 echo $EXIT_CODE
 
-# Save results, checkpoints, and logs
-case ${SIMULATION_TYPE} in
-	AWS)
-		aws s3 sync ./logs "${OUTPUT_FILE_PATH}logs/"
-		aws s3 sync ./outputs $OUTPUT_FILE_PATH
-		aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
-	;;
-	LOCAL)
-		cp $LOCAL_LOGS_PATH $OUTPUT_FILE_PATH
-		cp checkpoints $OUTPUT_FILE_PATH -r
-		cd outputs
-		cp *.h5 $OUTPUT_FILE_PATH
-		cp *.simularium $OUTPUT_FILE_PATH
-	;;
-esac
+# Save output files
+if [ $EXIT_CODE -eq 0 ] || [ $EXIT_CODE -eq 88888888 ]
+then
+	# if totally succeeded, or if simulation succeeded and visualization failed
+	# results and logs
+	case ${SIMULATION_TYPE} in
+		AWS)
+            aws s3 sync ./outputs $OUTPUT_FILE_PATH
+            aws s3 sync ./logs "${OUTPUT_FILE_PATH}logs/"
+        ;;
+		LOCAL)
+			cp $LOCAL_LOGS_PATH $OUTPUT_FILE_PATH
+            cd outputs
+			cp *.h5 $OUTPUT_FILE_PATH
+			cp *.simularium $OUTPUT_FILE_PATH
+		;;
+	esac
+else
+	# results, logs, and checkpoints in case of error
+	case ${SIMULATION_TYPE} in
+		AWS)
+            aws s3 sync ./outputs $OUTPUT_FILE_PATH
+            aws s3 sync ./checkpoints "${OUTPUT_FILE_PATH}checkpoints/"
+            aws s3 sync ./logs "${OUTPUT_FILE_PATH}logs/"
+        ;;
+		LOCAL)
+			cp $LOCAL_LOGS_PATH $OUTPUT_FILE_PATH
+			cp checkpoints $OUTPUT_FILE_PATH -r
+			cd outputs
+			cp *.h5 $OUTPUT_FILE_PATH
+			cp *.simularium $OUTPUT_FILE_PATH
+		;;
+	esac
+fi
