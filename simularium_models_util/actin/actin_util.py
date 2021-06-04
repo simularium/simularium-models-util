@@ -34,14 +34,14 @@ class ActinUtil:
     @staticmethod
     def get_new_arp23(topology):
         """
-        get a new arp3 and its unbranched arp2 neighbor,
+        get a new arp3 and its unbranched arp2#free neighbor,
         meaning the arp2/3 dimer has just bound
         """
         for vertex in topology.graph.get_vertices():
             pt = topology.particle_type_of_vertex(vertex)
             if "arp3#new" in pt:
                 for neighbor in vertex:
-                    if topology.particle_type_of_vertex(neighbor.get()) == "arp2":
+                    if topology.particle_type_of_vertex(neighbor.get()) == "arp2#free":
                         return neighbor.get(), vertex
         return None, None
 
@@ -168,7 +168,7 @@ class ActinUtil:
         as well as the offset vector
         """
         v_arp2 = ReaddyUtil.get_neighbor_of_types(
-            topology, vertex, ["arp2", "arp2#branched"], []
+            topology, vertex, ["arp2", "arp2#branched", "arp2#free"], []
         )
         offset_index = 0
         if v_arp2 is None:
@@ -180,7 +180,7 @@ class ActinUtil:
                 )
             offset_index = 3 - edges
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_branch, ["arp2", "arp2#branched"], []
+                topology, v_branch, ["arp2", "arp2#branched", "arp2#free"], []
             )
             if v_arp2 is None:
                 raise Exception(
@@ -505,7 +505,7 @@ class ActinUtil:
         for p in range(len(positions)):
             top = simulation.add_topology(
                 "Arp23-Dimer",
-                ["arp2", "arp3#ATP"],
+                ["arp2#free", "arp3#ATP"],
                 np.array(
                     [
                         positions[p],
@@ -757,6 +757,7 @@ class ActinUtil:
                 print(f"Couldn't find actin_arp2 with number {n_pointed}")
             ActinUtil.cancel_branch_reaction(topology, recipe, v_actin_barbed, v_arp3)
             return recipe
+        ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["free"], True)
         ReaddyUtil.set_flags(topology, recipe, v_arp3, [], ["new"], True)
         recipe.add_edge(v_actin_pointed, v_arp2)
         recipe.change_topology_type("Actin-Polymer")
@@ -912,7 +913,7 @@ class ActinUtil:
             else:
                 new_type = "Actin-Monomer"
         elif len(topology.graph.get_vertices()) < 3:
-            v_arp2 = ReaddyUtil.get_vertex_of_type(topology, "arp2", True)
+            v_arp2 = ReaddyUtil.get_vertex_of_type(topology, "arp2#free", True)
             if v_arp2 is not None:
                 new_type = "Arp23-Dimer"
             else:
@@ -1046,6 +1047,7 @@ class ActinUtil:
             )
         recipe.remove_edge(v_arp2, v_actin_arp2)
         recipe.remove_edge(v_arp3, v_actin_arp3)
+        ReaddyUtil.set_flags(topology, recipe, v_arp2, ["free"], [])
         recipe.change_topology_type("Actin-Polymer#Shrinking")
 
     @staticmethod
@@ -1293,6 +1295,7 @@ class ActinUtil:
         system.topologies.add_type("Arp23-Dimer")
         system.add_topology_species("arp2", diffCoeff)
         system.add_topology_species("arp2#branched", diffCoeff)
+        system.add_topology_species("arp2#free", diffCoeff)
         system.add_topology_species("arp3", diffCoeff)
         system.add_topology_species("arp3#ATP", diffCoeff)
         system.add_topology_species("arp3#new", diffCoeff)
@@ -1500,7 +1503,7 @@ class ActinUtil:
         util.add_polymer_bond_1D(  # mother filament actin to arp2 bonds
             ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             0,
-            ["arp2", "arp2#branched"],
+            ["arp2", "arp2#branched", "arp2#free"],
             None,
             force_constant,
             ActinStructure.arp2_to_mother_distance(),
@@ -1516,7 +1519,7 @@ class ActinUtil:
             system,
         )
         util.add_bond(  # arp2 to arp3 bonds
-            ["arp2", "arp2#branched"],
+            ["arp2", "arp2#branched", "arp2#free"],
             ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"],
             force_constant,
             ActinStructure.arp2_to_arp3_distance(),
@@ -1927,6 +1930,7 @@ class ActinUtil:
                 "actin#barbed_ATP_3",
                 "arp2",
                 "arp2#branched",
+                "arp2#free",
                 "arp3",
                 "arp3#ATP",
                 "cap",
@@ -1959,6 +1963,7 @@ class ActinUtil:
                 "actin#barbed_ATP_3",
                 "arp2",
                 "arp2#branched",
+                "arp2#free",
                 "arp3",
                 "arp3#ATP",
                 "cap",
@@ -1970,6 +1975,51 @@ class ActinUtil:
             ActinStructure.actin_to_actin_repulsion_distance(),
             system,
         )
+
+    @staticmethod
+    def add_box_potential(particle_types, origin, extent, force_constant, system):
+        """
+        add a box potential to keep the given particle types
+        inside a box centered at origin with extent
+        """
+        for particle_type in particle_types:
+            system.potentials.add_box(
+                particle_type=particle_type,
+                force_constant=force_constant,
+                origin=origin,
+                extent=extent,
+            )
+
+    @staticmethod
+    def add_monomer_box_potentials(system):
+        """
+        Confine free monomers to boxes centered at origin with extent
+        """
+        particle_types = {
+            "actin": ["actin#free", "actin#free_ATP"],
+            "arp": ["arp2#free"],
+            "cap": ["cap"],
+        }
+        for particle_type in particle_types:
+            if not parameters[f"use_box_{particle_type}"]:
+                continue
+            origin = [
+                parameters[f"{particle_type}_box_origin_x"],
+                parameters[f"{particle_type}_box_origin_y"],
+                parameters[f"{particle_type}_box_origin_z"],
+            ]
+            extent = [
+                parameters[f"{particle_type}_box_extent_x"],
+                parameters[f"{particle_type}_box_extent_y"],
+                parameters[f"{particle_type}_box_extent_z"],
+            ]
+            ActinUtil.add_box_potential(
+                particle_types[particle_type],
+                origin,
+                extent,
+                parameters["force_constant"],
+                system,
+            )
 
     @staticmethod
     def add_dimerize_reaction(system, rate, reaction_distance):

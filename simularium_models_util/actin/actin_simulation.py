@@ -100,6 +100,8 @@ class ActinSimulation:
         self.actin_util.add_cap_dihedrals(force_constant, self.system, util)
         # repulsions
         self.actin_util.add_repulsions(force_constant, self.system, util)
+        # box potentials
+        self.actin_util.add_monomer_box_potentials(self.system)
 
     def add_actin_reactions(self):
         """
