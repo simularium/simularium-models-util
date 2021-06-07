@@ -285,6 +285,7 @@ class ActinVisualization:
         radii = {
             "arp2": arp23_radius,
             "arp2#branched": arp23_radius,
+            "arp2#free": arp23_radius,
             "arp3": arp23_radius,
             "arp3#ATP": arp23_radius,
             "arp3#new": arp23_radius,

@@ -483,21 +483,29 @@ class ActinUtil:
     def get_box_positions(n_particles, particle_type):
         """
         Get random positions for n particles of the given type
-        either filling the simulation volume box 
+        either filling the simulation volume box
         or confined to a sub volume box
         """
         if parameters[f"use_box_{particle_type}"]:
-            origin = np.array([
-                parameters[f"{particle_type}_box_origin_x"],
-                parameters[f"{particle_type}_box_origin_y"],
-                parameters[f"{particle_type}_box_origin_z"],
-            ])
-            extent = np.array([
-                parameters[f"{particle_type}_box_extent_x"],
-                parameters[f"{particle_type}_box_extent_y"],
-                parameters[f"{particle_type}_box_extent_z"],
-            ])
-            result = origin + np.random.uniform(size=(n_particles, 3)) * (extent - origin)
+            # origin = np.array(
+            #     [
+            #         parameters[f"{particle_type}_box_origin_x"],
+            #         parameters[f"{particle_type}_box_origin_y"],
+            #         parameters[f"{particle_type}_box_origin_z"],
+            #     ]
+            # )
+            # extent = np.array(
+            #     [
+            #         parameters[f"{particle_type}_box_extent_x"],
+            #         parameters[f"{particle_type}_box_extent_y"],
+            #         parameters[f"{particle_type}_box_extent_z"],
+            #     ]
+            # )
+            origin = np.array([-50, -50, -50])
+            extent = np.array([50, 50, 50])
+            result = origin + np.random.uniform(size=(n_particles, 3)) * (
+                extent - origin
+            )
         else:
             result = (
                 np.random.uniform(size=(n_particles, 3)) * parameters["box_size"]
@@ -2020,16 +2028,19 @@ class ActinUtil:
         for particle_type in particle_types:
             if not parameters[f"use_box_{particle_type}"]:
                 continue
-            origin = [
-                parameters[f"{particle_type}_box_origin_x"],
-                parameters[f"{particle_type}_box_origin_y"],
-                parameters[f"{particle_type}_box_origin_z"],
-            ]
-            extent = [
-                parameters[f"{particle_type}_box_extent_x"],
-                parameters[f"{particle_type}_box_extent_y"],
-                parameters[f"{particle_type}_box_extent_z"],
-            ]
+            # origin = np.array([
+            #     parameters[f"{particle_type}_box_origin_x"],
+            #     parameters[f"{particle_type}_box_origin_y"],
+            #     parameters[f"{particle_type}_box_origin_z"],
+            # ])
+            # extent = np.array([
+            #     parameters[f"{particle_type}_box_extent_x"],
+            #     parameters[f"{particle_type}_box_extent_y"],
+            #     parameters[f"{particle_type}_box_extent_z"],
+            # ])
+            origin = np.array([-50, -50, -50])
+            extent = np.array([50, 50, 50])
+            print(f"add box for {particle_type}")
             ActinUtil.add_box_potential(
                 particle_types[particle_type],
                 origin,
