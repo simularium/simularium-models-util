@@ -480,14 +480,37 @@ class ActinUtil:
             ActinUtil.add_actin_dimer(positions[p], simulation)
 
     @staticmethod
+    def get_box_positions(n_particles, particle_type):
+        """
+        Get random positions for n particles of the given type
+        either filling the simulation volume box 
+        or confined to a sub volume box
+        """
+        if parameters[f"use_box_{particle_type}"]:
+            origin = np.array([
+                parameters[f"{particle_type}_box_origin_x"],
+                parameters[f"{particle_type}_box_origin_y"],
+                parameters[f"{particle_type}_box_origin_z"],
+            ])
+            extent = np.array([
+                parameters[f"{particle_type}_box_extent_x"],
+                parameters[f"{particle_type}_box_extent_y"],
+                parameters[f"{particle_type}_box_extent_z"],
+            ])
+            result = origin + np.random.uniform(size=(n_particles, 3)) * (extent - origin)
+        else:
+            result = (
+                np.random.uniform(size=(n_particles, 3)) * parameters["box_size"]
+                - parameters["box_size"] * 0.5
+            )
+        return result
+
+    @staticmethod
     def add_actin_monomers(n, simulation):
         """
         add free actin
         """
-        positions = (
-            np.random.uniform(size=(n, 3)) * parameters["box_size"]
-            - parameters["box_size"] * 0.5
-        )
+        positions = ActinUtil.get_box_positions(n, "actin")
         for p in range(len(positions)):
             simulation.add_topology(
                 "Actin-Monomer", ["actin#free_ATP"], np.array([positions[p]])
@@ -498,10 +521,7 @@ class ActinUtil:
         """
         add arp2/3 dimers
         """
-        positions = (
-            np.random.uniform(size=(n, 3)) * parameters["box_size"]
-            - parameters["box_size"] * 0.5
-        )
+        positions = ActinUtil.get_box_positions(n, "arp")
         for p in range(len(positions)):
             top = simulation.add_topology(
                 "Arp23-Dimer",
@@ -520,10 +540,7 @@ class ActinUtil:
         """
         add free capping protein
         """
-        positions = (
-            np.random.uniform(size=(n, 3)) * parameters["box_size"]
-            - parameters["box_size"] * 0.5
-        )
+        positions = ActinUtil.get_box_positions(n, "cap")
         for p in range(len(positions)):
             simulation.add_topology("Cap", ["cap"], np.array([positions[p]]))
 
