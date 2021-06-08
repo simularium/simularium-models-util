@@ -105,19 +105,12 @@ class ActinSimulation:
         """
         Add reactions to the ReaDDy system
         """
-        if self.parameters["spatial_polymerization"]:
-            self.actin_util.add_spatial_dimerize_reaction(self.system)
-            self.actin_util.add_spatial_trimerize_reaction(self.system)
-            self.actin_util.add_spatial_nucleate_reaction(self.system)
-            self.actin_util.add_spatial_pointed_growth_reaction(self.system)
-            self.actin_util.add_spatial_barbed_growth_reaction(self.system)
-            self.actin_util.add_spatial_nucleate_branch_reaction(self.system)
-        else:
-            self.actin_util.add_nonspatial_trimerize_reaction(self.system)
-            self.actin_util.add_nonspatial_nucleate_reaction(self.system)
-            self.actin_util.add_nonspatial_pointed_growth_reaction(self.system)
-            self.actin_util.add_nonspatial_barbed_growth_reaction(self.system)
-            self.actin_util.add_nonspatial_nucleate_branch_reaction(self.system)
+        self.actin_util.add_spatial_dimerize_reaction(self.system)
+        self.actin_util.add_spatial_trimerize_reaction(self.system)
+        self.actin_util.add_spatial_nucleate_reaction(self.system)
+        self.actin_util.add_spatial_pointed_growth_reaction(self.system)
+        self.actin_util.add_spatial_barbed_growth_reaction(self.system)
+        self.actin_util.add_spatial_nucleate_branch_reaction(self.system)
         self.actin_util.add_arp23_bind_reaction(self.system)
         self.actin_util.add_cap_bind_reaction(self.system)
         self.actin_util.add_dimerize_reverse_reaction(self.system)
@@ -130,18 +123,25 @@ class ActinSimulation:
         self.actin_util.add_arp23_unbind_reaction(self.system)
         self.actin_util.add_debranch_reaction(self.system)
         self.actin_util.add_cap_unbind_reaction(self.system)
+        if self.parameters["nonspatial_polymerization"]:
+            self.actin_util.add_nonspatial_trimerize_reaction(self.system)
+            self.actin_util.add_nonspatial_nucleate_reaction(self.system)
+            self.actin_util.add_nonspatial_pointed_growth_reaction(self.system)
+            self.actin_util.add_nonspatial_barbed_growth_reaction(self.system)
+            self.actin_util.add_nonspatial_nucleate_branch_reaction(self.system)
 
     def add_random_monomers(self):
         """
         Add randomly distributed actin monomers, Arp2/3 dimers,
         and capping protein according to concentrations and box size
         """
-        self.actin_util.add_actin_monomers(
-            ReaddyUtil.calculate_nParticles(
-                self.parameters["actin_concentration"], self.parameters["box_size"]
-            ),
-            self.simulation,
-        )
+        if not self.parameters["nonspatial_polymerization"]:
+            self.actin_util.add_actin_monomers(
+                ReaddyUtil.calculate_nParticles(
+                    self.parameters["actin_concentration"], self.parameters["box_size"]
+                ),
+                self.simulation,
+            )
         self.actin_util.add_arp23_dimers(
             ReaddyUtil.calculate_nParticles(
                 self.parameters["arp23_concentration"], self.parameters["box_size"]
