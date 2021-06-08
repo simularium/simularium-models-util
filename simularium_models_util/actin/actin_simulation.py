@@ -105,62 +105,30 @@ class ActinSimulation:
         """
         Add reactions to the ReaDDy system
         """
-        actin_radius = self.parameters["actin_radius"]
-        reaction_distance = self.parameters["reaction_distance"]
-        self.actin_util.add_dimerize_reaction(
-            self.system,
-            self.parameters["dimerize_rate"],
-            2 * actin_radius + reaction_distance,
-        )
+        if self.parameters["spatial_polymerization"]:
+            self.actin_util.add_spatial_dimerize_reaction(self.system)
+            self.actin_util.add_spatial_trimerize_reaction(self.system)
+            self.actin_util.add_spatial_nucleate_reaction(self.system)
+            self.actin_util.add_spatial_pointed_growth_reaction(self.system)
+            self.actin_util.add_spatial_barbed_growth_reaction(self.system)
+            self.actin_util.add_spatial_nucleate_branch_reaction(self.system)
+        else:
+            self.actin_util.add_nonspatial_trimerize_reaction(self.system)
+            self.actin_util.add_nonspatial_nucleate_reaction(self.system)
+            self.actin_util.add_nonspatial_pointed_growth_reaction(self.system)
+            self.actin_util.add_nonspatial_barbed_growth_reaction(self.system)
+            self.actin_util.add_nonspatial_nucleate_branch_reaction(self.system)
+        self.actin_util.add_arp23_bind_reaction(self.system)
+        self.actin_util.add_cap_bind_reaction(self.system)
         self.actin_util.add_dimerize_reverse_reaction(self.system)
-        self.actin_util.add_trimerize_reaction(
-            self.system,
-            self.parameters["trimerize_rate"],
-            2 * actin_radius + reaction_distance,
-        )
         self.actin_util.add_trimerize_reverse_reaction(self.system)
-        self.actin_util.add_nucleate_reaction(
-            self.system,
-            self.parameters["nucleate_ATP_rate"],
-            self.parameters["nucleate_ADP_rate"],
-            2 * actin_radius + reaction_distance,
-        )
-        self.actin_util.add_pointed_growth_reaction(
-            self.system,
-            self.parameters["pointed_growth_ATP_rate"],
-            self.parameters["pointed_growth_ADP_rate"],
-            2 * actin_radius + reaction_distance,
-        )
         self.actin_util.add_pointed_shrink_reaction(self.system)
-        self.actin_util.add_barbed_growth_reaction(
-            self.system,
-            self.parameters["barbed_growth_ATP_rate"],
-            self.parameters["barbed_growth_ADP_rate"],
-            2 * actin_radius + reaction_distance,
-        )
         self.actin_util.add_barbed_shrink_reaction(self.system)
         self.actin_util.add_hydrolyze_reaction(self.system)
         self.actin_util.add_actin_nucleotide_exchange_reaction(self.system)
         self.actin_util.add_arp23_nucleotide_exchange_reaction(self.system)
-        self.actin_util.add_arp23_bind_reaction(
-            self.system,
-            self.parameters["arp_bind_ATP_rate"],
-            self.parameters["arp_bind_ADP_rate"],
-            actin_radius + self.parameters["arp23_radius"] + reaction_distance,
-        )
         self.actin_util.add_arp23_unbind_reaction(self.system)
-        self.actin_util.add_nucleate_branch_reaction(
-            self.system,
-            self.parameters["barbed_growth_branch_ATP_rate"],
-            self.parameters["barbed_growth_branch_ADP_rate"],
-            actin_radius + self.parameters["arp23_radius"] + reaction_distance,
-        )
         self.actin_util.add_debranch_reaction(self.system)
-        self.actin_util.add_cap_bind_reaction(
-            self.system,
-            self.parameters["cap_bind_rate"],
-            actin_radius + self.parameters["cap_radius"] + reaction_distance,
-        )
         self.actin_util.add_cap_unbind_reaction(self.system)
 
     def add_random_monomers(self):
