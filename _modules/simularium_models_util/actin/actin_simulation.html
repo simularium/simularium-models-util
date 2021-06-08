@@ -292,75 +292,43 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add reactions to the ReaDDy system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">actin_radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">]</span>
-        <span class="n">reaction_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reaction_distance&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_dimerize_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;dimerize_rate&quot;</span><span class="p">],</span>
-            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_spatial_dimerize_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_spatial_trimerize_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_spatial_nucleate_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_spatial_pointed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_spatial_barbed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_spatial_nucleate_branch_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_bind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_dimerize_reverse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;trimerize_rate&quot;</span><span class="p">],</span>
-            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reverse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nucleate_ATP_rate&quot;</span><span class="p">],</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nucleate_ADP_rate&quot;</span><span class="p">],</span>
-            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_growth_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;pointed_growth_ATP_rate&quot;</span><span class="p">],</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;pointed_growth_ADP_rate&quot;</span><span class="p">],</span>
-            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_shrink_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_barbed_growth_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_ATP_rate&quot;</span><span class="p">],</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_ADP_rate&quot;</span><span class="p">],</span>
-            <span class="mi">2</span> <span class="o">*</span> <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_barbed_shrink_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_hydrolyze_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_nucleotide_exchange_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_nucleotide_exchange_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_bind_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp_bind_ATP_rate&quot;</span><span class="p">],</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp_bind_ADP_rate&quot;</span><span class="p">],</span>
-            <span class="n">actin_radius</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_branch_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_branch_ATP_rate&quot;</span><span class="p">],</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;barbed_growth_branch_ADP_rate&quot;</span><span class="p">],</span>
-            <span class="n">actin_radius</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_debranch_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bind_reaction</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_bind_rate&quot;</span><span class="p">],</span>
-            <span class="n">actin_radius</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">reaction_distance</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nonspatial_polymerization&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nonspatial_trimerize_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nonspatial_nucleate_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nonspatial_pointed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nonspatial_barbed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nonspatial_nucleate_branch_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinSimulation.add_random_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">add_random_monomers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add randomly distributed actin monomers, Arp2/3 dimers,</span>
 <span class="sd">        and capping protein according to concentrations and box size</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_monomers</span><span class="p">(</span>
-            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_nParticles</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_concentration&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
-            <span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nonspatial_polymerization&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_monomers</span><span class="p">(</span>
+                <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_nParticles</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_concentration&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
+                <span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_dimers</span><span class="p">(</span>
             <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_nParticles</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_concentration&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
