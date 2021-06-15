@@ -505,7 +505,8 @@
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_mother_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_mother_filament_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_mother_filament_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a list of the length of mother filaments in each frame of the trajectory</span>
+<span class="sd">        Get a list of the number of monomers in each mother filament</span>
+<span class="sd">        in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">)):</span>
@@ -519,7 +520,8 @@
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_daughter_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_daughter_filament_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_daughter_filament_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a list of the length of daughter filaments in each frame of the trajectory</span>
+<span class="sd">        Get a list of the number of monomers in each daughter filament</span>
+<span class="sd">        in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">particle_data</span><span class="p">)):</span>
