@@ -2038,23 +2038,21 @@ class ActinUtil:
         for particle_type in particle_types:
             if not parameters[f"use_box_{particle_type}"]:
                 continue
-            # origin = np.array([
-            #     parameters[f"{particle_type}_box_origin_x"],
-            #     parameters[f"{particle_type}_box_origin_y"],
-            #     parameters[f"{particle_type}_box_origin_z"],
-            # ])
-            # extent = np.array([
-            #     parameters[f"{particle_type}_box_extent_x"],
-            #     parameters[f"{particle_type}_box_extent_y"],
-            #     parameters[f"{particle_type}_box_extent_z"],
-            # ])
-            origin = np.array([-50, -50, -50])
-            extent = np.array([50, 50, 50])
-            print(f"add box for {particle_type}")
+            print(f"Adding box for {particle_type}")
+            center = np.array([
+                parameters[f"{particle_type}_box_center_x"],
+                parameters[f"{particle_type}_box_center_y"],
+                parameters[f"{particle_type}_box_center_z"],
+            ])
+            size = np.array([
+                parameters[f"{particle_type}_box_size_x"],
+                parameters[f"{particle_type}_box_size_y"],
+                parameters[f"{particle_type}_box_size_z"],
+            ])
             ActinUtil.add_box_potential(
                 particle_types[particle_type],
-                origin,
-                extent,
+                center - 0.5 * size,
+                size,
                 parameters["force_constant"],
                 system,
             )
