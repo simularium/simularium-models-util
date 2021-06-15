@@ -746,7 +746,7 @@ class ActinUtil:
         reaction function for adding an implicit ATP-monomer to a pointed end
         """
         if parameters["verbose"]:
-            print(f"(nonspatial) Pointed Grow ATP")
+            print("(nonspatial) Pointed Grow ATP")
         recipe = readdy.StructuralReactionRecipe(topology)
         if ActinUtil.do_nonspatial_growth(recipe, topology, "pointed", True):
             recipe.change_topology_type("Actin-Polymer#GrowingPointed")
@@ -758,7 +758,7 @@ class ActinUtil:
         reaction function for adding an implicit ADP-monomer to a pointed end
         """
         if parameters["verbose"]:
-            print(f"(nonspatial) Pointed Grow ADP")
+            print("(nonspatial) Pointed Grow ADP")
         recipe = readdy.StructuralReactionRecipe(topology)
         if ActinUtil.do_nonspatial_growth(recipe, topology, "pointed", False):
             recipe.change_topology_type("Actin-Polymer#GrowingPointed")
@@ -804,7 +804,7 @@ class ActinUtil:
         reaction function for adding an implicit ATP-monomer to a barbed end
         """
         if parameters["verbose"]:
-            print(f"(nonspatial) Barbed Grow ATP")
+            print("(nonspatial) Barbed Grow ATP")
         recipe = readdy.StructuralReactionRecipe(topology)
         if ActinUtil.do_nonspatial_growth(recipe, topology, "barbed", True):
             recipe.change_topology_type("Actin-Polymer#GrowingBarbed")
@@ -816,7 +816,7 @@ class ActinUtil:
         reaction function for adding an implicit ADP-monomer to a barbed end
         """
         if parameters["verbose"]:
-            print(f"(nonspatial) Barbed Grow ADP")
+            print("(nonspatial) Barbed Grow ADP")
         recipe = readdy.StructuralReactionRecipe(topology)
         if ActinUtil.do_nonspatial_growth(recipe, topology, "barbed", False):
             recipe.change_topology_type("Actin-Polymer#GrowingBarbed")
@@ -908,7 +908,7 @@ class ActinUtil:
         reaction function for adding an implicit ATP-monomer to arp2/3 to begin a branch
         """
         if parameters["verbose"]:
-            print(f"(nonspatial) Nucleate Branch ATP")
+            print("(nonspatial) Nucleate Branch ATP")
         recipe = readdy.StructuralReactionRecipe(topology)
         if ActinUtil.do_nonspatial_growth(recipe, topology, "arp2", True, True):
             recipe.change_topology_type("Actin-Polymer#Branch-Nucleating")
@@ -920,7 +920,7 @@ class ActinUtil:
         reaction function for adding an implicit ADP-monomer to arp2/3 to begin a branch
         """
         if parameters["verbose"]:
-            print(f"(nonspatial) Nucleate Branch ADP")
+            print("(nonspatial) Nucleate Branch ADP")
         recipe = readdy.StructuralReactionRecipe(topology)
         if ActinUtil.do_nonspatial_growth(recipe, topology, "arp2", False, True):
             recipe.change_topology_type("Actin-Polymer#Branch-Nucleating")
@@ -2558,16 +2558,18 @@ class ActinUtil:
         """
         attach implicit actin to arp2/3 to begin a branch
         """
+        reaction_function = ActinUtil.reaction_function_nonspatial_nucleate_branch_ATP
         system.topologies.add_structural_reaction(
             "Nonspatial_Barbed_Growth_Branch_ATP",
             topology_type="Actin-Polymer",
-            reaction_function=ActinUtil.reaction_function_nonspatial_nucleate_branch_ATP,
+            reaction_function=reaction_function,
             rate_function=lambda x: parameters["nucleate_branch_nonspatial_ATP_rate"],
         )
+        reaction_function = ActinUtil.reaction_function_nonspatial_nucleate_branch_ADP
         system.topologies.add_structural_reaction(
             "Nonspatial_Barbed_Growth_Branch_ADP",
             topology_type="Actin-Polymer",
-            reaction_function=ActinUtil.reaction_function_nonspatial_nucleate_branch_ADP,
+            reaction_function=reaction_function,
             rate_function=lambda x: parameters["nucleate_branch_nonspatial_ADP_rate"],
         )
 
