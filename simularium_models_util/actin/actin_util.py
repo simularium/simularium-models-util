@@ -631,14 +631,14 @@ class ActinUtil:
         return recipe
 
     @staticmethod
-    def do_nonspatial_growth(recipe, topology, end_type, with_ATP):
+    def do_nonspatial_growth(recipe, topology, end_type, with_ATP, exact_end_type=False):
         """
         add an implicit monomer to an arp2 or to a barbed or pointed end
 
         "Actin-Polymer(arp2) + Actin-Monomer(actin#free) -> "
             "Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new)",
         """
-        v_end = ReaddyUtil.get_random_vertex_of_type(topology, end_type, False)
+        v_end = ReaddyUtil.get_random_vertex_of_type(topology, end_type, exact_end_type)
         if v_end is None:
             if parameters["verbose"]:
                 print("Couldn't find end monomer")
@@ -913,7 +913,7 @@ class ActinUtil:
         if parameters["verbose"]:
             print(f"(nonspatial) Nucleate Branch ATP")
         recipe = readdy.StructuralReactionRecipe(topology)
-        if ActinUtil.do_nonspatial_growth(recipe, topology, "arp2", True):
+        if ActinUtil.do_nonspatial_growth(recipe, topology, "arp2", True, True):
             recipe.change_topology_type("Actin-Polymer#Branch-Nucleating")
         return recipe
 
@@ -925,7 +925,7 @@ class ActinUtil:
         if parameters["verbose"]:
             print(f"(nonspatial) Nucleate Branch ADP")
         recipe = readdy.StructuralReactionRecipe(topology)
-        if ActinUtil.do_nonspatial_growth(recipe, topology, "arp2", False):
+        if ActinUtil.do_nonspatial_growth(recipe, topology, "arp2", False, True):
             recipe.change_topology_type("Actin-Polymer#Branch-Nucleating")
         return recipe
 
