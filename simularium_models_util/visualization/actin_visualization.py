@@ -90,7 +90,7 @@ class ActinVisualization:
         return ScatterPlotData(
             title="Average length of filaments",
             xaxis_title="Time (µs)",
-            yaxis_title="Average length (nm)",
+            yaxis_title="Average length (monomers)",
             xtrace=analyzer.times,
             ytraces={
                 "Mother filaments": ActinAnalyzer.analyze_average_over_time(
