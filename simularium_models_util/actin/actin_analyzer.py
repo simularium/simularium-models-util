@@ -318,7 +318,8 @@ class ActinAnalyzer:
 
     def analyze_mother_filament_lengths(self):
         """
-        Get a list of the length of mother filaments in each frame of the trajectory
+        Get a list of the number of monomers in each mother filament
+        in each frame of the trajectory
         """
         result = []
         for t in range(len(self.particle_data)):
@@ -332,7 +333,8 @@ class ActinAnalyzer:
 
     def analyze_daughter_filament_lengths(self):
         """
-        Get a list of the length of daughter filaments in each frame of the trajectory
+        Get a list of the number of monomers in each daughter filament
+        in each frame of the trajectory
         """
         result = []
         for t in range(len(self.particle_data)):
