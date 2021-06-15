@@ -487,30 +487,25 @@ class ActinUtil:
         or confined to a sub volume box
         """
         if parameters[f"use_box_{particle_type}"]:
-            # origin = np.array(
-            #     [
-            #         parameters[f"{particle_type}_box_origin_x"],
-            #         parameters[f"{particle_type}_box_origin_y"],
-            #         parameters[f"{particle_type}_box_origin_z"],
-            #     ]
-            # )
-            # extent = np.array(
-            #     [
-            #         parameters[f"{particle_type}_box_extent_x"],
-            #         parameters[f"{particle_type}_box_extent_y"],
-            #         parameters[f"{particle_type}_box_extent_z"],
-            #     ]
-            # )
-            origin = np.array([-50, -50, -50])
-            extent = np.array([50, 50, 50])
-            result = origin + np.random.uniform(size=(n_particles, 3)) * (
-                extent - origin
+            center = np.array(
+                [
+                    parameters[f"{particle_type}_box_center_x"],
+                    parameters[f"{particle_type}_box_center_y"],
+                    parameters[f"{particle_type}_box_center_z"],
+                ]
             )
+            size = np.array(
+                [
+                    parameters[f"{particle_type}_box_size_x"],
+                    parameters[f"{particle_type}_box_size_y"],
+                    parameters[f"{particle_type}_box_size_z"],
+                ]
+            )
+            result = center + (np.random.uniform(size=(n_particles, 3)) - 0.5) * size
         else:
-            result = (
-                np.random.uniform(size=(n_particles, 3)) * parameters["box_size"]
-                - parameters["box_size"] * 0.5
-            )
+            result = (np.random.uniform(size=(n_particles, 3)) - 0.5) * parameters[
+                "box_size"
+            ]
         return result
 
     @staticmethod
@@ -631,7 +626,9 @@ class ActinUtil:
         return recipe
 
     @staticmethod
-    def do_nonspatial_growth(recipe, topology, end_type, with_ATP, exact_end_type=False):
+    def do_nonspatial_growth(
+        recipe, topology, end_type, with_ATP, exact_end_type=False
+    ):
         """
         add an implicit monomer to an arp2 or to a barbed or pointed end
 
