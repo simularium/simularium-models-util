@@ -793,14 +793,14 @@
         <span class="k">return</span> <span class="n">recipe</span></div>
 
 <div class="viewcode-block" id="ActinUtil.do_nonspatial_growth"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.do_nonspatial_growth">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="n">with_ATP</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="n">with_ATP</span><span class="p">,</span> <span class="n">exact_end_type</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add an implicit monomer to an arp2 or to a barbed or pointed end</span>
 
 <span class="sd">        &quot;Actin-Polymer(arp2) + Actin-Monomer(actin#free) -&gt; &quot;</span>
 <span class="sd">            &quot;Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new)&quot;,</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">v_end</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">v_end</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="n">exact_end_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">v_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find end monomer&quot;</span><span class="p">)</span>
@@ -1074,7 +1074,7 @@
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(nonspatial) Nucleate Branch ATP&quot;</span><span class="p">)</span>
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Branch-Nucleating&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">recipe</span></div>
 
@@ -1086,7 +1086,7 @@
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(nonspatial) Nucleate Branch ADP&quot;</span><span class="p">)</span>
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Branch-Nucleating&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">recipe</span></div>
 
