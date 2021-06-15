@@ -221,14 +221,14 @@
 <div class="viewcode-block" id="ActinUtil.get_new_arp23"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_new_arp23">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_new_arp23</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        get a new arp3 and its unbranched arp2 neighbor,</span>
+<span class="sd">        get a new arp3 and its unbranched arp2#free neighbor,</span>
 <span class="sd">        meaning the arp2/3 dimer has just bound</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
             <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot;arp3#new&quot;</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">vertex</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">==</span> <span class="s2">&quot;arp2&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">==</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">vertex</span>
         <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
 
@@ -355,7 +355,7 @@
 <span class="sd">        as well as the offset vector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span> <span class="p">[]</span>
         <span class="p">)</span>
         <span class="n">offset_index</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -367,7 +367,7 @@
                 <span class="p">)</span>
             <span class="n">offset_index</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">edges</span>
             <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-                <span class="n">topology</span><span class="p">,</span> <span class="n">v_branch</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> <span class="p">[]</span>
+                <span class="n">topology</span><span class="p">,</span> <span class="n">v_branch</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span> <span class="p">[]</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -666,15 +666,41 @@
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
             <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_actin_dimer</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">simulation</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="ActinUtil.get_box_positions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_box_positions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_box_positions</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="n">particle_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get random positions for n particles of the given type</span>
+<span class="sd">        either filling the simulation volume box</span>
+<span class="sd">        or confined to a sub volume box</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;use_box_</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]:</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_center_x&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_center_y&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_center_z&quot;</span><span class="p">],</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_size_x&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_size_y&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_size_z&quot;</span><span class="p">],</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">center</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_particles</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">parameters</span><span class="p">[</span>
+                <span class="s2">&quot;box_size&quot;</span>
+            <span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
 <div class="viewcode-block" id="ActinUtil.add_actin_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_actin_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_actin_monomers</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add free actin</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
-            <span class="o">-</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span>
-        <span class="p">)</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_box_positions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;actin&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
             <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span>
                 <span class="s2">&quot;Actin-Monomer&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">positions</span><span class="p">[</span><span class="n">p</span><span class="p">]])</span>
@@ -685,14 +711,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add arp2/3 dimers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
-            <span class="o">-</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span>
-        <span class="p">)</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_box_positions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;arp&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
             <span class="n">top</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span>
                 <span class="s2">&quot;Arp23-Dimer&quot;</span><span class="p">,</span>
-                <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">],</span>
+                <span class="p">[</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">],</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
                     <span class="p">[</span>
                         <span class="n">positions</span><span class="p">[</span><span class="n">p</span><span class="p">],</span>
@@ -707,10 +730,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add free capping protein</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span>
-            <span class="o">-</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span>
-        <span class="p">)</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_box_positions</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s2">&quot;cap&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)):</span>
             <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span><span class="s2">&quot;Cap&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cap&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">positions</span><span class="p">[</span><span class="n">p</span><span class="p">]]))</span></div>
 
@@ -793,7 +813,9 @@
         <span class="k">return</span> <span class="n">recipe</span></div>
 
 <div class="viewcode-block" id="ActinUtil.do_nonspatial_growth"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.do_nonspatial_growth">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">do_nonspatial_growth</span><span class="p">(</span><span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="n">with_ATP</span><span class="p">,</span> <span class="n">exact_end_type</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">do_nonspatial_growth</span><span class="p">(</span>
+        <span class="n">recipe</span><span class="p">,</span> <span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="n">with_ATP</span><span class="p">,</span> <span class="n">exact_end_type</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add an implicit monomer to an arp2 or to a barbed or pointed end</span>
 
@@ -1035,6 +1057,7 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find actin_arp2 with number </span><span class="si">{</span><span class="n">n_pointed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">ActinUtil</span><span class="o">.</span><span class="n">cancel_branch_reaction</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_actin_barbed</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;free&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">v_actin_pointed</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">)</span>
@@ -1214,7 +1237,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">new_type</span> <span class="o">=</span> <span class="s2">&quot;Actin-Monomer&quot;</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">new_type</span> <span class="o">=</span> <span class="s2">&quot;Arp23-Dimer&quot;</span>
             <span class="k">else</span><span class="p">:</span>
@@ -1348,6 +1371,7 @@
             <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_arp2</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_arp3</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">)</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;free&quot;</span><span class="p">],</span> <span class="p">[])</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Shrinking&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.reaction_function_arp23_unbind_ATP"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_arp23_unbind_ATP">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -1490,6 +1514,7 @@
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Arp23-Dimer&quot;</span><span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span>
@@ -1697,7 +1722,7 @@
         <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_bond_1D</span><span class="p">(</span>  <span class="c1"># mother filament actin to arp2 bonds</span>
             <span class="p">[</span><span class="s2">&quot;actin#&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#pointed_&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#pointed_ATP_&quot;</span><span class="p">],</span>
             <span class="mi">0</span><span class="p">,</span>
-            <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span>
             <span class="kc">None</span><span class="p">,</span>
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_to_mother_distance</span><span class="p">(),</span>
@@ -1713,7 +1738,7 @@
             <span class="n">system</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>  <span class="c1"># arp2 to arp3 bonds</span>
-            <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span>
             <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">],</span>
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_to_arp3_distance</span><span class="p">(),</span>
@@ -2124,6 +2149,7 @@
                 <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;cap&quot;</span><span class="p">,</span>
@@ -2156,6 +2182,7 @@
                 <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;cap&quot;</span><span class="p">,</span>
@@ -2167,6 +2194,56 @@
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_repulsion_distance</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinUtil.add_box_potential"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_box_potential">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_box_potential</span><span class="p">(</span><span class="n">particle_types</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">extent</span><span class="p">,</span> <span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        add a box potential to keep the given particle types</span>
+<span class="sd">        inside a box centered at origin with extent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">particle_type</span> <span class="ow">in</span> <span class="n">particle_types</span><span class="p">:</span>
+            <span class="n">system</span><span class="o">.</span><span class="n">potentials</span><span class="o">.</span><span class="n">add_box</span><span class="p">(</span>
+                <span class="n">particle_type</span><span class="o">=</span><span class="n">particle_type</span><span class="p">,</span>
+                <span class="n">force_constant</span><span class="o">=</span><span class="n">force_constant</span><span class="p">,</span>
+                <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span>
+                <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinUtil.add_monomer_box_potentials"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_monomer_box_potentials">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_monomer_box_potentials</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Confine free monomers to boxes centered at origin with extent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">particle_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;actin&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#free&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;arp&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;cap&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;cap&quot;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">particle_type</span> <span class="ow">in</span> <span class="n">particle_types</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;use_box_</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adding box for </span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_center_x&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_center_y&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_center_z&quot;</span><span class="p">],</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_size_x&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_size_y&quot;</span><span class="p">],</span>
+                    <span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">_box_size_z&quot;</span><span class="p">],</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_box_potential</span><span class="p">(</span>
+                <span class="n">particle_types</span><span class="p">[</span><span class="n">particle_type</span><span class="p">],</span>
+                <span class="n">center</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">size</span><span class="p">,</span>
+                <span class="n">size</span><span class="p">,</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">],</span>
+                <span class="n">system</span><span class="p">,</span>
+            <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_spatial_dimerize_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_dimerize_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_spatial_dimerize_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>

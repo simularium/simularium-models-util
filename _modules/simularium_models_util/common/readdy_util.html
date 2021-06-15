@@ -1239,9 +1239,11 @@
                 <span class="k">continue</span>
             <span class="n">reactions_df</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="k">for</span> <span class="n">rxn_name</span> <span class="ow">in</span> <span class="n">total_reactions_mapping</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">reactions_df</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">+=</span> <span class="n">reactions_df</span><span class="p">[</span><span class="n">rxn_name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">rxn_name</span> <span class="ow">in</span> <span class="n">reactions_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                    <span class="n">reactions_df</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">+=</span> <span class="n">reactions_df</span><span class="p">[</span><span class="n">rxn_name</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">rxn_name</span> <span class="ow">in</span> <span class="n">total_reactions_mapping</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">reactions_df</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">reactions_df</span><span class="p">[</span><span class="n">rxn_name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">rxn_name</span> <span class="ow">in</span> <span class="n">reactions_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                    <span class="n">reactions_df</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">reactions_df</span><span class="p">[</span><span class="n">rxn_name</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">reactions_df</span></div></div>
 </pre></div>
 

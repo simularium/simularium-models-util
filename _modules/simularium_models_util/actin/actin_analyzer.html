@@ -659,7 +659,7 @@
                 <span class="n">arp2_id</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">,</span> <span class="p">[</span><span class="n">actin1_id</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">actin_arp2_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="nb">print</span><span class="p">(</span>
                     <span class="s2">&quot;Failed to parse branch point: failed to find actin_arp2</span><span class="se">\n</span><span class="s2">&quot;</span>
                     <span class="o">+</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                     <span class="o">+</span> <span class="s2">&quot; neighbor types are: [&quot;</span>
@@ -668,6 +668,7 @@
                     <span class="p">)</span>
                     <span class="o">+</span> <span class="s2">&quot;]&quot;</span>
                 <span class="p">)</span>
+                <span class="k">continue</span>
             <span class="n">n</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span>
                 <span class="nb">int</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="mi">1</span>
             <span class="p">)</span>
