@@ -1052,7 +1052,9 @@ class ReaddyUtil:
                 continue
             reactions_df[total_rxn_name] = 0.0
             for rxn_name in total_reactions_mapping[total_rxn_name][0]:
-                reactions_df[total_rxn_name] += reactions_df[rxn_name]
+                if rxn_name in reactions_df.columns:
+                    reactions_df[total_rxn_name] += reactions_df[rxn_name]
             for rxn_name in total_reactions_mapping[total_rxn_name][1]:
-                reactions_df[total_rxn_name] += -1 * reactions_df[rxn_name]
+                if rxn_name in reactions_df.columns:
+                    reactions_df[total_rxn_name] += -1 * reactions_df[rxn_name]
         return reactions_df

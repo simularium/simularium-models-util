@@ -360,7 +360,13 @@ class ActinVisualization:
             spatial_units=UnitData("nm"),
             plots=[],
         )
-        converter = ReaddyConverter(data)
+        try:
+            converter = ReaddyConverter(data)
+        except OverflowError as e:
+            print(
+                "OverflowError during SimulariumIO conversion !!!!!!!!!!!!!!\n" + str(e)
+            )
+            return
         for plot_type in plots:
             for plot in plots[plot_type]:
                 converter.add_plot(plot, plot_type)

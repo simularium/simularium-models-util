@@ -64,8 +64,8 @@ def main():
                 parameters["total_steps"],
                 plots,
             )
-        except:
-            print("Failed viz!!!!!!!!!!")
+        except Exception as e:
+            print("Failed viz!!!!!!!!!!\n" + str(type(e)) + " " + str(e))
             report_hardware_usage()
             sys.exit(88888888)
     finally:
