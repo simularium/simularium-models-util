@@ -53,11 +53,7 @@ extra_requirements = {
     "test": test_requirements,
     "dev": dev_requirements,
     "viz": viz_requirements,
-    "all": [
-        *requirements,
-        *dev_requirements,
-        *viz_requirements
-    ]
+    "all": [*requirements, *dev_requirements, *viz_requirements],
 }
 
 setup(
@@ -74,9 +70,7 @@ setup(
     ],
     description="Tools for building computational biology models and example models from the Simularium project.",
     entry_points={
-        "console_scripts": [
-            "my_example=simularium_models_util.bin.my_example:main"
-        ],
+        "console_scripts": ["my_example=simularium_models_util.bin.my_example:main"],
     },
     install_requires=requirements,
     license="Allen Institute Software License",

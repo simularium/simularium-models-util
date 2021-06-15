@@ -470,7 +470,7 @@ class ActinAnalyzer:
                 arp2_id, actin_types, frame_particle_data, [actin1_id]
             )
             if actin_arp2_id is None:
-                raise Exception(
+                print(
                     "Failed to parse branch point: failed to find actin_arp2\n"
                     + frame_particle_data[arp2_id][0]
                     + " neighbor types are: ["
@@ -479,6 +479,7 @@ class ActinAnalyzer:
                     )
                     + "]"
                 )
+                continue
             n = ReaddyUtil.calculate_polymer_number(
                 int(frame_particle_data[actin_arp2_id][0][-1:]), 1
             )

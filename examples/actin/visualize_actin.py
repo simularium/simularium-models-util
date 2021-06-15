@@ -18,13 +18,9 @@ def main():
         help="the file path of the directory\
          containing the trajectories to parse",
     )
+    parser.add_argument("box_size", help="width of simulation cube")
     parser.add_argument(
-        "box_size", 
-        help="width of simulation cube"
-    )
-    parser.add_argument(
-        "total_steps", 
-        help="total number of iterations during model run"
+        "total_steps", help="total number of iterations during model run"
     )
     args = parser.parse_args()
     dir_path = args.dir_path
@@ -32,8 +28,12 @@ def main():
         if file.endswith(".h5"):
             file_path = os.path.join(dir_path, file)
             print(f"visualize {file_path}")
-            plots = ActinVisualization.generate_plots(file_path, float(args.box_size), 10)
-            ActinVisualization.visualize_actin(file_path, float(args.box_size), float(args.total_steps), plots)
+            plots = ActinVisualization.generate_plots(
+                file_path, float(args.box_size), 10
+            )
+            ActinVisualization.visualize_actin(
+                file_path, float(args.box_size), float(args.total_steps), plots
+            )
 
 
 if __name__ == "__main__":
