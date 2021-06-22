@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import os
+from simularium_models_util.actin.fiber_data import FiberData
+from simularium_models_util.actin.curve_point_data import CurvePointData
 import sys
 import pandas
 import argparse
 import psutil
+import numpy as np
 
 from simularium_models_util.actin import ActinSimulation
 from simularium_models_util.visualization import ActinVisualization
@@ -49,6 +52,26 @@ def main():
     actin_simulation = ActinSimulation(parameters, True, True)
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
+    if parameters["orthogonal_seed"]:
+        actin_simulation.add_fibers_from_data(
+            [
+                FiberData(
+                    0,
+                    [
+                        CurvePointData(
+                            np.array([-50, 0, 0]),
+                            np.array([1, 0, 0]),
+                            0,
+                        ),
+                        CurvePointData(
+                            np.array([0, 0, 0]),
+                            np.array([1, 0, 0]),
+                            50,
+                        ),
+                    ],
+                )
+            ]
+        )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(
