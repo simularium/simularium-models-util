@@ -2210,7 +2210,7 @@ class ActinUtil:
     @staticmethod
     def add_nonspatial_pointed_growth_reaction(system):
         """
-        attach an implicit monomer to a trimer
+        attach an implicit monomer to a pointed end
         """
         system.topologies.add_structural_reaction(
             "Nonspatial_Pointed_Growth_ATP",
@@ -2333,7 +2333,7 @@ class ActinUtil:
     @staticmethod
     def add_nonspatial_barbed_growth_reaction(system):
         """
-        attach an implicit monomer to a trimer
+        attach an implicit monomer to a barbed end
         """
         system.topologies.add_structural_reaction(
             "Nonspatial_Barbed_Growth_ATP",

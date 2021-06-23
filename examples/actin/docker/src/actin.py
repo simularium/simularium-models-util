@@ -9,6 +9,7 @@ import pandas
 import argparse
 import psutil
 import numpy as np
+from shutil import rmtree
 
 from simularium_models_util.actin import ActinSimulation
 from simularium_models_util.visualization import ActinVisualization
@@ -48,7 +49,7 @@ def main():
     parameters = parameters[run_name]
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
-    parameters["name"] = "outputs/" + args.model_name + "_" + run_name
+    parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
     actin_simulation = ActinSimulation(parameters, True, True)
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
@@ -59,12 +60,12 @@ def main():
                     0,
                     [
                         CurvePointData(
-                            np.array([-50, 0, 0]),
+                            np.array([-90, 0, 0]),
                             np.array([1, 0, 0]),
                             0,
                         ),
                         CurvePointData(
-                            np.array([0, 0, 0]),
+                            np.array([10, 0, 0]),
                             np.array([1, 0, 0]),
                             50,
                         ),
@@ -77,6 +78,8 @@ def main():
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"]
         )
+        # remove checkpoints once succeeded to save space
+        rmtree("checkpoints/")
         try:
             plots = ActinVisualization.generate_plots(
                 parameters["name"] + ".h5", parameters["box_size"], 10
