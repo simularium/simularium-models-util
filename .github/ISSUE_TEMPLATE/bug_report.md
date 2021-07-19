@@ -2,28 +2,23 @@
 name: Bug Report
 about: '"Something''s wrong..."'
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
 
 ## Description
-*A clear description of the bug*
 
-
-
+_A clear description of the bug_
 
 ## Expected Behavior
-*What did you expect to happen instead?*
 
-
-
+_What did you expect to happen instead?_
 
 ## Reproduction
-*A minimal example that exhibits the behavior.*
 
-
-
+_A minimal example that exhibits the behavior._
 
 ## Environment
-*Any additional information about your environment*
+
+_Any additional information about your environment. E.g. OS version, python version, browser etc._
