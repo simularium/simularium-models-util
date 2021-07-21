@@ -412,4 +412,21 @@ class ActinGenerator:
             )
             monomer_types[0] = f"actin#pointed_ATP_{monomer_types[0][-1:]}"
             result.append((monomer_types, np.array(monomer_positions), edges))
-        return result
+        return result # TODO return this with new structure:
+        """
+        monomer_data : {
+            "topologies": {
+                "[topology ID]" : {
+                    "type": "[topology type]",
+                    "particle_ids": []
+                },
+            "particles": {
+                "[particle ID]" : {
+                    "type": "[particle type]",
+                    "position": np.zeros(3),
+                    "neighbor_ids": [],
+                },
+            },
+        }
+        * IDs are uuid strings
+        """

@@ -452,6 +452,46 @@ class ActinUtil:
                 top.get_graph().add_edge(e[0], e[1])
 
     @staticmethod
+    def add_monomers_from_data(simulation, monomer_data):
+        """
+        add actin and other monomers
+
+        monomer_data : {
+            "topologies": {
+                "[topology ID]" : {
+                    "type": "[topology type]",
+                    "particle_ids": []
+                },
+            "particles": {
+                "[particle ID]" : {
+                    "type": "[particle type]",
+                    "position": np.zeros(3),
+                    "neighbor_ids": [],
+                },
+            },
+        }
+        * IDs are uuid strings
+        """
+        print(monomer_data)
+        for topology in monomer_data["topologies"]:
+            types = []
+            positions = []
+            neighbor_ids = {}
+            for index, particle_id in topology["particle_ids"]:
+                particle = monomer_data["particles"][particle_id]
+                types.append(particle["type"])
+                positions.append(particle["position"])
+                neighbor_ids[index] = []
+                for neighbor_id in particle["neighbor_ids"]:
+                    neighbor_ids[index].append(topology["particle_ids"].index(neighbor_id))
+            top = simulation.add_topology(
+                topology["type"], types, positions
+            )
+            for particle_id in neighbor_ids:
+                for neighbor_id in neighbor_ids[particle_id]:
+                    top.get_graph().add_edge(particle_id, neighbor_id)
+
+    @staticmethod
     def add_actin_dimer(position, simulation):
         """
         add an actin dimer fiber

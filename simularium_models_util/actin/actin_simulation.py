@@ -176,3 +176,25 @@ class ActinSimulation:
         their daughters' FiberData attached to their nucleated arps)
         """
         self.actin_util.add_fibers_from_data(self.simulation, fibers_data)
+
+    def add_monomers_from_data(self, monomer_data):
+        """
+        Add fibers and monomers specified in the monomer_data, in the form:
+        monomer_data = {
+            "topologies": {
+                [topology ID] : {
+                    "type": "[topology type]",
+                    "particle_ids": []
+                },
+            "particles": {
+                [particle ID] : {
+                    "type": "[particle type]",
+                    "position": np.zeros(3),
+                    "neighbor_ids": [],
+                },
+            },
+        }
+        * IDs are ints
+        """
+        self.actin_util.add_monomers_from_data(self.simulation, monomer_data)
+

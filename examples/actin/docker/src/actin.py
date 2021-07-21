@@ -10,8 +10,9 @@ import argparse
 import psutil
 import numpy as np
 from shutil import rmtree
+import uuid
 
-from simularium_models_util.actin import ActinSimulation
+from simularium_models_util.actin import ActinSimulation, ActinGenerator
 from simularium_models_util.visualization import ActinVisualization
 from simularium_models_util import RepeatedTimer
 
@@ -54,25 +55,25 @@ def main():
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
     if parameters["orthogonal_seed"]:
-        actin_simulation.add_fibers_from_data(
-            [
-                FiberData(
-                    0,
-                    [
-                        CurvePointData(
-                            np.array([-90, 0, 0]),
-                            np.array([1, 0, 0]),
-                            0,
-                        ),
-                        CurvePointData(
-                            np.array([10, 0, 0]),
-                            np.array([1, 0, 0]),
-                            50,
-                        ),
-                    ],
-                )
-            ]
-        )
+        orthogonal_seed = [
+            FiberData(
+                0,
+                [
+                    CurvePointData(
+                        position=np.array([-70, 0, 0]),
+                        tangent=np.array([1, 0, 0]),
+                        arc_length=0,
+                    ),
+                    CurvePointData(
+                        position=np.array([10, 0, 0]),
+                        tangent=np.array([1, 0, 0]),
+                        arc_length=80,
+                    ),
+                ],
+            )
+        ]
+        # actin_simulation.add_fibers_from_data(orthogonal_seed)
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(orthogonal_seed))
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(
