@@ -31,7 +31,7 @@ class ArpData:
         self.distance_from_mother_pointed = math.inf
 
     def get_closest_actin_index(
-        self, monomer_positions, monomer_types, branch_indices, mother_barbed_index
+        self, particles, particle_ids, branch_indices, mother_barbed_index
     ):
         """
         get the index of the closest actin monomer to the arp position
@@ -39,8 +39,9 @@ class ArpData:
         min_distance = math.inf
         closest_actin_index = -1
         for i in range(0, mother_barbed_index - 1):
-            if "actin" in monomer_types[i] and i not in branch_indices:
-                d = np.linalg.norm(monomer_positions[i] - self.position)
+            particle_id = particle_ids[i]
+            if "actin" in particles[particle_id].type_name and i not in branch_indices:
+                d = np.linalg.norm(particles[particle_id].position - self.position)
                 if d < min_distance:
                     closest_actin_index = i
                     min_distance = d
