@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import uuid
+import math
 
 import numpy as np
 
@@ -69,21 +70,22 @@ class ActinGenerator:
         particle_ids = []
         # get actin positions
         fiber_points = fiber.reversed_points() if direction < 0 else fiber.points
+        fiber_tangents = fiber.reversed_tangents() if direction < 0 else fiber.tangents
         start_index = fiber.get_index_of_curve_start_point(axis_pos, direction < 0)
         actin_offset_from_axis = ActinStructure.actin_distance_from_axis()
         for i in range(start_index, len(fiber_points) - 1):
             while (
-                np.linalg.norm(axis_pos - fiber_points[i + 1].position)
+                np.linalg.norm(axis_pos - fiber_points[i + 1])
                 >= ActinStructure.actin_to_actin_axis_distance
             ):
                 axis_pos += (
                     ActinStructure.actin_to_actin_axis_distance
                     * direction
-                    * fiber_points[i].tangent
+                    * fiber_tangents[i]
                 )
                 normal = ReaddyUtil.rotate(
                     normal,
-                    fiber_points[i].tangent,
+                    fiber_tangents[i],
                     direction * ActinStructure.actin_to_actin_axis_angle(),
                 )
                 new_particle_id = str(uuid.uuid4())
@@ -91,6 +93,7 @@ class ActinGenerator:
                 particles[new_particle_id] = ParticleData(
                     unique_id=new_particle_id,
                     position=axis_pos + actin_offset_from_axis * normal + offset_vector,
+                    neighbor_ids=[],
                 )
         # get actin types and edges
         actin_number = pointed_actin_number
@@ -111,17 +114,16 @@ class ActinGenerator:
         particle_ids,
         fiber,
         arp,
-        mother_barbed_index,
-        branch_indices,
+        actin_arp_ids,
         particles = {},
     ):
         """
         add positions, types, and edges for a bound arp2 and arp3
         """
         closest_actin_index = arp.get_closest_actin_index(
-            particles, particle_ids, branch_indices, mother_barbed_index
+            particle_ids, actin_arp_ids, particles
         )
-        if closest_actin_index < 0 or closest_actin_index >= len(particle_ids) - 1:
+        if closest_actin_index < 0:
             return particles, particle_ids
         arp2_id = str(uuid.uuid4())
         arp2_index = len(particle_ids)
@@ -130,11 +132,11 @@ class ActinGenerator:
             unique_id=arp2_id,
             type_name="arp2",
             position=arp.get_bound_monomer_position(
-                particles[particle_ids[closest_actin_id]].position, fiber, "arp2"
+                particles[particle_ids[closest_actin_index]].position, fiber, "arp2"
             ),
-            neighbor_ids=[particle_ids[closest_actin_id]],
+            neighbor_ids=[particle_ids[closest_actin_index]],
         )
-        particles[particle_ids[closest_actin_id]].neighbor_ids.append(arp2_id)
+        particles[particle_ids[closest_actin_index]].neighbor_ids.append(arp2_id)
         arp3_id = str(uuid.uuid4())
         arp3_index = len(particle_ids)
         particle_ids.append(arp3_id)
@@ -142,11 +144,11 @@ class ActinGenerator:
             unique_id=arp3_id,
             type_name="arp3#ATP",
             position=arp.get_bound_monomer_position(
-                particles[particle_ids[closest_actin_id]].position, fiber, "arp3"
+                particles[particle_ids[closest_actin_index]].position, fiber, "arp3"
             ),
-            neighbor_ids=[particle_ids[closest_actin_id + 1], arp2_id],
+            neighbor_ids=[particle_ids[closest_actin_index + 1], arp2_id],
         )
-        particles[particle_ids[closest_actin_id + 1]].neighbor_ids.append(arp3_id)
+        particles[particle_ids[closest_actin_index + 1]].neighbor_ids.append(arp3_id)
         particles[arp2_id].neighbor_ids.append(arp3_id)
         return particles, particle_ids
 
@@ -210,24 +212,22 @@ class ActinGenerator:
         """
         recursively get all the monomer data for the given branching fiber
         """
+        fiber_particle_ids = []
         daughter_particle_ids = []
         current_index = 0
-        branch_indices = []
+        actin_arp_ids = []
         actin_number = pointed_actin_number
         for a in range(len(fiber.nucleated_arps)):
-
             # first get positions for arp2, arp3, and daughter actin bound to arp 
             # for the first nucleated arp, they constrain the helical position of everything else
             arp = fiber.nucleated_arps[a]
             fork_positions, v_branch_shift = ActinGenerator.get_nucleated_arp_monomer_positions(fiber, arp)
-
             # get mother monomers if this is the first nucleated arp
             if a == 0:
                 actin_arp2_axis_pos = fiber.get_nearest_position(fork_positions[0])
                 actin_arp2_normal = ReaddyUtil.normalize(
                     fork_positions[0] - actin_arp2_axis_pos
                 )
-
                 # get mother monomers from the pointed end
                 (
                     particles, 
@@ -244,21 +244,23 @@ class ActinGenerator:
                 )
                 pointed_particle_ids.reverse()
                 raw_pointed_type = particles[pointed_particle_ids[0]].type_name
-                pointed_state = "branch" if fiber.mother_arp is not None else "pointed"
+                pointed_state = "branch" if fiber.is_daughter else "pointed"
                 particles[pointed_particle_ids[0]].type_name = f"actin#{pointed_state}_ATP_{raw_pointed_type[-1:]}"
-
+                if fiber.is_daughter:
+                    particles = ActinGenerator.check_shift_branch_actin_numbers(
+                        particles, pointed_particle_ids)
+                    actin_number = int(particles[pointed_particle_ids[len(pointed_particle_ids) - 1]].type_name[-1]) + 1
                 # get mother actin bound to arp2
-                arp2_actin_id = str(uuid.uuid4())
+                actin_arp2_id = str(uuid.uuid4())
                 last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
-                particles[arp2_actin_id] = ParticleData(
-                    unique_id=arp2_actin_id,
+                particles[actin_arp2_id] = ParticleData(
+                    unique_id=actin_arp2_id,
                     type_name=f"actin#ATP_{actin_number}",
                     position=fork_positions[0],
                     neighbor_ids=[last_pointed_id],
                 )
-                particles[last_pointed_id].neighbor_ids.append(arp2_actin_id)
+                particles[last_pointed_id].neighbor_ids.append(actin_arp2_id)
                 actin_number = ActinGenerator.get_actin_number(actin_number, 1)
-
                 # get mother monomers toward the barbed end
                 (
                     particles, 
@@ -273,20 +275,17 @@ class ActinGenerator:
                     actin_number,
                     particles,
                 )
-                particles[barbed_particle_ids[0]].neighbor_ids.append(arp2_actin_id)
-                particles[arp2_actin_id].neighbor_ids.append(barbed_particle_ids[0])
+                particles[barbed_particle_ids[0]].neighbor_ids.append(actin_arp2_id)
+                particles[actin_arp2_id].neighbor_ids.append(barbed_particle_ids[0])
                 barbed_id = barbed_particle_ids[len(barbed_particle_ids) - 1]
                 particles[barbed_id].type_name = f"actin#barbed_ATP_{particles[barbed_id].type_name[-1:]}"
-
-                particle_ids += pointed_particle_ids + [arp2_actin_id] + barbed_particle_ids
-
+                fiber_particle_ids += pointed_particle_ids + [actin_arp2_id] + barbed_particle_ids
             # get the daughter monomers on this branch after the first branch actin
             axis_pos = arp.daughter_fiber.get_nearest_position(fork_positions[3])
             (
                 particles,
                 branch_particle_ids,
             ) = ActinGenerator.get_monomers_for_fiber(
-                particles,
                 arp.daughter_fiber,
                 ReaddyUtil.normalize(fork_positions[3] - axis_pos),
                 axis_pos,
@@ -294,7 +293,6 @@ class ActinGenerator:
                 2,
                 particles,
             )
-
             # get daughter arp2, arp3, and first branch actin monomers
             arp2_id = str(uuid.uuid4())
             particles[arp2_id] = ParticleData(
@@ -322,39 +320,33 @@ class ActinGenerator:
             # attach mother to arp
             particles[arp2_id].neighbor_ids.append(branch_actin_id)
             if a == 0:
-                arp3_actin_id = barbed_particle_ids[0]
+                actin_arp3_id = barbed_particle_ids[0]
             else:
-                arp_mother_pos = fiber.get_nearest_position(arp.position)
-                v_mother = fiber.get_nearest_segment_direction(arp.position)
-                v_daughter = arp.daughter_fiber.get_nearest_segment_direction(
-                    arp.position
-                )
-                ideal_actin_arp2_pos = arp_mother_pos + arp.get_local_nucleated_monomer_position(
-                    v_mother, v_daughter, "actin_arp2"
-                )
-                arp2_actin_id =
-                arp3_actin_id =
-            particles[arp2_id].neighbor_ids.append(arp2_actin_id)
-            particles[arp2_actin_id].neighbor_ids.append(arp2_id)
-            particles[arp3_id].neighbor_ids.append(arp3_actin_id)
-            particles[arp3_actin_id].neighbor_ids.append(arp3_id)
+                actin_arp2_index = arp.get_closest_actin_index(fiber_particle_ids, actin_arp_ids, particles)
+                if actin_arp2_index < 0:
+                    raise Exception("Failed to find mother actins to bind to arp")
+                actin_arp2_id = fiber_particle_ids[actin_arp2_index]
+                actin_arp3_id = fiber_particle_ids[actin_arp2_index + 1]
+            actin_arp_ids += [actin_arp2_id, actin_arp3_id]
+            particles[arp2_id].neighbor_ids.append(actin_arp2_id)
+            particles[actin_arp2_id].neighbor_ids.append(arp2_id)
+            particles[arp3_id].neighbor_ids.append(actin_arp3_id)
+            particles[actin_arp3_id].neighbor_ids.append(arp3_id)
             # attach daughter to arp
             if len(branch_particle_ids) > 0: 
                 particles[branch_actin_id].neighbor_ids.append(branch_particle_ids[0])
                 particles[branch_particle_ids[0]].neighbor_ids.append(branch_actin_id)
-            
-            particle_ids += [arp2_id, arp3_id, branch_actin_id] + branch_particle_ids
-            
+            daughter_particle_ids += [arp2_id, arp3_id, branch_actin_id] + branch_particle_ids
         # add non-nucleated bound arps
         for a in range(len(fiber.bound_arps)):
             particles, particle_ids = ActinGenerator.add_bound_arp_monomers(
                 particle_ids,
                 fiber,
                 fiber.bound_arps[a],
-                mother_barbed_index,
-                branch_indices,
+                actin_arp_ids,
                 particles,
             )
+        particle_ids += fiber_particle_ids + daughter_particle_ids
         return particles, particle_ids
 
     @staticmethod
@@ -370,25 +362,18 @@ class ActinGenerator:
             particles, particle_ids, _, = ActinGenerator.get_actins_for_linear_fiber(
                 fiber, start_normal, start_axis_pos, 1, offset_vector, actin_number, particles
             )
-            monomer_positions += positions
-            # if fiber.mother_arp is not None:
-            #     types = ActinGenerator.check_shift_branch_actin_numbers(types)
-            types[-1] = f"actin#barbed_ATP_{types[-1][-1:]}"
-            monomer_types += types
-            monomer_edges += edges
             for a in range(len(fiber.bound_arps)):
                 particles, particle_ids = ActinGenerator.add_bound_arp_monomers(
                     particle_ids,
                     fiber,
                     fiber.bound_arps[a],
-                    len(monomer_positions) - 1,
                     [],
                     particles,
                 )
         else:
             # fiber has branches
             particles, particle_ids = ActinGenerator.get_monomers_for_branching_fiber(
-                particle_ids,
+                [],
                 fiber,
                 offset_vector,
                 actin_number,
@@ -415,7 +400,7 @@ class ActinGenerator:
                 ReaddyUtil.get_random_perpendicular_vector(
                     fiber_data.get_first_segment_direction()
                 ),
-                fiber_data.pointed_point().position,
+                fiber_data.pointed_point(),
                 np.zeros(3),
                 1,
             )
@@ -425,5 +410,12 @@ class ActinGenerator:
             }
             result["particles"] = {**result["particles"], **particles}
         for particle_id in result["particles"]:
-            result["particles"][particle_id] = **result["particles"][particle_id]
+            result["particles"][particle_id] = dict(result["particles"][particle_id])
+        return result
+
+    @staticmethod
+    def particles_to_string(particles):
+        result = ""
+        for particle_id in particles:
+            result += str(dict(particles[particle_id])) + ", "
         return result

@@ -5,7 +5,6 @@ import numpy as np
 
 from ..common import ReaddyUtil
 from .fiber_data import FiberData
-from .curve_point_data import CurvePointData
 
 
 class ActinStructure:
@@ -77,10 +76,8 @@ class ActinStructure:
         return FiberData(
             0,
             [
-                CurvePointData(axis_position0, ActinStructure.mother_axis_direction, 0),
-                CurvePointData(
-                    axis_position1, ActinStructure.mother_axis_direction, arc_length
-                ),
+                axis_position0,
+                axis_position1,
             ],
         )
 

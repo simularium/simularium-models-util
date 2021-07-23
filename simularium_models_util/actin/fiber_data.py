@@ -15,18 +15,34 @@ class FiberData:
     fiber_id = -1
     points = []
     points_reversed = None
-    mother_arp = None
+    is_daughter = False
     nucleated_arps = []
     bound_arps = []
+    tangents = []
+    tangents_reversed = None
 
-    def __init__(self, fiber_id, points):
+    def __init__(self, fiber_id, points, is_daughter=False, nucleated_arps=None, bound_arps=None):
+        """
+        points is a List of numpy arrays of shape = 3
+        """
         if len(points) < 2:
             raise Exception("Fiber has less than 2 points!")
         self.fiber_id = fiber_id
         self.points = points
-        self.mother_arp = None
-        self.nucleated_arps = []
-        self.bound_arps = []
+        self.is_daughter = is_daughter
+        self.nucleated_arps = [] if nucleated_arps is None else nucleated_arps
+        self.bound_arps = [] if bound_arps is None else bound_arps
+        self.tangents = self.get_tangents()
+
+    def get_tangents(self):
+        """
+        get the tangent at each segment
+        """
+        result = []
+        for index in range(len(self.points) - 1):
+            result.append(ReaddyUtil.normalize(self.points[index + 1] - self.points[index]))
+        result.append(ReaddyUtil.normalize(self.points[len(self.points) - 1] - self.points[len(self.points) - 2]))
+        return result
 
     def pointed_point(self):
         """
@@ -45,7 +61,7 @@ class FiberData:
         get a normalized direction vector along the entire fiber
         """
         return ReaddyUtil.normalize(
-            self.barbed_point().position - self.pointed_point().position
+            self.barbed_point() - self.pointed_point()
         )
 
     def reversed_points(self):
@@ -57,6 +73,16 @@ class FiberData:
             self.points_reversed = self.points.copy()
             self.points_reversed.reverse()
         return self.points_reversed
+
+    def reversed_tangents(self):
+        """
+        create the tangents_reversed list if not already created
+        and return it
+        """
+        if self.tangents_reversed is None:
+            self.tangents_reversed = self.tangents.copy()
+            self.tangents_reversed.reverse()
+        return self.tangents_reversed
 
     def get_index_of_curve_start_point(self, start_position, reverse=False):
         """
@@ -70,9 +96,9 @@ class FiberData:
             return 0
         fiber_points = self.reversed_points() if reverse else self.points
         for p in range(len(fiber_points) - 2):
-            d = np.linalg.norm(start_position - fiber_points[p].position)
+            d = np.linalg.norm(start_position - fiber_points[p])
             arc_length = np.linalg.norm(
-                fiber_points[p + 1].position - fiber_points[p].position
+                fiber_points[p + 1] - fiber_points[p]
             )
             if d < arc_length:
                 return p
@@ -87,7 +113,7 @@ class FiberData:
         closest_index = 0
         min_distance = math.inf
         for p in range(len(self.points) - 1):
-            d = np.linalg.norm(position - self.points[p].position)
+            d = np.linalg.norm(position - self.points[p])
             if d < min_distance:
                 closest_index = p
                 min_distance = d
@@ -107,8 +133,8 @@ class FiberData:
             next_closest_index = len(self.points) - 2
         else:
             if np.linalg.norm(
-                position - self.points[closest_index + 1].position
-            ) < np.linalg.norm(position - self.points[closest_index - 1].position):
+                position - self.points[closest_index + 1]
+            ) < np.linalg.norm(position - self.points[closest_index - 1]):
                 next_closest_index = closest_index + 1
             else:
                 next_closest_index = closest_index - 1
@@ -120,11 +146,11 @@ class FiberData:
         """
         closest_ix = self.get_indices_of_closest_points(position)
         fiber_dir = ReaddyUtil.normalize(
-            self.points[closest_ix[1]].position - self.points[closest_ix[0]].position
+            self.points[closest_ix[1]] - self.points[closest_ix[0]]
         )
-        v = position - self.points[closest_ix[0]].position
+        v = position - self.points[closest_ix[0]]
         d = np.dot(v, fiber_dir)
-        return self.points[closest_ix[0]].position + fiber_dir * d
+        return self.points[closest_ix[0]] + fiber_dir * d
 
     def get_nearest_segment_direction(self, position):
         """
@@ -134,11 +160,11 @@ class FiberData:
             self.get_nearest_position(position)
         )
         return ReaddyUtil.normalize(
-            self.points[start_index + 1].position - self.points[start_index].position
+            self.points[start_index + 1] - self.points[start_index]
         )
 
     def get_first_segment_direction(self):
         """
         get the direction vector of the first segment of the fiber at the pointed end
         """
-        return ReaddyUtil.normalize(self.points[1].position - self.points[0].position)
+        return ReaddyUtil.normalize(self.points[1] - self.points[0])

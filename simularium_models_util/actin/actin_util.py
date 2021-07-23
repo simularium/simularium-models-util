@@ -9,7 +9,6 @@ from ..common import ReaddyUtil
 from .actin_generator import ActinGenerator
 from .actin_structure import ActinStructure
 from .fiber_data import FiberData
-from .curve_point_data import CurvePointData
 
 
 parameters = {}
@@ -416,16 +415,8 @@ class ActinUtil:
                     FiberData(
                         0,
                         [
-                            CurvePointData(
-                                positions[fiber],
-                                direction,
-                                0,
-                            ),
-                            CurvePointData(
-                                positions[fiber] + length * direction,
-                                direction,
-                                length,
-                            ),
+                            positions[fiber],
+                            positions[fiber] + length * direction,
                         ],
                     ),
                 ]
@@ -472,20 +463,20 @@ class ActinUtil:
         }
         * IDs are uuid strings
         """
-        print(monomer_data)
-        for topology in monomer_data["topologies"]:
+        for topology_id in monomer_data["topologies"]:
+            topology = monomer_data["topologies"][topology_id]
             types = []
             positions = []
             neighbor_ids = {}
-            for index, particle_id in topology["particle_ids"]:
-                particle = monomer_data["particles"][particle_id]
-                types.append(particle["type"])
+            for index in range(len(topology["particle_ids"])):
+                particle = monomer_data["particles"][topology["particle_ids"][index]]
+                types.append(particle["type_name"])
                 positions.append(particle["position"])
                 neighbor_ids[index] = []
                 for neighbor_id in particle["neighbor_ids"]:
                     neighbor_ids[index].append(topology["particle_ids"].index(neighbor_id))
             top = simulation.add_topology(
-                topology["type"], types, positions
+                topology["type"], types, np.array(positions)
             )
             for particle_id in neighbor_ids:
                 for neighbor_id in neighbor_ids[particle_id]:
