@@ -21,7 +21,9 @@ class ArpData:
     assigned = False
     distance_from_mother_pointed = math.inf
 
-    def __init__(self, arp_id, position, bound=True, nucleated=False, daughter_fiber=None):
+    def __init__(
+        self, arp_id, position, bound=True, nucleated=False, daughter_fiber=None
+    ):
         self.arp_id = arp_id
         self.position = position
         self.bound = bound
@@ -30,9 +32,7 @@ class ArpData:
         self.assigned = False
         self.distance_from_mother_pointed = math.inf
 
-    def get_closest_actin_index(
-        self, particle_ids, actin_arp_ids, particles
-    ):
+    def get_closest_actin_index(self, particle_ids, actin_arp_ids, particles):
         """
         get the index of the closest actin monomer to the arp position
         excluding the barbed end (because that monomer would also be bound to this arp)
@@ -41,8 +41,13 @@ class ArpData:
         closest_actin_index = -1
         for index in range(len(particle_ids) - 1):
             particle_id = particle_ids[index]
-            if "actin" in particles[particle_id].type_name and particle_id not in actin_arp_ids:
-                distance = np.linalg.norm(particles[particle_id].position - self.position)
+            if (
+                "actin" in particles[particle_id].type_name
+                and particle_id not in actin_arp_ids
+            ):
+                distance = np.linalg.norm(
+                    particles[particle_id].position - self.position
+                )
                 if distance < min_distance:
                     closest_actin_index = index
                     min_distance = distance

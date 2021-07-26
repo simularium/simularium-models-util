@@ -474,10 +474,10 @@ class ActinUtil:
                 positions.append(particle["position"])
                 neighbor_ids[index] = []
                 for neighbor_id in particle["neighbor_ids"]:
-                    neighbor_ids[index].append(topology["particle_ids"].index(neighbor_id))
-            top = simulation.add_topology(
-                topology["type"], types, np.array(positions)
-            )
+                    neighbor_ids[index].append(
+                        topology["particle_ids"].index(neighbor_id)
+                    )
+            top = simulation.add_topology(topology["type"], types, np.array(positions))
             for particle_id in neighbor_ids:
                 for neighbor_id in neighbor_ids[particle_id]:
                     top.get_graph().add_edge(particle_id, neighbor_id)

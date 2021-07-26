@@ -72,7 +72,6 @@ class ActinStructure:
         axis_position1 = (
             ActinStructure.mother_axis_point + ActinStructure.mother_axis_direction * d1
         )
-        arc_length = np.linalg.norm(axis_position1 - axis_position0)
         return FiberData(
             0,
             [

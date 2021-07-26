@@ -197,4 +197,3 @@ class ActinSimulation:
         * IDs are ints
         """
         self.actin_util.add_monomers_from_data(self.simulation, monomer_data)
-

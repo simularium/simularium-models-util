@@ -14,6 +14,7 @@ import psutil
 from simularium_models_util.actin import FiberData, ArpData, ActinSimulation, ActinGenerator
 from simularium_models_util.visualization import ActinVisualization
 from simularium_models_util import RepeatedTimer
+from simularium_models_util.tests import linear_actin_fiber, branched_actin_fiber
 
 
 def report_hardware_usage():
@@ -53,155 +54,12 @@ def main():
     actin_simulation = ActinSimulation(parameters, True, True)
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers()
-    if parameters["orthogonal_seed"]:
-        orthogonal_seed = [
-            FiberData(
-                0,
-                [
-                    np.array([-70, 0, 0]),
-                    np.array([10, 0, 0]),
-                ],
-            )
-        ]
-        branched_seed = [
-            FiberData(
-                fiber_id=0,
-                points=[
-                    np.array([-50, 0, 0]),
-                    np.array([50, 0, 0]),
-                ],
-                nucleated_arps=[
-                    ArpData(
-                        arp_id=0,
-                        position=np.array([-19, 0, 0]),
-                        nucleated=True,
-                        daughter_fiber=FiberData(
-                            fiber_id=1,
-                            points=[
-                                np.array([-19, 0, 0]),
-                                np.array([0.8, 54.5, 0]),
-                            ],
-                            is_daughter=True,
-                            nucleated_arps=[
-                                ArpData(
-                                    arp_id=1,
-                                    position=np.array([-6, 35.7, 0]),
-                                    nucleated=True,
-                                    daughter_fiber=FiberData(
-                                        fiber_id=2,
-                                        points=[
-                                            np.array([-6, 35.7, 0]),
-                                            np.array([14, 35.7, 0]),
-                                        ],
-                                        is_daughter=True,
-                                    ),
-                                ),
-                            ],
-                        ),
-                    ),
-                    ArpData(
-                        arp_id=3,
-                        position=np.array([0, 0, 0]),
-                        nucleated=True,
-                        daughter_fiber=FiberData(
-                            fiber_id=3,
-                            points=[
-                                np.array([0, 0, 0]),
-                                np.array([16.4, -45.1, 0]),
-                            ],
-                            is_daughter=True,
-                            nucleated_arps=[
-                                ArpData(
-                                    arp_id=4,
-                                    position=np.array([6.5, -17.9, 0]),
-                                    nucleated=True,
-                                    daughter_fiber=FiberData(
-                                        fiber_id=4,
-                                        points=[
-                                            np.array([6.5, -17.9, 0]),
-                                            np.array([-30.3, -48.7, 0]),
-                                        ],
-                                        is_daughter=True,
-                                        nucleated_arps=[
-                                            ArpData(
-                                                arp_id=5,
-                                                position=np.array([-22.6, -42.3, 0]),
-                                                nucleated=True,
-                                                daughter_fiber=FiberData(
-                                                    fiber_id=5,
-                                                    points=[
-                                                        np.array([-22.6, -42.3, 0]),
-                                                        np.array([-15.8, -61.1, 0]),
-                                                    ],
-                                                    is_daughter=True,
-                                                ),
-                                            ),
-                                        ],
-                                    ),
-                                ),
-                                ArpData(
-                                    arp_id=6,
-                                    position=np.array([13, -35.7, 0]),
-                                    nucleated=True,
-                                    daughter_fiber=FiberData(
-                                        fiber_id=6,
-                                        points=[
-                                            np.array([13, -35.7, 0]),
-                                            np.array([33, -35.7, 0]),
-                                        ],
-                                        is_daughter=True,
-                                    ),
-                                ),
-                            ],
-                        ),
-                    ),
-                    ArpData(
-                        arp_id=7,
-                        position=np.array([9.5, 0, 0]),
-                        nucleated=True,
-                        daughter_fiber=FiberData(
-                            fiber_id=7,
-                            points=[
-                                np.array([9.5, 0, 0]),
-                                np.array([16.3, 0, 18.8]),
-                            ],
-                            is_daughter=True,
-                        ),
-                    ),
-                    ArpData(
-                        arp_id=8,
-                        position=np.array([19, 0, 0]),
-                        nucleated=True,
-                        daughter_fiber=FiberData(
-                            fiber_id=8,
-                            points=[
-                                np.array([19, 0, 0]),
-                                np.array([29.3, 28.2, 0]),
-                            ],
-                            is_daughter=True,
-                            bound_arps=[
-                                ArpData(
-                                    arp_id=9,
-                                    position=np.array([25.9, 18.8, 0]),
-                                ),
-                            ],
-                        ),
-                    ),
-                ],
-                bound_arps=[
-                    ArpData(
-                        arp_id=2,
-                        position=np.array([-10, 0, 0]),
-                    ),
-                    ArpData(
-                        arp_id=10,
-                        position=np.array([25, 0, 0]),
-                    )
-                ],
-            )
-        ]
-        # actin_simulation.add_fibers_from_data(orthogonal_seed)
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(branched_seed))
+    if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
+        print("ortho")
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(linear_actin_fiber()))
+    if "branched_seed" in parameters and parameters["branched_seed"]:
+        print("branched")
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(branched_actin_fiber()))
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(

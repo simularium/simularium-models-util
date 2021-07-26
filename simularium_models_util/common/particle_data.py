@@ -8,12 +8,13 @@ class ParticleData:
     """
     Particle data for a monomer
     """
+
     unique_id = ""
     type_name = ""
     position = np.zeros(3)
     neighbor_ids = []
 
-    def __init__(self, unique_id, position, type_name = "", neighbor_ids = None):
+    def __init__(self, unique_id, position, type_name="", neighbor_ids=None):
         self.unique_id = unique_id
         self.type_name = type_name
         self.position = position

@@ -21,7 +21,9 @@ class FiberData:
     tangents = []
     tangents_reversed = None
 
-    def __init__(self, fiber_id, points, is_daughter=False, nucleated_arps=None, bound_arps=None):
+    def __init__(
+        self, fiber_id, points, is_daughter=False, nucleated_arps=None, bound_arps=None
+    ):
         """
         points is a List of numpy arrays of shape = 3
         """
@@ -40,8 +42,14 @@ class FiberData:
         """
         result = []
         for index in range(len(self.points) - 1):
-            result.append(ReaddyUtil.normalize(self.points[index + 1] - self.points[index]))
-        result.append(ReaddyUtil.normalize(self.points[len(self.points) - 1] - self.points[len(self.points) - 2]))
+            result.append(
+                ReaddyUtil.normalize(self.points[index + 1] - self.points[index])
+            )
+        result.append(
+            ReaddyUtil.normalize(
+                self.points[len(self.points) - 1] - self.points[len(self.points) - 2]
+            )
+        )
         return result
 
     def pointed_point(self):
@@ -60,9 +68,7 @@ class FiberData:
         """
         get a normalized direction vector along the entire fiber
         """
-        return ReaddyUtil.normalize(
-            self.barbed_point() - self.pointed_point()
-        )
+        return ReaddyUtil.normalize(self.barbed_point() - self.pointed_point())
 
     def reversed_points(self):
         """
@@ -97,9 +103,7 @@ class FiberData:
         fiber_points = self.reversed_points() if reverse else self.points
         for p in range(len(fiber_points) - 2):
             d = np.linalg.norm(start_position - fiber_points[p])
-            arc_length = np.linalg.norm(
-                fiber_points[p + 1] - fiber_points[p]
-            )
+            arc_length = np.linalg.norm(fiber_points[p + 1] - fiber_points[p])
             if d < arc_length:
                 return p
         return None
