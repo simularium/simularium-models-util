@@ -49,7 +49,7 @@ class ActinGenerator:
                 n += 1
                 if n > 3:
                     n = 1
-            return result
+            return particles
         return particles
 
     @staticmethod
@@ -100,7 +100,7 @@ class ActinGenerator:
         for i in range(len(particle_ids)):
             particle_id = particle_ids[i]
             particles[particle_id].type_name = f"actin#ATP_{actin_number}"
-            actin_number = ActinGenerator.get_actin_number(actin_number, 1)
+            actin_number = ActinGenerator.get_actin_number(actin_number, direction)
             if i > 0:
                 particles[particle_id].neighbor_ids.append(particle_ids[i - 1])
             if i < len(particle_ids) - 1:
@@ -205,6 +205,8 @@ class ActinGenerator:
     def get_monomers_for_branching_fiber(
         particle_ids,
         fiber,
+        start_normal, 
+        start_axis_pos,
         offset_vector,
         pointed_actin_number,
         particles = {},
@@ -224,62 +226,82 @@ class ActinGenerator:
             fork_positions, v_branch_shift = ActinGenerator.get_nucleated_arp_monomer_positions(fiber, arp)
             # get mother monomers if this is the first nucleated arp
             if a == 0:
-                actin_arp2_axis_pos = fiber.get_nearest_position(fork_positions[0])
-                actin_arp2_normal = ReaddyUtil.normalize(
-                    fork_positions[0] - actin_arp2_axis_pos
-                )
                 # get mother monomers from the pointed end
-                (
-                    particles, 
-                    pointed_particle_ids,
-                    actin_number,
-                ) = ActinGenerator.get_actins_for_linear_fiber(
-                    fiber,
-                    actin_arp2_normal,
-                    actin_arp2_axis_pos,
-                    -1,
-                    offset_vector,
-                    actin_number,
-                    particles,
-                )
-                pointed_particle_ids.reverse()
-                raw_pointed_type = particles[pointed_particle_ids[0]].type_name
-                pointed_state = "branch" if fiber.is_daughter else "pointed"
-                particles[pointed_particle_ids[0]].type_name = f"actin#{pointed_state}_ATP_{raw_pointed_type[-1:]}"
-                if fiber.is_daughter:
-                    particles = ActinGenerator.check_shift_branch_actin_numbers(
-                        particles, pointed_particle_ids)
-                    actin_number = int(particles[pointed_particle_ids[len(pointed_particle_ids) - 1]].type_name[-1]) + 1
-                # get mother actin bound to arp2
-                actin_arp2_id = str(uuid.uuid4())
-                last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
-                particles[actin_arp2_id] = ParticleData(
-                    unique_id=actin_arp2_id,
-                    type_name=f"actin#ATP_{actin_number}",
-                    position=fork_positions[0],
-                    neighbor_ids=[last_pointed_id],
-                )
-                particles[last_pointed_id].neighbor_ids.append(actin_arp2_id)
-                actin_number = ActinGenerator.get_actin_number(actin_number, 1)
-                # get mother monomers toward the barbed end
-                (
-                    particles, 
-                    barbed_particle_ids,
-                    actin_number,
-                ) = ActinGenerator.get_actins_for_linear_fiber(
-                    fiber,
-                    actin_arp2_normal,
-                    actin_arp2_axis_pos,
-                    1,
-                    offset_vector,
-                    actin_number,
-                    particles,
-                )
-                particles[barbed_particle_ids[0]].neighbor_ids.append(actin_arp2_id)
-                particles[actin_arp2_id].neighbor_ids.append(barbed_particle_ids[0])
-                barbed_id = barbed_particle_ids[len(barbed_particle_ids) - 1]
-                particles[barbed_id].type_name = f"actin#barbed_ATP_{particles[barbed_id].type_name[-1:]}"
-                fiber_particle_ids += pointed_particle_ids + [actin_arp2_id] + barbed_particle_ids
+                if not fiber.is_daughter:
+                    # if this is a mother filament, the pointed end is totally unconstrained
+                    # so make it match the first branch junction
+                    actin_arp2_axis_pos = fiber.get_nearest_position(fork_positions[0])
+                    actin_arp2_normal = ReaddyUtil.normalize(
+                        fork_positions[0] - actin_arp2_axis_pos
+                    )
+                    (
+                        particles, 
+                        pointed_particle_ids,
+                        actin_number,
+                    ) = ActinGenerator.get_actins_for_linear_fiber(
+                        fiber,
+                        actin_arp2_normal,
+                        actin_arp2_axis_pos,
+                        -1,
+                        offset_vector,
+                        actin_number,
+                        particles,
+                    )
+                    if fiber.is_daughter:
+                        particles = ActinGenerator.check_shift_branch_actin_numbers(particles, pointed_particle_ids)
+                        actin_number = ActinGenerator.get_actin_number(int(particles[pointed_particle_ids[len(pointed_particle_ids) - 1]].type_name[-1]), 1)
+                    else:
+                        raw_pointed_type = particles[pointed_particle_ids[0]].type_name
+                        particles[pointed_particle_ids[0]].type_name = f"actin#pointed_ATP_{raw_pointed_type[-1:]}"
+                    # get mother actin bound to arp2
+                    actin_arp2_id = str(uuid.uuid4())
+                    last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
+                    particles[actin_arp2_id] = ParticleData(
+                        unique_id=actin_arp2_id,
+                        type_name=f"actin#ATP_{actin_number}",
+                        position=fork_positions[0],
+                        neighbor_ids=[last_pointed_id],
+                    )
+                    particles[last_pointed_id].neighbor_ids.append(actin_arp2_id)
+                    actin_number = ActinGenerator.get_actin_number(actin_number, 1)
+                    # get mother monomers toward the barbed end
+                    (
+                        particles, 
+                        barbed_particle_ids,
+                        actin_number,
+                    ) = ActinGenerator.get_actins_for_linear_fiber(
+                        fiber,
+                        actin_arp2_normal,
+                        actin_arp2_axis_pos,
+                        1,
+                        offset_vector,
+                        actin_number,
+                        particles,
+                    )
+                    particles[barbed_particle_ids[0]].neighbor_ids.append(actin_arp2_id)
+                    particles[actin_arp2_id].neighbor_ids.append(barbed_particle_ids[0])
+                    barbed_id = barbed_particle_ids[len(barbed_particle_ids) - 1]
+                    particles[barbed_id].type_name = f"actin#barbed_ATP_{particles[barbed_id].type_name[-1:]}"
+                    fiber_particle_ids += pointed_particle_ids + [actin_arp2_id] + barbed_particle_ids
+                else:
+                    # if this is a daughter filament, the entire filament
+                    # is already determined by the branch junction
+                    (
+                        particles, 
+                        all_particle_ids,
+                        actin_number,
+                    ) = ActinGenerator.get_actins_for_linear_fiber(
+                        fiber,
+                        start_normal,
+                        start_axis_pos,
+                        1,
+                        offset_vector,
+                        actin_number,
+                        particles,
+                    )
+                    barbed_id = all_particle_ids[len(all_particle_ids) - 1]
+                    particles[barbed_id].type_name = f"actin#barbed_ATP_{particles[barbed_id].type_name[-1:]}"
+                    fiber_particle_ids += all_particle_ids
             # get the daughter monomers on this branch after the first branch actin
             axis_pos = arp.daughter_fiber.get_nearest_position(fork_positions[3])
             (
@@ -319,7 +341,7 @@ class ActinGenerator:
             )
             # attach mother to arp
             particles[arp2_id].neighbor_ids.append(branch_actin_id)
-            if a == 0:
+            if a == 0 and not fiber.is_daughter:
                 actin_arp3_id = barbed_particle_ids[0]
             else:
                 actin_arp2_index = arp.get_closest_actin_index(fiber_particle_ids, actin_arp_ids, particles)
@@ -375,6 +397,8 @@ class ActinGenerator:
             particles, particle_ids = ActinGenerator.get_monomers_for_branching_fiber(
                 [],
                 fiber,
+                start_normal, 
+                start_axis_pos,
                 offset_vector,
                 actin_number,
                 particles,
@@ -414,8 +438,15 @@ class ActinGenerator:
         return result
 
     @staticmethod
-    def particles_to_string(particles):
+    def particles_to_string(particle_ids, particles, info=""):
         result = ""
-        for particle_id in particles:
-            result += str(dict(particles[particle_id])) + ", "
+        for particle_id in particle_ids:
+            if len(info) < 1:
+                result += str(dict(particles[particle_id])) + ", "
+            elif "id" in info:
+                result += str(particles[particle_id].unique_id) + ", "
+            elif "type" in info:
+                result += str(particles[particle_id].type_name) + ", "
+            elif "pos" in info:
+                result += str(particles[particle_id].position) + ", "
         return result
