@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>simularium_models_util.actin.curve_point_data &mdash; Simularium Models Util 0.0.0 documentation</title>
+  <title>simularium_models_util.common.particle_data &mdash; Simularium Models Util 0.0.0 documentation</title>
   
 
   
@@ -169,7 +169,7 @@
         
           <li><a href="../../simularium_models_util.html">simularium_models_util</a> &raquo;</li>
         
-      <li>simularium_models_util.actin.curve_point_data</li>
+      <li>simularium_models_util.common.particle_data</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -184,24 +184,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for simularium_models_util.actin.curve_point_data</h1><div class="highlight"><pre>
+  <h1>Source code for simularium_models_util.common.particle_data</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<div class="viewcode-block" id="CurvePointData"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.curve_point_data.CurvePointData">[docs]</a><span class="k">class</span> <span class="nc">CurvePointData</span><span class="p">:</span>
+
+<div class="viewcode-block" id="ParticleData"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.particle_data.ParticleData">[docs]</a><span class="k">class</span> <span class="nc">ParticleData</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    structure to store data for a point on a curve</span>
+<span class="sd">    Particle data for a monomer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">position</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">tangent</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">arc_length</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">unique_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">type_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">neighbor_ids</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">tangent</span><span class="p">,</span> <span class="n">arc_length</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">neighbor_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span> <span class="o">=</span> <span class="n">unique_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="n">type_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tangent</span> <span class="o">=</span> <span class="n">tangent</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">arc_length</span> <span class="o">=</span> <span class="n">arc_length</span></div>
+        <span class="k">if</span> <span class="n">neighbor_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">neighbor_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">neighbor_ids</span> <span class="o">=</span> <span class="n">neighbor_ids</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="s2">&quot;unique_id&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span>
+        <span class="k">yield</span> <span class="s2">&quot;type_name&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span>
+        <span class="k">yield</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span>
+        <span class="k">yield</span> <span class="s2">&quot;neighbor_ids&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">neighbor_ids</span></div>
 </pre></div>
 
            </div>

@@ -188,9 +188,11 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
+<span class="kn">import</span> <span class="nn">uuid</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span><span class="p">,</span> <span class="n">ParticleData</span>
 <span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span>
 
 
@@ -215,25 +217,26 @@
         <span class="k">return</span> <span class="n">n</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.check_shift_branch_actin_numbers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.check_shift_branch_actin_numbers">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">check_shift_branch_actin_numbers</span><span class="p">(</span><span class="n">type_names</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check_shift_branch_actin_numbers</span><span class="p">(</span><span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        if the first actin&#39;s number is not 2,</span>
 <span class="sd">        shift the branch&#39;s actin numbers so that it is</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="s2">&quot;2&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">type_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">type_names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">first_actin_type</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">type_name</span>
+        <span class="k">if</span> <span class="s2">&quot;2&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_actin_type</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">first_actin_type</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
             <span class="n">offset</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">type_names</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">)):</span>
                 <span class="n">new_n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">offset</span>
                 <span class="k">if</span> <span class="n">new_n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
                     <span class="n">new_n</span> <span class="o">-=</span> <span class="mi">3</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_names</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}{</span><span class="n">new_n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">type_name</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">type_name</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">type_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}{</span><span class="n">new_n</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
                     <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">return</span> <span class="n">result</span>
-        <span class="k">return</span> <span class="n">type_names</span></div>
+            <span class="k">return</span> <span class="n">particles</span>
+        <span class="k">return</span> <span class="n">particles</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_actins_for_linear_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_actins_for_linear_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_actins_for_linear_fiber</span><span class="p">(</span>
@@ -243,87 +246,109 @@
         <span class="n">direction</span><span class="p">,</span>
         <span class="n">offset_vector</span><span class="p">,</span>
         <span class="n">pointed_actin_number</span><span class="p">,</span>
+        <span class="n">next_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">particles</span><span class="o">=</span><span class="p">{},</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get actin monomer data pointed to barbed for a fiber with no daughter branches</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">start_normal</span><span class="p">)</span>
         <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">start_axis_pos</span><span class="p">))</span>
-        <span class="n">monomer_positions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">monomer_types</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">monomer_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">particle_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># get actin positions</span>
         <span class="n">fiber_points</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">reversed_points</span><span class="p">()</span> <span class="k">if</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">fiber</span><span class="o">.</span><span class="n">points</span>
+        <span class="n">fiber_tangents</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">reversed_tangents</span><span class="p">()</span> <span class="k">if</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">fiber</span><span class="o">.</span><span class="n">tangents</span>
         <span class="n">start_index</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_index_of_curve_start_point</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">,</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">actin_offset_from_axis</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_distance_from_axis</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">while</span> <span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_pos</span> <span class="o">-</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">axis_pos</span> <span class="o">-</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
                 <span class="o">&gt;=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_distance</span>
             <span class="p">):</span>
                 <span class="n">axis_pos</span> <span class="o">+=</span> <span class="p">(</span>
                     <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_distance</span>
                     <span class="o">*</span> <span class="n">direction</span>
-                    <span class="o">*</span> <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tangent</span>
+                    <span class="o">*</span> <span class="n">fiber_tangents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="p">)</span>
                 <span class="n">normal</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span>
                     <span class="n">normal</span><span class="p">,</span>
-                    <span class="n">fiber_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tangent</span><span class="p">,</span>
+                    <span class="n">fiber_tangents</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                     <span class="n">direction</span> <span class="o">*</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_angle</span><span class="p">(),</span>
                 <span class="p">)</span>
-                <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">axis_pos</span> <span class="o">+</span> <span class="n">actin_offset_from_axis</span> <span class="o">*</span> <span class="n">normal</span> <span class="o">+</span> <span class="n">offset_vector</span>
+                <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">new_particle_id</span> <span class="o">=</span> <span class="n">next_id</span>
+                    <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_particle_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+                <span class="n">particle_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_particle_id</span><span class="p">)</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">new_particle_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+                    <span class="n">unique_id</span><span class="o">=</span><span class="n">new_particle_id</span><span class="p">,</span>
+                    <span class="n">position</span><span class="o">=</span><span class="n">axis_pos</span> <span class="o">+</span> <span class="n">actin_offset_from_axis</span> <span class="o">*</span> <span class="n">normal</span> <span class="o">+</span> <span class="n">offset_vector</span><span class="p">,</span>
+                    <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[],</span>
                 <span class="p">)</span>
         <span class="c1"># get actin types and edges</span>
         <span class="n">actin_number</span> <span class="o">=</span> <span class="n">pointed_actin_number</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)):</span>
-            <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">actin_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">)):</span>
+            <span class="n">particle_id</span> <span class="o">=</span> <span class="n">particle_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">actin_number</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">direction</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">monomer_types</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span><span class="p">,</span> <span class="n">actin_number</span></div>
+            <span class="n">particle_ids</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">actin_number</span><span class="p">,</span> <span class="n">next_id</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.add_bound_arp_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.add_bound_arp_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_bound_arp_monomers</span><span class="p">(</span>
-        <span class="n">monomer_positions</span><span class="p">,</span>
-        <span class="n">monomer_types</span><span class="p">,</span>
-        <span class="n">monomer_edges</span><span class="p">,</span>
+        <span class="n">particle_ids</span><span class="p">,</span>
         <span class="n">fiber</span><span class="p">,</span>
         <span class="n">arp</span><span class="p">,</span>
-        <span class="n">mother_barbed_index</span><span class="p">,</span>
-        <span class="n">branch_indices</span><span class="p">,</span>
+        <span class="n">actin_arp_ids</span><span class="p">,</span>
+        <span class="n">next_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">particles</span><span class="o">=</span><span class="p">{},</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add positions, types, and edges for a bound arp2 and arp3</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">closest_actin_index</span> <span class="o">=</span> <span class="n">arp</span><span class="o">.</span><span class="n">get_closest_actin_index</span><span class="p">(</span>
-            <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">branch_indices</span><span class="p">,</span> <span class="n">mother_barbed_index</span>
+            <span class="n">particle_ids</span><span class="p">,</span> <span class="n">actin_arp_ids</span><span class="p">,</span> <span class="n">particles</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">closest_actin_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span>
-        <span class="c1"># positions</span>
-        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">arp</span><span class="o">.</span><span class="n">get_bound_monomer_position</span><span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">],</span> <span class="n">fiber</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span>
-            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">next_id</span>
+        <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">arp2_id</span> <span class="o">=</span> <span class="n">next_id</span>
+            <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">arp2_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="n">particle_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp2_id</span><span class="p">)</span>
+        <span class="n">particles</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+            <span class="n">unique_id</span><span class="o">=</span><span class="n">arp2_id</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="n">arp</span><span class="o">.</span><span class="n">get_bound_monomer_position</span><span class="p">(</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span>
+            <span class="p">),</span>
+            <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">]],</span>
         <span class="p">)</span>
-        <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">arp</span><span class="o">.</span><span class="n">get_bound_monomer_position</span><span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">],</span> <span class="n">fiber</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span>
-            <span class="p">)</span>
+        <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">]]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp2_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">arp3_id</span> <span class="o">=</span> <span class="n">next_id</span>
+            <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">arp3_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="n">particle_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp3_id</span><span class="p">)</span>
+        <span class="n">particles</span><span class="p">[</span><span class="n">arp3_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+            <span class="n">unique_id</span><span class="o">=</span><span class="n">arp3_id</span><span class="p">,</span>
+            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="n">arp</span><span class="o">.</span><span class="n">get_bound_monomer_position</span><span class="p">(</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span>
+            <span class="p">),</span>
+            <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">arp2_id</span><span class="p">],</span>
         <span class="p">)</span>
-        <span class="c1"># types</span>
-        <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;arp2&quot;</span><span class="p">)</span>
-        <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">)</span>
-        <span class="c1"># edges</span>
-        <span class="n">arp2_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
-        <span class="n">arp3_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">closest_actin_index</span><span class="p">,</span> <span class="n">arp2_index</span><span class="p">))</span>
-        <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">closest_actin_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">arp3_index</span><span class="p">))</span>
-        <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">arp2_index</span><span class="p">,</span> <span class="n">arp3_index</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span></div>
+        <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp3_id</span><span class="p">)</span>
+        <span class="n">particles</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp3_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">next_id</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_nucleated_arp_monomer_positions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_nucleated_arp_monomer_positions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_nucleated_arp_monomer_positions</span><span class="p">(</span><span class="n">mother_fiber</span><span class="p">,</span> <span class="n">nucleated_arp</span><span class="p">):</span>
@@ -376,229 +401,350 @@
 
 <div class="viewcode-block" id="ActinGenerator.get_monomers_for_branching_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_branching_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_monomers_for_branching_fiber</span><span class="p">(</span>
-        <span class="n">monomer_positions</span><span class="p">,</span>
-        <span class="n">monomer_types</span><span class="p">,</span>
-        <span class="n">monomer_edges</span><span class="p">,</span>
+        <span class="n">particle_ids</span><span class="p">,</span>
         <span class="n">fiber</span><span class="p">,</span>
+        <span class="n">start_normal</span><span class="p">,</span>
+        <span class="n">start_axis_pos</span><span class="p">,</span>
         <span class="n">offset_vector</span><span class="p">,</span>
         <span class="n">pointed_actin_number</span><span class="p">,</span>
+        <span class="n">next_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">particles</span><span class="o">=</span><span class="p">{},</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        recursively get all the monomer data for the given branching fiber</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">daughter_positions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">daughter_types</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">daughter_edges</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">current_index</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">branch_indices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">fiber_particle_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">daughter_particle_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">actin_arp_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">actin_number</span> <span class="o">=</span> <span class="n">pointed_actin_number</span>
         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">nucleated_arps</span><span class="p">)):</span>
+            <span class="c1"># first get positions for arp2, arp3, and daughter actin bound to arp</span>
+            <span class="c1"># for the first nucleated arp, they constrain the</span>
+            <span class="c1"># helical position of everything else</span>
             <span class="n">arp</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">nucleated_arps</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
-            <span class="c1"># add arp2, arp3, and daughter actin bound to arp3</span>
             <span class="p">(</span>
                 <span class="n">fork_positions</span><span class="p">,</span>
                 <span class="n">v_branch_shift</span><span class="p">,</span>
             <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_nucleated_arp_monomer_positions</span><span class="p">(</span><span class="n">fiber</span><span class="p">,</span> <span class="n">arp</span><span class="p">)</span>
-            <span class="n">daughter_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-            <span class="n">daughter_types</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">])</span>
-            <span class="n">daughter_edges</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
-            <span class="c1"># add the rest of the daughter monomers on this branch</span>
+            <span class="c1"># get mother monomers if this is the first nucleated arp</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># get mother monomers from the pointed end</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">fiber</span><span class="o">.</span><span class="n">is_daughter</span><span class="p">:</span>
+                    <span class="c1"># if this is a mother filament,</span>
+                    <span class="c1"># the pointed end is totally unconstrained</span>
+                    <span class="c1"># so make it match the first branch junction</span>
+                    <span class="n">actin_arp2_axis_pos</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">actin_arp2_normal</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+                        <span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">actin_arp2_axis_pos</span>
+                    <span class="p">)</span>
+
+                    <span class="p">(</span>
+                        <span class="n">particles</span><span class="p">,</span>
+                        <span class="n">pointed_particle_ids</span><span class="p">,</span>
+                        <span class="n">actin_number</span><span class="p">,</span>
+                        <span class="n">next_id</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
+                        <span class="n">fiber</span><span class="p">,</span>
+                        <span class="n">actin_arp2_normal</span><span class="p">,</span>
+                        <span class="n">actin_arp2_axis_pos</span><span class="p">,</span>
+                        <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">offset_vector</span><span class="p">,</span>
+                        <span class="n">actin_number</span><span class="p">,</span>
+                        <span class="n">next_id</span><span class="p">,</span>
+                        <span class="n">particles</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">fiber</span><span class="o">.</span><span class="n">is_daughter</span><span class="p">:</span>
+                        <span class="n">particles</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">check_shift_branch_actin_numbers</span><span class="p">(</span>
+                            <span class="n">particles</span><span class="p">,</span> <span class="n">pointed_particle_ids</span>
+                        <span class="p">)</span>
+                        <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span>
+                            <span class="nb">int</span><span class="p">(</span>
+                                <span class="n">particles</span><span class="p">[</span>
+                                    <span class="n">pointed_particle_ids</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pointed_particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                                <span class="p">]</span><span class="o">.</span><span class="n">type_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="p">),</span>
+                            <span class="mi">1</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">raw_pointed_type</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="n">pointed_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">type_name</span>
+                        <span class="n">particles</span><span class="p">[</span>
+                            <span class="n">pointed_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="p">]</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#pointed_ATP_</span><span class="si">{</span><span class="n">raw_pointed_type</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="c1"># get mother actin bound to arp2</span>
+                    <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="n">next_id</span>
+                        <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+                    <span class="n">last_pointed_id</span> <span class="o">=</span> <span class="n">pointed_particle_ids</span><span class="p">[</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">pointed_particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="p">]</span>
+                    <span class="n">particles</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+                        <span class="n">unique_id</span><span class="o">=</span><span class="n">actin_arp2_id</span><span class="p">,</span>
+                        <span class="n">type_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">actin_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                        <span class="n">position</span><span class="o">=</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[</span><span class="n">last_pointed_id</span><span class="p">],</span>
+                    <span class="p">)</span>
+                    <span class="n">particles</span><span class="p">[</span><span class="n">last_pointed_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">actin_arp2_id</span><span class="p">)</span>
+                    <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="c1"># get mother monomers toward the barbed end</span>
+
+                    <span class="p">(</span>
+                        <span class="n">particles</span><span class="p">,</span>
+                        <span class="n">barbed_particle_ids</span><span class="p">,</span>
+                        <span class="n">actin_number</span><span class="p">,</span>
+                        <span class="n">next_id</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
+                        <span class="n">fiber</span><span class="p">,</span>
+                        <span class="n">actin_arp2_normal</span><span class="p">,</span>
+                        <span class="n">actin_arp2_axis_pos</span><span class="p">,</span>
+                        <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">offset_vector</span><span class="p">,</span>
+                        <span class="n">actin_number</span><span class="p">,</span>
+                        <span class="n">next_id</span><span class="p">,</span>
+                        <span class="n">particles</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">particles</span><span class="p">[</span><span class="n">barbed_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">actin_arp2_id</span><span class="p">)</span>
+                    <span class="n">particles</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">barbed_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">barbed_id</span> <span class="o">=</span> <span class="n">barbed_particle_ids</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">barbed_particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">particles</span><span class="p">[</span>
+                        <span class="n">barbed_id</span>
+                    <span class="p">]</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">particles</span><span class="p">[</span><span class="n">barbed_id</span><span class="p">]</span><span class="o">.</span><span class="n">type_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">fiber_particle_ids</span> <span class="o">+=</span> <span class="p">(</span>
+                        <span class="n">pointed_particle_ids</span> <span class="o">+</span> <span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">]</span> <span class="o">+</span> <span class="n">barbed_particle_ids</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># if this is a daughter filament, the entire filament</span>
+                    <span class="c1"># is already determined by the branch junction</span>
+
+                    <span class="p">(</span>
+                        <span class="n">particles</span><span class="p">,</span>
+                        <span class="n">all_particle_ids</span><span class="p">,</span>
+                        <span class="n">actin_number</span><span class="p">,</span>
+                        <span class="n">next_id</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
+                        <span class="n">fiber</span><span class="p">,</span>
+                        <span class="n">start_normal</span><span class="p">,</span>
+                        <span class="n">start_axis_pos</span><span class="p">,</span>
+                        <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">offset_vector</span><span class="p">,</span>
+                        <span class="n">actin_number</span><span class="p">,</span>
+                        <span class="n">next_id</span><span class="p">,</span>
+                        <span class="n">particles</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="n">barbed_id</span> <span class="o">=</span> <span class="n">all_particle_ids</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">all_particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">particles</span><span class="p">[</span>
+                        <span class="n">barbed_id</span>
+                    <span class="p">]</span><span class="o">.</span><span class="n">type_name</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">particles</span><span class="p">[</span><span class="n">barbed_id</span><span class="p">]</span><span class="o">.</span><span class="n">type_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">fiber_particle_ids</span> <span class="o">+=</span> <span class="n">all_particle_ids</span>
+            <span class="c1"># get the daughter monomers on this branch after the first branch actin</span>
             <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">arp</span><span class="o">.</span><span class="n">daughter_fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
             <span class="p">(</span>
-                <span class="n">branch_positions</span><span class="p">,</span>
-                <span class="n">branch_types</span><span class="p">,</span>
-                <span class="n">branch_edges</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
+                <span class="n">branch_particle_ids</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
             <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_fiber</span><span class="p">(</span>
                 <span class="n">arp</span><span class="o">.</span><span class="n">daughter_fiber</span><span class="p">,</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">axis_pos</span><span class="p">),</span>
                 <span class="n">axis_pos</span><span class="p">,</span>
                 <span class="n">offset_vector</span> <span class="o">+</span> <span class="n">v_branch_shift</span><span class="p">,</span>
                 <span class="mi">2</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">daughter_positions</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">branch_positions</span>
-            <span class="n">daughter_types</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">+=</span> <span class="n">branch_types</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">branch_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">daughter_edges</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-                <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">branch_edges</span><span class="p">:</span>
-                    <span class="n">daughter_edges</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span>
-            <span class="c1"># get mother monomer positions toward pointed end</span>
-            <span class="n">actin_arp2_axis_pos</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">actin_arp2_normal</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
-                <span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">actin_arp2_axis_pos</span>
+            <span class="c1"># get daughter arp2, arp3, and first branch actin monomers</span>
+            <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">arp2_id</span> <span class="o">=</span> <span class="n">next_id</span>
+                <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">arp2_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+                <span class="n">unique_id</span><span class="o">=</span><span class="n">arp2_id</span><span class="p">,</span>
+                <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[],</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># if this is the first nucleated arp</span>
-                <span class="c1"># get the rest of the fiber</span>
-                <span class="p">(</span>
-                    <span class="n">pointed_positions</span><span class="p">,</span>
-                    <span class="n">pointed_types</span><span class="p">,</span>
-                    <span class="n">pointed_edges</span><span class="p">,</span>
-                    <span class="n">actin_number</span><span class="p">,</span>
-                <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
-                    <span class="n">fiber</span><span class="p">,</span>
-                    <span class="n">actin_arp2_normal</span><span class="p">,</span>
-                    <span class="n">actin_arp2_axis_pos</span><span class="p">,</span>
-                    <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-                    <span class="n">offset_vector</span><span class="p">,</span>
-                    <span class="n">actin_number</span><span class="p">,</span>
+            <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">arp3_id</span> <span class="o">=</span> <span class="n">next_id</span>
+                <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">arp3_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">arp3_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+                <span class="n">unique_id</span><span class="o">=</span><span class="n">arp3_id</span><span class="p">,</span>
+                <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp3_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">branch_actin_id</span> <span class="o">=</span> <span class="n">next_id</span>
+                <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">branch_actin_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="n">branch_state</span> <span class="o">=</span> <span class="s2">&quot;_barbed&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">branch_particle_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">branch_actin_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
+                <span class="n">unique_id</span><span class="o">=</span><span class="n">branch_actin_id</span><span class="p">,</span>
+                <span class="n">type_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;actin#branch</span><span class="si">{</span><span class="n">branch_state</span><span class="si">}</span><span class="s2">_ATP_1&quot;</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                <span class="n">neighbor_ids</span><span class="o">=</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="c1"># attach mother to arp</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch_actin_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">fiber</span><span class="o">.</span><span class="n">is_daughter</span><span class="p">:</span>
+                <span class="n">actin_arp3_id</span> <span class="o">=</span> <span class="n">barbed_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">actin_arp2_index</span> <span class="o">=</span> <span class="n">arp</span><span class="o">.</span><span class="n">get_closest_actin_index</span><span class="p">(</span>
+                    <span class="n">fiber_particle_ids</span><span class="p">,</span> <span class="n">actin_arp_ids</span><span class="p">,</span> <span class="n">particles</span>
                 <span class="p">)</span>
-                <span class="n">pointed_positions</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-                <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">pointed_positions</span>
-                <span class="n">pointed_types</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-                <span class="c1"># if fiber.mother_arp is not None:</span>
-                <span class="c1">#     pointed_types = ActinGenerator.check_shift_branch_actin_numbers(</span>
-                <span class="c1">#         pointed_types)</span>
-                <span class="c1">#     actin_number = int(pointed_types[len(pointed_types) - 1][-1]) + 1</span>
-                <span class="n">pointed_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#branch_ATP_</span><span class="si">{</span><span class="n">pointed_types</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">pointed_types</span>
-                <span class="n">monomer_edges</span> <span class="o">+=</span> <span class="n">pointed_edges</span>
-                <span class="n">current_index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pointed_positions</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pointed_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">current_index</span><span class="p">))</span>
-            <span class="c1"># add the actin monomer attached to the branch&#39;s arp2</span>
-            <span class="n">monomer_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fork_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">monomer_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">actin_number</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">actin_number</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">actin_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">branch_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_index</span><span class="p">)</span>
-            <span class="c1"># get monomers pointed to barbed until next arp</span>
-            <span class="p">(</span>
-                <span class="n">barbed_positions</span><span class="p">,</span>
-                <span class="n">barbed_types</span><span class="p">,</span>
-                <span class="n">barbed_edges</span><span class="p">,</span>
-                <span class="n">actin_number</span><span class="p">,</span>
-            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
-                <span class="n">fiber</span><span class="p">,</span>
-                <span class="n">actin_arp2_normal</span><span class="p">,</span>
-                <span class="n">actin_arp2_axis_pos</span><span class="p">,</span>
-                <span class="mi">1</span><span class="p">,</span>
-                <span class="n">offset_vector</span><span class="p">,</span>
-                <span class="n">actin_number</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">barbed_positions</span>
-            <span class="n">barbed_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">barbed_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">barbed_types</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barbed_positions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_index</span><span class="p">,</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="n">current_index</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">barbed_edges</span><span class="p">)):</span>
-                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="p">(</span>
-                        <span class="n">barbed_edges</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">,</span>
-                        <span class="n">barbed_edges</span><span class="p">[</span><span class="n">e</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-            <span class="n">current_index</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">barbed_positions</span><span class="p">)</span>
-        <span class="n">mother_barbed_index</span> <span class="o">=</span> <span class="n">current_index</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">daughter_positions</span><span class="p">)):</span>
-            <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">daughter_positions</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
-            <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">daughter_types</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
-            <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">branch_indices</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="n">current_index</span><span class="p">)</span>
-            <span class="p">)</span>  <span class="c1"># mother actin to arp2</span>
-            <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">branch_indices</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="p">)</span>  <span class="c1"># mother actin to arp3</span>
-            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">daughter_edges</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span>
-                <span class="n">monomer_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">,</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">current_index</span><span class="p">))</span>
-            <span class="n">current_index</span> <span class="o">+=</span> <span class="n">branch_indices</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">actin_arp2_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to find mother actins to bind to arp&quot;</span><span class="p">)</span>
+                <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="n">fiber_particle_ids</span><span class="p">[</span><span class="n">actin_arp2_index</span><span class="p">]</span>
+                <span class="n">actin_arp3_id</span> <span class="o">=</span> <span class="n">fiber_particle_ids</span><span class="p">[</span><span class="n">actin_arp2_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">actin_arp_ids</span> <span class="o">+=</span> <span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">,</span> <span class="n">actin_arp3_id</span><span class="p">]</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">arp2_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">actin_arp2_id</span><span class="p">)</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp2_id</span><span class="p">)</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">arp3_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">actin_arp3_id</span><span class="p">)</span>
+            <span class="n">particles</span><span class="p">[</span><span class="n">actin_arp3_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arp3_id</span><span class="p">)</span>
+            <span class="c1"># attach daughter to arp</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">branch_particle_ids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">branch_actin_id</span><span class="p">]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">particles</span><span class="p">[</span><span class="n">branch_particle_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch_actin_id</span><span class="p">)</span>
+            <span class="n">daughter_particle_ids</span> <span class="o">+=</span> <span class="p">[</span>
+                <span class="n">arp2_id</span><span class="p">,</span>
+                <span class="n">arp3_id</span><span class="p">,</span>
+                <span class="n">branch_actin_id</span><span class="p">,</span>
+            <span class="p">]</span> <span class="o">+</span> <span class="n">branch_particle_ids</span>
+        <span class="c1"># add non-nucleated bound arps</span>
         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">)):</span>
-            <span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">,</span>
-                <span class="n">monomer_types</span><span class="p">,</span>
-                <span class="n">monomer_edges</span><span class="p">,</span>
-            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">add_bound_arp_monomers</span><span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">,</span>
-                <span class="n">monomer_types</span><span class="p">,</span>
-                <span class="n">monomer_edges</span><span class="p">,</span>
+            <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">next_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">add_bound_arp_monomers</span><span class="p">(</span>
+                <span class="n">particle_ids</span><span class="p">,</span>
                 <span class="n">fiber</span><span class="p">,</span>
                 <span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">[</span><span class="n">a</span><span class="p">],</span>
-                <span class="n">mother_barbed_index</span><span class="p">,</span>
-                <span class="n">branch_indices</span><span class="p">,</span>
+                <span class="n">actin_arp_ids</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span></div>
+        <span class="n">particle_ids</span> <span class="o">+=</span> <span class="n">fiber_particle_ids</span> <span class="o">+</span> <span class="n">daughter_particle_ids</span>
+        <span class="k">return</span> <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">next_id</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_monomers_for_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_fiber">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_monomers_for_fiber</span><span class="p">(</span>
-        <span class="n">fiber</span><span class="p">,</span> <span class="n">start_normal</span><span class="p">,</span> <span class="n">start_axis_pos</span><span class="p">,</span> <span class="n">offset_vector</span><span class="p">,</span> <span class="n">pointed_actin_number</span>
+        <span class="n">fiber</span><span class="p">,</span>
+        <span class="n">start_normal</span><span class="p">,</span>
+        <span class="n">start_axis_pos</span><span class="p">,</span>
+        <span class="n">offset_vector</span><span class="p">,</span>
+        <span class="n">pointed_actin_number</span><span class="p">,</span>
+        <span class="n">next_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">particles</span><span class="o">=</span><span class="p">{},</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        recursively get all the monomer data for the given fiber network</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">monomer_positions</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">monomer_types</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">monomer_edges</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">actin_number</span> <span class="o">=</span> <span class="n">pointed_actin_number</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">nucleated_arps</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># fiber has no branches</span>
             <span class="p">(</span>
-                <span class="n">new_positions</span><span class="p">,</span>
-                <span class="n">new_types</span><span class="p">,</span>
-                <span class="n">new_edges</span><span class="p">,</span>
-                <span class="n">b</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
+                <span class="n">particle_ids</span><span class="p">,</span>
+                <span class="n">_</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
             <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_actins_for_linear_fiber</span><span class="p">(</span>
-                <span class="n">fiber</span><span class="p">,</span> <span class="n">start_normal</span><span class="p">,</span> <span class="n">start_axis_pos</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">offset_vector</span><span class="p">,</span> <span class="n">actin_number</span>
+                <span class="n">fiber</span><span class="p">,</span>
+                <span class="n">start_normal</span><span class="p">,</span>
+                <span class="n">start_axis_pos</span><span class="p">,</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="n">offset_vector</span><span class="p">,</span>
+                <span class="n">actin_number</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">monomer_positions</span> <span class="o">+=</span> <span class="n">new_positions</span>
-            <span class="c1"># if fiber.mother_arp is not None:</span>
-            <span class="c1">#     new_types = ActinGenerator.check_shift_branch_actin_numbers(new_types)</span>
-            <span class="n">new_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">new_types</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">monomer_types</span> <span class="o">+=</span> <span class="n">new_types</span>
-            <span class="n">monomer_edges</span> <span class="o">+=</span> <span class="n">new_edges</span>
             <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">)):</span>
                 <span class="p">(</span>
-                    <span class="n">monomer_positions</span><span class="p">,</span>
-                    <span class="n">monomer_types</span><span class="p">,</span>
-                    <span class="n">monomer_edges</span><span class="p">,</span>
+                    <span class="n">particles</span><span class="p">,</span>
+                    <span class="n">particle_ids</span><span class="p">,</span>
+                    <span class="n">next_id</span><span class="p">,</span>
                 <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">add_bound_arp_monomers</span><span class="p">(</span>
-                    <span class="n">monomer_positions</span><span class="p">,</span>
-                    <span class="n">monomer_types</span><span class="p">,</span>
-                    <span class="n">monomer_edges</span><span class="p">,</span>
+                    <span class="n">particle_ids</span><span class="p">,</span>
                     <span class="n">fiber</span><span class="p">,</span>
                     <span class="n">fiber</span><span class="o">.</span><span class="n">bound_arps</span><span class="p">[</span><span class="n">a</span><span class="p">],</span>
-                    <span class="nb">len</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
                     <span class="p">[],</span>
+                    <span class="n">next_id</span><span class="p">,</span>
+                    <span class="n">particles</span><span class="p">,</span>
                 <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># fiber has branches</span>
             <span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">,</span>
-                <span class="n">monomer_types</span><span class="p">,</span>
-                <span class="n">monomer_edges</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
+                <span class="n">particle_ids</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
             <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_branching_fiber</span><span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">,</span>
-                <span class="n">monomer_types</span><span class="p">,</span>
-                <span class="n">monomer_edges</span><span class="p">,</span>
+                <span class="p">[],</span>
                 <span class="n">fiber</span><span class="p">,</span>
+                <span class="n">start_normal</span><span class="p">,</span>
+                <span class="n">start_axis_pos</span><span class="p">,</span>
                 <span class="n">offset_vector</span><span class="p">,</span>
                 <span class="n">actin_number</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
+                <span class="n">particles</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="n">monomer_positions</span><span class="p">,</span> <span class="n">monomer_types</span><span class="p">,</span> <span class="n">monomer_edges</span></div>
+        <span class="k">return</span> <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">next_id</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="n">next_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get all the monomer data for the (branched) fibers in fibers_data</span>
 
 <span class="sd">        fibers_data: List[FiberData]</span>
 <span class="sd">        (FiberData for mother fibers only, which should have</span>
 <span class="sd">        their daughters&#39; FiberData attached to their nucleated arps)</span>
+
+<span class="sd">        if next_id &lt; 0, use uuids rather than ints</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;topologies&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;particles&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="p">}</span>
         <span class="k">for</span> <span class="n">fiber_data</span> <span class="ow">in</span> <span class="n">fibers_data</span><span class="p">:</span>
-            <span class="p">(</span>
-                <span class="n">monomer_positions</span><span class="p">,</span>
-                <span class="n">monomer_types</span><span class="p">,</span>
-                <span class="n">edges</span><span class="p">,</span>
-            <span class="p">)</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_fiber</span><span class="p">(</span>
+            <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">next_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_fiber</span><span class="p">(</span>
                 <span class="n">fiber_data</span><span class="p">,</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_perpendicular_vector</span><span class="p">(</span>
                     <span class="n">fiber_data</span><span class="o">.</span><span class="n">get_first_segment_direction</span><span class="p">()</span>
                 <span class="p">),</span>
-                <span class="n">fiber_data</span><span class="o">.</span><span class="n">pointed_point</span><span class="p">()</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+                <span class="n">fiber_data</span><span class="o">.</span><span class="n">pointed_point</span><span class="p">(),</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
                 <span class="mi">1</span><span class="p">,</span>
+                <span class="n">next_id</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">monomer_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#pointed_ATP_</span><span class="si">{</span><span class="n">monomer_types</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">monomer_types</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monomer_positions</span><span class="p">),</span> <span class="n">edges</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">top_id</span> <span class="o">=</span> <span class="n">next_id</span>
+                <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">top_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">top_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="n">particle_ids</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">particles</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">]:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.particles_to_string"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.particles_to_string">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">particles_to_string</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">,</span> <span class="n">particles</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">particle_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]))</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;type&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]</span><span class="o">.</span><span class="n">type_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
+            <span class="k">elif</span> <span class="s2">&quot;pos&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">particles</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
         <span class="k">return</span> <span class="n">result</span></div></div>
 </pre></div>
 

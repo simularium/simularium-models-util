@@ -362,7 +362,28 @@
 <span class="sd">        (FiberData for mother fibers only, which should have</span>
 <span class="sd">        their daughters&#39; FiberData attached to their nucleated arps)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_monomers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_monomers_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_monomers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add fibers and monomers specified in the monomer_data, in the form:</span>
+<span class="sd">        monomer_data = {</span>
+<span class="sd">            &quot;topologies&quot;: {</span>
+<span class="sd">                [topology ID] : {</span>
+<span class="sd">                    &quot;type&quot;: &quot;[topology type]&quot;,</span>
+<span class="sd">                    &quot;particle_ids&quot;: []</span>
+<span class="sd">                },</span>
+<span class="sd">            &quot;particles&quot;: {</span>
+<span class="sd">                [particle ID] : {</span>
+<span class="sd">                    &quot;type&quot;: &quot;[particle type]&quot;,</span>
+<span class="sd">                    &quot;position&quot;: np.zeros(3),</span>
+<span class="sd">                    &quot;neighbor_ids&quot;: [],</span>
+<span class="sd">                },</span>
+<span class="sd">            },</span>
+<span class="sd">        }</span>
+<span class="sd">        * IDs are ints</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

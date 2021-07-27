@@ -60,14 +60,6 @@ simularium\_models\_util.actin.arp\_data module
    :undoc-members:
    :show-inheritance:
 
-simularium\_models\_util.actin.curve\_point\_data module
---------------------------------------------------------
-
-.. automodule:: simularium_models_util.actin.curve_point_data
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 simularium\_models\_util.actin.fiber\_data module
 -------------------------------------------------
 
