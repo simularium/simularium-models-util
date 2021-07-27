@@ -44,6 +44,14 @@ simularium\_models\_util.actin.actin\_structure module
    :undoc-members:
    :show-inheritance:
 
+simularium\_models\_util.actin.actin\_test\_data module
+-------------------------------------------------------
+
+.. automodule:: simularium_models_util.actin.actin_test_data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simularium\_models\_util.actin.actin\_util module
 -------------------------------------------------
 
