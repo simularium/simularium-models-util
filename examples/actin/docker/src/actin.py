@@ -11,10 +11,9 @@ import numpy as np
 import pandas
 import psutil
 
-from simularium_models_util.actin import FiberData, ArpData, ActinSimulation, ActinGenerator
+from simularium_models_util.actin import FiberData, ArpData, ActinSimulation, ActinGenerator, ActinTestData
 from simularium_models_util.visualization import ActinVisualization
 from simularium_models_util import RepeatedTimer
-from simularium_models_util.tests import linear_actin_fiber, branched_actin_fiber
 
 
 def report_hardware_usage():
@@ -56,10 +55,10 @@ def main():
     actin_simulation.add_random_linear_fibers()
     if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
         print("ortho")
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(linear_actin_fiber()))
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber()))
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(branched_actin_fiber()))
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.branched_actin_fiber()))
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(

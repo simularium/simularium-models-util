@@ -3,25 +3,19 @@
 
 import pytest
 
-from simularium_models_util.actin import ActinGenerator
-from simularium_models_util.tests import (
-    linear_actin_fiber,
-    branched_actin_fiber,
-    linear_actin_monomers,
-    branched_actin_monomers,
-)
+from simularium_models_util.actin import ActinGenerator, ActinTestData
 
 
 @pytest.mark.parametrize(
     "fibers, expected_monomers",
     [
         (
-            linear_actin_fiber(),
-            linear_actin_monomers(),
+            ActinTestData.linear_actin_fiber(),
+            ActinTestData.linear_actin_monomers(),
         ),
         (
-            branched_actin_fiber(),
-            branched_actin_monomers(),
+            ActinTestData.branched_actin_fiber(),
+            ActinTestData.branched_actin_monomers(),
         ),
     ],
 )
