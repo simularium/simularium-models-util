@@ -197,7 +197,7 @@ class ActinTestData:
             "particles": {
                 0: {
                     "unique_id": 0,
-                    "type_name": "actin#ATP_1",
+                    "type_name": "actin#pointed_ATP_1",
                     "position": np.array([-67.19690124, -1.52726022, 0.53388461]),
                     "neighbor_ids": [1],
                 },
@@ -359,7 +359,7 @@ class ActinTestData:
                 },
                 27: {
                     "unique_id": 27,
-                    "type_name": "actin#ATP_1",
+                    "type_name": "actin#barbed_ATP_1",
                     "position": np.array([8.48676536, 1.4431209, -0.73140865]),
                     "neighbor_ids": [26],
                 },
