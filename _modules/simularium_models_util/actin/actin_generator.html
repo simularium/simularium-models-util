@@ -729,8 +729,6 @@
                 <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="n">particle_ids</span><span class="p">,</span>
             <span class="p">}</span>
             <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">particles</span><span class="p">}</span>
-        <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">]:</span>
-            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.particles_to_string"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.particles_to_string">[docs]</a>    <span class="nd">@staticmethod</span>
