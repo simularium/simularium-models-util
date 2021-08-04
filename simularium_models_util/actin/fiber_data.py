@@ -14,6 +14,7 @@ class FiberData:
 
     fiber_id = -1
     points = []
+    type_name = ""
     points_reversed = None
     is_daughter = False
     nucleated_arps = []
@@ -22,7 +23,7 @@ class FiberData:
     tangents_reversed = None
 
     def __init__(
-        self, fiber_id, points, is_daughter=False, nucleated_arps=None, bound_arps=None
+        self, fiber_id, points, type_name="", is_daughter=False, nucleated_arps=None, bound_arps=None
     ):
         """
         points is a List of numpy arrays of shape = 3
@@ -31,6 +32,7 @@ class FiberData:
             raise Exception("Fiber has less than 2 points!")
         self.fiber_id = fiber_id
         self.points = points
+        self.type_name = type_name
         self.is_daughter = is_daughter
         self.nucleated_arps = [] if nucleated_arps is None else nucleated_arps
         self.bound_arps = [] if bound_arps is None else bound_arps
@@ -180,4 +182,5 @@ class FiberData:
         return f"FiberData(id={self.fiber_id}, points=[{self.points[0]}, {self.points[-1]}]"
 
     def __iter__(self):
+        yield "type_name", self.type_name
         yield "points", [self.points[0]] + [self.points[-1]]

@@ -15,6 +15,7 @@ class ActinTestData:
                     np.array([-70, 0, 0]),
                     np.array([10, 0, 0]),
                 ],
+                "Actin-Polymer",
             )
         ]
 
@@ -26,6 +27,7 @@ class ActinTestData:
                     np.array([-50, 0, 0]),
                     np.array([50, 0, 0]),
                 ],
+                type_name="Actin-Polymer",
                 nucleated_arps=[
                     ArpData(
                         arp_id=0,
@@ -37,6 +39,7 @@ class ActinTestData:
                                 np.array([-19, 0, 0]),
                                 np.array([0.8, 54.5, 0]),
                             ],
+                            type_name="Actin-Polymer",
                             is_daughter=True,
                             nucleated_arps=[
                                 ArpData(
@@ -49,6 +52,7 @@ class ActinTestData:
                                             np.array([-6, 35.7, 0]),
                                             np.array([14, 35.7, 0]),
                                         ],
+                                        type_name="Actin-Polymer",
                                         is_daughter=True,
                                     ),
                                 ),
@@ -65,6 +69,7 @@ class ActinTestData:
                                 np.array([0, 0, 0]),
                                 np.array([16.4, -45.1, 0]),
                             ],
+                            type_name="Actin-Polymer",
                             is_daughter=True,
                             nucleated_arps=[
                                 ArpData(
@@ -77,6 +82,7 @@ class ActinTestData:
                                             np.array([6.5, -17.9, 0]),
                                             np.array([-30.3, -48.7, 0]),
                                         ],
+                                        type_name="Actin-Polymer",
                                         is_daughter=True,
                                         nucleated_arps=[
                                             ArpData(
@@ -89,6 +95,7 @@ class ActinTestData:
                                                         np.array([-22.6, -42.3, 0]),
                                                         np.array([-15.8, -61.1, 0]),
                                                     ],
+                                                    type_name="Actin-Polymer",
                                                     is_daughter=True,
                                                 ),
                                             ),
@@ -105,6 +112,7 @@ class ActinTestData:
                                             np.array([13, -35.7, 0]),
                                             np.array([33, -35.7, 0]),
                                         ],
+                                        type_name="Actin-Polymer",
                                         is_daughter=True,
                                     ),
                                 ),
@@ -121,6 +129,7 @@ class ActinTestData:
                                 np.array([9.5, 0, 0]),
                                 np.array([16.3, 0, 18.8]),
                             ],
+                            type_name="Actin-Polymer",
                             is_daughter=True,
                         ),
                     ),
@@ -134,6 +143,7 @@ class ActinTestData:
                                 np.array([19, 0, 0]),
                                 np.array([29.3, 28.2, 0]),
                             ],
+                            type_name="Actin-Polymer",
                             is_daughter=True,
                             bound_arps=[
                                 ArpData(
@@ -161,7 +171,7 @@ class ActinTestData:
         return {
             "topologies": {
                 28: {
-                    "type": "Actin-Polymer",
+                    "type_name": "Actin-Polymer",
                     "particle_ids": [
                         0,
                         1,
@@ -370,7 +380,7 @@ class ActinTestData:
         return {
             "topologies": {
                 122: {
-                    "type": "Actin-Polymer",
+                    "type_name": "Actin-Polymer",
                     "particle_ids": [
                         10,
                         9,
