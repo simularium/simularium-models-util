@@ -23,7 +23,13 @@ class FiberData:
     tangents_reversed = None
 
     def __init__(
-        self, fiber_id, points, type_name="", is_daughter=False, nucleated_arps=None, bound_arps=None
+        self,
+        fiber_id,
+        points,
+        type_name="",
+        is_daughter=False,
+        nucleated_arps=None,
+        bound_arps=None,
     ):
         """
         points is a List of numpy arrays of shape = 3
@@ -179,7 +185,10 @@ class FiberData:
         """
         string representation
         """
-        return f"FiberData(id={self.fiber_id}, points=[{self.points[0]}, {self.points[-1]}]"
+        return (
+            f"FiberData(id={self.fiber_id}, points=[{self.points[0]}, "
+            f"{self.points[-1]}]"
+        )
 
     def __iter__(self):
         yield "type_name", self.type_name

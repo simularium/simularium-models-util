@@ -27,7 +27,10 @@ class ParticleData:
         """
         string representation
         """
-        return f"ParticleData(id={self.unique_id}, type={self.type_name}, position={self.position}, neighbors={self.neighbor_ids})"
+        return (
+            f"ParticleData(id={self.unique_id}, type={self.type_name}, "
+            f"position={self.position}, neighbors={self.neighbor_ids})"
+        )
 
     def __iter__(self):
         yield "type_name", self.type_name

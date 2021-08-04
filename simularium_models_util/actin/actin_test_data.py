@@ -10,7 +10,7 @@ class ActinTestData:
     def linear_actin_fiber():
         return [
             FiberData(
-                0,
+                28,
                 [
                     np.array([-70, 0, 0]),
                     np.array([10, 0, 0]),
