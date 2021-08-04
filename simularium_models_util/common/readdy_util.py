@@ -895,7 +895,7 @@ class ReaddyUtil:
         get data for topologies of particles
         from readdy.simulation.current_topologies
         """
-        edges = ReaddyUtil.get_readdy_particle_edges(current_topologies)
+        edges = ReaddyUtil.get_current_particle_edges(current_topologies)
         result = {
             "topologies": {},
             "particles": {},
