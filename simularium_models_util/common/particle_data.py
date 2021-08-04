@@ -23,8 +23,13 @@ class ParticleData:
         else:
             self.neighbor_ids = neighbor_ids
 
+    def to_string(self):
+        """
+        string representation
+        """
+        return f"ParticleData(id={self.unique_id}, type={self.type_name}, position={self.position}, neighbors={self.neighbor_ids})"
+
     def __iter__(self):
-        yield "unique_id", self.unique_id
         yield "type_name", self.type_name
         yield "position", self.position
         yield "neighbor_ids", self.neighbor_ids

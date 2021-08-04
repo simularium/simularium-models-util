@@ -177,4 +177,7 @@ class FiberData:
         """
         string representation
         """
-        return f"{self.fiber_id} : ({self.points[0]}, {self.points[-1]})"
+        return f"FiberData(id={self.fiber_id}, points=[{self.points[0]}, {self.points[-1]}]"
+
+    def __iter__(self):
+        yield "points", [self.points[0]] + [self.points[-1]]
