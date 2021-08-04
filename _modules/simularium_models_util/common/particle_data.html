@@ -210,8 +210,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">neighbor_ids</span> <span class="o">=</span> <span class="n">neighbor_ids</span>
 
+<div class="viewcode-block" id="ParticleData.to_string"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.particle_data.ParticleData.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        string representation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ParticleData(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="si">}</span><span class="s2">, type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type_name</span><span class="si">}</span><span class="s2">, position=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s2">, neighbors=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">yield</span> <span class="s2">&quot;unique_id&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span>
         <span class="k">yield</span> <span class="s2">&quot;type_name&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type_name</span>
         <span class="k">yield</span> <span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span>
         <span class="k">yield</span> <span class="s2">&quot;neighbor_ids&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">neighbor_ids</span></div>
