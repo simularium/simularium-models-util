@@ -172,3 +172,9 @@ class FiberData:
         get the direction vector of the first segment of the fiber at the pointed end
         """
         return ReaddyUtil.normalize(self.points[1] - self.points[0])
+
+    def to_string(self):
+        """
+        string representation
+        """
+        return f"{self.fiber_id} : ({self.points[0]}, {self.points[-1]})"
