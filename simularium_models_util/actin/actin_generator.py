@@ -538,7 +538,7 @@ class ActinGenerator:
             else:
                 top_id = str(uuid.uuid4())
             result["topologies"][top_id] = {
-                "type": "Actin-Polymer",
+                "type_name": "Actin-Polymer",
                 "particle_ids": particle_ids,
             }
             result["particles"] = {**result["particles"], **particles}
