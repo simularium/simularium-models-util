@@ -450,12 +450,12 @@ class ActinUtil:
         monomer_data : {
             "topologies": {
                 "[topology ID]" : {
-                    "type": "[topology type]",
+                    "type_name": "[topology type]",
                     "particle_ids": []
                 },
             "particles": {
                 "[particle ID]" : {
-                    "type": "[particle type]",
+                    "type_name": "[particle type]",
                     "position": np.zeros(3),
                     "neighbor_ids": [],
                 },
@@ -477,7 +477,7 @@ class ActinUtil:
                     neighbor_ids[index].append(
                         topology["particle_ids"].index(neighbor_id)
                     )
-            top = simulation.add_topology(topology["type"], types, np.array(positions))
+            top = simulation.add_topology(topology["type_name"], types, np.array(positions))
             for particle_id in neighbor_ids:
                 for neighbor_id in neighbor_ids[particle_id]:
                     top.get_graph().add_edge(particle_id, neighbor_id)
