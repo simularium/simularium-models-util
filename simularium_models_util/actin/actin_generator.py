@@ -542,8 +542,6 @@ class ActinGenerator:
                 "particle_ids": particle_ids,
             }
             result["particles"] = {**result["particles"], **particles}
-        for particle_id in result["particles"]:
-            result["particles"][particle_id] = dict(result["particles"][particle_id])
         return result
 
     @staticmethod
