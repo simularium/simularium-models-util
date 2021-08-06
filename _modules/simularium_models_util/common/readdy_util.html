@@ -1061,7 +1061,7 @@
 <div class="viewcode-block" id="ReaddyUtil.get_current_particle_edges"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_current_particle_edges">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_current_particle_edges</span><span class="p">(</span><span class="n">current_topologies</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        During a running simulation, </span>
+<span class="sd">        During a running simulation,</span>
 <span class="sd">        get all the edges in the ReaDDy topologies</span>
 <span class="sd">        as (particle1 id, particle2 id)</span>
 <span class="sd">        from readdy.simulation.current_topologies</span>
@@ -1078,7 +1078,7 @@
 <div class="viewcode-block" id="ReaddyUtil.get_current_monomers"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_current_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_current_monomers</span><span class="p">(</span><span class="n">current_topologies</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        During a running simulation, </span>
+<span class="sd">        During a running simulation,</span>
 <span class="sd">        get data for topologies of particles</span>
 <span class="sd">        from readdy.simulation.current_topologies</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1102,7 +1102,10 @@
                     <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
                     <span class="s2">&quot;neighbor_ids&quot;</span><span class="p">:</span> <span class="n">neighbor_ids</span><span class="p">,</span>
                 <span class="p">}</span>
-            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type_name&quot;</span><span class="p">:</span> <span class="n">topology</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="n">particle_ids</span><span class="p">}</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;type_name&quot;</span><span class="p">:</span> <span class="n">topology</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="n">particle_ids</span><span class="p">,</span>
+            <span class="p">}</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.shape_frame_edge_data"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_edge_data">[docs]</a>    <span class="nd">@staticmethod</span>
