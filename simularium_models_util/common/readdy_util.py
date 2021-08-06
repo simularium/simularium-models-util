@@ -874,7 +874,7 @@ class ReaddyUtil:
     @staticmethod
     def get_current_particle_edges(current_topologies):
         """
-        During a running simulation, 
+        During a running simulation,
         get all the edges in the ReaDDy topologies
         as (particle1 id, particle2 id)
         from readdy.simulation.current_topologies
@@ -891,7 +891,7 @@ class ReaddyUtil:
     @staticmethod
     def get_current_monomers(current_topologies):
         """
-        During a running simulation, 
+        During a running simulation,
         get data for topologies of particles
         from readdy.simulation.current_topologies
         """
@@ -915,7 +915,10 @@ class ReaddyUtil:
                     "position": p.pos,
                     "neighbor_ids": neighbor_ids,
                 }
-            result["topologies"][index] = {"type_name": topology.type, "particle_ids": particle_ids}
+            result["topologies"][index] = {
+                "type_name": topology.type,
+                "particle_ids": particle_ids,
+            }
         return result
 
     @staticmethod

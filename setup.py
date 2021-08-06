@@ -9,7 +9,7 @@ with open("README.md") as readme_file:
     readme = readme_file.read()
 
 viz_requirements = [
-    "simulariumio @ git+https://github.com/allen-cell-animated/simulariumio.git",
+    "simulariumio>=1.1.0",
 ]
 
 setup_requirements = [
