@@ -470,10 +470,10 @@ class ActinUtil:
             neighbor_ids = {}
             for index in range(len(topology["particle_ids"])):
                 particle = monomer_data["particles"][topology["particle_ids"][index]]
-                types.append(particle["type_name"])
-                positions.append(particle["position"])
+                types.append(particle.type_name)
+                positions.append(particle.position)
                 neighbor_ids[index] = []
-                for neighbor_id in particle["neighbor_ids"]:
+                for neighbor_id in particle.neighbor_ids:
                     neighbor_ids[index].append(
                         topology["particle_ids"].index(neighbor_id)
                     )
