@@ -5,7 +5,7 @@ import numpy as np
 import readdy
 import random
 
-from ..common import ReaddyUtil
+from ..common import ReaddyUtil, ParticleData
 from .actin_generator import ActinGenerator
 from .actin_structure import ActinStructure
 from .fiber_data import FiberData
@@ -469,7 +469,11 @@ class ActinUtil:
             positions = []
             neighbor_ids = {}
             for index in range(len(topology["particle_ids"])):
-                particle = monomer_data["particles"][topology["particle_ids"][index]]
+                particle_id = topology["particle_ids"][index]
+                particle_dict = monomer_data["particles"][particle_id]
+                particle = ParticleData(
+                    unique_id=particle_id,
+                    **particle_dict)
                 types.append(particle.type_name)
                 positions.append(particle.position)
                 neighbor_ids[index] = []
