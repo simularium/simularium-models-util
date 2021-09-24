@@ -400,7 +400,7 @@ class ActinUtil:
         return random.choice(v_arp2s)
 
     @staticmethod
-    def add_random_linear_fibers(simulation, n_fibers, length=20):
+    def add_random_linear_fibers(simulation, n_fibers, length=20, use_uuids=True):
         """
         add linear actin fibers of the given length
         """
@@ -419,28 +419,20 @@ class ActinUtil:
                             positions[fiber] + length * direction,
                         ],
                     ),
-                ]
+                ], 
+                -1 if use_uuids else 0
             )
-            top = simulation.add_topology(
-                "Actin-Polymer", monomers[0][0], np.array(monomers[0][1])
-            )
-            for e in monomers[0][2]:
-                top.get_graph().add_edge(e[0], e[1])
+            ActinUtil.add_monomers_from_data(simulation, monomers)
 
     @staticmethod
-    def add_fibers_from_data(simulation, fibers_data):
+    def add_fibers_from_data(simulation, fibers_data, use_uuids=True):
         """
         add (branched) actin fiber(s)
 
         fibers_data : List[FiberData]
         """
-        fiber_monomers = ActinGenerator.get_monomers(fibers_data)
-        for fiber in range(len(fiber_monomers)):
-            top = simulation.add_topology(
-                "Actin-Polymer", fiber_monomers[fiber][0], fiber_monomers[fiber][1]
-            )
-            for e in fiber_monomers[fiber][2]:
-                top.get_graph().add_edge(e[0], e[1])
+        fiber_monomers = ActinGenerator.get_monomers(fibers_data, -1 if use_uuids else 0)
+        ActinUtil.add_monomers_from_data(simulation, fiber_monomers)
 
     @staticmethod
     def add_monomers_from_data(simulation, monomer_data):

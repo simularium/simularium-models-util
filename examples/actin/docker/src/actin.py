@@ -50,22 +50,20 @@ def main():
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
-    actin_simulation = ActinSimulation(parameters, True, True)
+    actin_simulation = ActinSimulation(parameters, True, False)
     actin_simulation.add_random_monomers()
-    actin_simulation.add_random_linear_fibers()
+    actin_simulation.add_random_linear_fibers(use_uuids=False)
     if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
         print("ortho")
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber()))
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber()), use_uuids=False)
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.branched_actin_fiber()))
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.branched_actin_fiber()), use_uuids=False)
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"]
         )
-        # remove checkpoints once succeeded to save space
-        rmtree("checkpoints/")
         try:
             plots = ActinVisualization.generate_plots(
                 parameters["name"] + ".h5", parameters["box_size"], 10

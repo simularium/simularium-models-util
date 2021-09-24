@@ -157,7 +157,7 @@ class ActinSimulation:
             self.simulation,
         )
 
-    def add_random_linear_fibers(self):
+    def add_random_linear_fibers(self, use_uuids=True):
         """
         Add randomly distributed and oriented linear fibers
         """
@@ -165,9 +165,10 @@ class ActinSimulation:
             self.simulation,
             int(self.parameters["seed_n_fibers"]),
             self.parameters["seed_fiber_length"],
+            -1 if use_uuids else 0,
         )
 
-    def add_fibers_from_data(self, fibers_data):
+    def add_fibers_from_data(self, fibers_data, use_uuids=True):
         """
         Add fibers specified in a list of FiberData
 
@@ -175,7 +176,7 @@ class ActinSimulation:
         (FiberData for mother fibers only, which should have
         their daughters' FiberData attached to their nucleated arps)
         """
-        self.actin_util.add_fibers_from_data(self.simulation, fibers_data)
+        self.actin_util.add_fibers_from_data(self.simulation, fibers_data, use_uuids)
 
     def add_monomers_from_data(self, monomer_data):
         """
