@@ -252,7 +252,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinSimulation.add_random_linear_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_linear_fibers">[docs]</a>    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinSimulation.add_random_linear_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_linear_fibers">[docs]</a>    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add randomly distributed and oriented linear fibers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -260,9 +260,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
             <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;seed_n_fibers&quot;</span><span class="p">]),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;seed_fiber_length&quot;</span><span class="p">],</span>
+            <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinSimulation.add_fibers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_fibers_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinSimulation.add_fibers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_fibers_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add fibers specified in a list of FiberData</span>
 
@@ -270,7 +271,7 @@
 <span class="sd">        (FiberData for mother fibers only, which should have</span>
 <span class="sd">        their daughters&#39; FiberData attached to their nucleated arps)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_fibers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">,</span> <span class="n">use_uuids</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinSimulation.add_monomers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_monomers_from_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_monomers_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -636,6 +636,7 @@
                 <span class="s2">&quot;type_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="n">particle_ids</span><span class="p">,</span>
             <span class="p">}</span>
+            <span class="n">particles</span> <span class="o">=</span> <span class="p">{</span><span class="n">p_id</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">particle_data</span><span class="p">)</span> <span class="k">for</span> <span class="n">p_id</span><span class="p">,</span> <span class="n">particle_data</span> <span class="ow">in</span> <span class="n">particles</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
             <span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="o">**</span><span class="n">particles</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">result</span></div>
 

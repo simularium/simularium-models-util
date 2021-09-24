@@ -495,7 +495,7 @@
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">v_arp2s</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_random_linear_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_random_linear_fibers">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">n_fibers</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">n_fibers</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add linear actin fibers of the given length</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -514,28 +514,20 @@
                             <span class="n">positions</span><span class="p">[</span><span class="n">fiber</span><span class="p">]</span> <span class="o">+</span> <span class="n">length</span> <span class="o">*</span> <span class="n">direction</span><span class="p">,</span>
                         <span class="p">],</span>
                     <span class="p">),</span>
-                <span class="p">]</span>
+                <span class="p">],</span> 
+                <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span>
             <span class="p">)</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span>
-                <span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span> <span class="n">monomers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monomers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
-            <span class="p">)</span>
-            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">monomers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]:</span>
-                <span class="n">top</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">monomers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_fibers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_fibers_from_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add (branched) actin fiber(s)</span>
 
 <span class="sd">        fibers_data : List[FiberData]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fiber_monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber_monomers</span><span class="p">)):</span>
-            <span class="n">top</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span>
-                <span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span> <span class="n">fiber_monomers</span><span class="p">[</span><span class="n">fiber</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fiber_monomers</span><span class="p">[</span><span class="n">fiber</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="p">)</span>
-            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">fiber_monomers</span><span class="p">[</span><span class="n">fiber</span><span class="p">][</span><span class="mi">2</span><span class="p">]:</span>
-                <span class="n">top</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+        <span class="n">fiber_monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fiber_monomers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_monomers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_monomers_from_data">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">):</span>
