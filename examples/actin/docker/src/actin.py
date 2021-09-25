@@ -55,10 +55,10 @@ def main():
     actin_simulation.add_random_linear_fibers(use_uuids=False)
     if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
         print("ortho")
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber()), use_uuids=False)
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0))
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
-        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.branched_actin_fiber()), use_uuids=False)
+        actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.branched_actin_fiber(), 0))
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(

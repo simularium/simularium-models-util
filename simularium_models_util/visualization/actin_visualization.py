@@ -4,7 +4,7 @@
 import numpy as np
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import MetaData, UnitData, ScatterPlotData
+from simulariumio import MetaData, UnitData, ScatterPlotData, DisplayData
 from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
 
@@ -282,69 +282,151 @@ class ActinVisualization:
         actin_radius = 2.0 + extra_radius
         arp23_radius = 2.0 + extra_radius
         cap_radius = 3.0 + extra_radius
-        radii = {
-            "arp2": arp23_radius,
-            "arp2#branched": arp23_radius,
-            "arp2#free": arp23_radius,
-            "arp3": arp23_radius,
-            "arp3#ATP": arp23_radius,
-            "arp3#new": arp23_radius,
-            "arp3#new_ATP": arp23_radius,
-            "cap": cap_radius,
-            "cap#new": cap_radius,
-            "cap#bound": cap_radius,
-            "actin#free": actin_radius,
-            "actin#free_ATP": actin_radius,
-            "actin#new": actin_radius,
-            "actin#new_ATP": actin_radius,
-            "actin#1": actin_radius,
-            "actin#2": actin_radius,
-            "actin#3": actin_radius,
-            "actin#ATP_1": actin_radius,
-            "actin#ATP_2": actin_radius,
-            "actin#ATP_3": actin_radius,
-            "actin#pointed_1": actin_radius,
-            "actin#pointed_2": actin_radius,
-            "actin#pointed_3": actin_radius,
-            "actin#pointed_ATP_1": actin_radius,
-            "actin#pointed_ATP_2": actin_radius,
-            "actin#pointed_ATP_3": actin_radius,
-            "actin#barbed_1": actin_radius,
-            "actin#barbed_2": actin_radius,
-            "actin#barbed_3": actin_radius,
-            "actin#barbed_ATP_1": actin_radius,
-            "actin#barbed_ATP_2": actin_radius,
-            "actin#barbed_ATP_3": actin_radius,
-            "actin#branch_1": actin_radius,
-            "actin#branch_ATP_1": actin_radius,
-            "actin#branch_barbed_1": actin_radius,
-            "actin#branch_barbed_ATP_1": actin_radius,
-        }
-        # type grouping
-        type_grouping = {
-            "arp2": ["arp2", "arp2#new"],
-            "arp2#ATP": ["arp2#ATP", "arp2#new_ATP"],
-            "cap": ["cap", "cap#new"],
-            "actin#free": ["actin#free", "actin#new"],
-            "actin#free_ATP": ["actin#free_ATP", "actin#new_ATP"],
-            "actin": ["actin#1", "actin#2", "actin#3"],
-            "actin#ATP": ["actin#ATP_1", "actin#ATP_2", "actin#ATP_3"],
-            "actin#pointed": ["actin#pointed_1", "actin#pointed_2", "actin#pointed_3"],
-            "actin#pointed_ATP": [
-                "actin#pointed_ATP_1",
-                "actin#pointed_ATP_2",
-                "actin#pointed_ATP_3",
-            ],
-            "actin#barbed": ["actin#barbed_1", "actin#barbed_2", "actin#barbed_3"],
-            "actin#barbed_ATP": [
-                "actin#barbed_ATP_1",
-                "actin#barbed_ATP_2",
-                "actin#barbed_ATP_3",
-            ],
-            "actin#branch": ["actin#branch_1"],
-            "actin#branch_ATP": ["actin#branch_ATP_1"],
-            "actin#branch_barbed": ["actin#branch_barbed_1"],
-            "actin#branch_barbed_ATP": ["actin#branch_barbed_ATP_1"],
+        display_data = {
+            "arp2": DisplayData(
+                name="arp2",
+                radius=arp23_radius,
+            ),
+            "arp2#branched": DisplayData(
+                name="arp2#branched",
+                radius=arp23_radius,
+            ),
+            "arp2#free": DisplayData(
+                name="arp2#free",
+                radius=arp23_radius,
+            ),
+            "arp3": DisplayData(
+                name="arp3",
+                radius=arp23_radius,
+            ),
+            "arp3#new": DisplayData(
+                name="arp3",
+                radius=arp23_radius,
+            ),
+            "arp3#ATP": DisplayData(
+                name="arp3#ATP",
+                radius=arp23_radius,
+            ),
+            "arp3#new_ATP": DisplayData(
+                name="arp3#ATP",
+                radius=arp23_radius,
+            ),
+            "cap": DisplayData(
+                name="cap",
+                radius=cap_radius,
+            ),
+            "cap#new": DisplayData(
+                name="cap",
+                radius=cap_radius,
+            ),
+            "cap#bound": DisplayData(
+                name="cap#bound",
+                radius=cap_radius,
+            ),
+            "actin#free": DisplayData(
+                name="actin#free",
+                radius=actin_radius,
+            ),
+            "actin#free_ATP": DisplayData(
+                name="actin#free_ATP",
+                radius=actin_radius,
+            ),
+            "actin#new": DisplayData(
+                name="actin",
+                radius=actin_radius,
+            ),
+            "actin#new_ATP": DisplayData(
+                name="actin#ATP",
+                radius=actin_radius,
+            ),
+            "actin#1": DisplayData(
+                name="actin",
+                radius=actin_radius,
+            ),
+            "actin#2": DisplayData(
+                name="actin",
+                radius=actin_radius,
+            ),
+            "actin#3": DisplayData(
+                name="actin",
+                radius=actin_radius,
+            ),
+            "actin#ATP_1": DisplayData(
+                name="actin#ATP",
+                radius=actin_radius,
+            ),
+            "actin#ATP_2": DisplayData(
+                name="actin#ATP",
+                radius=actin_radius,
+            ),
+            "actin#ATP_3": DisplayData(
+                name="actin#ATP",
+                radius=actin_radius,
+            ),
+            "actin#pointed_1": DisplayData(
+                name="actin#pointed",
+                radius=actin_radius,
+            ),
+            "actin#pointed_2": DisplayData(
+                name="actin#pointed",
+                radius=actin_radius,
+            ),
+            "actin#pointed_3": DisplayData(
+                name="actin#pointed",
+                radius=actin_radius,
+            ),
+            "actin#pointed_ATP_1": DisplayData(
+                name="actin#pointed_ATP",
+                radius=actin_radius,
+            ),
+            "actin#pointed_ATP_2": DisplayData(
+                name="actin#pointed_ATP",
+                radius=actin_radius,
+            ),
+            "actin#pointed_ATP_3": DisplayData(
+                name="actin#pointed_ATP",
+                radius=actin_radius,
+            ),
+            "actin#barbed_1": DisplayData(
+                name="actin#barbed",
+                radius=actin_radius,
+            ),
+            "actin#barbed_2": DisplayData(
+                name="actin#barbed",
+                radius=actin_radius,
+            ),
+            "actin#barbed_3": DisplayData(
+                name="actin#barbed",
+                radius=actin_radius,
+            ),
+            "actin#barbed_ATP_1": DisplayData(
+                name="actin#barbed_ATP",
+                radius=actin_radius,
+            ),
+            "actin#barbed_ATP_2": DisplayData(
+                name="actin#barbed_ATP",
+                radius=actin_radius,
+            ),
+            "actin#barbed_ATP_3": DisplayData(
+                name="actin#barbed_ATP",
+                radius=actin_radius,
+            ),
+            "actin#branch_1": DisplayData(
+                name="actin#branch",
+                radius=actin_radius,
+            ),
+            "actin#branch_ATP_1": DisplayData(
+                name="actin#branch_ATP",
+                radius=actin_radius,
+            ),
+            "actin#branch_barbed_1": DisplayData(
+                name="actin#branch_barbed",
+                radius=actin_radius,
+            ),
+            "actin#branch_barbed_ATP_1": DisplayData(
+                name="actin#branch_barbed_ATP",
+                radius=actin_radius,
+            ),
         }
         # convert
         data = ReaddyData(
@@ -354,8 +436,7 @@ class ActinVisualization:
             # assume 1e3 recorded steps
             timestep=TIMESTEP * total_steps * 1e-3,
             path_to_readdy_h5=path_to_readdy_h5,
-            radii=radii,
-            type_grouping=type_grouping,
+            display_data=display_data,
             time_units=UnitData("µs"),
             spatial_units=UnitData("nm"),
             plots=[],
