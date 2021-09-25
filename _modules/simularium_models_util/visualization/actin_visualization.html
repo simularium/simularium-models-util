@@ -99,7 +99,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">simulariumio.readdy</span> <span class="kn">import</span> <span class="n">ReaddyConverter</span><span class="p">,</span> <span class="n">ReaddyData</span>
-<span class="kn">from</span> <span class="nn">simulariumio</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">UnitData</span><span class="p">,</span> <span class="n">ScatterPlotData</span>
+<span class="kn">from</span> <span class="nn">simulariumio</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">UnitData</span><span class="p">,</span> <span class="n">ScatterPlotData</span><span class="p">,</span> <span class="n">DisplayData</span>
 <span class="kn">from</span> <span class="nn">simulariumio.filters</span> <span class="kn">import</span> <span class="n">MultiplyTimeFilter</span>
 <span class="kn">from</span> <span class="nn">..actin</span> <span class="kn">import</span> <span class="n">ActinAnalyzer</span>
 
@@ -377,69 +377,151 @@
         <span class="n">actin_radius</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">extra_radius</span>
         <span class="n">arp23_radius</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="n">extra_radius</span>
         <span class="n">cap_radius</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">+</span> <span class="n">extra_radius</span>
-        <span class="n">radii</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;arp2&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;arp2#branched&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;arp2#free&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;arp3&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;arp3#new&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">:</span> <span class="n">arp23_radius</span><span class="p">,</span>
-            <span class="s2">&quot;cap&quot;</span><span class="p">:</span> <span class="n">cap_radius</span><span class="p">,</span>
-            <span class="s2">&quot;cap#new&quot;</span><span class="p">:</span> <span class="n">cap_radius</span><span class="p">,</span>
-            <span class="s2">&quot;cap#bound&quot;</span><span class="p">:</span> <span class="n">cap_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#free&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#new&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#2&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#3&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-            <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">actin_radius</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="c1"># type grouping</span>
-        <span class="n">type_grouping</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;arp2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#new&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;arp2#ATP&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;arp2#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#new_ATP&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;cap&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;cap&quot;</span><span class="p">,</span> <span class="s2">&quot;cap#new&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#free&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#free&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#new&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#3&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#ATP&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#pointed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="s2">&quot;actin#barbed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="s2">&quot;actin#branch&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#branch_ATP&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#branch_barbed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;actin#branch_barbed_ATP&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">],</span>
+        <span class="n">display_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;arp2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;arp2#branched&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;arp2#free&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;arp3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;arp3#new&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;cap&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cap&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">cap_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;cap#new&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cap&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">cap_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;cap#bound&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cap#bound&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">cap_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#free&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#free&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#new&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch_barbed&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch_barbed_ATP&quot;</span><span class="p">,</span>
+                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">}</span>
         <span class="c1"># convert</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ReaddyData</span><span class="p">(</span>
@@ -449,8 +531,7 @@
             <span class="c1"># assume 1e3 recorded steps</span>
             <span class="n">timestep</span><span class="o">=</span><span class="n">TIMESTEP</span> <span class="o">*</span> <span class="n">total_steps</span> <span class="o">*</span> <span class="mf">1e-3</span><span class="p">,</span>
             <span class="n">path_to_readdy_h5</span><span class="o">=</span><span class="n">path_to_readdy_h5</span><span class="p">,</span>
-            <span class="n">radii</span><span class="o">=</span><span class="n">radii</span><span class="p">,</span>
-            <span class="n">type_grouping</span><span class="o">=</span><span class="n">type_grouping</span><span class="p">,</span>
+            <span class="n">display_data</span><span class="o">=</span><span class="n">display_data</span><span class="p">,</span>
             <span class="n">time_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;µs&quot;</span><span class="p">),</span>
             <span class="n">spatial_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;nm&quot;</span><span class="p">),</span>
             <span class="n">plots</span><span class="o">=</span><span class="p">[],</span>
