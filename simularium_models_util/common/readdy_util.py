@@ -924,7 +924,12 @@ class ReaddyUtil:
     @staticmethod
     def shape_frame_edge_data(time_index, topology_records):
         """
-        Get all the edges at the given time index as (particle1 id, particle2 id)
+        After a simulation has finished,
+        get all the edges at the given time index 
+        as (particle1 id, particle2 id)
+
+        topology_records from 
+        readdy.Trajectory(h5_file_path).read_observable_topologies()
         """
         result = []
         for top in topology_records[time_index]:
@@ -940,26 +945,36 @@ class ReaddyUtil:
         time_index, topology_records, ids, types, positions, traj
     ):
         """
-        Get a dictionary mapping particle id to data for each particle:
-            [id] : (type, list of neighbor ids, position)
+        After a simulation has finished,
+        get data for topologies of particles
+
+        traj from readdy.Trajectory(h5_file_path)
+        topology_records from traj.read_observable_topologies()
+        ids, types, positions from traj.read_observable_particles()
         """
         edges = ReaddyUtil.shape_frame_edge_data(time_index, topology_records)
-        result = {}
+        result = {
+            "topologies": {},
+            "particles": {},
+        }
+        for index, top in enumerate(topology_records[time_index]):
+            result["topologies"][index] = {
+                "type_name": top.type, 
+                "particle_ids": top.particles
+            }
         for p in range(len(ids[time_index])):
-            p_id = ids[time_index][p]
-            p_type = traj.species_name(types[time_index][p])
-            p_pos = positions[time_index][p]
+            position = positions[time_index][p]
             neighbor_ids = []
             for edge in edges:
                 if p_id == edge[0]:
                     neighbor_ids.append(edge[1])
                 elif p_id == edge[1]:
                     neighbor_ids.append(edge[0])
-            result[p_id] = (
-                p_type,
-                neighbor_ids,
-                np.array([p_pos[0], p_pos[1], p_pos[2]]),
-            )
+            result["particles"][ids[time_index][p]] = {
+                    "type_name": traj.species_name(types[time_index][p]),
+                    "position": np.array([position[0], position[1], position[2]]),,
+                    "neighbor_ids": neighbor_ids,
+                }
         return result
 
     @staticmethod
