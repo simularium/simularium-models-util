@@ -110,13 +110,12 @@ class KinesinUtil:
                 "Failed to find new motor\n" + ReaddyUtil.topology_to_string(topology)
             )
         tubulin = ReaddyUtil.get_neighbor_of_type(
-            topology, motor, "tubulinB#bound", False
+            topology,
+            motor,
+            "tubulinB#bound",
+            False,
+            error_msg="Failed to find bound tubulin",
         )
-        if tubulin is None:
-            raise Exception(
-                "Failed to find bound tubulin\n"
-                + ReaddyUtil.topology_to_string(topology)
-            )
         if parameters["verbose"]:
             print(
                 ReaddyUtil.vertex_to_string(topology, motor)
@@ -161,13 +160,12 @@ class KinesinUtil:
                 + ReaddyUtil.topology_to_string(topology)
             )
         tubulin = ReaddyUtil.get_neighbor_of_type(
-            topology, motor, "tubulinB#bound", False
+            topology,
+            motor,
+            "tubulinB#bound",
+            False,
+            error_msg="Failed to find bound tubulin",
         )
-        if tubulin is None:
-            raise Exception(
-                "Failed to find bound tubulin\n"
-                + ReaddyUtil.topology_to_string(topology)
-            )
         if parameters["verbose"]:
             print(
                 ReaddyUtil.vertex_to_string(topology, motor)

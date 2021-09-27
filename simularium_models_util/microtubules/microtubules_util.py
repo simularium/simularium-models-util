@@ -851,12 +851,12 @@ class MicrotubulesUtil:
         if parameters["verbose"]:
             print("Grow 1")
         recipe = readdy.StructuralReactionRecipe(topology)
-        v_newB = ReaddyUtil.get_vertex_of_type(topology, "tubulinB#free", True)
-        if v_newB is None:
-            raise Exception(
-                "Failed to find tubulinB#free vertex\n"
-                + ReaddyUtil.topology_to_string(topology)
-            )
+        v_newB = ReaddyUtil.get_vertex_of_type(
+            topology,
+            "tubulinB#free",
+            True,
+            error_msg="Failed to find tubulinB#free vertex",
+        )
         v_newA = ReaddyUtil.get_neighbor_of_type(
             topology, v_newB, "tubulinA#free", True
         )
@@ -895,12 +895,12 @@ class MicrotubulesUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow 2")
-        v_newB = ReaddyUtil.get_vertex_of_type(topology, "tubulinB#free", True)
-        if v_newB is None:
-            raise Exception(
-                "Failed to find tubulinB#free vertex\n"
-                + ReaddyUtil.topology_to_string(topology)
-            )
+        v_newB = ReaddyUtil.get_vertex_of_type(
+            topology,
+            "tubulinB#free",
+            True,
+            error_msg="Failed to find tubulinB#free vertex",
+        )
         v_newA = ReaddyUtil.get_neighbor_of_type(
             topology, v_newB, "tubulinA#free", True
         )
@@ -1303,24 +1303,19 @@ class MicrotubulesUtil:
         """
         recipe = readdy.StructuralReactionRecipe(topology)
         detaching_sites = [
-            ReaddyUtil.get_vertex_of_type(topology, "site#2_detach", False),
-            ReaddyUtil.get_vertex_of_type(topology, "site#1_detach", False),
+            ReaddyUtil.get_vertex_of_type(
+                topology,
+                "site#2_detach",
+                False,
+                error_msg="Failed to find detaching sites",
+            ),
+            ReaddyUtil.get_vertex_of_type(
+                topology,
+                "site#1_detach",
+                False,
+                error_msg="Failed to find detaching sites",
+            ),
         ]
-        if None in detaching_sites:
-            site0 = (
-                "None"
-                if detaching_sites[0] is None
-                else ReaddyUtil.vertex_to_string(detaching_sites[0])
-            )
-            site1 = (
-                "None"
-                if detaching_sites[1] is None
-                else ReaddyUtil.vertex_to_string(detaching_sites[1])
-            )
-            raise Exception(
-                f"Failed to find detaching sites, ({site0}, {site1})\n"
-                + ReaddyUtil.topology_to_string(topology)
-            )
         detaching_tubulins = [
             ReaddyUtil.get_neighbor_of_type(
                 topology, detaching_sites[0], "tubulin", False
@@ -1457,10 +1452,14 @@ class MicrotubulesUtil:
         if parameters["verbose"]:
             print("Hydrolyze")
         recipe = readdy.StructuralReactionRecipe(topology)
-        tubulin = ReaddyUtil.get_random_vertex_of_type(topology, "#GTP", False)
+        tubulin = ReaddyUtil.get_random_vertex_of_type(
+            topology,
+            "#GTP",
+            False,
+            parameters["verbose"],
+            "Hydrolyze cancelled: Couldn't find GTP-tubulin",
+        )
         if tubulin is None:
-            if parameters["verbose"]:
-                print("Hydrolyze cancelled: Couldn't find GTP-tubulin")
             return recipe
         sites = MicrotubulesUtil.get_tubulin_sites(topology, tubulin)
         if sites is not None:

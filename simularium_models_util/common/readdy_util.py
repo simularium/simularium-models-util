@@ -170,7 +170,22 @@ class ReaddyUtil:
         return n / (1e-30 * 6.022e23 * np.power(dim, 3.0))
 
     @staticmethod
-    def get_vertex_of_type(topology, vertex_type, exact_match):
+    def vertex_not_found(verbose, error_msg, debug_msg):
+        """
+        If a vertex was not found, check if an exception should be raised
+        or a debug message should be printed
+        If error_msg == "", don't raise an exception
+        If not verbose or debug_msg == "", don't print the message
+        """
+        if error_msg:
+            raise Exception(error_msg + "\n" + ReaddyUtil.topology_to_string(topology))
+        if verbose and debug_msg:
+            print(debug_msg)
+
+    @staticmethod
+    def get_vertex_of_type(
+        topology, vertex_type, exact_match, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get the first vertex with a given type
         """
@@ -180,30 +195,39 @@ class ReaddyUtil:
                 exact_match and pt == vertex_type
             ):
                 return vertex
+        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
-    def get_first_vertex_of_types(topology, vertex_types):
+    def get_first_vertex_of_types(
+        topology, vertex_types, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get the first vertex with any of the given types
         """
         for vertex in topology.graph.get_vertices():
             if topology.particle_type_of_vertex(vertex) in vertex_types:
                 return vertex
+        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
-    def get_vertex_with_id(topology, vertex_id):
+    def get_vertex_with_id(
+        topology, vertex_id, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get the first vertex with a given id
         """
         for vertex in topology.graph.get_vertices():
             if topology.particle_id_of_vertex(vertex) == vertex_id:
                 return vertex
+        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
-    def get_first_neighbor(topology, vertex, exclude_vertices):
+    def get_first_neighbor(
+        topology, vertex, exclude_vertices, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get the first neighboring vertex
         """
@@ -214,11 +238,19 @@ class ReaddyUtil:
             if topology.particle_id_of_vertex(neighbor) in exclude_ids:
                 continue
             return neighbor.get()
+        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
     def get_neighbor_of_type(
-        topology, vertex, vertex_type, exact_match, exclude_vertices=[]
+        topology,
+        vertex,
+        vertex_type,
+        exact_match,
+        exclude_vertices=[],
+        verbose=False,
+        debug_msg="",
+        error_msg="",
     ):
         """
         get the first neighboring vertex of type vertex_type
@@ -235,10 +267,19 @@ class ReaddyUtil:
                 exact_match and pt == vertex_type
             ):
                 return v_neighbor
+        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
-    def get_neighbor_of_types(topology, vertex, vertex_types, exclude_vertices):
+    def get_neighbor_of_types(
+        topology,
+        vertex,
+        vertex_types,
+        exclude_vertices,
+        verbose=False,
+        debug_msg="",
+        error_msg="",
+    ):
         """
         get the first neighboring vertex with any of the given types,
         excluding particles with the given ids
@@ -253,10 +294,13 @@ class ReaddyUtil:
             pt = topology.particle_type_of_vertex(v_neighbor)
             if pt in vertex_types:
                 return v_neighbor
+        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
-    def get_vertices_of_type(topology, vertex_type, exact_match):
+    def get_vertices_of_type(
+        topology, vertex_type, exact_match, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get all vertices with a given type
         """
@@ -267,10 +311,20 @@ class ReaddyUtil:
                 exact_match and pt == vertex_type
             ):
                 v.append(vertex)
+        if len(v) == 0:
+            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return v
 
     @staticmethod
-    def get_neighbors_of_type(topology, vertex, vertex_type, exact_match):
+    def get_neighbors_of_type(
+        topology,
+        vertex,
+        vertex_type,
+        exact_match,
+        verbose=False,
+        debug_msg="",
+        error_msg="",
+    ):
         """
         get all neighboring vertices with a given type
         """
@@ -282,20 +336,27 @@ class ReaddyUtil:
                 exact_match and pt == vertex_type
             ):
                 v.append(v_neighbor)
+        if len(v) == 0:
+            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
         return v
 
     @staticmethod
-    def get_random_vertex_of_type(topology, vertex_type, exact_match):
+    def get_random_vertex_of_type(
+        topology, vertex_type, exact_match, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get a random vertex with a given type
         """
         vertices = ReaddyUtil.get_vertices_of_type(topology, vertex_type, exact_match)
         if len(vertices) == 0:
+            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
             return None
         return random.choice(vertices)
 
     @staticmethod
-    def get_random_vertex_of_types(topology, vertex_types):
+    def get_random_vertex_of_types(
+        topology, vertex_types, verbose=False, debug_msg="", error_msg=""
+    ):
         """
         get a random vertex with any of the given types
         """
@@ -303,6 +364,7 @@ class ReaddyUtil:
         for vertex_type in vertex_types:
             v += ReaddyUtil.get_vertices_of_type(topology, vertex_type, True)
         if len(v) == 0:
+            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
             return None
         return random.choice(v)
 

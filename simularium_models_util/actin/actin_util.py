@@ -31,6 +31,21 @@ class ActinUtil:
         set_parameters(parameters)
 
     @staticmethod
+    def get_new_vertex():
+        """
+        Get the vertex tagged "new"
+        """
+        results = ReaddyUtil.get_vertices_of_type(
+            topology, ["new"], exact_match=False, error_msg="Failed to find new vertex"
+        )
+        if len(results) > 1:
+            raise Exception(
+                f"Found more than one new vertex\n"
+                f"{ReaddyUtil.topology_to_string(topology)}"
+            )
+        return results[0]
+
+    @staticmethod
     def get_new_arp23(topology):
         """
         get a new arp3 and its unbranched arp2#free neighbor,
@@ -179,21 +194,19 @@ class ActinUtil:
                 )
             offset_index = 3 - edges
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_branch, ["arp2", "arp2#branched", "arp2#free"], []
+                topology,
+                v_branch,
+                ["arp2", "arp2#branched", "arp2#free"],
+                [],
+                error_msg="Failed to set position: couldn't find arp2",
             )
-            if v_arp2 is None:
-                raise Exception(
-                    f"Failed to set position: couldn't find arp2\n"
-                    f"{ReaddyUtil.topology_to_string(topology)}"
-                )
         v_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"], []
+            topology,
+            v_arp2,
+            ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"],
+            [],
+            error_msg="Failed to set position: couldn't find arp3",
         )
-        if v_arp3 is None:
-            raise Exception(
-                f"Failed to set position: couldn't find arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         actin_types = (
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
@@ -201,23 +214,21 @@ class ActinUtil:
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
         )
         v_actin_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp3, actin_types, []
+            topology,
+            v_arp3,
+            actin_types,
+            [],
+            error_msg="Failed to set position: couldn't find actin_arp3",
         )
-        if v_actin_arp3 is None:
-            raise Exception(
-                f"Failed to set position: couldn't find actin_arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp3, -1)
         actin_types = [f"actin#ATP_{n_pointed}", f"actin#{n_pointed}"]
         v_actin_arp2 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp3, actin_types, []
+            topology,
+            v_actin_arp3,
+            actin_types,
+            [],
+            error_msg="Failed to set position: couldn't find actin_arp2",
         )
-        if v_actin_arp2 is None:
-            raise Exception(
-                f"Failed to set position: couldn't find actin_arp2\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1)
         actin_types = [
             f"actin#ATP_{n_pointed}",
@@ -228,15 +239,12 @@ class ActinUtil:
         if n_pointed == 1:
             actin_types += ["actin#branch_1", "actin#branch_ATP_1"]
         v_prev = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp2, actin_types, [v_actin_arp3]
+            topology,
+            v_actin_arp2,
+            actin_types,
+            [v_actin_arp3],
+            error_msg="Failed to set position: couldn't find v_prev",
         )
-        if v_prev is None:
-            raise Exception(
-                "Failed to set position: couldn't find v_prev, "
-                f"actin_arp2 is {ReaddyUtil.vertex_to_string(topology, v_actin_arp2)}, "
-                f"actin_arp3 is {ReaddyUtil.vertex_to_string(topology, v_actin_arp3)}\n"
-                + str(ReaddyUtil.topology_to_string(topology))
-            )
         return (
             [v_prev, v_actin_arp2, v_actin_arp3],
             ActinStructure.mother1_to_branch_actin_vectors()[offset_index],
@@ -342,13 +350,12 @@ class ActinUtil:
             + ["actin#branch_1", "actin#branch_ATP_1"]
         )
         v1 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp2, actin_types, [v_actin_arp3]
+            topology,
+            v_actin_arp2,
+            actin_types,
+            [v_actin_arp3],
+            error_msg="Failed to set position: couldn't find v1",
         )
-        if v1 is None:
-            raise Exception(
-                f"Failed to set position: couldn't find v1\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         pos1 = ReaddyUtil.get_vertex_position(topology, v1)
         pos2 = ReaddyUtil.get_vertex_position(topology, v_actin_arp2)
         pos3 = ReaddyUtil.get_vertex_position(topology, v_actin_arp3)
@@ -378,12 +385,13 @@ class ActinUtil:
         and with or without a branch attached to the arp2
         """
         v_arp3s = ReaddyUtil.get_vertices_of_type(
-            topology, "arp3#ATP" if with_ATP else "arp3", True
+            topology,
+            "arp3#ATP" if with_ATP else "arp3",
+            True,
+            parameters["verbose"],
+            f"Couldn't find arp3 (ATP={with_ATP})",
         )
         if len(v_arp3s) < 1:
-            if parameters["verbose"]:
-                state = "ATP" if with_ATP else "ADP"
-                print(f"Couldn't find arp3 with {state}")
             return None
         v_arp2s = []
         for v_arp3 in v_arp3s:
@@ -394,8 +402,7 @@ class ActinUtil:
                 v_arp2s.append(v_arp2)
         if len(v_arp2s) < 1:
             if parameters["verbose"]:
-                state = "out" if not with_branch else ""
-                print(f"Couldn't find arp2 with{state} branch")
+                print(f"Couldn't find arp2 (branch={with_branch})")
             return None
         return random.choice(v_arp2s)
 
@@ -594,18 +601,11 @@ class ActinUtil:
                 "actin#barbed_2",
                 "actin#barbed_3",
             ],
+            error_msg="Failed to find barbed end of dimer",
         )
-        if v_barbed is None:
-            raise Exception(
-                f"Failed to find barbed end of dimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
-        v_pointed = ReaddyUtil.get_first_neighbor(topology, v_barbed, [])
-        if v_pointed is None:
-            raise Exception(
-                f"Failed to find pointed end of dimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_pointed = ReaddyUtil.get_first_neighbor(
+            topology, v_barbed, [], error_msg="Failed to find pointed end of dimer"
+        )
         recipe.remove_edge(v_barbed, v_pointed)
         recipe.change_particle_type(v_barbed, "actin#free_ATP")
         recipe.change_particle_type(v_pointed, "actin#free_ATP")
@@ -620,26 +620,19 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Trimerize")
-        v_new = ReaddyUtil.get_first_vertex_of_types(
-            topology, ["actin#new", "actin#new_ATP"]
+        v_new = ReaddyUtil.get_new_vertex()
+        v_neighbor1 = ReaddyUtil.get_first_neighbor(
+            topology,
+            v_new,
+            [],
+            error_msg="Failed to find first neighbor of new vertex in trimer",
         )
-        if v_new is None:
-            raise Exception(
-                f"Failed to find new vertex in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
-        v_neighbor1 = ReaddyUtil.get_first_neighbor(topology, v_new, [])
-        if v_neighbor1 is None:
-            raise Exception(
-                f"Failed to find first neighbor of new vertex in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
-        v_neighbor2 = ReaddyUtil.get_first_neighbor(topology, v_neighbor1, [v_new])
-        if v_neighbor2 is None:
-            raise Exception(
-                f"Failed to find second neighbor of new vertex in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_neighbor2 = ReaddyUtil.get_first_neighbor(
+            topology,
+            v_neighbor1,
+            [v_new],
+            error_msg="Failed to find second neighbor of new vertex in trimer",
+        )
         ReaddyUtil.set_flags(
             topology,
             recipe,
@@ -664,17 +657,18 @@ class ActinUtil:
         "Actin-Polymer(arp2) + Actin-Monomer(actin#free) -> "
             "Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new)",
         """
-        v_end = ReaddyUtil.get_random_vertex_of_type(topology, end_type, exact_end_type)
+        v_end = ReaddyUtil.get_random_vertex_of_type(
+            topology,
+            end_type,
+            exact_end_type,
+            parameters["verbose"],
+            "Couldn't find end monomer",
+        )
         if v_end is None:
-            if parameters["verbose"]:
-                print("Couldn't find end monomer")
             return False
-        v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_end, [])
-        if v_neighbor is None:
-            raise Exception(
-                f"Failed to find neighbor of end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_neighbor = ReaddyUtil.get_first_neighbor(
+            topology, v_end, [], error_msg="Failed to find neighbor of end"
+        )
         pos_end = ReaddyUtil.get_vertex_position(topology, v_end)
         pos_neighbor = ReaddyUtil.get_vertex_position(topology, v_neighbor)
         v_neighbor_to_end = pos_end - pos_neighbor
@@ -717,18 +711,14 @@ class ActinUtil:
                 "actin#barbed_2",
                 "actin#barbed_3",
             ],
+            error_msg="Failed to find barbed end in trimer",
         )
-        if v_barbed is None:
-            raise Exception(
-                f"Failed to find barbed end in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
-        v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_barbed, [])
-        if v_neighbor is None:
-            raise Exception(
-                f"Failed to find neighbor of barbed end in trimer\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_neighbor = ReaddyUtil.get_first_neighbor(
+            topology,
+            v_barbed,
+            [],
+            error_msg="Failed to find neighbor of barbed end in trimer",
+        )
         recipe.remove_edge(v_barbed, v_neighbor)
         recipe.change_particle_type(v_barbed, "actin#free_ATP")
         ReaddyUtil.set_flags(topology, recipe, v_neighbor, ["barbed"], [], True)
@@ -743,20 +733,10 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow Pointed")
-        v_new = ReaddyUtil.get_first_vertex_of_types(
-            topology, ["actin#new", "actin#new_ATP"]
+        v_new = ReaddyUtil.get_new_vertex()
+        v_neighbor = ReaddyUtil.get_first_neighbor(
+            topology, v_new, [], error_msg="Failed to find neighbor of new pointed end"
         )
-        if v_new is None:
-            raise Exception(
-                f"Failed to find new vertex at pointed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
-        v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_new, [])
-        if v_neighbor is None:
-            raise Exception(
-                f"Failed to find neighbor of new pointed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         ReaddyUtil.set_flags(
             topology,
             recipe,
@@ -801,20 +781,10 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow Barbed")
-        v_new = ReaddyUtil.get_first_vertex_of_types(
-            topology, ["actin#new", "actin#new_ATP"]
+        v_new = ReaddyUtil.get_new_vertex()
+        v_neighbor = ReaddyUtil.get_first_neighbor(
+            topology, v_new, [], error_msg="Failed to find neighbor of new barbed end"
         )
-        if v_new is None:
-            raise Exception(
-                f"Failed to find new barbed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
-        v_neighbor = ReaddyUtil.get_first_neighbor(topology, v_new, [])
-        if v_neighbor is None:
-            raise Exception(
-                f"Failed to find neighbor of new barbed end\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         ReaddyUtil.set_flags(
             topology,
             recipe,
@@ -866,12 +836,9 @@ class ActinUtil:
                 f"Failed to find new arp2 and arp3\n"
                 f"{ReaddyUtil.topology_to_string(topology)}"
             )
-        v_actin_barbed = ReaddyUtil.get_first_neighbor(topology, v_arp3, [v_arp2])
-        if v_actin_barbed is None:
-            raise Exception(
-                f"Failed to find new actin_arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_actin_barbed = ReaddyUtil.get_first_neighbor(
+            topology, v_arp3, [v_arp2], error_msg="Failed to find new actin_arp3"
+        )
         # make sure arp3 binds to the barbed end neighbor of the actin bound to arp2
         n_pointed = ActinUtil.get_actin_number(topology, v_actin_barbed, -1)
         actin_types = [
@@ -883,7 +850,12 @@ class ActinUtil:
         if n_pointed == 1:
             actin_types += ["actin#branch_1", "actin#branch_ATP_1"]
         v_actin_pointed = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_barbed, actin_types, []
+            topology,
+            v_actin_barbed,
+            actin_types,
+            [],
+            parameters["verbose"],
+            f"Couldn't find actin_arp2 with number {n_pointed}",
         )
         if v_actin_pointed is not None:
             pointed_type = topology.particle_type_of_vertex(v_actin_pointed)
@@ -895,8 +867,6 @@ class ActinUtil:
                 )
                 return recipe
         else:
-            if parameters["verbose"]:
-                print(f"Couldn't find actin_arp2 with number {n_pointed}")
             ActinUtil.cancel_branch_reaction(topology, recipe, v_actin_barbed, v_arp3)
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["free"], True)
@@ -916,14 +886,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Start Branch")
-        v_new = ReaddyUtil.get_first_vertex_of_types(
-            topology, ["actin#new", "actin#new_ATP"]
-        )
-        if v_new is None:
-            raise Exception(
-                f"Failed to find new branch actin\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_new = ReaddyUtil.get_new_vertex()
         ReaddyUtil.set_flags(
             topology, recipe, v_new, ["barbed", "1", "branch"], ["new"], True
         )
@@ -964,11 +927,12 @@ class ActinUtil:
         atp_state = "_ATP" if ATP else ""
         end_type = f"actin#{end_state}{atp_state}"
         v_end = ReaddyUtil.get_random_vertex_of_types(
-            topology, ActinUtil.get_all_polymer_actin_types(end_type)
+            topology,
+            ActinUtil.get_all_polymer_actin_types(end_type),
+            parameters["verbose"],
+            "Couldn't find end actin to remove",
         )
         if v_end is None:
-            if parameters["verbose"]:
-                print("Couldn't find end actin to remove")
             return False
         v_arp = ReaddyUtil.get_neighbor_of_types(
             topology, v_end, ["arp3", "arp3#ATP", "arp2", "arp2#branched"], []
@@ -984,10 +948,10 @@ class ActinUtil:
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ["actin#branch_1", "actin#branch_ATP_1"],
             [],
+            parameters["verbose"],
+            "Couldn't find plain actin neighbor of actin to remove",
         )
         if v_neighbor is None:
-            if parameters["verbose"]:
-                print("Couldn't find plain actin neighbor of actin to remove")
             return False
         if not barbed:
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
@@ -1107,10 +1071,10 @@ class ActinUtil:
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
             + ["actin#branch_barbed_ATP_1", "actin#branch_ATP_1"],
+            parameters["verbose"],
+            "Couldn't find ATP-actin",
         )
         if v is None:
-            if parameters["verbose"]:
-                print("Couldn't find ATP-actin")
             recipe.change_topology_type("Actin-Polymer#Fail-Hydrolysis-Actin")
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v, [], ["ATP"], True)
@@ -1124,10 +1088,10 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Hydrolyze Arp2/3")
-        v = ReaddyUtil.get_random_vertex_of_types(topology, ["arp3#ATP"])
+        v = ReaddyUtil.get_random_vertex_of_types(
+            topology, ["arp3#ATP"], parameters["verbose"], "Couldn't find ATP-arp3"
+        )
         if v is None:
-            if parameters["verbose"]:
-                print("Couldn't find ATP-arp3")
             recipe.change_topology_type("Actin-Polymer#Fail-Hydrolysis-Arp")
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v, [], ["ATP"], True)
@@ -1141,10 +1105,14 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Nucleotide Exchange Actin")
-        v = ReaddyUtil.get_vertex_of_type(topology, "actin#free", True)
+        v = ReaddyUtil.get_vertex_of_type(
+            topology,
+            "actin#free",
+            True,
+            parameters["verbose"],
+            "Couldn't find ADP-actin",
+        )
         if v is None:
-            if parameters["verbose"]:
-                print("Couldn't find ADP-actin")
             recipe.change_topology_type("Actin-Polymer#Fail-Nucleotide-Exchange-Actin")
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v, ["ATP"], [], True)
@@ -1158,10 +1126,10 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Nucleotide Exchange Arp2/3")
-        v = ReaddyUtil.get_vertex_of_type(topology, "arp3", True)
+        v = ReaddyUtil.get_vertex_of_type(
+            topology, "arp3", True, parameters["verbose"], "Couldn't find ADP-arp3"
+        )
         if v is None:
-            if parameters["verbose"]:
-                print("Couldn't find ADP-arp3")
             recipe.change_topology_type("Actin-Polymer#Fail-Nucleotide-Exchange-Arp")
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v, ["ATP"], [], True)
@@ -1189,28 +1157,14 @@ class ActinUtil:
             + ["actin#branch_1", "actin#branch_ATP_1"]
         )
         v_actin_arp2 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, actin_types, []
+            topology, v_arp2, actin_types, [], error_msg="Failed to find actin_arp2"
         )
-        if v_actin_arp2 is None:
-            raise Exception(
-                f"Failed to find actin_arp2\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         v_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp2, ["arp3", "arp3#ATP"], []
+            topology, v_arp2, ["arp3", "arp3#ATP"], [], error_msg="Failed to find arp3"
         )
-        if v_arp3 is None:
-            raise Exception(
-                f"Failed to find arp3\n" f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         v_actin_arp3 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_arp3, actin_types, []
+            topology, v_arp3, actin_types, [], error_msg="Failed to find actin_arp3"
         )
-        if v_actin_arp3 is None:
-            raise Exception(
-                f"Failed to find actin_arp3\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         recipe.remove_edge(v_arp2, v_actin_arp2)
         recipe.remove_edge(v_arp3, v_actin_arp3)
         ReaddyUtil.set_flags(topology, recipe, v_arp2, ["free"], [])
@@ -1256,12 +1210,13 @@ class ActinUtil:
             "actin#branch_barbed_1",
             "actin#branch_barbed_ATP_1",
         ]
-        v_actin1 = ReaddyUtil.get_neighbor_of_types(topology, v_arp2, actin_types, [])
-        if v_actin1 is None:
-            raise Exception(
-                f"Failed to find first branch actin\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_actin1 = ReaddyUtil.get_neighbor_of_types(
+            topology,
+            v_arp2,
+            actin_types,
+            [],
+            error_msg="Failed to find first branch actin",
+        )
         recipe.remove_edge(v_arp2, v_actin1)
         ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["branched"], True)
         pt_actin1 = topology.particle_type_of_vertex(v_actin1)
@@ -1306,11 +1261,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Finish Cap Bind")
-        v_new = ReaddyUtil.get_first_vertex_of_types(topology, ["cap#new"])
-        if v_new is None:
-            raise Exception(
-                f"Failed to find new cap\n" f"{ReaddyUtil.topology_to_string(topology)}"
-            )
+        v_new = ReaddyUtil.get_new_vertex()
         ReaddyUtil.set_flags(topology, recipe, v_new, ["bound"], ["new"], True)
         recipe.change_topology_type("Actin-Polymer")
         return recipe
@@ -1323,10 +1274,10 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Remove Cap")
-        v_cap = ReaddyUtil.get_random_vertex_of_types(topology, ["cap#bound"])
+        v_cap = ReaddyUtil.get_random_vertex_of_types(
+            topology, ["cap#bound"], parameters["verbose"], "Couldn't find cap"
+        )
         if v_cap is None:
-            if parameters["verbose"]:
-                print("Couldn't find cap")
             recipe.change_topology_type("Actin-Polymer#Fail-Cap-Unbind")
             return recipe
         v_actin = ReaddyUtil.get_neighbor_of_types(
@@ -1336,12 +1287,8 @@ class ActinUtil:
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ["actin#branch_1", "actin#branch_ATP_1"],
             [],
+            error_msg="Failed to find actin bound to cap",
         )
-        if v_actin is None:
-            raise Exception(
-                f"Failed to find actin bound to cap\n"
-                f"{ReaddyUtil.topology_to_string(topology)}"
-            )
         recipe.remove_edge(v_cap, v_actin)
         ReaddyUtil.set_flags(topology, recipe, v_cap, [], ["bound"], True)
         ReaddyUtil.set_flags(topology, recipe, v_actin, ["barbed"], [], True)
