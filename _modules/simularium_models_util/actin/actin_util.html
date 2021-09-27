@@ -514,8 +514,8 @@
                             <span class="n">positions</span><span class="p">[</span><span class="n">fiber</span><span class="p">]</span> <span class="o">+</span> <span class="n">length</span> <span class="o">*</span> <span class="n">direction</span><span class="p">,</span>
                         <span class="p">],</span>
                     <span class="p">),</span>
-                <span class="p">],</span> 
-                <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="p">],</span>
+                <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">monomers</span><span class="p">)</span></div>
 
@@ -526,7 +526,9 @@
 
 <span class="sd">        fibers_data : List[FiberData]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fiber_monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">fiber_monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span>
+            <span class="n">fibers_data</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fiber_monomers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_monomers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_monomers_from_data">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -558,9 +560,7 @@
             <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">])):</span>
                 <span class="n">particle_id</span> <span class="o">=</span> <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
                 <span class="n">particle_dict</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span>
-                <span class="n">particle</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
-                    <span class="n">unique_id</span><span class="o">=</span><span class="n">particle_id</span><span class="p">,</span>
-                    <span class="o">**</span><span class="n">particle_dict</span><span class="p">)</span>
+                <span class="n">particle</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span><span class="n">unique_id</span><span class="o">=</span><span class="n">particle_id</span><span class="p">,</span> <span class="o">**</span><span class="n">particle_dict</span><span class="p">)</span>
                 <span class="n">types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">type_name</span><span class="p">)</span>
                 <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
                 <span class="n">neighbor_ids</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
