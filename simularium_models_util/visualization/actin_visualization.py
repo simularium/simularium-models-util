@@ -459,4 +459,4 @@ class ActinVisualization:
                 ),
             ]
         )
-        converter.write_external_JSON(filtered_data, path_to_readdy_h5)
+        converter.save(filtered_data, path_to_readdy_h5, binary=False)
