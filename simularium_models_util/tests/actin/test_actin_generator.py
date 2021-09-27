@@ -14,8 +14,8 @@ from simularium_models_util.actin import ActinGenerator, ActinTestData
             ActinTestData.linear_actin_monomers(),
         ),
         (
-            ActinTestData.branched_actin_fiber(),
-            ActinTestData.branched_actin_monomers(),
+            ActinTestData.complex_branched_actin_fiber(),
+            ActinTestData.complex_branched_actin_monomers(),
         ),
     ],
 )

@@ -4,7 +4,7 @@
 import numpy as np
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import MetaData, UnitData, ScatterPlotData, DisplayData
+from simulariumio import MetaData, UnitData, ScatterPlotData, DisplayData, JsonWriter
 from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
 
@@ -459,4 +459,4 @@ class ActinVisualization:
                 ),
             ]
         )
-        converter.save(filtered_data, path_to_readdy_h5, binary=False)
+        JsonWriter.save(filtered_data, path_to_readdy_h5)

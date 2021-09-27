@@ -19,7 +19,7 @@ class ActinTestData:
             )
         ]
 
-    def branched_actin_fiber():
+    def complex_branched_actin_fiber():
         return [
             FiberData(
                 fiber_id=0,
@@ -162,6 +162,34 @@ class ActinTestData:
                     ArpData(
                         arp_id=10,
                         position=np.array([25, 0, 0]),
+                    ),
+                ],
+            )
+        ]
+
+    def simple_branched_actin_fiber():
+        return [
+            FiberData(
+                fiber_id=0,
+                points=[
+                    np.array([-50, 0, 0]),
+                    np.array([50, 0, 0]),
+                ],
+                type_name="Actin-Polymer",
+                nucleated_arps=[
+                    ArpData(
+                        arp_id=0,
+                        position=np.array([0, 0, 0]),
+                        nucleated=True,
+                        daughter_fiber=FiberData(
+                            fiber_id=1,
+                            points=[
+                                np.array([0, 0, 0]),
+                                np.array([16.4, -45.1, 0]),
+                            ],
+                            type_name="Actin-Polymer",
+                            is_daughter=True,
+                        ),
                     ),
                 ],
             )
@@ -376,7 +404,7 @@ class ActinTestData:
             },
         }
 
-    def branched_actin_monomers():
+    def complex_branched_actin_monomers():
         return {
             "topologies": {
                 122: {

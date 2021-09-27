@@ -5,7 +5,7 @@ import numpy as np
 import readdy
 import random
 
-from ..common import ReaddyUtil, ParticleData
+from ..common import ReaddyUtil
 from .actin_generator import ActinGenerator
 from .actin_structure import ActinStructure
 from .fiber_data import FiberData
@@ -462,30 +462,34 @@ class ActinUtil:
                 },
             },
         }
-        * IDs are uuid strings
+        * IDs are uuid strings or ints
         """
         for topology_id in monomer_data["topologies"]:
             topology = monomer_data["topologies"][topology_id]
             types = []
             positions = []
-            neighbor_ids = {}
-            for index in range(len(topology["particle_ids"])):
-                particle_id = topology["particle_ids"][index]
-                particle_dict = monomer_data["particles"][particle_id]
-                particle = ParticleData(unique_id=particle_id, **particle_dict)
-                types.append(particle.type_name)
-                positions.append(particle.position)
-                neighbor_ids[index] = []
-                for neighbor_id in particle.neighbor_ids:
-                    neighbor_ids[index].append(
-                        topology["particle_ids"].index(neighbor_id)
-                    )
+            for particle_id in topology["particle_ids"]:
+                particle = monomer_data["particles"][particle_id]
+                types.append(particle["type_name"])
+                positions.append(particle["position"])
             top = simulation.add_topology(
                 topology["type_name"], types, np.array(positions)
             )
-            for particle_id in neighbor_ids:
-                for neighbor_id in neighbor_ids[particle_id]:
-                    top.get_graph().add_edge(particle_id, neighbor_id)
+            added_edges = []
+            test = []
+            for index, particle_id in enumerate(topology["particle_ids"]):
+                for neighbor_id in monomer_data["particles"][particle_id][
+                    "neighbor_ids"
+                ]:
+                    neighbor_index = topology["particle_ids"].index(neighbor_id)
+                    if (index, neighbor_index) not in added_edges and (
+                        neighbor_index,
+                        index,
+                    ) not in added_edges:
+                        top.get_graph().add_edge(index, neighbor_index)
+                        added_edges.append((index, neighbor_index))
+                        added_edges.append((neighbor_index, index))
+                        test.append((index, neighbor_index))
 
     @staticmethod
     def add_actin_dimer(position, simulation):
