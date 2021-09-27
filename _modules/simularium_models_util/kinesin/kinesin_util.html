@@ -205,13 +205,12 @@
                 <span class="s2">&quot;Failed to find new motor</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="n">tubulin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="s2">&quot;tubulinB#bound&quot;</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">motor</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#bound&quot;</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">,</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find bound tubulin&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">tubulin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to find bound tubulin</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-            <span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">)</span>
@@ -256,13 +255,12 @@
                 <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="n">tubulin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">,</span> <span class="s2">&quot;tubulinB#bound&quot;</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">motor</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#bound&quot;</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">,</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find bound tubulin&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">tubulin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to find bound tubulin</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-            <span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">motor</span><span class="p">)</span>

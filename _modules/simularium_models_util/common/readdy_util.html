@@ -264,8 +264,23 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1e-30</span> <span class="o">*</span> <span class="mf">6.022e23</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span></div>
 
+<div class="viewcode-block" id="ReaddyUtil.vertex_not_found"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vertex_not_found">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If a vertex was not found, check if an exception should be raised</span>
+<span class="sd">        or a debug message should be printed</span>
+<span class="sd">        If error_msg == &quot;&quot;, don&#39;t raise an exception</span>
+<span class="sd">        If not verbose or debug_msg == &quot;&quot;, don&#39;t print the message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">error_msg</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">error_msg</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="n">debug_msg</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">debug_msg</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ReaddyUtil.get_vertex_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_vertex_of_type</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the first vertex with a given type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -275,30 +290,39 @@
                 <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
             <span class="p">):</span>
                 <span class="k">return</span> <span class="n">vertex</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_first_vertex_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_first_vertex_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_first_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_first_vertex_of_types</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the first vertex with any of the given types</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">vertex_types</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">vertex</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_vertex_with_id"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertex_with_id">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_vertex_with_id</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_id</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_vertex_with_id</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex_id</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the first vertex with a given id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span> <span class="o">==</span> <span class="n">vertex_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">vertex</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_first_neighbor"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_first_neighbor">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_first_neighbor</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the first neighboring vertex</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -309,11 +333,19 @@
             <span class="k">if</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_id_of_vertex</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span> <span class="ow">in</span> <span class="n">exclude_ids</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="k">return</span> <span class="n">neighbor</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_neighbor_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_neighbor_of_type</span><span class="p">(</span>
-        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">topology</span><span class="p">,</span>
+        <span class="n">vertex</span><span class="p">,</span>
+        <span class="n">vertex_type</span><span class="p">,</span>
+        <span class="n">exact_match</span><span class="p">,</span>
+        <span class="n">exclude_vertices</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the first neighboring vertex of type vertex_type</span>
@@ -330,10 +362,19 @@
                 <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
             <span class="p">):</span>
                 <span class="k">return</span> <span class="n">v_neighbor</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_neighbor_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbor_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_neighbor_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">,</span> <span class="n">exclude_vertices</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_neighbor_of_types</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span>
+        <span class="n">vertex</span><span class="p">,</span>
+        <span class="n">vertex_types</span><span class="p">,</span>
+        <span class="n">exclude_vertices</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the first neighboring vertex with any of the given types,</span>
 <span class="sd">        excluding particles with the given ids</span>
@@ -348,10 +389,13 @@
             <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_neighbor</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">vertex_types</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">v_neighbor</span>
+        <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_vertices_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_vertices_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_vertices_of_type</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get all vertices with a given type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -362,10 +406,20 @@
                 <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
             <span class="p">):</span>
                 <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_neighbors_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_neighbors_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_neighbors_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_neighbors_of_type</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span>
+        <span class="n">vertex</span><span class="p">,</span>
+        <span class="n">vertex_type</span><span class="p">,</span>
+        <span class="n">exact_match</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get all neighboring vertices with a given type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -377,20 +431,27 @@
                 <span class="n">exact_match</span> <span class="ow">and</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">vertex_type</span>
             <span class="p">):</span>
                 <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_neighbor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_random_vertex_of_type"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_type">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_random_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_random_vertex_of_type</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get a random vertex with a given type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">vertices</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="n">exact_match</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_random_vertex_of_types"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_vertex_of_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_random_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_random_vertex_of_types</span><span class="p">(</span>
+        <span class="n">topology</span><span class="p">,</span> <span class="n">vertex_types</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get a random vertex with any of the given types</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -398,6 +459,7 @@
         <span class="k">for</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">vertex_types</span><span class="p">:</span>
             <span class="n">v</span> <span class="o">+=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex_type</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_not_found</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="n">debug_msg</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
 

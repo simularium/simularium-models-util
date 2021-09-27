@@ -104,154 +104,17 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="module-simularium_models_util.visualization.actin_visualization">
-<span id="simularium-models-util-visualization-actin-visualization-module"></span><h2>simularium_models_util.visualization.actin_visualization module<a class="headerlink" href="#module-simularium_models_util.visualization.actin_visualization" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.visualization.actin_visualization.</span></span><span class="sig-name descname"><span class="pre">ActinVisualization</span></span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>visualize an actin trajectory in Simularium</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.generate_plots">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.generate_plots" title="Permalink to this definition"></a></dt>
-<dd><p>Use an ActinAnalyzer to generate plots of observables</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_actin_growth_reactions_vs_concentration_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actin_growth_reactions_vs_concentration_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_actin_growth_reactions_vs_concentration_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_actin_growth_reactions_vs_concentration_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of cumulative reaction events over time
-for each total polymerization reaction over time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_avg_length_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_avg_length_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_avg_length_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_avg_length_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of average mother and daughter filament length</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_bound_monomers_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_bound_monomers_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_bound_monomers_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_bound_monomers_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of percent actin in filaments</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_branch_angle_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_branch_angle_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_branch_angle_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_branch_angle_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of branch angle mean and std dev</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_capped_ends_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_capped_ends_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_capped_ends_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_capped_ends_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of percent barbed ends that are capped</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_depolymerization_reactions_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_depolymerization_reactions_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_depolymerization_reactions_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_depolymerization_reactions_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of cumulative reaction events over time
-for each total polymerization reaction over time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_dimers_trimers_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_dimers_trimers_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_dimers_trimers_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_dimers_trimers_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of number of dimer and trimer complexes over time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_filament_straightness_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_filament_straightness_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_filament_straightness_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_filament_straightness_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of how many nm each monomer is away
-from ideal position in a straight filament</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_helix_pitch_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_helix_pitch_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_helix_pitch_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_helix_pitch_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of average helix pitch
-for both the short and long helices
-ideal Ref: <a class="reference external" href="http://www.jbc.org/content/266/1/1.full.pdf">http://www.jbc.org/content/266/1/1.full.pdf</a></p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.get_polymerization_reactions_plot">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_polymerization_reactions_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.get_polymerization_reactions_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_polymerization_reactions_plot" title="Permalink to this definition"></a></dt>
-<dd><p>Add a plot of cumulative reaction events over time
-for each total polymerization reaction over time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.actin_visualization.ActinVisualization.visualize_actin">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">visualize_actin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/actin_visualization.html#ActinVisualization.visualize_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.actin_visualization.ActinVisualization.visualize_actin" title="Permalink to this definition"></a></dt>
-<dd><p>visualize an actin trajectory in Simularium</p>
-</dd></dl>
-
-</dd></dl>
-
+<section id="simularium-models-util-visualization-actin-visualization-module">
+<h2>simularium_models_util.visualization.actin_visualization module<a class="headerlink" href="#simularium-models-util-visualization-actin-visualization-module" title="Permalink to this headline"></a></h2>
 </section>
-<section id="module-simularium_models_util.visualization.kinesin_visualization">
-<span id="simularium-models-util-visualization-kinesin-visualization-module"></span><h2>simularium_models_util.visualization.kinesin_visualization module<a class="headerlink" href="#module-simularium_models_util.visualization.kinesin_visualization" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.kinesin_visualization.KinesinVisualization">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.visualization.kinesin_visualization.</span></span><span class="sig-name descname"><span class="pre">KinesinVisualization</span></span><a class="reference internal" href="_modules/simularium_models_util/visualization/kinesin_visualization.html#KinesinVisualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.kinesin_visualization.KinesinVisualization" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>visualize a kinesin trajectory in Simularium</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.kinesin_visualization.KinesinVisualization.get_mapping_for_all_polymer_types">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_mapping_for_all_polymer_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types_mapping</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/kinesin_visualization.html#KinesinVisualization.get_mapping_for_all_polymer_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.kinesin_visualization.KinesinVisualization.get_mapping_for_all_polymer_types" title="Permalink to this definition"></a></dt>
-<dd><p>creates a dictionary mapping particle type for all polymer types to a value
-for a dictionary of types and values</p>
-<p>returns dictionary mapping all types to values</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.kinesin_visualization.KinesinVisualization.visualize_kinesin">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">visualize_kinesin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/kinesin_visualization.html#KinesinVisualization.visualize_kinesin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.kinesin_visualization.KinesinVisualization.visualize_kinesin" title="Permalink to this definition"></a></dt>
-<dd><p>visualize a kinesin trajectory in Simularium</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.kinesin_visualization.main">
-<span class="sig-prename descclassname"><span class="pre">simularium_models_util.visualization.kinesin_visualization.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/kinesin_visualization.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.kinesin_visualization.main" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<section id="simularium-models-util-visualization-kinesin-visualization-module">
+<h2>simularium_models_util.visualization.kinesin_visualization module<a class="headerlink" href="#simularium-models-util-visualization-kinesin-visualization-module" title="Permalink to this headline"></a></h2>
 </section>
-<section id="module-simularium_models_util.visualization.microtubules_visualization">
-<span id="simularium-models-util-visualization-microtubules-visualization-module"></span><h2>simularium_models_util.visualization.microtubules_visualization module<a class="headerlink" href="#module-simularium_models_util.visualization.microtubules_visualization" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.visualization.microtubules_visualization.</span></span><span class="sig-name descname"><span class="pre">MicrotubulesVisualization</span></span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>visualize a microtubules trajectory in Simularium</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_mapping_for_all_polymer_types">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_mapping_for_all_polymer_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">types_mapping</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.get_mapping_for_all_polymer_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_mapping_for_all_polymer_types" title="Permalink to this definition"></a></dt>
-<dd><p>creates a dictionary mapping particle type for all polymer types to a value
-for a dictionary of types and values</p>
-<p>returns dictionary mapping all types to values</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.visualize_microtubules">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">visualize_microtubules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.visualize_microtubules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.visualize_microtubules" title="Permalink to this definition"></a></dt>
-<dd><p>visualize a microtubule trajectory in Simularium</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.main">
-<span class="sig-prename descclassname"><span class="pre">simularium_models_util.visualization.microtubules_visualization.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.main" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<section id="simularium-models-util-visualization-microtubules-visualization-module">
+<h2>simularium_models_util.visualization.microtubules_visualization module<a class="headerlink" href="#simularium-models-util-visualization-microtubules-visualization-module" title="Permalink to this headline"></a></h2>
 </section>
-<section id="module-simularium_models_util.visualization">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simularium_models_util.visualization" title="Permalink to this headline"></a></h2>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 

@@ -687,13 +687,13 @@ angle values are in degrees)</p></li>
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.actin.actin_test_data.</span></span><span class="sig-name descname"><span class="pre">ActinTestData</span></span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_test_data.ActinTestData.branched_actin_fiber">
-<span class="sig-name descname"><span class="pre">branched_actin_fiber</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData.branched_actin_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData.branched_actin_fiber" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_test_data.ActinTestData.complex_branched_actin_fiber">
+<span class="sig-name descname"><span class="pre">complex_branched_actin_fiber</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData.complex_branched_actin_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData.complex_branched_actin_fiber" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_test_data.ActinTestData.branched_actin_monomers">
-<span class="sig-name descname"><span class="pre">branched_actin_monomers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData.branched_actin_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData.branched_actin_monomers" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_test_data.ActinTestData.complex_branched_actin_monomers">
+<span class="sig-name descname"><span class="pre">complex_branched_actin_monomers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData.complex_branched_actin_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData.complex_branched_actin_monomers" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -704,6 +704,11 @@ angle values are in degrees)</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_test_data.ActinTestData.linear_actin_monomers">
 <span class="sig-name descname"><span class="pre">linear_actin_monomers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData.linear_actin_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData.linear_actin_monomers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_test_data.ActinTestData.simple_branched_actin_fiber">
+<span class="sig-name descname"><span class="pre">simple_branched_actin_fiber</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_test_data.html#ActinTestData.simple_branched_actin_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_test_data.ActinTestData.simple_branched_actin_fiber" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -964,7 +969,7 @@ inside a box centered at origin with extent</p>
 </dd>
 </dl>
 <p>}
-* IDs are uuid strings</p>
+* IDs are uuid strings or ints</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1148,6 +1153,12 @@ as well as the offset vector</p>
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_new_arp23</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_new_arp23"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_new_arp23" title="Permalink to this definition"></a></dt>
 <dd><p>get a new arp3 and its unbranched arp2#free neighbor,
 meaning the arp2/3 dimer has just bound</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_new_vertex">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_new_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_new_vertex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_new_vertex" title="Permalink to this definition"></a></dt>
+<dd><p>Get the vertex tagged “new”</p>
 </dd></dl>
 
 <dl class="py method">

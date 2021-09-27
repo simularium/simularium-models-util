@@ -114,7 +114,7 @@
             <span class="p">)</span>
         <span class="p">]</span></div>
 
-<div class="viewcode-block" id="ActinTestData.branched_actin_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_test_data.ActinTestData.branched_actin_fiber">[docs]</a>    <span class="k">def</span> <span class="nf">branched_actin_fiber</span><span class="p">():</span>
+<div class="viewcode-block" id="ActinTestData.complex_branched_actin_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_test_data.ActinTestData.complex_branched_actin_fiber">[docs]</a>    <span class="k">def</span> <span class="nf">complex_branched_actin_fiber</span><span class="p">():</span>
         <span class="k">return</span> <span class="p">[</span>
             <span class="n">FiberData</span><span class="p">(</span>
                 <span class="n">fiber_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -257,6 +257,34 @@
                     <span class="n">ArpData</span><span class="p">(</span>
                         <span class="n">arp_id</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                         <span class="n">position</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                    <span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">]</span></div>
+
+<div class="viewcode-block" id="ActinTestData.simple_branched_actin_fiber"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_test_data.ActinTestData.simple_branched_actin_fiber">[docs]</a>    <span class="k">def</span> <span class="nf">simple_branched_actin_fiber</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">FiberData</span><span class="p">(</span>
+                <span class="n">fiber_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">points</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                <span class="p">],</span>
+                <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span>
+                <span class="n">nucleated_arps</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">ArpData</span><span class="p">(</span>
+                        <span class="n">arp_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">position</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                        <span class="n">nucleated</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">daughter_fiber</span><span class="o">=</span><span class="n">FiberData</span><span class="p">(</span>
+                            <span class="n">fiber_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">points</span><span class="o">=</span><span class="p">[</span>
+                                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">16.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">45.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                            <span class="p">],</span>
+                            <span class="n">type_name</span><span class="o">=</span><span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span>
+                            <span class="n">is_daughter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="p">),</span>
                     <span class="p">),</span>
                 <span class="p">],</span>
             <span class="p">)</span>
@@ -471,7 +499,7 @@
             <span class="p">},</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="ActinTestData.branched_actin_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_test_data.ActinTestData.branched_actin_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">branched_actin_monomers</span><span class="p">():</span>
+<div class="viewcode-block" id="ActinTestData.complex_branched_actin_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_test_data.ActinTestData.complex_branched_actin_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">complex_branched_actin_monomers</span><span class="p">():</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;topologies&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="mi">122</span><span class="p">:</span> <span class="p">{</span>

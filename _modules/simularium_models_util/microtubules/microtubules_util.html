@@ -946,12 +946,12 @@
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grow 1&quot;</span><span class="p">)</span>
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-        <span class="n">v_newB</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;tubulinB#free&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_newB</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to find tubulinB#free vertex</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-            <span class="p">)</span>
+        <span class="n">v_newB</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#free&quot;</span><span class="p">,</span>
+            <span class="kc">True</span><span class="p">,</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find tubulinB#free vertex&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">v_newA</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span> <span class="n">v_newB</span><span class="p">,</span> <span class="s2">&quot;tubulinA#free&quot;</span><span class="p">,</span> <span class="kc">True</span>
         <span class="p">)</span>
@@ -990,12 +990,12 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grow 2&quot;</span><span class="p">)</span>
-        <span class="n">v_newB</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;tubulinB#free&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_newB</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to find tubulinB#free vertex</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-            <span class="p">)</span>
+        <span class="n">v_newB</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#free&quot;</span><span class="p">,</span>
+            <span class="kc">True</span><span class="p">,</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find tubulinB#free vertex&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">v_newA</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span> <span class="n">v_newB</span><span class="p">,</span> <span class="s2">&quot;tubulinA#free&quot;</span><span class="p">,</span> <span class="kc">True</span>
         <span class="p">)</span>
@@ -1398,24 +1398,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="n">detaching_sites</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;site#2_detach&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;site#1_detach&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+                <span class="n">topology</span><span class="p">,</span>
+                <span class="s2">&quot;site#2_detach&quot;</span><span class="p">,</span>
+                <span class="kc">False</span><span class="p">,</span>
+                <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find detaching sites&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+                <span class="n">topology</span><span class="p">,</span>
+                <span class="s2">&quot;site#1_detach&quot;</span><span class="p">,</span>
+                <span class="kc">False</span><span class="p">,</span>
+                <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find detaching sites&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">]</span>
-        <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="n">detaching_sites</span><span class="p">:</span>
-            <span class="n">site0</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s2">&quot;None&quot;</span>
-                <span class="k">if</span> <span class="n">detaching_sites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="k">else</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">detaching_sites</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="p">)</span>
-            <span class="n">site1</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="s2">&quot;None&quot;</span>
-                <span class="k">if</span> <span class="n">detaching_sites</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="k">else</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">detaching_sites</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find detaching sites, (</span><span class="si">{</span><span class="n">site0</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">site1</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="o">+</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-            <span class="p">)</span>
         <span class="n">detaching_tubulins</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
                 <span class="n">topology</span><span class="p">,</span> <span class="n">detaching_sites</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;tubulin&quot;</span><span class="p">,</span> <span class="kc">False</span>
@@ -1552,10 +1547,14 @@
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hydrolyze&quot;</span><span class="p">)</span>
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
-        <span class="n">tubulin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;#GTP&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">tubulin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="s2">&quot;#GTP&quot;</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Hydrolyze cancelled: Couldn&#39;t find GTP-tubulin&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">tubulin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hydrolyze cancelled: Couldn&#39;t find GTP-tubulin&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">sites</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_tubulin_sites</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">tubulin</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">sites</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

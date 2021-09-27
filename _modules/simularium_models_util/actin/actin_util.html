@@ -100,7 +100,7 @@
 <span class="kn">import</span> <span class="nn">readdy</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
-<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span><span class="p">,</span> <span class="n">ParticleData</span>
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 <span class="kn">from</span> <span class="nn">.actin_generator</span> <span class="kn">import</span> <span class="n">ActinGenerator</span>
 <span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span>
 <span class="kn">from</span> <span class="nn">.fiber_data</span> <span class="kn">import</span> <span class="n">FiberData</span>
@@ -124,6 +124,21 @@
 <span class="sd">        which can&#39;t be instance methods, so parameters are global</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">set_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ActinUtil.get_new_vertex"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_new_vertex">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_new_vertex</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the vertex tagged &quot;new&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">],</span> <span class="n">exact_match</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find new vertex&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Found more than one new vertex</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="ActinUtil.get_new_arp23"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_new_arp23">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_new_arp23</span><span class="p">(</span><span class="n">topology</span><span class="p">):</span>
@@ -274,21 +289,19 @@
                 <span class="p">)</span>
             <span class="n">offset_index</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">edges</span>
             <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-                <span class="n">topology</span><span class="p">,</span> <span class="n">v_branch</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span> <span class="p">[]</span>
+                <span class="n">topology</span><span class="p">,</span>
+                <span class="n">v_branch</span><span class="p">,</span>
+                <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span>
+                <span class="p">[],</span>
+                <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to set position: couldn&#39;t find arp2&quot;</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Failed to set position: couldn&#39;t find arp2</span><span class="se">\n</span><span class="s2">&quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
         <span class="n">v_arp3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">],</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_arp2</span><span class="p">,</span>
+            <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">],</span>
+            <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to set position: couldn&#39;t find arp3&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_arp3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to set position: couldn&#39;t find arp3</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">actin_types</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin&quot;</span><span class="p">)</span>
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">)</span>
@@ -296,23 +309,21 @@
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">v_actin_arp3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_arp3</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to set position: couldn&#39;t find actin_arp3&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_actin_arp3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to set position: couldn&#39;t find actin_arp3</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">n_pointed</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">actin_types</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">n_pointed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;actin#</span><span class="si">{</span><span class="n">n_pointed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
         <span class="n">v_actin_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_actin_arp3</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to set position: couldn&#39;t find actin_arp2&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_actin_arp2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to set position: couldn&#39;t find actin_arp2</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">n_pointed</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">actin_types</span> <span class="o">=</span> <span class="p">[</span>
             <span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">n_pointed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -323,15 +334,12 @@
         <span class="k">if</span> <span class="n">n_pointed</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">actin_types</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">]</span>
         <span class="n">v_prev</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[</span><span class="n">v_actin_arp3</span><span class="p">]</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_actin_arp2</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">v_actin_arp3</span><span class="p">],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to set position: couldn&#39;t find v_prev&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_prev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to set position: couldn&#39;t find v_prev, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;actin_arp2 is </span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;actin_arp3 is </span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vertex_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">))</span>
-            <span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="p">[</span><span class="n">v_prev</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">],</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother1_to_branch_actin_vectors</span><span class="p">()[</span><span class="n">offset_index</span><span class="p">],</span>
@@ -437,13 +445,12 @@
             <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">v1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[</span><span class="n">v_actin_arp3</span><span class="p">]</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_actin_arp2</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">v_actin_arp3</span><span class="p">],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to set position: couldn&#39;t find v1&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to set position: couldn&#39;t find v1</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">pos1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
         <span class="n">pos2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">)</span>
         <span class="n">pos3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">)</span>
@@ -473,12 +480,13 @@
 <span class="sd">        and with or without a branch attached to the arp2</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">v_arp3s</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertices_of_type</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span> <span class="k">if</span> <span class="n">with_ATP</span> <span class="k">else</span> <span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="kc">True</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="s2">&quot;arp3#ATP&quot;</span> <span class="k">if</span> <span class="n">with_ATP</span> <span class="k">else</span> <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
+            <span class="kc">True</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find arp3 (ATP=</span><span class="si">{</span><span class="n">with_ATP</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_arp3s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;ATP&quot;</span> <span class="k">if</span> <span class="n">with_ATP</span> <span class="k">else</span> <span class="s2">&quot;ADP&quot;</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find arp3 with </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="n">v_arp2s</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">v_arp3</span> <span class="ow">in</span> <span class="n">v_arp3s</span><span class="p">:</span>
@@ -489,8 +497,7 @@
                 <span class="n">v_arp2s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_arp2</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_arp2s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;out&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">with_branch</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find arp2 with</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2"> branch&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find arp2 (branch=</span><span class="si">{</span><span class="n">with_branch</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">v_arp2s</span><span class="p">)</span></div>
 
@@ -550,30 +557,34 @@
 <span class="sd">                },</span>
 <span class="sd">            },</span>
 <span class="sd">        }</span>
-<span class="sd">        * IDs are uuid strings</span>
+<span class="sd">        * IDs are uuid strings or ints</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">topology_id</span> <span class="ow">in</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">]:</span>
             <span class="n">topology</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">topology_id</span><span class="p">]</span>
             <span class="n">types</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">neighbor_ids</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">])):</span>
-                <span class="n">particle_id</span> <span class="o">=</span> <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
-                <span class="n">particle_dict</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span>
-                <span class="n">particle</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span><span class="n">unique_id</span><span class="o">=</span><span class="n">particle_id</span><span class="p">,</span> <span class="o">**</span><span class="n">particle_dict</span><span class="p">)</span>
-                <span class="n">types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">type_name</span><span class="p">)</span>
-                <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-                <span class="n">neighbor_ids</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">neighbor_id</span> <span class="ow">in</span> <span class="n">particle</span><span class="o">.</span><span class="n">neighbor_ids</span><span class="p">:</span>
-                    <span class="n">neighbor_ids</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                        <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">neighbor_id</span><span class="p">)</span>
-                    <span class="p">)</span>
+            <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">]:</span>
+                <span class="n">particle</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span>
+                <span class="n">types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">])</span>
+                <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
             <span class="n">top</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span>
                 <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">],</span> <span class="n">types</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">neighbor_ids</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">neighbor_id</span> <span class="ow">in</span> <span class="n">neighbor_ids</span><span class="p">[</span><span class="n">particle_id</span><span class="p">]:</span>
-                    <span class="n">top</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">particle_id</span><span class="p">,</span> <span class="n">neighbor_id</span><span class="p">)</span></div>
+            <span class="n">added_edges</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">neighbor_id</span> <span class="ow">in</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">][</span>
+                    <span class="s2">&quot;neighbor_ids&quot;</span>
+                <span class="p">]:</span>
+                    <span class="n">neighbor_index</span> <span class="o">=</span> <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">neighbor_id</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">neighbor_index</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">added_edges</span> <span class="ow">and</span> <span class="p">(</span>
+                        <span class="n">neighbor_index</span><span class="p">,</span>
+                        <span class="n">index</span><span class="p">,</span>
+                    <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">added_edges</span><span class="p">:</span>
+                        <span class="n">top</span><span class="o">.</span><span class="n">get_graph</span><span class="p">()</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">neighbor_index</span><span class="p">)</span>
+                        <span class="n">added_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">index</span><span class="p">,</span> <span class="n">neighbor_index</span><span class="p">))</span>
+                        <span class="n">added_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">neighbor_index</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+                        <span class="n">test</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">index</span><span class="p">,</span> <span class="n">neighbor_index</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_actin_dimer"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_actin_dimer">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_actin_dimer</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">simulation</span><span class="p">):</span>
@@ -689,18 +700,11 @@
                 <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
             <span class="p">],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find barbed end of dimer&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_barbed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find barbed end of dimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">v_pointed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_barbed</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_pointed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find pointed end of dimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_pointed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_barbed</span><span class="p">,</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find pointed end of dimer&quot;</span>
+        <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">,</span> <span class="n">v_pointed</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">,</span> <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">v_pointed</span><span class="p">,</span> <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">)</span>
@@ -715,26 +719,19 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trimerize&quot;</span><span class="p">)</span>
-        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;actin#new&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">]</span>
+        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_new_vertex</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">v_neighbor1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_new</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find first neighbor of new vertex in trimer&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find new vertex in trimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">v_neighbor1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_neighbor1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find first neighbor of new vertex in trimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">v_neighbor2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_neighbor1</span><span class="p">,</span> <span class="p">[</span><span class="n">v_new</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">v_neighbor2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find second neighbor of new vertex in trimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_neighbor2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_neighbor1</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">v_new</span><span class="p">],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find second neighbor of new vertex in trimer&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span>
             <span class="n">recipe</span><span class="p">,</span>
@@ -759,17 +756,18 @@
 <span class="sd">        &quot;Actin-Polymer(arp2) + Actin-Monomer(actin#free) -&gt; &quot;</span>
 <span class="sd">            &quot;Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new)&quot;,</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">v_end</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">end_type</span><span class="p">,</span> <span class="n">exact_end_type</span><span class="p">)</span>
+        <span class="n">v_end</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">end_type</span><span class="p">,</span>
+            <span class="n">exact_end_type</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Couldn&#39;t find end monomer&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">v_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find end monomer&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_end</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_neighbor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find neighbor of end</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_end</span><span class="p">,</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find neighbor of end&quot;</span>
+        <span class="p">)</span>
         <span class="n">pos_end</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_end</span><span class="p">)</span>
         <span class="n">pos_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_position</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_neighbor</span><span class="p">)</span>
         <span class="n">v_neighbor_to_end</span> <span class="o">=</span> <span class="n">pos_end</span> <span class="o">-</span> <span class="n">pos_neighbor</span>
@@ -812,18 +810,14 @@
                 <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
             <span class="p">],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find barbed end in trimer&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_barbed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find barbed end in trimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_barbed</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_neighbor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find neighbor of barbed end in trimer</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_barbed</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find neighbor of barbed end in trimer&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">,</span> <span class="n">v_neighbor</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">,</span> <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_neighbor</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;barbed&quot;</span><span class="p">],</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
@@ -838,20 +832,10 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grow Pointed&quot;</span><span class="p">)</span>
-        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;actin#new&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">]</span>
+        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_new_vertex</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find neighbor of new pointed end&quot;</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find new vertex at pointed end</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_neighbor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find neighbor of new pointed end</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span>
             <span class="n">recipe</span><span class="p">,</span>
@@ -896,20 +880,10 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grow Barbed&quot;</span><span class="p">)</span>
-        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;actin#new&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">]</span>
+        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_new_vertex</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find neighbor of new barbed end&quot;</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find new barbed end</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_neighbor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find neighbor of new barbed end</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span>
             <span class="n">recipe</span><span class="p">,</span>
@@ -961,12 +935,9 @@
                 <span class="sa">f</span><span class="s2">&quot;Failed to find new arp2 and arp3</span><span class="se">\n</span><span class="s2">&quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-        <span class="n">v_actin_barbed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">,</span> <span class="p">[</span><span class="n">v_arp2</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">v_actin_barbed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find new actin_arp3</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_actin_barbed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">,</span> <span class="p">[</span><span class="n">v_arp2</span><span class="p">],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find new actin_arp3&quot;</span>
+        <span class="p">)</span>
         <span class="c1"># make sure arp3 binds to the barbed end neighbor of the actin bound to arp2</span>
         <span class="n">n_pointed</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_number</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_barbed</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">actin_types</span> <span class="o">=</span> <span class="p">[</span>
@@ -978,7 +949,12 @@
         <span class="k">if</span> <span class="n">n_pointed</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">actin_types</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">]</span>
         <span class="n">v_actin_pointed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_actin_barbed</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_actin_barbed</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find actin_arp2 with number </span><span class="si">{</span><span class="n">n_pointed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">v_actin_pointed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pointed_type</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_actin_pointed</span><span class="p">)</span>
@@ -990,8 +966,6 @@
                 <span class="p">)</span>
                 <span class="k">return</span> <span class="n">recipe</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find actin_arp2 with number </span><span class="si">{</span><span class="n">n_pointed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">ActinUtil</span><span class="o">.</span><span class="n">cancel_branch_reaction</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_actin_barbed</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;free&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
@@ -1011,14 +985,7 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start Branch&quot;</span><span class="p">)</span>
-        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;actin#new&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">]</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find new branch actin</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_new_vertex</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;barbed&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;branch&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">],</span> <span class="kc">True</span>
         <span class="p">)</span>
@@ -1059,11 +1026,12 @@
         <span class="n">atp_state</span> <span class="o">=</span> <span class="s2">&quot;_ATP&quot;</span> <span class="k">if</span> <span class="n">ATP</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">end_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;actin#</span><span class="si">{</span><span class="n">end_state</span><span class="si">}{</span><span class="n">atp_state</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">v_end</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="n">end_type</span><span class="p">)</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="n">end_type</span><span class="p">),</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Couldn&#39;t find end actin to remove&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">v_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find end actin to remove&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">v_arp</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span> <span class="n">v_end</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> <span class="p">[]</span>
@@ -1079,10 +1047,10 @@
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">)</span>
             <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
             <span class="p">[],</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Couldn&#39;t find plain actin neighbor of actin to remove&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">v_neighbor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find plain actin neighbor of actin to remove&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">barbed</span><span class="p">:</span>
             <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
@@ -1202,10 +1170,10 @@
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">)</span>
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">)</span>
             <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Couldn&#39;t find ATP-actin&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find ATP-actin&quot;</span><span class="p">)</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Fail-Hydrolysis-Actin&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;ATP&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
@@ -1219,10 +1187,10 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hydrolyze Arp2/3&quot;</span><span class="p">)</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">])</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_types</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span> <span class="s2">&quot;Couldn&#39;t find ATP-arp3&quot;</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find ATP-arp3&quot;</span><span class="p">)</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Fail-Hydrolysis-Arp&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;ATP&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
@@ -1236,10 +1204,14 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nucleotide Exchange Actin&quot;</span><span class="p">)</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;actin#free&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="s2">&quot;actin#free&quot;</span><span class="p">,</span>
+            <span class="kc">True</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Couldn&#39;t find ADP-actin&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find ADP-actin&quot;</span><span class="p">)</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Fail-Nucleotide-Exchange-Actin&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ATP&quot;</span><span class="p">],</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
@@ -1253,10 +1225,10 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nucleotide Exchange Arp2/3&quot;</span><span class="p">)</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span> <span class="s2">&quot;Couldn&#39;t find ADP-arp3&quot;</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find ADP-arp3&quot;</span><span class="p">)</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Fail-Nucleotide-Exchange-Arp&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ATP&quot;</span><span class="p">],</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
@@ -1284,28 +1256,14 @@
             <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">v_actin_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find actin_arp2&quot;</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_actin_arp2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find actin_arp2</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">v_arp3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">],</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">],</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find arp3&quot;</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_arp3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find arp3</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">v_actin_arp3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[]</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="n">v_arp3</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[],</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find actin_arp3&quot;</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_actin_arp3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find actin_arp3</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_arp2</span><span class="p">,</span> <span class="n">v_actin_arp2</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_arp3</span><span class="p">,</span> <span class="n">v_actin_arp3</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;free&quot;</span><span class="p">],</span> <span class="p">[])</span>
@@ -1351,12 +1309,13 @@
             <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">,</span>
             <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="n">v_actin1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="n">actin_types</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">if</span> <span class="n">v_actin1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find first branch actin</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_actin1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_arp2</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find first branch actin&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_arp2</span><span class="p">,</span> <span class="n">v_actin1</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_arp2</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;branched&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">pt_actin1</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_actin1</span><span class="p">)</span>
@@ -1401,11 +1360,7 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finish Cap Bind&quot;</span><span class="p">)</span>
-        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cap#new&quot;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">v_new</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find new cap</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="n">v_new</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_new_vertex</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_new</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;bound&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;new&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">recipe</span></div>
@@ -1418,10 +1373,10 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Remove Cap&quot;</span><span class="p">)</span>
-        <span class="n">v_cap</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_types</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cap#bound&quot;</span><span class="p">])</span>
+        <span class="n">v_cap</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_vertex_of_types</span><span class="p">(</span>
+            <span class="n">topology</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;cap#bound&quot;</span><span class="p">],</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span> <span class="s2">&quot;Couldn&#39;t find cap&quot;</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">v_cap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t find cap&quot;</span><span class="p">)</span>
             <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Fail-Cap-Unbind&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">v_actin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
@@ -1431,12 +1386,8 @@
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">)</span>
             <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
             <span class="p">[],</span>
+            <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find actin bound to cap&quot;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">v_actin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Failed to find actin bound to cap</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_cap</span><span class="p">,</span> <span class="n">v_actin</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_cap</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;bound&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_actin</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;barbed&quot;</span><span class="p">],</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
