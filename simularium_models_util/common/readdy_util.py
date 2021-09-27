@@ -925,10 +925,10 @@ class ReaddyUtil:
     def shape_frame_edge_data(time_index, topology_records):
         """
         After a simulation has finished,
-        get all the edges at the given time index 
+        get all the edges at the given time index
         as (particle1 id, particle2 id)
 
-        topology_records from 
+        topology_records from
         readdy.Trajectory(h5_file_path).read_observable_topologies()
         """
         result = []
@@ -959,10 +959,11 @@ class ReaddyUtil:
         }
         for index, top in enumerate(topology_records[time_index]):
             result["topologies"][index] = {
-                "type_name": top.type, 
-                "particle_ids": top.particles
+                "type_name": top.type,
+                "particle_ids": top.particles,
             }
         for p in range(len(ids[time_index])):
+            p_id = ids[time_index][p]
             position = positions[time_index][p]
             neighbor_ids = []
             for edge in edges:
@@ -971,10 +972,10 @@ class ReaddyUtil:
                 elif p_id == edge[1]:
                     neighbor_ids.append(edge[0])
             result["particles"][ids[time_index][p]] = {
-                    "type_name": traj.species_name(types[time_index][p]),
-                    "position": np.array([position[0], position[1], position[2]]),,
-                    "neighbor_ids": neighbor_ids,
-                }
+                "type_name": traj.species_name(types[time_index][p]),
+                "position": np.array([position[0], position[1], position[2]]),
+                "neighbor_ids": neighbor_ids,
+            }
         return result
 
     @staticmethod

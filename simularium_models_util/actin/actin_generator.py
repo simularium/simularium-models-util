@@ -541,7 +541,9 @@ class ActinGenerator:
                 "type_name": "Actin-Polymer",
                 "particle_ids": particle_ids,
             }
-            particles = {p_id : dict(particle_data) for p_id, particle_data in particles.items()}
+            particles = {
+                p_id: dict(particle_data) for p_id, particle_data in particles.items()
+            }
             result["particles"] = {**result["particles"], **particles}
         return result
 

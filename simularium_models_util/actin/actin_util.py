@@ -419,8 +419,8 @@ class ActinUtil:
                             positions[fiber] + length * direction,
                         ],
                     ),
-                ], 
-                -1 if use_uuids else 0
+                ],
+                -1 if use_uuids else 0,
             )
             ActinUtil.add_monomers_from_data(simulation, monomers)
 
@@ -431,7 +431,9 @@ class ActinUtil:
 
         fibers_data : List[FiberData]
         """
-        fiber_monomers = ActinGenerator.get_monomers(fibers_data, -1 if use_uuids else 0)
+        fiber_monomers = ActinGenerator.get_monomers(
+            fibers_data, -1 if use_uuids else 0
+        )
         ActinUtil.add_monomers_from_data(simulation, fiber_monomers)
 
     @staticmethod
@@ -463,9 +465,7 @@ class ActinUtil:
             for index in range(len(topology["particle_ids"])):
                 particle_id = topology["particle_ids"][index]
                 particle_dict = monomer_data["particles"][particle_id]
-                particle = ParticleData(
-                    unique_id=particle_id,
-                    **particle_dict)
+                particle = ParticleData(unique_id=particle_id, **particle_dict)
                 types.append(particle.type_name)
                 positions.append(particle.position)
                 neighbor_ids[index] = []
