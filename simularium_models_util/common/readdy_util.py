@@ -170,7 +170,7 @@ class ReaddyUtil:
         return n / (1e-30 * 6.022e23 * np.power(dim, 3.0))
 
     @staticmethod
-    def vertex_not_found(verbose, error_msg, debug_msg):
+    def vertex_not_found(topology, verbose, error_msg, debug_msg):
         """
         If a vertex was not found, check if an exception should be raised
         or a debug message should be printed
@@ -195,7 +195,7 @@ class ReaddyUtil:
                 exact_match and pt == vertex_type
             ):
                 return vertex
-        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+        ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
@@ -208,7 +208,7 @@ class ReaddyUtil:
         for vertex in topology.graph.get_vertices():
             if topology.particle_type_of_vertex(vertex) in vertex_types:
                 return vertex
-        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+        ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
@@ -221,7 +221,7 @@ class ReaddyUtil:
         for vertex in topology.graph.get_vertices():
             if topology.particle_id_of_vertex(vertex) == vertex_id:
                 return vertex
-        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+        ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
@@ -238,7 +238,7 @@ class ReaddyUtil:
             if topology.particle_id_of_vertex(neighbor) in exclude_ids:
                 continue
             return neighbor.get()
-        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+        ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
@@ -267,7 +267,7 @@ class ReaddyUtil:
                 exact_match and pt == vertex_type
             ):
                 return v_neighbor
-        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+        ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
@@ -294,7 +294,7 @@ class ReaddyUtil:
             pt = topology.particle_type_of_vertex(v_neighbor)
             if pt in vertex_types:
                 return v_neighbor
-        ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+        ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return None
 
     @staticmethod
@@ -312,7 +312,7 @@ class ReaddyUtil:
             ):
                 v.append(vertex)
         if len(v) == 0:
-            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+            ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return v
 
     @staticmethod
@@ -337,7 +337,7 @@ class ReaddyUtil:
             ):
                 v.append(v_neighbor)
         if len(v) == 0:
-            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+            ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
         return v
 
     @staticmethod
@@ -349,7 +349,7 @@ class ReaddyUtil:
         """
         vertices = ReaddyUtil.get_vertices_of_type(topology, vertex_type, exact_match)
         if len(vertices) == 0:
-            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+            ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
             return None
         return random.choice(vertices)
 
@@ -364,7 +364,7 @@ class ReaddyUtil:
         for vertex_type in vertex_types:
             v += ReaddyUtil.get_vertices_of_type(topology, vertex_type, True)
         if len(v) == 0:
-            ReaddyUtil.vertex_not_found(verbose, error_msg, debug_msg)
+            ReaddyUtil.vertex_not_found(topology, verbose, error_msg, debug_msg)
             return None
         return random.choice(v)
 
