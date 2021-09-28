@@ -1392,6 +1392,8 @@ class ActinUtil:
         for i in range(1, 4):
             system.add_topology_species(f"actin#{i}", diffCoeff)
             system.add_topology_species(f"actin#ATP_{i}", diffCoeff)
+            system.add_topology_species(f"actin#mid_{i}", diffCoeff)
+            system.add_topology_species(f"actin#mid_ATP_{i}", diffCoeff)
             system.add_topology_species(f"actin#pointed_{i}", diffCoeff)
             system.add_topology_species(f"actin#pointed_ATP_{i}", diffCoeff)
             system.add_topology_species(f"actin#barbed_{i}", diffCoeff)
@@ -1408,9 +1410,9 @@ class ActinUtil:
         """
         bond_length = ActinStructure.actin_to_actin_distance()
         util.add_polymer_bond_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#barbed_", "actin#barbed_ATP_"],
             1,
             force_constant,
             bond_length,
@@ -1418,7 +1420,7 @@ class ActinUtil:
         )
         util.add_bond(
             ["actin#branch_1", "actin#branch_ATP_1"],
-            ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
+            ["actin#2", "actin#ATP_2", "actin#mid_2", "actin#mid_ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
             force_constant,
             bond_length,
             system,
@@ -1426,7 +1428,9 @@ class ActinUtil:
         util.add_polymer_bond_1D(  # temporary during growth reactions
             [
                 "actin#",
-                "actin#ATP_",
+                "actin#ATP_", 
+                "actin#mid_", 
+                "actin#mid_ATP_",
                 "actin#pointed_",
                 "actin#pointed_ATP_",
                 "actin#barbed_",
@@ -1459,11 +1463,11 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_angle()
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             -1,
-            ["actin#", "actin#ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_"],
             0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#barbed_", "actin#barbed_ATP_"],
             1,
             force_constant,
             angle,
@@ -1471,8 +1475,8 @@ class ActinUtil:
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
-            ["actin#2", "actin#ATP_2"],
-            ["actin#3", "actin#ATP_3", "actin#barbed_3", "actin#barbed_ATP_3"],
+            ["actin#2", "actin#ATP_2", "actin#mid_2", "actin#mid_ATP_2"],
+            ["actin#3", "actin#ATP_3", "actin#mid_3", "actin#mid_ATP_3", "actin#barbed_3", "actin#barbed_ATP_3"],
             force_constant,
             angle,
             system,
@@ -1485,13 +1489,13 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             -1,
-            ["actin#", "actin#ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_"],
             0,
-            ["actin#", "actin#ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_"],
             1,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#barbed_", "actin#barbed_ATP_"],
             2,
             force_constant,
             angle,
@@ -1499,9 +1503,9 @@ class ActinUtil:
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
-            ["actin#2", "actin#ATP_2"],
-            ["actin#3", "actin#ATP_3"],
-            ["actin#1", "actin#ATP_1", "actin#barbed_1", "actin#barbed_ATP_1"],
+            ["actin#2", "actin#ATP_2", "actin#mid_2", "actin#mid_ATP_2"],
+            ["actin#3", "actin#ATP_3", "actin#mid_3", "actin#mid_ATP_3"],
+            ["actin#1", "actin#ATP_1", "actin#mid_1", "actin#mid_ATP_1", "actin#barbed_1", "actin#barbed_ATP_1"],
             force_constant,
             angle,
             system,
@@ -1513,7 +1517,7 @@ class ActinUtil:
         add bonds between arp2, arp3, and actins
         """
         util.add_polymer_bond_1D(  # mother filament actin to arp2 bonds
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             0,
             ["arp2", "arp2#branched", "arp2#free"],
             None,
@@ -1522,7 +1526,7 @@ class ActinUtil:
             system,
         )
         util.add_polymer_bond_1D(  # mother filament actin to arp3 bonds
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_" "actin#barbed_", "actin#barbed_ATP_"],
             0,
             ["arp3", "arp3#ATP", "arp3#new", "arp3#new_ATP"],
             None,
@@ -1583,7 +1587,6 @@ class ActinUtil:
             ActinStructure.arp2_daughter1_daughter2_angle(),
             system,
         )
-        angle = ActinStructure.mother1_mother2_arp3_angle()
         util.add_polymer_angle_1D(
             ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             0,
@@ -1592,15 +1595,7 @@ class ActinUtil:
             ["arp3", "arp3#ATP"],
             None,
             force_constant,
-            angle,
-            system,
-        )
-        util.add_angle(
-            ["actin#branch_1", "actin#branch_ATP_1"],
-            ["actin#2", "actin#ATP_2"],
-            ["arp3", "arp3#ATP"],
-            force_constant,
-            angle,
+            ActinStructure.mother1_mother2_arp3_angle(),
             system,
         )
         util.add_polymer_angle_1D(
@@ -1657,7 +1652,7 @@ class ActinUtil:
         )
         angle = ActinStructure.mother_mother0_mother1_arp2_dihedral_angle()
         util.add_polymer_dihedral_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             -1,
             ["actin#", "actin#ATP_"],
             0,
@@ -1856,9 +1851,9 @@ class ActinUtil:
         """
         angle = ActinStructure.actin_to_actin_angle()
         util.add_polymer_angle_1D(
-            ["actin#", "actin#ATP_", "actin#pointed_", "actin#pointed_ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_", "actin#pointed_", "actin#pointed_ATP_"],
             0,
-            ["actin#", "actin#ATP_"],
+            ["actin#", "actin#ATP_", "actin#mid_", "actin#mid_ATP_"],
             1,
             ["cap#bound"],
             None,
