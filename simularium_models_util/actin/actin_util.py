@@ -36,7 +36,7 @@ class ActinUtil:
         Get the vertex tagged "new"
         """
         results = ReaddyUtil.get_vertices_of_type(
-            topology, ["new"], exact_match=False, error_msg="Failed to find new vertex"
+            topology, "new", exact_match=False, error_msg="Failed to find new vertex"
         )
         if len(results) > 1:
             raise Exception(
