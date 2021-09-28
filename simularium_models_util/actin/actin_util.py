@@ -1570,18 +1570,6 @@ class ActinUtil:
             ActinStructure.arp3_arp2_daughter1_angle(),
             system,
         )
-        angle = ActinStructure.arp2_daughter1_daughter2_angle()
-        util.add_polymer_angle_1D(
-            ["arp2", "arp2#branched"],
-            None,
-            ["actin#", "actin#ATP_"],
-            0,
-            ["actin#", "actin#ATP_", "actin#barbed_", "actin#barbed_ATP_"],
-            1,
-            force_constant,
-            angle,
-            system,
-        )
         util.add_angle(
             ["arp2", "arp2#branched"],
             [
@@ -1592,7 +1580,7 @@ class ActinUtil:
             ],
             ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
             force_constant,
-            angle,
+            ActinStructure.arp2_daughter1_daughter2_angle(),
             system,
         )
         angle = ActinStructure.mother1_mother2_arp3_angle()
