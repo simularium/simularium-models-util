@@ -624,7 +624,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Trimerize")
-        v_new = ReaddyUtil.get_new_vertex(topology)
+        v_new = ActinUtil.get_new_vertex(topology)
         v_neighbor1 = ReaddyUtil.get_first_neighbor(
             topology,
             v_new,
@@ -737,7 +737,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow Pointed")
-        v_new = ReaddyUtil.get_new_vertex(topology)
+        v_new = ActinUtil.get_new_vertex(topology)
         v_neighbor = ReaddyUtil.get_first_neighbor(
             topology, v_new, [], error_msg="Failed to find neighbor of new pointed end"
         )
@@ -785,7 +785,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Grow Barbed")
-        v_new = ReaddyUtil.get_new_vertex(topology)
+        v_new = ActinUtil.get_new_vertex(topology)
         v_neighbor = ReaddyUtil.get_first_neighbor(
             topology, v_new, [], error_msg="Failed to find neighbor of new barbed end"
         )
@@ -890,7 +890,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Start Branch")
-        v_new = ReaddyUtil.get_new_vertex(topology)
+        v_new = ActinUtil.get_new_vertex(topology)
         ReaddyUtil.set_flags(
             topology, recipe, v_new, ["barbed", "1", "branch"], ["new"], True
         )
@@ -1265,7 +1265,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Finish Cap Bind")
-        v_new = ReaddyUtil.get_new_vertex(topology)
+        v_new = ActinUtil.get_new_vertex(topology)
         ReaddyUtil.set_flags(topology, recipe, v_new, ["bound"], ["new"], True)
         recipe.change_topology_type("Actin-Polymer")
         return recipe
@@ -1584,7 +1584,12 @@ class ActinUtil:
         )
         util.add_angle(
             ["arp2", "arp2#branched"],
-            ["actin#branch_1", "actin#branch_ATP_1", "actin#branch_barbed_1", "actin#branch_barbed_ATP_1"],
+            [
+                "actin#branch_1",
+                "actin#branch_ATP_1",
+                "actin#branch_barbed_1",
+                "actin#branch_barbed_ATP_1",
+            ],
             ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
             force_constant,
             angle,
