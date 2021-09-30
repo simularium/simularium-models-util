@@ -363,6 +363,30 @@ class ActinVisualization:
                 name="actin#ATP",
                 radius=actin_radius,
             ),
+            "actin#mid_1": DisplayData(
+                name="actin#mid",
+                radius=actin_radius,
+            ),
+            "actin#mid_2": DisplayData(
+                name="actin#mid",
+                radius=actin_radius,
+            ),
+            "actin#mid_3": DisplayData(
+                name="actin#mid",
+                radius=actin_radius,
+            ),
+            "actin#mid_ATP_1": DisplayData(
+                name="actin#mid_ATP",
+                radius=actin_radius,
+            ),
+            "actin#mid_ATP_2": DisplayData(
+                name="actin#mid_ATP",
+                radius=actin_radius,
+            ),
+            "actin#mid_ATP_3": DisplayData(
+                name="actin#mid_ATP",
+                radius=actin_radius,
+            ),
             "actin#pointed_1": DisplayData(
                 name="actin#pointed",
                 radius=actin_radius,
