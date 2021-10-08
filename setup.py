@@ -42,6 +42,13 @@ dev_requirements = [
     "wheel>=0.34.2",
 ]
 
+example_requirements = [
+    "psutil",
+    "awscli",
+    "openpyxl>=3.0",
+    *viz_requirements,
+]
+
 requirements = [
     "numpy>=1.16",
     "scipy>=1.5.2",
@@ -53,7 +60,8 @@ extra_requirements = {
     "test": test_requirements,
     "dev": dev_requirements,
     "viz": viz_requirements,
-    "all": [*requirements, *dev_requirements, *viz_requirements],
+    "examples": example_requirements,
+    "all": [*requirements, *dev_requirements, *viz_requirements, *example_requirements],
 }
 
 setup(
