@@ -84,55 +84,55 @@ class ActinTestData:
                                         ],
                                         type_name="Actin-Polymer",
                                         is_daughter=True,
-                                        # nucleated_arps=[
-                                        #     ArpData(
-                                        #         arp_id=5,
-                                        #         position=np.array([-22.6, -42.3, 0]),
-                                        #         nucleated=True,
-                                        #         daughter_fiber=FiberData(
-                                        #             fiber_id=5,
-                                        #             points=[
-                                        #                 np.array([-22.6, -42.3, 0]),
-                                        #                 np.array([-15.8, -61.1, 0]),
-                                        #             ],
-                                        #             type_name="Actin-Polymer",
-                                        #             is_daughter=True,
-                                        #         ),
-                                        #     ),
-                                        # ],
+                                        nucleated_arps=[
+                                            ArpData(
+                                                arp_id=5,
+                                                position=np.array([-22.6, -42.3, 0]),
+                                                nucleated=True,
+                                                daughter_fiber=FiberData(
+                                                    fiber_id=5,
+                                                    points=[
+                                                        np.array([-22.6, -42.3, 0]),
+                                                        np.array([-15.8, -61.1, 0]),
+                                                    ],
+                                                    type_name="Actin-Polymer",
+                                                    is_daughter=True,
+                                                ),
+                                            ),
+                                        ],
                                     ),
                                 ),
-                                # ArpData(
-                                #     arp_id=6,
-                                #     position=np.array([13, -35.7, 0]),
-                                #     nucleated=True,
-                                #     daughter_fiber=FiberData(
-                                #         fiber_id=6,
-                                #         points=[
-                                #             np.array([13, -35.7, 0]),
-                                #             np.array([33, -35.7, 0]),
-                                #         ],
-                                #         type_name="Actin-Polymer",
-                                #         is_daughter=True,
-                                #     ),
-                                # ),
+                                ArpData(
+                                    arp_id=6,
+                                    position=np.array([13, -35.7, 0]),
+                                    nucleated=True,
+                                    daughter_fiber=FiberData(
+                                        fiber_id=6,
+                                        points=[
+                                            np.array([13, -35.7, 0]),
+                                            np.array([33, -35.7, 0]),
+                                        ],
+                                        type_name="Actin-Polymer",
+                                        is_daughter=True,
+                                    ),
+                                ),
                             ],
                         ),
                     ),
-                    # ArpData(
-                    #     arp_id=7,
-                    #     position=np.array([9.5, 0, 0]),
-                    #     nucleated=True,
-                    #     daughter_fiber=FiberData(
-                    #         fiber_id=7,
-                    #         points=[
-                    #             np.array([9.5, 0, 0]),
-                    #             np.array([16.3, 0, 18.8]),
-                    #         ],
-                    #         type_name="Actin-Polymer",
-                    #         is_daughter=True,
-                    #     ),
-                    # ),
+                    ArpData(
+                        arp_id=7,
+                        position=np.array([9.5, 0, 0]),
+                        nucleated=True,
+                        daughter_fiber=FiberData(
+                            fiber_id=7,
+                            points=[
+                                np.array([9.5, 0, 0]),
+                                np.array([16.3, 0, 18.8]),
+                            ],
+                            type_name="Actin-Polymer",
+                            is_daughter=True,
+                        ),
+                    ),
                     ArpData(
                         arp_id=8,
                         position=np.array([19, 0, 0]),

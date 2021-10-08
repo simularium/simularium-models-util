@@ -1468,6 +1468,7 @@ class ActinUtil:
                 "actin#branch_ATP_1",
                 "actin#branch_barbed_1",
                 "actin#branch_barbed_ATP_1",
+                "arp3#ATP",
             ],
             ["actin#new", "actin#new_ATP"],
             force_constant,
