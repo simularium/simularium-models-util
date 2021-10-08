@@ -207,7 +207,7 @@ class ActinGenerator:
         for a in range(len(fiber.bound_arps)):
             arp = fiber.bound_arps[a]
             closest_actin_index = arp.get_closest_actin_index(
-                particle_ids, actin_arp_ids, particles
+                particle_ids, actin_arp_ids, None, particles
             )
             if closest_actin_index < 0:
                 return particles, particle_ids
