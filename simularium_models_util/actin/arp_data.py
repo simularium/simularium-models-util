@@ -32,7 +32,9 @@ class ArpData:
         self.assigned = False
         self.distance_from_mother_pointed = math.inf
 
-    def get_closest_actin_index(self, particle_ids, actin_arp_ids, mother_fiber, particles):
+    def get_closest_actin_index(
+        self, particle_ids, actin_arp_ids, mother_fiber, particles
+    ):
         """
         get the index of the closest actin monomer to the arp position
         excluding the barbed end (because that monomer would also be bound to this arp)
@@ -52,17 +54,22 @@ class ArpData:
                     closest_actin_index = index
                     min_distance = distance
         if mother_fiber is not None and self.daughter_fiber is not None:
-            # if this arp is nucleated, check that the branch will grow roughly 
+            # if this arp is nucleated, check that the branch will grow roughly
             # in the correct direction, otherwise chose a neighbor actin
             # so the branch grows the other direction
             closest_actin_pos = particles[particle_ids[closest_actin_index]].position
-            v_mother = mother_fiber.get_nearest_segment_direction(closest_actin_pos)
-            v_daughter = self.daughter_fiber.get_nearest_segment_direction(closest_actin_pos)
+            v_daughter = self.daughter_fiber.get_nearest_segment_direction(
+                closest_actin_pos
+            )
             closest_actin_axis_pos = mother_fiber.get_nearest_position(
                 closest_actin_pos
             )
             v_closest = closest_actin_pos - closest_actin_axis_pos
-            dot = v_daughter[0] * v_closest[0] + v_daughter[1] * v_closest[1] + v_daughter[2] * v_closest[2]
+            dot = (
+                v_daughter[0] * v_closest[0]
+                + v_daughter[1] * v_closest[1]
+                + v_daughter[2] * v_closest[2]
+            )
             if dot < 0:
                 if closest_actin_index < len(particle_ids) - 2:
                     closest_actin_index += 1
@@ -70,7 +77,8 @@ class ArpData:
                     closest_actin_index -= 1
                 else:
                     raise Exception(
-                        "Failed to find actin_arp2 that would nucleate branch in correct direction"
+                        "Failed to find actin_arp2 that would nucleate branch "
+                        "in correct direction"
                     )
         return closest_actin_index
 
@@ -119,17 +127,6 @@ class ArpData:
         )
 
     def get_local_nucleated_monomer_position(self, v_mother, v_daughter, monomer_type):
-        """
-        get the offset vector in the arp's local space for the nearby monomers
-        """
-        offset_vector = (
-            ActinStructure.branch_monomer_position(monomer_type)
-            - ActinStructure.mother_branch_position()
-        )
-        rotation = self.get_nucleated_arp_rotation(v_mother, v_daughter)
-        return np.squeeze(np.array(np.dot(rotation, offset_vector)))
-
-    def get_branch_monomer_position(self, actin_arp_ids, monomer_type, particles):
         """
         get the offset vector in the arp's local space for the nearby monomers
         """

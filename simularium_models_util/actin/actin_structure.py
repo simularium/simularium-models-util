@@ -358,4 +358,3 @@ class ActinStructure:
     @staticmethod
     def mother1_to_mother_vector():
         return ActinStructure.mother_positions[1] - ActinStructure.mother_positions[3]
-        
