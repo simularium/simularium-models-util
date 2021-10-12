@@ -3,18 +3,19 @@
 
 import pytest
 
-from simularium_models_util.actin import ActinSimulation, ActinTestData, ActinUtil
+from simularium_models_util.actin import ActinSimulation
 from simularium_models_util.tests.conftest import (
-    parameters_rxns_off, 
+    parameters_rxns_off,
     assert_topologies_equal,
-    monomer,
     dimer,
 )
+
 
 def reverse_dimerize_parameters():
     result = parameters_rxns_off
     result["dimerize_reverse_rate"] = 1e30
     return result
+
 
 @pytest.mark.parametrize(
     "parameters, start_monomers, expected_monomers",
@@ -29,6 +30,6 @@ def reverse_dimerize_parameters():
 def test_generate_monomers(parameters, start_monomers, expected_monomers):
     actin_simulation = ActinSimulation(parameters)
     actin_simulation.add_monomers_from_data(start_monomers)
-    actin_simulation.simulate(0.000000001) # 10 steps
+    actin_simulation.simulate(0.000000001)  # 10 steps
     monomers = actin_simulation.get_current_monomers()
     assert_topologies_equal(monomers, expected_monomers)

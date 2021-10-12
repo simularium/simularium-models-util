@@ -197,12 +197,15 @@ class ActinSimulation:
         }
         * IDs are ints
         """
-        self.topologies = self.actin_util.add_monomers_from_data(self.simulation, monomer_data)
+        self.topologies = self.actin_util.add_monomers_from_data(
+            self.simulation, monomer_data
+        )
 
     def simulate(self, d_time):
         """
         Simulate in ReaDDy for the given d_time seconds
         """
+
         def loop():
             readdy_actions = self.simulation._actions
             init = readdy_actions.initialize_kernel()
@@ -231,6 +234,7 @@ class ActinSimulation:
                 update_nl()
                 calculate_forces()
                 observe(t)
+
         self.simulation._run_custom_loop(loop)
 
     def get_current_monomers(self):
@@ -240,6 +244,4 @@ class ActinSimulation:
         from readdy.simulation.current_topologies
         as monomers
         """
-        return ReaddyUtil.get_current_monomers(
-            self.simulation.current_topologies
-        )
+        return ReaddyUtil.get_current_monomers(self.simulation.current_topologies)

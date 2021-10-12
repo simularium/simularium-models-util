@@ -61,7 +61,10 @@ parameters_rxns_off = {
     "verbose": False,
 }
 
-def assert_topologies_equal(topology_monomers1, topology_monomers2, test_position=False):
+
+def assert_topologies_equal(
+    topology_monomers1, topology_monomers2, test_position=False
+):
     """
     Assert two topologies (in monomer form) are equivalent
     """
@@ -76,10 +79,7 @@ def assert_topologies_equal(topology_monomers1, topology_monomers2, test_positio
         topology_monomers2["topologies"][top_id2]["particle_ids"]
     )
     for particle_id in topology_monomers1["topologies"][top_id1]["particle_ids"]:
-        assert (
-            particle_id
-            in topology_monomers2["topologies"][top_id2]["particle_ids"]
-        )
+        assert particle_id in topology_monomers2["topologies"][top_id2]["particle_ids"]
     for particle_id in topology_monomers2["topologies"][top_id2]["particle_ids"]:
         assert particle_id in topology_monomers1["topologies"][top_id1]["particle_ids"]
     # check the particle types, positions (optionally), and neighbors
@@ -89,7 +89,10 @@ def assert_topologies_equal(topology_monomers1, topology_monomers2, test_positio
         assert particle1["type_name"] == particle2["type_name"]
         assert particle1["neighbor_ids"] == particle2["neighbor_ids"]
         if test_position:
-            np.testing.assert_almost_equal(particle1["position"], particle2["position"], decimal=2)
+            np.testing.assert_almost_equal(
+                particle1["position"], particle2["position"], decimal=2
+            )
+
 
 def monomer():
     return {
@@ -110,6 +113,7 @@ def monomer():
             },
         },
     }
+
 
 def dimer():
     return {
