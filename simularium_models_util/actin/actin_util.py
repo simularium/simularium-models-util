@@ -462,6 +462,7 @@ class ActinUtil:
         }
         * IDs are uuid strings or ints
         """
+        topologies = []
         for topology_id in monomer_data["topologies"]:
             topology = monomer_data["topologies"][topology_id]
             types = []
@@ -488,6 +489,8 @@ class ActinUtil:
                         added_edges.append((index, neighbor_index))
                         added_edges.append((neighbor_index, index))
                         test.append((index, neighbor_index))
+            topologies.append(top)
+        return topologies
 
     @staticmethod
     def add_actin_dimer(position, simulation):

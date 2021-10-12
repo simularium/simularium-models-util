@@ -197,4 +197,49 @@ class ActinSimulation:
         }
         * IDs are ints
         """
-        self.actin_util.add_monomers_from_data(self.simulation, monomer_data)
+        self.topologies = self.actin_util.add_monomers_from_data(self.simulation, monomer_data)
+
+    def simulate(self, d_time):
+        """
+        Simulate in ReaDDy for the given d_time seconds
+        """
+        def loop():
+            readdy_actions = self.simulation._actions
+            init = readdy_actions.initialize_kernel()
+            diffuse = readdy_actions.integrator_euler_brownian_dynamics(
+                self.parameters["internal_timestep"]
+            )
+            calculate_forces = readdy_actions.calculate_forces()
+            create_nl = readdy_actions.create_neighbor_list(
+                self.system.calculate_max_cutoff().magnitude
+            )
+            update_nl = readdy_actions.update_neighbor_list()
+            react = readdy_actions.reaction_handler_uncontrolled_approximation(
+                self.parameters["internal_timestep"]
+            )
+            observe = readdy_actions.evaluate_observables()
+            init()
+            create_nl()
+            calculate_forces()
+            update_nl()
+            observe(0)
+            n_steps = int(d_time * 1e9 / self.parameters["internal_timestep"])
+            for t in range(1, n_steps + 1):
+                diffuse()
+                update_nl()
+                react()
+                update_nl()
+                calculate_forces()
+                observe(t)
+        self.simulation._run_custom_loop(loop)
+
+    def get_current_monomers(self):
+        """
+        During a running simulation,
+        get data for topologies of particles
+        from readdy.simulation.current_topologies
+        as monomers
+        """
+        return ReaddyUtil.get_current_monomers(
+            self.simulation.current_topologies
+        )
