@@ -485,15 +485,15 @@ class ActinUtil:
             topology, v_actin_arp3, barbed_types, []
         )
         v_actin_barbed2 = None
-        if actin_barbed1 is not None:
-            actin_barbed2 = ReaddyUtil.get_neighbor_of_types(
+        if v_actin_barbed1 is not None:
+            v_actin_barbed2 = ReaddyUtil.get_neighbor_of_types(
                 topology, v_actin_barbed1, barbed_types, []
             )
         return [
             v_actin_pointed,
             v_actin_arp2,
             v_actin_arp3,
-            actin_barbed1,
+            v_actin_barbed1,
             v_actin_barbed2,
         ]
 
@@ -511,12 +511,12 @@ class ActinUtil:
 
     @staticmethod
     def set_actin_mid_flags_at_removed_branch(
-        topology, recipe, actin_arp2, actin_arp3, arp3
+        topology, recipe, v_actin_arp2, v_actin_arp3, v_arp3
     ):
         """
         set the "mid" state on all the actins near a branch dissociation reaction
         """
-        arp3_id = topology.particle_id_of_vertex(arp3)
+        arp3_id = topology.particle_id_of_vertex(v_arp3)
         v_branch_actins = ActinUtil.get_actins_near_branch(
             topology, recipe, v_actin_arp2, v_actin_arp3
         )
