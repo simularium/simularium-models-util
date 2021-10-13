@@ -125,25 +125,18 @@ class ActinSimulation:
         self.actin_util.add_arp23_unbind_reaction(self.system)
         self.actin_util.add_debranch_reaction(self.system)
         self.actin_util.add_cap_unbind_reaction(self.system)
-        if self.parameters["nonspatial_polymerization"]:
-            self.actin_util.add_nonspatial_trimerize_reaction(self.system)
-            self.actin_util.add_nonspatial_nucleate_reaction(self.system)
-            self.actin_util.add_nonspatial_pointed_growth_reaction(self.system)
-            self.actin_util.add_nonspatial_barbed_growth_reaction(self.system)
-            self.actin_util.add_nonspatial_nucleate_branch_reaction(self.system)
 
     def add_random_monomers(self):
         """
         Add randomly distributed actin monomers, Arp2/3 dimers,
         and capping protein according to concentrations and box size
         """
-        if not self.parameters["nonspatial_polymerization"]:
-            self.actin_util.add_actin_monomers(
-                ReaddyUtil.calculate_nParticles(
-                    self.parameters["actin_concentration"], self.parameters["box_size"]
-                ),
-                self.simulation,
-            )
+        self.actin_util.add_actin_monomers(
+            ReaddyUtil.calculate_nParticles(
+                self.parameters["actin_concentration"], self.parameters["box_size"]
+            ),
+            self.simulation,
+        )
         self.actin_util.add_arp23_dimers(
             ReaddyUtil.calculate_nParticles(
                 self.parameters["arp23_concentration"], self.parameters["box_size"]

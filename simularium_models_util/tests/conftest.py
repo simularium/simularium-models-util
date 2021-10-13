@@ -57,7 +57,6 @@ parameters_rxns_off = {
     "use_box_arp": False,
     "use_box_cap": False,
     "implicit_actin_concentration": 0,
-    "nonspatial_polymerization": False,
     "verbose": False,
 }
 
