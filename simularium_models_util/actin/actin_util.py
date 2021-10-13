@@ -210,6 +210,8 @@ class ActinUtil:
         actin_types = (
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
         )
@@ -345,6 +347,8 @@ class ActinUtil:
         actin_types = (
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
             + ["actin#branch_1", "actin#branch_ATP_1"]
@@ -405,6 +409,120 @@ class ActinUtil:
                 print(f"Couldn't find arp2 (branch={with_branch})")
             return None
         return random.choice(v_arp2s)
+
+    @staticmethod
+    def check_arp3_attached_to_neighbors(
+        topology, vertex, max_edges, exclude_id=None, last_vertex_id=None
+    ):
+        """ """
+        for neighbor in vertex:
+            n_id = topology.particle_id_of_vertex(neighbor)
+            if n_id == last_vertex_id or n_id == exclude_id:
+                continue
+            pt = topology.particle_type_of_vertex(neighbor)
+            if "arp3" in pt:
+                return True
+            if "actin" not in pt or max_edges <= 1:
+                continue
+            arp3_is_attached_to_neighbors = ActinUtil.check_arp3_attached_to_neighbors(
+                topology,
+                neighbor.get(),
+                max_edges - 1,
+                exclude_id,
+                topology.particle_id_of_vertex(vertex),
+            )
+            if arp3_is_attached_to_neighbors:
+                return True
+        return False
+
+    @staticmethod
+    def set_actin_mid_flag(topology, recipe, vertex, exclude_id=None):
+        """
+        if an actin near a reaction is a "mid" actin,
+        add the "mid" flag, otherwise remove it
+
+        actin is "mid" unless:
+        - it is within 2 away from an actin bound to arp3
+        - it is neighbor of a branch actin
+        - it is pointed, barbed, or branch # TODO
+        """
+        if not ActinUtil.check_arp3_attached_to_neighbors(
+            topology, vertex, 3, exclude_id
+        ):
+            if (
+                ReaddyUtil.get_neighbor_of_type(topology, vertex, "actin#branch", False)
+                is None
+            ):
+                ReaddyUtil.set_flags(topology, recipe, vertex, ["mid"], [""], True)
+                return
+        ReaddyUtil.set_flags(topology, recipe, vertex, [""], ["mid"], True)
+
+    @staticmethod
+    def get_actins_near_branch(topology, recipe, v_actin_arp2, v_actin_arp3):
+        """
+        get the 5 mother actins near a branch
+        """
+        pointed_types = (
+            ActinUtil.get_all_polymer_actin_types("actin")
+            + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#pointed")
+            + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
+        )
+        barbed_types = (
+            ActinUtil.get_all_polymer_actin_types("actin")
+            + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#barbed")
+            + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
+        )
+        v_actin_pointed = ReaddyUtil.get_neighbor_of_types(
+            topology, v_actin_arp2, pointed_types, []
+        )
+        v_actin_barbed1 = ReaddyUtil.get_neighbor_of_types(
+            topology, v_actin_arp3, barbed_types, []
+        )
+        v_actin_barbed2 = None
+        if actin_barbed1 is not None:
+            actin_barbed2 = ReaddyUtil.get_neighbor_of_types(
+                topology, v_actin_barbed1, barbed_types, []
+            )
+        return [
+            v_actin_pointed,
+            v_actin_arp2,
+            v_actin_arp3,
+            actin_barbed1,
+            v_actin_barbed2,
+        ]
+
+    @staticmethod
+    def set_actin_mid_flags_at_new_branch(topology, recipe, v_actin_arp2, v_actin_arp3):
+        """
+        Remove the "mid" flag on all the mother actins near a branch nucleation reaction
+        """
+        v_branch_actins = ActinUtil.get_actins_near_branch(
+            topology, recipe, v_actin_arp2, v_actin_arp3
+        )
+        for v_actin in v_branch_actins:
+            if v_actin is not None:
+                ReaddyUtil.set_flags(topology, recipe, v_actin, [""], ["mid"], True)
+
+    @staticmethod
+    def set_actin_mid_flags_at_removed_branch(
+        topology, recipe, actin_arp2, actin_arp3, arp3
+    ):
+        """
+        set the "mid" state on all the actins near a branch dissociation reaction
+        """
+        arp3_id = topology.particle_id_of_vertex(arp3)
+        v_branch_actins = ActinUtil.get_actins_near_branch(
+            topology, recipe, v_actin_arp2, v_actin_arp3
+        )
+        for v_actin in v_branch_actins:
+            if v_actin is not None:
+                ActinUtil.set_actin_mid_flag(topology, recipe, v_actin, arp3_id)
 
     @staticmethod
     def add_random_linear_fibers(simulation, n_fibers, length=20, use_uuids=True):
@@ -726,8 +844,44 @@ class ActinUtil:
         )
         recipe.remove_edge(v_barbed, v_neighbor)
         recipe.change_particle_type(v_barbed, "actin#free_ATP")
-        ReaddyUtil.set_flags(topology, recipe, v_neighbor, ["barbed"], [], True)
+        ReaddyUtil.set_flags(topology, recipe, v_neighbor, ["barbed"], ["mid"], True)
         recipe.change_topology_type("Actin-Polymer#Shrinking")
+        return recipe
+
+    @staticmethod
+    def do_finish_grow(topology, barbed):
+        """
+        reaction function for the pointed or barbed end growing
+        """
+        recipe = readdy.StructuralReactionRecipe(topology)
+        end_type = "barbed" if barbed else "pointed"
+        if parameters["verbose"]:
+            print("Grow " + end_type)
+        v_new = ActinUtil.get_new_vertex(topology)
+        v_neighbor = ReaddyUtil.get_first_neighbor(
+            topology,
+            v_new,
+            [],
+            error_msg=f"Failed to find neighbor of new {end_type} end",
+        )
+        ReaddyUtil.set_flags(
+            topology,
+            recipe,
+            v_new,
+            [
+                end_type,
+                str(
+                    ActinUtil.get_actin_number(
+                        topology, v_neighbor, 1 if barbed else -1
+                    )
+                ),
+            ],
+            ["new"],
+            True,
+        )
+        ActinUtil.set_actin_mid_flag(topology, recipe, v_neighbor)
+        ActinUtil.set_end_vertex_position(topology, recipe, v_new, barbed)
+        recipe.change_topology_type("Actin-Polymer")
         return recipe
 
     @staticmethod
@@ -735,23 +889,7 @@ class ActinUtil:
         """
         reaction function for the pointed end growing
         """
-        recipe = readdy.StructuralReactionRecipe(topology)
-        if parameters["verbose"]:
-            print("Grow Pointed")
-        v_new = ActinUtil.get_new_vertex(topology)
-        v_neighbor = ReaddyUtil.get_first_neighbor(
-            topology, v_new, [], error_msg="Failed to find neighbor of new pointed end"
-        )
-        ReaddyUtil.set_flags(
-            topology,
-            recipe,
-            v_new,
-            ["pointed", str(ActinUtil.get_actin_number(topology, v_neighbor, -1))],
-            ["new"],
-            True,
-        )
-        recipe.change_topology_type("Actin-Polymer")
-        ActinUtil.set_end_vertex_position(topology, recipe, v_new, False)
+        recipe = ActinUtil.do_finish_grow(topology, False)
         return recipe
 
     @staticmethod
@@ -783,23 +921,7 @@ class ActinUtil:
         """
         reaction function for the barbed end growing
         """
-        recipe = readdy.StructuralReactionRecipe(topology)
-        if parameters["verbose"]:
-            print("Grow Barbed")
-        v_new = ActinUtil.get_new_vertex(topology)
-        v_neighbor = ReaddyUtil.get_first_neighbor(
-            topology, v_new, [], error_msg="Failed to find neighbor of new barbed end"
-        )
-        ReaddyUtil.set_flags(
-            topology,
-            recipe,
-            v_new,
-            ["barbed", str(ActinUtil.get_actin_number(topology, v_neighbor, 1))],
-            ["new"],
-            True,
-        )
-        ActinUtil.set_end_vertex_position(topology, recipe, v_new, True)
-        recipe.change_topology_type("Actin-Polymer")
+        recipe = ActinUtil.do_finish_grow(topology, True)
         return recipe
 
     @staticmethod
@@ -876,6 +998,9 @@ class ActinUtil:
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["free"], True)
         ReaddyUtil.set_flags(topology, recipe, v_arp3, [], ["new"], True)
+        ActinUtil.set_actin_mid_flags_at_new_branch(
+            topology, recipe, v_actin_pointed, v_actin_barbed
+        )
         recipe.add_edge(v_actin_pointed, v_arp2)
         recipe.change_topology_type("Actin-Polymer")
         ActinUtil.set_arp23_vertex_position(
@@ -951,6 +1076,8 @@ class ActinUtil:
             v_end,
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
             + ["actin#branch_1", "actin#branch_ATP_1"],
             [],
             parameters["verbose"],
@@ -978,7 +1105,7 @@ class ActinUtil:
             recipe,
             v_neighbor,
             ["barbed"] if barbed else ["pointed"],
-            [],
+            ["mid"],
             True,
         )
         recipe.change_topology_type("Actin-Polymer#Shrinking")
@@ -1074,6 +1201,7 @@ class ActinUtil:
             topology,
             ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
             + ["actin#branch_barbed_ATP_1", "actin#branch_ATP_1"],
             parameters["verbose"],
@@ -1157,6 +1285,8 @@ class ActinUtil:
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed")
             + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
             + ["actin#branch_1", "actin#branch_ATP_1"]
@@ -1172,6 +1302,9 @@ class ActinUtil:
         )
         recipe.remove_edge(v_arp2, v_actin_arp2)
         recipe.remove_edge(v_arp3, v_actin_arp3)
+        ActinUtil.set_actin_mid_flags_at_removed_branch(
+            topology, recipe, v_actin_arp2, v_actin_arp3, v_arp3
+        )
         ReaddyUtil.set_flags(topology, recipe, v_arp2, ["free"], [])
         recipe.change_topology_type("Actin-Polymer#Shrinking")
 
@@ -1234,6 +1367,14 @@ class ActinUtil:
             ReaddyUtil.set_flags(
                 topology, recipe, v_actin1, ["pointed"], ["branch"], True
             )
+            actin_types = ActinUtil.get_all_polymer_actin_types(
+                "actin"
+            ) + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            v_actin2 = ReaddyUtil.get_neighbor_of_types(
+                topology, v_actin1, actin_types, []
+            )
+            if v_actin2 is not None:
+                ActinUtil.set_actin_mid_flag(topology, recipe, v_actin2)
         recipe.change_topology_type("Actin-Polymer#Shrinking")
 
     @staticmethod
@@ -1290,6 +1431,8 @@ class ActinUtil:
             v_cap,
             ActinUtil.get_all_polymer_actin_types("actin")
             + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid")
+            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
             + ["actin#branch_1", "actin#branch_ATP_1"],
             [],
             error_msg="Failed to find actin bound to cap",
@@ -2162,7 +2305,7 @@ class ActinUtil:
             system.topologies.add_spatial_reaction(
                 f"Trimerize{i}: "
                 f"Actin-Dimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP) -> "
-                f"Actin-Trimer#Growing(actin#ATP_{i}--actin#new_ATP)",
+                f"Actin-Trimer#Growing(actin#mid_ATP_{i}--actin#new_ATP)",
                 rate=parameters["trimerize_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
             )
@@ -2510,7 +2653,7 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ATP1{i}: "
-                f"Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3) -> "
+                f"Actin-Polymer(actin#mid_ATP_{i}) + Arp23-Dimer(arp3) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new)",
                 rate=parameters["arp_bind_ATP_rate"],
                 radius=parameters["actin_radius"]
@@ -2519,7 +2662,7 @@ class ActinUtil:
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ATP2{i}: "
-                f"Actin-Polymer(actin#ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Actin-Polymer(actin#mid_ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new_ATP)",
                 rate=parameters["arp_bind_ATP_rate"],
                 radius=parameters["actin_radius"]
@@ -2528,7 +2671,7 @@ class ActinUtil:
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ADP1{i}: "
-                f"Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3) -> "
+                f"Actin-Polymer(actin#mid_{i}) + Arp23-Dimer(arp3) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new)",
                 rate=parameters["arp_bind_ADP_rate"],
                 radius=parameters["actin_radius"]
@@ -2537,7 +2680,7 @@ class ActinUtil:
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ADP2{i}: "
-                f"Actin-Polymer(actin#{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Actin-Polymer(actin#mid_{i}) + Arp23-Dimer(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new_ATP)",
                 rate=parameters["arp_bind_ADP_rate"],
                 radius=parameters["actin_radius"]
