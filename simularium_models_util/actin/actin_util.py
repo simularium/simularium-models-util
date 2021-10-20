@@ -68,6 +68,7 @@ class ActinUtil:
             print("Canceling branch reaction")
         pt = topology.particle_type_of_vertex(actin_arp3)
         recipe.remove_edge(actin_arp3, arp3)
+        ReaddyUtil.set_flags(topology, recipe, actin_arp3, ["mid"], [], True)
         ReaddyUtil.set_flags(topology, recipe, arp3, [], ["new"], True)
         state = "ATP" if "ATP" in pt else "ADP"
         recipe.change_topology_type(f"Actin-Polymer#Fail-Branch-{state}")
@@ -414,7 +415,9 @@ class ActinUtil:
     def check_arp3_attached_to_neighbors(
         topology, vertex, max_edges, exclude_id=None, last_vertex_id=None
     ):
-        """ """
+        """
+        Check if an arp3 is attached to the vertex's neighbors within max_edges
+        """
         for neighbor in vertex:
             n_id = topology.particle_id_of_vertex(neighbor)
             if n_id == last_vertex_id or n_id == exclude_id:
@@ -442,52 +445,70 @@ class ActinUtil:
         add the "mid" flag, otherwise remove it
 
         actin is "mid" unless:
-        - it is within 2 away from an actin bound to arp3
-        - it is neighbor of a branch actin
-        - it is pointed, barbed, or branch # TODO
+        - it is pointed, barbed, or branch
+        - it is within 2 neighbors from an actin bound to arp3
+        - it is neighbor of a pointed or branch actin
         """
-        if not ActinUtil.check_arp3_attached_to_neighbors(
-            topology, vertex, 3, exclude_id
+        pt = topology.particle_type_of_vertex(vertex)
+        if "pointed" in pt or "branch" in pt or "barbed" in pt:
+            return
+        if (
+            not ActinUtil.check_arp3_attached_to_neighbors(
+                topology, vertex, 3, exclude_id
+            )
+            and ReaddyUtil.get_neighbor_of_type(topology, vertex, "actin#branch", False)
+            is None
+            and ReaddyUtil.get_neighbor_of_type(topology, vertex, "actin#pointed", False)
+            is None
         ):
-            if (
-                ReaddyUtil.get_neighbor_of_type(topology, vertex, "actin#branch", False)
-                is None
-            ):
-                ReaddyUtil.set_flags(topology, recipe, vertex, ["mid"], [""], True)
-                return
-        ReaddyUtil.set_flags(topology, recipe, vertex, [""], ["mid"], True)
+            ReaddyUtil.set_flags(topology, recipe, vertex, ["mid"], [""], True)
+        else:
+            ReaddyUtil.set_flags(topology, recipe, vertex, [""], ["mid"], True)
 
     @staticmethod
     def get_actins_near_branch(topology, recipe, v_actin_arp2, v_actin_arp3):
         """
         get the 5 mother actins near a branch
         """
-        pointed_types = (
-            ActinUtil.get_all_polymer_actin_types("actin")
-            + ActinUtil.get_all_polymer_actin_types("actin#ATP")
-            + ActinUtil.get_all_polymer_actin_types("actin#mid")
-            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
-            + ActinUtil.get_all_polymer_actin_types("actin#pointed")
-            + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
-        )
-        barbed_types = (
-            ActinUtil.get_all_polymer_actin_types("actin")
-            + ActinUtil.get_all_polymer_actin_types("actin#ATP")
-            + ActinUtil.get_all_polymer_actin_types("actin#mid")
-            + ActinUtil.get_all_polymer_actin_types("actin#mid_ATP")
-            + ActinUtil.get_all_polymer_actin_types("actin#barbed")
-            + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
-        )
+        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1)
+        pointed_types = [
+            f"actin#ATP_{n_pointed}",
+            f"actin#{n_pointed}",
+            f"actin#mid_ATP_{n_pointed}",
+            f"actin#mid_{n_pointed}",
+            f"actin#pointed_ATP_{n_pointed}",
+            f"actin#pointed_{n_pointed}",
+        ]
+        if n_pointed == 1:
+            pointed_types += ["actin#branch_1", "actin#branch_ATP_1"]
         v_actin_pointed = ReaddyUtil.get_neighbor_of_types(
             topology, v_actin_arp2, pointed_types, []
         )
+        n_barbed = ActinUtil.get_actin_number(topology, v_actin_arp3, 1)
+        barbed_types = [
+            f"actin#ATP_{n_barbed}",
+            f"actin#{n_barbed}",
+            f"actin#mid_ATP_{n_barbed}",
+            f"actin#mid_{n_barbed}",
+            f"actin#barbed_ATP_{n_barbed}",
+            f"actin#barbed_{n_barbed}",
+        ]
         v_actin_barbed1 = ReaddyUtil.get_neighbor_of_types(
-            topology, v_actin_arp3, barbed_types, []
+            topology, v_actin_arp3, barbed_types, [v_actin_pointed]
         )
         v_actin_barbed2 = None
         if v_actin_barbed1 is not None:
+            n_barbed = ActinUtil.get_actin_number(topology, v_actin_barbed1, 1)
+            barbed_types = [
+                f"actin#ATP_{n_barbed}",
+                f"actin#{n_barbed}",
+                f"actin#mid_ATP_{n_barbed}",
+                f"actin#mid_{n_barbed}",
+                f"actin#barbed_ATP_{n_barbed}",
+                f"actin#barbed_{n_barbed}",
+            ]
             v_actin_barbed2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_actin_barbed1, barbed_types, []
+                topology, v_actin_barbed1, barbed_types, [v_actin_arp3]
             )
         return [
             v_actin_pointed,
@@ -890,17 +911,16 @@ class ActinUtil:
             parameters["verbose"],
             f"Couldn't find actin_arp2 with number {n_pointed}",
         )
-        if v_actin_pointed is not None:
-            pointed_type = topology.particle_type_of_vertex(v_actin_pointed)
-            if "pointed" in pointed_type or "branch" in pointed_type:
-                if parameters["verbose"]:
-                    print("Branch is starting exactly at a pointed end")
-                ActinUtil.cancel_branch_reaction(
-                    topology, recipe, v_actin_barbed, v_arp3
-                )
-                return recipe
-        else:
+        if v_actin_pointed is None:
             ActinUtil.cancel_branch_reaction(topology, recipe, v_actin_barbed, v_arp3)
+            return recipe
+        pointed_type = topology.particle_type_of_vertex(v_actin_pointed)
+        if "pointed" in pointed_type or "branch" in pointed_type:
+            if parameters["verbose"]:
+                print("Branch is starting exactly at a pointed end or start of a branch")
+            ActinUtil.cancel_branch_reaction(
+                topology, recipe, v_actin_barbed, v_arp3
+            )
             return recipe
         ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["free"], True)
         ReaddyUtil.set_flags(topology, recipe, v_arp3, [], ["new"], True)
@@ -1159,8 +1179,6 @@ class ActinUtil:
         if v_arp2 is None:
             state = "ATP" if with_ATP else "ADP"
             recipe.change_topology_type("Actin-Polymer#Fail-Arp-Unbind-" + state)
-            if parameters["verbose"]:
-                print(f"Couldn't find unbranched {state}-arp2")
             return recipe
         actin_types = (
             ActinUtil.get_all_polymer_actin_types("actin")
@@ -1220,9 +1238,7 @@ class ActinUtil:
         v_arp2 = ActinUtil.get_random_arp2(topology, with_ATP, True)
         if v_arp2 is None:
             state = "ATP" if with_ATP else "ADP"
-            if parameters["verbose"]:
-                print(f"Couldn't find arp2 with {state}")
-            recipe.change_topology_type(f"Actin-Polymer#Fail-Debranch-{state}")
+            recipe.change_topology_type("Actin-Polymer#Fail-Debranch-" + state)
             return recipe
         actin_types = [
             "actin#branch_1",
@@ -1249,9 +1265,12 @@ class ActinUtil:
             ReaddyUtil.set_flags(
                 topology, recipe, v_actin1, ["pointed"], ["branch"], True
             )
-            actin_types = ActinUtil.get_all_polymer_actin_types(
-                "actin"
-            ) + ActinUtil.get_all_polymer_actin_types("actin#ATP")
+            actin_types = [
+                "actin#ATP_2",
+                "actin#2",
+                "actin#barbed_ATP_2",
+                "actin#barbed_2",
+            ]
             v_actin2 = ReaddyUtil.get_neighbor_of_types(
                 topology, v_actin1, actin_types, []
             )

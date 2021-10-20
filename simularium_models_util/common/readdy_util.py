@@ -114,7 +114,7 @@ class ReaddyUtil:
         return (
             topology.particle_type_of_vertex(vertex)
             + " ("
-            + topology.particle_id_of_vertex(vertex)
+            + str(topology.particle_id_of_vertex(vertex))
             + ")"
         )
 
@@ -406,6 +406,8 @@ class ReaddyUtil:
             for flag in add_flags:
                 if flag not in flags:
                     flags.append(flag)
+            if "" in flags:
+                flags.remove("")
             if len(flags) < 1:
                 recipe.change_particle_type(vertex, pt[: pt.index("#")])
                 return
@@ -414,9 +416,15 @@ class ReaddyUtil:
             for f in range(len(flags)):
                 flag_string = flag_string + ("_" if f > 0 else "") + flags[f]
             particle_type = pt[: pt.index("#")]
-            recipe.change_particle_type(
-                vertex, f"{particle_type}#{flag_string}{polymer_indices}"
-            )
+            new_type = f"{particle_type}#{flag_string}{polymer_indices}"
+            try:
+                recipe.change_particle_type(vertex, new_type)
+            except:
+                pid = topology.particle_type_of_vertex(vertex)
+                raise Exception(
+                    f"Tried to set particle {pid} to type {new_type}\n"
+                    f"{ReaddyUtil.topology_to_string(topology)}"
+                )
 
     @staticmethod
     def calculate_polymer_number(number, offset):

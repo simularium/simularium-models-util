@@ -438,6 +438,9 @@ class ActinGenerator:
                 particles = ActinGenerator.set_particle_type_name(
                     "actin#pointed_ATP_", pointed_particle_ids[0], particles
                 )
+                if len(pointed_particle_ids) > 1:
+                    # remove "mid" from second actin
+                    ActinGenerator.remove_mid_from_actin(pointed_particle_ids[1], particles)
             # get mother actin bound to arp2
             actin_arp2_id = ActinGenerator.get_next_id()
             last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
@@ -484,10 +487,13 @@ class ActinGenerator:
                 particles = ActinGenerator.check_shift_branch_actin_numbers(
                     particles, particle_ids
                 )
-            else:
+            elif len(particle_ids) > 0:
                 particles = ActinGenerator.set_particle_type_name(
                     "actin#pointed_ATP_", particle_ids[0], particles
                 )
+                if len(particle_ids) > 1:
+                    # remove "mid" from second actin
+                    ActinGenerator.remove_mid_from_actin(particle_ids[1], particles)
             actin_arp_ids = None
         particles = ActinGenerator.set_particle_type_name(
             "actin#barbed_ATP_",

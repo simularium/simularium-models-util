@@ -58,7 +58,7 @@ def main():
         actin_simulation.add_monomers_from_data(ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0))
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
-        monomers = ActinGenerator.get_monomers(ActinTestData.complex_branched_actin_fiber(), 0)
+        monomers = ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), 0)
         actin_simulation.add_monomers_from_data(monomers)
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
