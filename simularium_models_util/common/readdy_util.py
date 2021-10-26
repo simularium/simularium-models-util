@@ -645,19 +645,17 @@ class ReaddyUtil:
             for t2 in types2:
                 for t3 in types3:
                     for t4 in types4:
-                        if (t1, t2, t3, t4) not in self.dihedral_quads and (
-                            t4,
-                            t3,
-                            t2,
-                            t1,
-                        ) not in self.dihedral_quads:
+                        if (
+                            (t1, t2, t3, t4) not in self.dihedral_quads and 
+                            (t4, t3, t2, t1) not in self.dihedral_quads
+                        ):
                             system.topologies.configure_cosine_dihedral(
                                 t1, t2, t3, t4, force_const, 1.0, angle
                             )
-                            self.dihedral_quads.append((t1, t2, t3, t4))
                             system.topologies.configure_cosine_dihedral(
                                 t4, t3, t2, t1, force_const, 1.0, angle
                             )
+                            self.dihedral_quads.append((t1, t2, t3, t4))
                             self.dihedral_quads.append((t4, t3, t2, t1))
 
     def add_repulsion(self, types1, types2, force_const, distance, system):

@@ -102,8 +102,8 @@ class ActinGenerator:
     ):
         """
         remove "mid" flags from actins near a branch junction,
-        including the actin bound to arp3,
-        as well as one actin before and the second actin after the arps
+        including the actin bound to arp2, the actin bound to arp3,
+        as well as one actin before and two actins after the arps
         on the mother filament
         """
         actin_mother0_id = ActinGenerator.get_neighbor_actin_id(
@@ -116,7 +116,9 @@ class ActinGenerator:
             actin_mother3_id, 1, particles
         )
         particles = ActinGenerator.remove_mid_from_actin(actin_mother0_id, particles)
+        particles = ActinGenerator.remove_mid_from_actin(actin_arp_ids[0], particles)
         particles = ActinGenerator.remove_mid_from_actin(actin_arp_ids[1], particles)
+        particles = ActinGenerator.remove_mid_from_actin(actin_mother3_id, particles)
         particles = ActinGenerator.remove_mid_from_actin(actin_mother4_id, particles)
         return particles
 
@@ -446,7 +448,7 @@ class ActinGenerator:
             last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
             particles[actin_arp2_id] = ParticleData(
                 unique_id=actin_arp2_id,
-                type_name=f"actin#mid_ATP_{actin_number}",
+                type_name=f"actin#ATP_{actin_number}",
                 position=fork_positions[0],
                 neighbor_ids=[last_pointed_id],
             )
