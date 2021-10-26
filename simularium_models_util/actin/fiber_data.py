@@ -181,7 +181,7 @@ class FiberData:
         """
         return ReaddyUtil.normalize(self.points[1] - self.points[0])
 
-    def to_string(self):
+    def __str__(self):
         """
         string representation
         """

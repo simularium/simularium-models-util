@@ -6,7 +6,7 @@ import uuid
 import numpy as np
 
 from ..common import ReaddyUtil, ParticleData
-from .actin_structure import ActinStructure
+from .actin_structure import ActinStructure, FiberData
 
 next_id = 0
 
@@ -563,7 +563,112 @@ class ActinGenerator:
         return particles, main_particle_ids + daughter_particle_ids
 
     @staticmethod
-    def get_monomers(fibers_data, use_uuids=True):
+    def get_extents(child_box_center, child_box_size):
+        """
+        get the min and max extents
+        within the coordinates defined by a parent box
+        of a child box defined by center and size
+        """
+        return (child_box_center - child_box_size / 2., child_box_center + child_box_size / 2.)
+
+    @staticmethod
+    def position_is_in_bounds(position, min_extent, max_extent):
+        """
+        check if a position is within the given extents
+        """
+        for dim in range(3):
+            if position[dim] < min_extent[dim] or position[dim] > max_extent[dim]:
+                return False
+        return True
+
+    @staticmethod
+    def get_point_on_plane_of_intersecting_extent(point1, point2, min_extent, max_extent):
+        """
+        get a point (which is also the normal) of the extent plane intersected 
+        by the line segment between the given points,
+        assume bounds are a rectangular prism orthogonal to cartesian grid
+        """
+        result = np.zeros(3)
+        for dim in range(3):
+            if (point1[dim] < min_extent[dim] and point2[dim] > min_extent[dim]) or (
+                point2[dim] < min_extent[dim] and point1[dim] > min_extent[dim]
+            ):
+                result[dim] = min_extent[dim]
+                return result
+            elif (point1[dim] < max_extent[dim] and point2[dim] > max_extent[dim]) or (
+                point2[dim] < max_extent[dim] and point1[dim] > max_extent[dim]
+            ):
+                result[dim] = max_extent[dim]
+                return result
+        return None
+
+    @staticmethod
+    def get_intersection_point_with_extents(point1, point2, min_extent, max_extent):
+        """
+        get the point where the line segment between the given positions intersects the bounds volume,
+        assume bounds are a rectangular prism orthogonal to cartesian grid
+        """
+        plane = ActinGenerator.get_point_on_plane_of_intersecting_extent(point1, point2, min_extent, max_extent)
+        if plane is None:
+            return None
+        direction = ReaddyUtil.normalize(point2 - point1)
+        t = (np.dot(plane, plane) - np.dot(plane, point1)) / np.dot(plane, direction)
+        return point1 + t * direction
+
+    @staticmethod
+    def get_cropped_fibers(fibers_data, child_box_center, child_box_size):
+        """
+        crop the fiber data to a cube volume 
+        defined by child_box_center 
+        (center of cropped box in parent box coordinates) 
+        and child_box_size
+        and center it around the box_center as the origin
+
+        fibers_data: List[FiberData]
+        (FiberData for mother fibers only, which should have
+        their daughters' FiberData attached to their nucleated arps)
+
+        # TODO handle daughter fiber connections
+        """
+        if child_box_center is None or child_box_size is None:
+            return fibers_data
+        min_extent, max_extent = ActinGenerator.get_extents(child_box_center, child_box_size)
+        position_offset = -child_box_center
+        result = []
+        for fiber in fibers_data:
+            current_chunk = []
+            tracing = False
+            for i in range(len(fiber.points)):
+                position_is_in_bounds = ActinGenerator.position_is_in_bounds(fiber.points[i], min_extent, max_extent)
+                if not tracing:
+                    if position_is_in_bounds:
+                        tracing = True
+                        if len(current_chunk) > 0:
+                            result.append(FiberData(fiber.fiber_id, current_chunk))
+                        if i == 0:
+                            current_chunk = [fiber.points[i] + position_offset]
+                        else:
+                            intersection = ActinGenerator.get_intersection_point_with_extents(
+                                fiber.points[i - 1], fiber.points[i], min_extent, max_extent
+                            ) + position_offset
+                            current_chunk = [intersection, fiber.points[i] + position_offset]
+                else:
+                    if not position_is_in_bounds:
+                        tracing = False
+                        if len(current_chunk) > 0:
+                            current_chunk.append(
+                                ActinGenerator.get_intersection_point_with_extents(
+                                    fiber.points[i - 1], fiber.points[i], min_extent, max_extent
+                                ) + position_offset
+                            )
+                    else:
+                        current_chunk.append(fiber.points[i] + position_offset)
+            if len(current_chunk) > 0:
+                result.append(FiberData(fiber.fiber_id, current_chunk))
+        return result
+
+    @staticmethod
+    def get_monomers(fibers_data, child_box_center=None, child_box_size=None, use_uuids=True):
         """
         get all the monomer data for the (branched) fibers in fibers_data
 
@@ -576,7 +681,8 @@ class ActinGenerator:
             "particles": {},
         }
         ActinGenerator.set_next_id(-1 if use_uuids else 0)
-        for fiber in fibers_data:
+        cropped_fiber_data = ActinGenerator.get_cropped_fibers(fibers_data, child_box_center, child_box_size)
+        for fiber in cropped_fiber_data:
             particles, particle_ids = ActinGenerator.get_monomers_for_fiber(
                 fiber,
                 ReaddyUtil.get_random_perpendicular_vector(
