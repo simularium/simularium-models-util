@@ -45,6 +45,18 @@ class ActinAnalyzer:
         )
         self.time_inc_s = self.times[-1] * 1e-6 / (len(self.times) - 1)
 
+    def analyze_reaction_count_over_time(self, reaction_name):
+        """
+        Get a list of the number of times a reaction happened
+        between each analyzed timestep of the given reaction
+        """
+        if reaction_name not in self.reactions:
+            print(f"Couldn't find reaction: {reaction_name}")
+            return None
+        return np.insert(
+            self.reactions[reaction_name].to_numpy(), 0, 0.0
+        )
+
     def analyze_reaction_rate_over_time(self, reaction_name):
         """
         Get a list of the reaction rate per second
@@ -110,6 +122,8 @@ class ActinAnalyzer:
         for i in range(1, 4):
             result.append(f"actin#{i}")
             result.append(f"actin#ATP_{i}")
+            result.append(f"actin#mid_{i}")
+            result.append(f"actin#mid_ATP_{i}")
         return result
 
     @staticmethod
@@ -155,6 +169,7 @@ class ActinAnalyzer:
         result = []
         for i in range(1, 4):
             result.append(f"actin#ATP_{i}")
+            result.append(f"actin#mid_ATP_{i}")
             result.append(f"actin#pointed_ATP_{i}")
             result.append(f"actin#barbed_ATP_{i}")
         result.append("actin#branch_ATP_1")
@@ -169,6 +184,7 @@ class ActinAnalyzer:
         result = []
         for i in range(1, 4):
             result.append(f"actin#{i}")
+            result.append(f"actin#mid_{i}")
             result.append(f"actin#pointed_{i}")
             result.append(f"actin#barbed_{i}")
         result.append("actin#branch_1")
@@ -352,16 +368,12 @@ class ActinAnalyzer:
         """
         result = []
         for t in range(len(self.particle_data)):
-            bound_arp23 = 0
-            free_arp23 = 0
-            arp2_ids = ReaddyUtil.analyze_frame_get_ids_for_types(
+            bound_arp23 = len(ReaddyUtil.analyze_frame_get_ids_for_types(
                 ["arp2", "arp2#branched"], self.particle_data[t]
-            )
-            for arp2_id in arp2_ids:
-                if len(self.particle_data[t][arp2_id][1]) > 1:
-                    bound_arp23 += 1
-                if len(self.particle_data[t][arp2_id][1]) <= 1:
-                    free_arp23 += 1
+            ))
+            free_arp23 = len(ReaddyUtil.analyze_frame_get_ids_for_types(
+                ["arp2", "arp2#branched"], self.particle_data[t]
+            ))
             if free_arp23 + bound_arp23 > 0:
                 result.append(bound_arp23 / float(free_arp23 + bound_arp23))
             else:
@@ -488,6 +500,8 @@ class ActinAnalyzer:
             actin_arp3_types = [
                 f"actin#{n}",
                 f"actin#ATP_{n}",
+                f"actin#mid_{n}",
+                f"actin#mid_ATP_{n}",
                 f"actin#pointed_{n}",
                 f"actin#pointed_ATP_{n}",
                 f"actin#branch_{n}",

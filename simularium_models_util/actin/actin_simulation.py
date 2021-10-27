@@ -107,12 +107,12 @@ class ActinSimulation:
         """
         Add reactions to the ReaDDy system
         """
-        self.actin_util.add_spatial_dimerize_reaction(self.system)
-        self.actin_util.add_spatial_trimerize_reaction(self.system)
-        self.actin_util.add_spatial_nucleate_reaction(self.system)
-        self.actin_util.add_spatial_pointed_growth_reaction(self.system)
-        self.actin_util.add_spatial_barbed_growth_reaction(self.system)
-        self.actin_util.add_spatial_nucleate_branch_reaction(self.system)
+        self.actin_util.add_dimerize_reaction(self.system)
+        self.actin_util.add_trimerize_reaction(self.system)
+        self.actin_util.add_nucleate_reaction(self.system)
+        self.actin_util.add_pointed_growth_reaction(self.system)
+        self.actin_util.add_barbed_growth_reaction(self.system)
+        self.actin_util.add_nucleate_branch_reaction(self.system)
         self.actin_util.add_arp23_bind_reaction(self.system)
         self.actin_util.add_cap_bind_reaction(self.system)
         self.actin_util.add_dimerize_reverse_reaction(self.system)

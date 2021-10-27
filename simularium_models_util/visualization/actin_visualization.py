@@ -9,28 +9,27 @@ from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
 
 TIMESTEP = 0.1  # ns
-SPECIES_COUNT_RXNS = ["Dimers", "Trimers"]
 POLYMERIZATION_RXNS = [
-    "Barbed growth ATP",
-    "Barbed growth ADP",
-    "Pointed growth ATP",
-    "Pointed growth ADP",
-]
-DEPOLYMERIZATION_RXNS = [
-    "Pointed shrink ATP",
-    "Pointed shrink ADP",
-    "Barbed shrink ATP",
-    "Barbed shrink ADP",
-]
-GROWTH_REACTIONS = [
     "Dimerize",
     "Trimerize",
-    "Barbed growth ATP",
-    "Barbed growth ADP",
-    "Pointed growth ATP",
-    "Pointed growth ADP",
-    "Branch ATP",
-    "Branch ADP",
+    "Grow Pointed",
+    "Grow Barbed",
+    "Bind Arp2/3",
+    "Start Branch",
+    "Bind Cap",
+]
+STRUCTURAL_RXNS = [
+    "Reverse Dimerize",
+    "Reverse Trimerize",
+    "Shrink Pointed",
+    "Shrink Barbed",
+    "Unbind Arp2/3",
+    "Debranch",
+    "Unbind Cap",
+    "Hydrolyze Actin",
+    "Hydrolyze Arp2/3",
+    "Bind ATP (actin)",
+    "Bind ATP (arp2/3)",
 ]
 
 
@@ -52,33 +51,11 @@ class ActinVisualization:
             ytraces={
                 "Actin in filaments": 100.0
                 * analyzer.analyze_ratio_of_filamentous_to_total_actin(),
-                "ATP-Actin in filaments": 100.0
-                * analyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin(),
                 "Arp2/3 in filaments": 100.0
                 * analyzer.analyze_ratio_of_bound_to_total_arp23(),
                 "Actin in daughter filaments": 100.0
                 * analyzer.analyze_ratio_of_daughter_to_total_actin(),
             },
-            render_mode="lines",
-        )
-
-    @staticmethod
-    def get_dimers_trimers_plot(analyzer):
-        """
-        Add a plot of number of dimer and trimer complexes over time
-        """
-        ytraces = {}
-        for total_rxn_name in SPECIES_COUNT_RXNS:
-            rate = analyzer.reactions[total_rxn_name].to_numpy()
-            ytraces[total_rxn_name] = np.zeros(rate.shape[0] + 1)
-            for t in range(len(rate) + 1):
-                ytraces[total_rxn_name][t] = np.sum(rate[:t])
-        return ScatterPlotData(
-            title="Actin dimers and trimers",
-            xaxis_title="Time (µs)",
-            yaxis_title="Number of complexes",
-            xtrace=analyzer.times,
-            ytraces=ytraces,
             render_mode="lines",
         )
 
@@ -111,13 +88,13 @@ class ActinVisualization:
         """
         ytraces = {}
         for total_rxn_name in POLYMERIZATION_RXNS:
-            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+            rxn_rate = analyzer.analyze_reaction_count_over_time(total_rxn_name)
             if rxn_rate is not None:
                 ytraces[total_rxn_name] = rxn_rate
         return ScatterPlotData(
-            title="Polymerization reaction rates",
+            title="Polymerization reactions",
             xaxis_title="Time (µs)",
-            yaxis_title="Rate (s\u207B\u00B9)",
+            yaxis_title="Reaction events",
             xtrace=analyzer.times,
             ytraces=ytraces,
             render_mode="lines",
@@ -130,14 +107,14 @@ class ActinVisualization:
         for each total polymerization reaction over time
         """
         ytraces = {}
-        for total_rxn_name in DEPOLYMERIZATION_RXNS:
-            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+        for total_rxn_name in STRUCTURAL_RXNS:
+            rxn_rate = analyzer.analyze_reaction_count_over_time(total_rxn_name)
             if rxn_rate is not None:
                 ytraces[total_rxn_name] = rxn_rate
         return ScatterPlotData(
-            title="Depolymerization reaction rates",
+            title="Structural reaction triggers",
             xaxis_title="Time (µs)",
-            yaxis_title="Rate (s\u207B\u00B9)",
+            yaxis_title="Reaction events",
             xtrace=analyzer.times,
             ytraces=ytraces,
             render_mode="lines",
@@ -150,14 +127,14 @@ class ActinVisualization:
         for each total polymerization reaction over time
         """
         ytraces = {}
-        for total_rxn_name in GROWTH_REACTIONS:
-            rxn_rate = analyzer.analyze_reaction_rate_over_time(total_rxn_name)
+        for total_rxn_name in POLYMERIZATION_RXNS:
+            rxn_rate = analyzer.analyze_reaction_count_over_time(total_rxn_name)
             if rxn_rate is not None:
                 ytraces[total_rxn_name] = rxn_rate
         return ScatterPlotData(
-            title="Actin growth vs concentration",
+            title="Actin polymerization vs concentration",
             xaxis_title="[Actin] (µM)",
-            yaxis_title="Rate (s\u207B\u00B9)",
+            yaxis_title="Reaction events",
             xtrace=analyzer.analyze_free_actin_concentration_over_time(),
             ytraces=ytraces,
             render_mode="lines",
@@ -257,14 +234,13 @@ class ActinVisualization:
         return {
             "scatter": [
                 ActinVisualization.get_bound_monomers_plot(analyzer),
-                ActinVisualization.get_dimers_trimers_plot(analyzer),
                 ActinVisualization.get_avg_length_plot(analyzer),
                 ActinVisualization.get_polymerization_reactions_plot(analyzer),
                 ActinVisualization.get_depolymerization_reactions_plot(analyzer),
                 ActinVisualization.get_actin_growth_reactions_vs_concentration_plot(
                     analyzer
                 ),
-                ActinVisualization.get_capped_ends_plot(analyzer),
+                # ActinVisualization.get_capped_ends_plot(analyzer),
                 ActinVisualization.get_branch_angle_plot(analyzer),
                 ActinVisualization.get_helix_pitch_plot(analyzer),
                 ActinVisualization.get_filament_straightness_plot(analyzer),

@@ -60,20 +60,6 @@ class ActinUtil:
         return None, None
 
     @staticmethod
-    def cancel_branch_reaction(topology, recipe, actin_arp3, arp3):
-        """
-        Undo the branching spatial reaction if the structural reaction fails
-        """
-        if parameters["verbose"]:
-            print("Canceling branch reaction")
-        pt = topology.particle_type_of_vertex(actin_arp3)
-        recipe.remove_edge(actin_arp3, arp3)
-        ReaddyUtil.set_flags(topology, recipe, actin_arp3, ["mid"], [], True)
-        ReaddyUtil.set_flags(topology, recipe, arp3, [], ["new"], True)
-        state = "ATP" if "ATP" in pt else "ADP"
-        recipe.change_topology_type(f"Actin-Polymer#Fail-Branch-{state}")
-
-    @staticmethod
     def get_actin_number(topology, vertex, offset):
         """
         get the type number for an actin plus the given offset in range [-1, 1]
@@ -156,7 +142,7 @@ class ActinUtil:
         return (positions[1] + vector_to_new_pos).tolist()
 
     @staticmethod
-    def get_next_actin(topology, v_actin, direction):
+    def get_next_actin(topology, v_actin, direction, error_if_not_found=False):
         """
         get the next actin toward the pointed or barbed direction
         """
@@ -172,13 +158,15 @@ class ActinUtil:
         ]
         if direction < 0 and n == 1:
             actin_types += ["actin#branch_1", "actin#branch_ATP_1"]
+        error_msg = f"Couldn't find next actin with number {n}"
         v_actin_neighbor = ReaddyUtil.get_neighbor_of_types(
             topology,
             v_actin,
             actin_types,
             [],
             parameters["verbose"],
-            f"Couldn't find next actin with number {n}",
+            error_msg if not error_if_not_found else "",
+            error_msg if error_if_not_found else "",
         )
         return v_actin_neighbor
 
@@ -929,18 +917,14 @@ class ActinUtil:
             topology, v_arp3, [v_arp2], error_msg="Failed to find new actin_arp3"
         )
         # make sure arp2 binds to the pointed end neighbor of the actin bound to arp3
-        v_actin_arp2 = ActinUtil.get_next_actin(topology, v_actin_arp3, -1)
-        if v_actin_arp2 is None:
-            ActinUtil.cancel_branch_reaction(topology, recipe, v_actin_arp3, v_arp3)
-            return recipe
-        pointed_type = topology.particle_type_of_vertex(v_actin_arp2)
-        if "pointed" in pointed_type or "branch" in pointed_type:
-            if parameters["verbose"]:
-                print("Branch is starting exactly at a pointed end or start of a branch")
-            ActinUtil.cancel_branch_reaction(
-                topology, recipe, v_actin_arp3, v_arp3
+        v_actin_arp2 = ActinUtil.get_next_actin(
+            topology, v_actin_arp3, -1, error_if_not_found=True
+        )
+        actin_arp2_type = topology.particle_type_of_vertex(v_actin_arp2)
+        if "pointed" in actin_arp2_type or "branch" in actin_arp2_type:
+            raise Exception(
+                "Branch is starting exactly at a pointed end or start of a branch"
             )
-            return recipe
         ReaddyUtil.set_flags(topology, recipe, v_arp2, [], ["free"], True)
         ReaddyUtil.set_flags(topology, recipe, v_arp3, [], ["new"], True)
         ActinUtil.set_actin_mid_flags_at_new_branch(
@@ -989,15 +973,16 @@ class ActinUtil:
             "Couldn't find end actin to remove",
         )
         if v_end is None:
-            recipe.change_topology_type(f"Actin-Polymer#Fail-{end_state}-Shrink-{atp_state}")
             return recipe
         v_arp = ReaddyUtil.get_neighbor_of_types(
-            topology, v_end, ["arp3", "arp3#ATP", "arp2", "arp2#branched"], []
+            topology, 
+            v_end, 
+            ["arp3", "arp3#ATP", "arp2", "arp2#branched"], 
+            [], 
+            parameters["verbose"], 
+            "Couldn't remove actin because a branch was attached"
         )
         if v_arp is not None:
-            if parameters["verbose"]:
-                print("Couldn't remove actin because a branch was attached")
-            recipe.change_topology_type(f"Actin-Polymer#Fail-{end_state}-Shrink-{atp_state}")
             return recipe
         v_neighbor = ReaddyUtil.get_neighbor_of_types(
             topology,
@@ -1012,21 +997,18 @@ class ActinUtil:
             "Couldn't find plain actin neighbor of actin to remove",
         )
         if v_neighbor is None:
-            recipe.change_topology_type(f"Actin-Polymer#Fail-{end_state}-Shrink-{atp_state}")
             return recipe
         if not barbed:
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, v_neighbor, ["arp2", "arp2#branched"], []
+                topology, 
+                v_neighbor, 
+                ["arp2", "arp2#branched"], 
+                [], 
+                parameters["verbose"],
+                "Couldn't remove actin because a branch was attached to its barbed neighbor"
             )
             if v_arp2 is not None:
-                if parameters["verbose"]:
-                    print(
-                        "Couldn't remove actin because a branch was attached "
-                        "to its barbed neighbor"
-                    )
-                recipe.change_topology_type(f"Actin-Polymer#Fail-{end_state}-Shrink-{atp_state}")
                 return recipe
-        if not barbed:
             v_neighbor_neighbor = ActinUtil.get_next_actin(topology, v_neighbor, 1)
             if v_neighbor_neighbor is not None:
                 ReaddyUtil.set_flags(
@@ -1113,7 +1095,7 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Hydrolyze Actin")
-        v = ReaddyUtil.get_random_vertex_of_types(
+        v_actin = ReaddyUtil.get_random_vertex_of_types(
             topology,
             ActinUtil.get_all_polymer_actin_types("actin#ATP")
             + ActinUtil.get_all_polymer_actin_types("actin#pointed_ATP")
@@ -1123,10 +1105,9 @@ class ActinUtil:
             parameters["verbose"],
             "Couldn't find ATP-actin",
         )
-        if v is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Hydrolysis-Actin")
+        if v_actin is None:
             return recipe
-        ReaddyUtil.set_flags(topology, recipe, v, [], ["ATP"], True)
+        ReaddyUtil.set_flags(topology, recipe, v_actin, [], ["ATP"], True)
         return recipe
 
     @staticmethod
@@ -1137,13 +1118,12 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Hydrolyze Arp2/3")
-        v = ReaddyUtil.get_random_vertex_of_types(
+        v_arp3 = ReaddyUtil.get_random_vertex_of_types(
             topology, ["arp3#ATP"], parameters["verbose"], "Couldn't find ATP-arp3"
         )
-        if v is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Hydrolysis-Arp")
+        if v_arp3 is None:
             return recipe
-        ReaddyUtil.set_flags(topology, recipe, v, [], ["ATP"], True)
+        ReaddyUtil.set_flags(topology, recipe, v_arp3, [], ["ATP"], True)
         return recipe
 
     @staticmethod
@@ -1154,17 +1134,16 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Nucleotide Exchange Actin")
-        v = ReaddyUtil.get_vertex_of_type(
+        v_actin = ReaddyUtil.get_vertex_of_type(
             topology,
             "actin#free",
             True,
             parameters["verbose"],
             "Couldn't find ADP-actin",
         )
-        if v is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Nucleotide-Exchange-Actin")
+        if v_actin is None:
             return recipe
-        ReaddyUtil.set_flags(topology, recipe, v, ["ATP"], [], True)
+        ReaddyUtil.set_flags(topology, recipe, v_actin, ["ATP"], [], True)
         return recipe
 
     @staticmethod
@@ -1175,13 +1154,12 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Nucleotide Exchange Arp2/3")
-        v = ReaddyUtil.get_vertex_of_type(
+        v_arp3 = ReaddyUtil.get_vertex_of_type(
             topology, "arp3", True, parameters["verbose"], "Couldn't find ADP-arp3"
         )
-        if v is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Nucleotide-Exchange-Arp")
+        if v_arp3 is None:
             return recipe
-        ReaddyUtil.set_flags(topology, recipe, v, ["ATP"], [], True)
+        ReaddyUtil.set_flags(topology, recipe, v_arp3, ["ATP"], [], True)
         return recipe
 
     @staticmethod
@@ -1195,7 +1173,6 @@ class ActinUtil:
             print(f"Remove Arp2/3 {state}")
         v_arp2 = ActinUtil.get_random_arp2(topology, with_ATP, False)
         if v_arp2 is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Arp-Unbind-" + state)
             return recipe
         actin_types = (
             ActinUtil.get_all_polymer_actin_types("actin")
@@ -1251,7 +1228,6 @@ class ActinUtil:
             print(f"Debranching {state}")
         v_arp2 = ActinUtil.get_random_arp2(topology, with_ATP, True)
         if v_arp2 is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Debranch-" + state)
             return recipe
         actin_types = [
             "actin#branch_1",
@@ -1320,7 +1296,6 @@ class ActinUtil:
             topology, ["cap#bound"], parameters["verbose"], "Couldn't find cap"
         )
         if v_cap is None:
-            recipe.change_topology_type("Actin-Polymer#Fail-Cap-Unbind")
             return recipe
         v_actin = ReaddyUtil.get_neighbor_of_types(
             topology,
@@ -1408,23 +1383,6 @@ class ActinUtil:
         system.topologies.add_type("Actin-Polymer#Branching")
         system.topologies.add_type("Actin-Polymer#Branch-Nucleating")
         system.topologies.add_type("Actin-Polymer#Capping")
-        system.topologies.add_type("Actin-Polymer#Fail-Pointed-Shrink-ATP")
-        system.topologies.add_type("Actin-Polymer#Fail-Pointed-Shrink-ADP")
-        system.topologies.add_type("Actin-Polymer#Fail-Barbed-Shrink-ATP")
-        system.topologies.add_type("Actin-Polymer#Fail-Barbed-Shrink-ADP")
-        system.topologies.add_type("Actin-Polymer#Fail-Hydrolysis-Actin")
-        system.topologies.add_type("Actin-Polymer#Fail-Hydrolysis-Arp")
-        system.topologies.add_type("Actin-Polymer#Fail-Branch-ATP")
-        system.topologies.add_type("Actin-Polymer#Fail-Branch-ADP")
-        system.topologies.add_type("Actin-Polymer#Fail-Arp-Bind-ATP")
-        system.topologies.add_type("Actin-Polymer#Fail-Arp-Bind-ADP")
-        system.topologies.add_type("Actin-Polymer#Fail-Debranch-ATP")
-        system.topologies.add_type("Actin-Polymer#Fail-Debranch-ADP")
-        system.topologies.add_type("Actin-Polymer#Fail-Arp-Unbind-ATP")
-        system.topologies.add_type("Actin-Polymer#Fail-Arp-Unbind-ADP")
-        system.topologies.add_type("Actin-Polymer#Fail-Nucleotide-Exchange-Actin")
-        system.topologies.add_type("Actin-Polymer#Fail-Nucleotide-Exchange-Arp")
-        system.topologies.add_type("Actin-Polymer#Fail-Cap-Unbind")
         system.add_topology_species("actin#free", diffCoeff)
         system.add_topology_species("actin#free_ATP", diffCoeff)
         system.add_topology_species("actin#new", diffCoeff)
@@ -2231,7 +2189,7 @@ class ActinUtil:
             )
 
     @staticmethod
-    def add_spatial_dimerize_reaction(system):
+    def add_dimerize_reaction(system):
         """
         attach two monomers
         """
@@ -2256,7 +2214,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_spatial_trimerize_reaction(system):
+    def add_trimerize_reaction(system):
         """
         attach a monomer to a dimer
         """
@@ -2288,7 +2246,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_spatial_nucleate_reaction(system):
+    def add_nucleate_reaction(system):
         """
         reversibly attach a monomer to a trimer
         """
@@ -2309,7 +2267,7 @@ class ActinUtil:
             )
 
     @staticmethod
-    def add_spatial_pointed_growth_reaction(system):
+    def add_pointed_growth_reaction(system):
         """
         attach a monomer to the pointed end of a filament
         """
@@ -2367,18 +2325,6 @@ class ActinUtil:
             rate_function=lambda x: parameters["pointed_shrink_ADP_rate"],
         )
         system.topologies.add_structural_reaction(
-            "Fail_Pointed_Shrink_ATP",
-            topology_type="Actin-Polymer#Fail-Pointed-Shrink-ATP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
-            "Fail_Pointed_Shrink_ADP",
-            topology_type="Actin-Polymer#Fail-Pointed-Shrink-ADP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
             "Cleanup_Shrink",
             topology_type="Actin-Polymer#Shrinking",
             reaction_function=ActinUtil.reaction_function_cleanup_shrink,
@@ -2386,7 +2332,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_spatial_barbed_growth_reaction(system):
+    def add_barbed_growth_reaction(system):
         """
         attach a monomer to the barbed end of a filament
         """
@@ -2471,18 +2417,6 @@ class ActinUtil:
             reaction_function=ActinUtil.reaction_function_barbed_shrink_ADP,
             rate_function=lambda x: parameters["barbed_shrink_ADP_rate"],
         )
-        system.topologies.add_structural_reaction(
-            "Fail_Barbed_Shrink_ATP",
-            topology_type="Actin-Polymer#Fail-Barbed-Shrink-ATP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
-            "Fail_Barbed_Shrink_ADP",
-            topology_type="Actin-Polymer#Fail-Barbed-Shrink-ADP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
 
     @staticmethod
     def add_hydrolyze_reaction(system):
@@ -2496,22 +2430,10 @@ class ActinUtil:
             rate_function=lambda x: parameters["hydrolysis_actin_rate"],
         )
         system.topologies.add_structural_reaction(
-            "Fail_Hydrolysis_Actin",
-            topology_type="Actin-Polymer#Fail-Hydrolysis-Actin",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
             "Hydrolysis_Arp",
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_hydrolyze_arp,
             rate_function=lambda x: parameters["hydrolysis_arp_rate"],
-        )
-        system.topologies.add_structural_reaction(
-            "Fail_Hydrolysis_Arp",
-            topology_type="Actin-Polymer#Fail-Hydrolysis-Arp",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
         )
 
     @staticmethod
@@ -2586,18 +2508,6 @@ class ActinUtil:
             reaction_function=ActinUtil.reaction_function_finish_arp_bind,
             rate_function=ReaddyUtil.rate_function_infinity,
         )
-        system.topologies.add_structural_reaction(
-            "Cleanup_Fail_Arp_Bind_ATP",
-            topology_type="Actin-Polymer#Fail-Branch-ATP",
-            reaction_function=ActinUtil.reaction_function_cleanup_shrink,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
-            "Cleanup_Fail_Arp_Bind_ADP",
-            topology_type="Actin-Polymer#Fail-Branch-ADP",
-            reaction_function=ActinUtil.reaction_function_cleanup_shrink,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
 
     @staticmethod
     def add_arp23_unbind_reaction(system):
@@ -2616,21 +2526,9 @@ class ActinUtil:
             reaction_function=ActinUtil.reaction_function_arp23_unbind_ADP,
             rate_function=lambda x: parameters["arp_unbind_ADP_rate"],
         )
-        system.topologies.add_structural_reaction(
-            "Fail_Arp_Unbind_ATP",
-            topology_type="Actin-Polymer#Fail-Arp-Unbind-ATP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
-            "Fail_Arp_Unbind_ADP",
-            topology_type="Actin-Polymer#Fail-Arp-Unbind-ADP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
 
     @staticmethod
-    def add_spatial_nucleate_branch_reaction(system):
+    def add_nucleate_branch_reaction(system):
         """
         add actin to arp2/3 to begin a branch
         """
@@ -2676,18 +2574,6 @@ class ActinUtil:
             reaction_function=ActinUtil.reaction_function_debranching_ADP,
             rate_function=lambda x: parameters["debranching_ADP_rate"],
         )
-        system.topologies.add_structural_reaction(
-            "Fail_Debranch_ATP",
-            topology_type="Actin-Polymer#Fail-Debranch-ATP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
-        system.topologies.add_structural_reaction(
-            "Fail_Debranch_ADP",
-            topology_type="Actin-Polymer#Fail-Debranch-ADP",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
-        )
 
     @staticmethod
     def add_cap_bind_reaction(system):
@@ -2712,7 +2598,7 @@ class ActinUtil:
                 + parameters["reaction_distance"],
             )
         system.topologies.add_structural_reaction(
-            "Finish_Cap-Bind",
+            "Finish_Cap_Bind",
             topology_type="Actin-Polymer#Capping",
             reaction_function=ActinUtil.reaction_function_finish_cap_bind,
             rate_function=ReaddyUtil.rate_function_infinity,
@@ -2728,10 +2614,4 @@ class ActinUtil:
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_cap_unbind,
             rate_function=lambda x: parameters["cap_unbind_rate"],
-        )
-        system.topologies.add_structural_reaction(
-            "Fail_Cap_Unbind",
-            topology_type="Actin-Polymer#Fail-Cap-Unbind",
-            reaction_function=ReaddyUtil.reaction_function_reset_state,
-            rate_function=ReaddyUtil.rate_function_infinity,
         )
