@@ -9,7 +9,7 @@ from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer
 
 TIMESTEP = 0.1  # ns
-POLYMERIZATION_RXNS = [
+GROWTH_RXNS = [
     "Dimerize",
     "Trimerize",
     "Grow Pointed",
@@ -18,6 +18,12 @@ POLYMERIZATION_RXNS = [
     "Start Branch",
     "Bind Cap",
 ]
+GROUPED_GROWTH_RXNS = {
+    "Dimerize Actin": ["Dimerize"],
+    "Polymerize Actin": ["Trimerize", "Grow Pointed", "Grow Barbed", "Start Branch"],
+    "Bind Arp2/3": ["Bind Arp2/3"],
+    "Bind Cap": ["Bind Cap"],
+}
 STRUCTURAL_RXNS = [
     "Reverse Dimerize",
     "Reverse Trimerize",
@@ -81,18 +87,18 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def get_polymerization_reactions_plot(analyzer):
+    def get_growth_reactions_plot(analyzer):
         """
-        Add a plot of cumulative reaction events over time
-        for each total polymerization reaction over time
+        Add a plot of reaction events over time
+        for each total growth reaction
         """
         ytraces = {}
-        for total_rxn_name in POLYMERIZATION_RXNS:
-            rxn_rate = analyzer.analyze_reaction_count_over_time(total_rxn_name)
-            if rxn_rate is not None:
-                ytraces[total_rxn_name] = rxn_rate
+        for total_rxn_name in GROWTH_RXNS:
+            rxn_events = analyzer.analyze_reaction_count_over_time(total_rxn_name)
+            if rxn_events is not None:
+                ytraces[total_rxn_name] = rxn_events
         return ScatterPlotData(
-            title="Polymerization reactions",
+            title="Growth reactions",
             xaxis_title="Time (µs)",
             yaxis_title="Reaction events",
             xtrace=analyzer.times,
@@ -101,38 +107,42 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def get_depolymerization_reactions_plot(analyzer):
+    def get_structural_reactions_plot(analyzer):
         """
-        Add a plot of cumulative reaction events over time
-        for each total polymerization reaction over time
+        Add a plot of the number of times a structural reaction 
+        was triggered over time
+        Note: triggered != completed, the reaction may have failed 
+        to find the required reactants
         """
         ytraces = {}
         for total_rxn_name in STRUCTURAL_RXNS:
-            rxn_rate = analyzer.analyze_reaction_count_over_time(total_rxn_name)
-            if rxn_rate is not None:
-                ytraces[total_rxn_name] = rxn_rate
+            rxn_events = analyzer.analyze_reaction_count_over_time(total_rxn_name)
+            if rxn_events is not None:
+                ytraces[total_rxn_name] = rxn_events
         return ScatterPlotData(
             title="Structural reaction triggers",
             xaxis_title="Time (µs)",
-            yaxis_title="Reaction events",
+            yaxis_title="Reaction triggers",
             xtrace=analyzer.times,
             ytraces=ytraces,
             render_mode="lines",
         )
 
     @staticmethod
-    def get_actin_growth_reactions_vs_concentration_plot(analyzer):
+    def get_growth_reactions_vs_actin_plot(analyzer):
         """
-        Add a plot of cumulative reaction events over time
-        for each total polymerization reaction over time
+        Add a plot of average reaction events over time
+        for each total growth reaction
         """
         ytraces = {}
-        for total_rxn_name in POLYMERIZATION_RXNS:
-            rxn_rate = analyzer.analyze_reaction_count_over_time(total_rxn_name)
-            if rxn_rate is not None:
-                ytraces[total_rxn_name] = rxn_rate
+        for rxn_group_name in GROUPED_GROWTH_RXNS:
+            group_reaction_events = []
+            for total_rxn_name in GROUPED_GROWTH_RXNS[rxn_group_name]:
+                group_reaction_events.append(analyzer.analyze_reaction_count_over_time(total_rxn_name))
+            if len(group_reaction_events) > 0:
+                ytraces[rxn_group_name] = np.sum(np.array(group_reaction_events), axis=0)
         return ScatterPlotData(
-            title="Actin polymerization vs concentration",
+            title="Growth vs [actin]",
             xaxis_title="[Actin] (µM)",
             yaxis_title="Reaction events",
             xtrace=analyzer.analyze_free_actin_concentration_over_time(),
@@ -235,15 +245,13 @@ class ActinVisualization:
             "scatter": [
                 ActinVisualization.get_bound_monomers_plot(analyzer),
                 ActinVisualization.get_avg_length_plot(analyzer),
-                ActinVisualization.get_polymerization_reactions_plot(analyzer),
-                ActinVisualization.get_depolymerization_reactions_plot(analyzer),
-                ActinVisualization.get_actin_growth_reactions_vs_concentration_plot(
-                    analyzer
-                ),
+                ActinVisualization.get_growth_reactions_plot(analyzer),
+                ActinVisualization.get_growth_reactions_vs_actin_plot(analyzer),
                 # ActinVisualization.get_capped_ends_plot(analyzer),
                 ActinVisualization.get_branch_angle_plot(analyzer),
                 ActinVisualization.get_helix_pitch_plot(analyzer),
                 ActinVisualization.get_filament_straightness_plot(analyzer),
+                ActinVisualization.get_structural_reactions_plot(analyzer),
             ],
             "histogram": [],
         }

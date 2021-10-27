@@ -1009,7 +1009,7 @@ class ReaddyUtil:
         return result
 
     @staticmethod
-    def shape_frame_particle_data(
+    def shape_frame_monomer_data(
         time_index, topology_records, ids, types, positions, traj
     ):
         """
@@ -1047,7 +1047,7 @@ class ReaddyUtil:
         return result
 
     @staticmethod
-    def shape_particle_data(
+    def shape_monomer_data(
         min_time,
         max_time,
         time_inc,
@@ -1059,9 +1059,18 @@ class ReaddyUtil:
         traj,
     ):
         """
-        For each time point, get a dictionary mapping particle id
-        to data for each particle:
-            [id] : (type, list of neighbor ids, position)
+        For each time point, get a dictionary with keys
+          "topologies" : mapping of topology id to data for each topology:
+            [id: int] : {
+                "type_name" : str,
+                "particle_ids" : List[int]
+            }
+          "particles" : mapping of particle id to data for each particle:
+            [id: int] : {
+                "type_name" : str, 
+                "position" : np.ndarray, 
+                "neighbor_ids" : List[int]
+            }
         """
         print("Shaping data for analysis...")
         result = []
@@ -1069,7 +1078,7 @@ class ReaddyUtil:
         for t in range(len(times)):
             if t >= min_time and t <= max_time and t % time_inc == 0:
                 result.append(
-                    ReaddyUtil.shape_frame_particle_data(
+                    ReaddyUtil.shape_frame_monomer_data(
                         t, topology_records, ids, types, positions, traj
                     )
                 )
@@ -1104,7 +1113,7 @@ class ReaddyUtil:
         """
         result = []
         for p_id in frame_particle_data:
-            if frame_particle_data[p_id][0] in particle_types:
+            if frame_particle_data[p_id]["type_name"] in particle_types:
                 result.append(p_id)
         return result
 
@@ -1116,10 +1125,10 @@ class ReaddyUtil:
         Get the id for the first neighbor with one of the neighbor_types
         in the given frame of data
         """
-        for n_id in frame_particle_data[particle_id][1]:
+        for n_id in frame_particle_data[particle_id]["neighbor_ids"]:
             if n_id in exclude_ids:
                 continue
-            nt = frame_particle_data[n_id][0]
+            nt = frame_particle_data[n_id]["type_name"]
             if nt in neighbor_types:
                 return n_id
         return None
