@@ -711,7 +711,7 @@ class ActinUtil:
         positions = ActinUtil.get_box_positions(n, "actin")
         for p in range(len(positions)):
             simulation.add_topology(
-                "Actin-Monomer", ["actin#free_ATP"], np.array([positions[p]])
+                "Actin-Monomer-ATP", ["actin#free_ATP"], np.array([positions[p]])
             )
 
     @staticmethod
@@ -722,7 +722,7 @@ class ActinUtil:
         positions = ActinUtil.get_box_positions(n, "arp")
         for p in range(len(positions)):
             top = simulation.add_topology(
-                "Arp23-Dimer",
+                "Arp23-Dimer-ATP",
                 ["arp2#free", "arp3#ATP"],
                 np.array(
                     [
@@ -765,10 +765,12 @@ class ActinUtil:
         v_pointed = ReaddyUtil.get_first_neighbor(
             topology, v_barbed, [], error_msg="Failed to find pointed end of dimer"
         )
+        pt_barbed = topology.particle_type_of_vertex(v_barbed)
+        pt_pointed = topology.particle_type_of_vertex(v_pointed)
         recipe.remove_edge(v_barbed, v_pointed)
-        recipe.change_particle_type(v_barbed, "actin#free_ATP")
-        recipe.change_particle_type(v_pointed, "actin#free_ATP")
-        recipe.change_topology_type("Actin-Monomer")
+        recipe.change_particle_type(v_barbed, "actin#free" + ("_ATP" if "ATP" in pt_barbed else ""))
+        recipe.change_particle_type(v_pointed, "actin#free" + ("_ATP" if "ATP" in pt_pointed else ""))
+        recipe.change_topology_type("Actin-Monomer-ATP")
         return recipe
 
     @staticmethod
@@ -1071,11 +1073,15 @@ class ActinUtil:
             if v_cap is not None:
                 new_type = "Cap"
             else:
-                new_type = "Actin-Monomer"
+                v_actin = ReaddyUtil.get_vertex_of_type(topology, "actin", False, error_msg="Failed to find actin to set monomer's ATP state")
+                pt_actin = topology.particle_type_of_vertex(v_actin)  
+                new_type = "Actin-Monomer" + ("-ATP" if "ATP" in pt_actin else "")
         elif len(topology.graph.get_vertices()) < 3:
             v_arp2 = ReaddyUtil.get_vertex_of_type(topology, "arp2#free", True)
             if v_arp2 is not None:
-                new_type = "Arp23-Dimer"
+                v_arp3 = ReaddyUtil.get_vertex_of_type(topology, "arp3", False, error_msg="Failed to find arp3 to set arp2/3's ATP state")
+                pt_arp3 = topology.particle_type_of_vertex(v_arp3)
+                new_type = "Arp23-Dimer" + ("-ATP" if "ATP" in pt_arp3 else "")
             else:
                 new_type = "Actin-Dimer"
         elif len(topology.graph.get_vertices()) < 4:
@@ -1319,6 +1325,7 @@ class ActinUtil:
         """
         add particle and topology types for Arp2/3 dimer
         """
+        system.topologies.add_type("Arp23-Dimer-ATP")
         system.topologies.add_type("Arp23-Dimer")
         system.add_topology_species("arp2", diffCoeff)
         system.add_topology_species("arp2#branched", diffCoeff)
@@ -1371,6 +1378,7 @@ class ActinUtil:
 
                                             + end
         """
+        system.topologies.add_type("Actin-Monomer-ATP")
         system.topologies.add_type("Actin-Monomer")
         system.topologies.add_type("Actin-Dimer")
         system.topologies.add_type("Actin-Trimer")
@@ -2195,7 +2203,7 @@ class ActinUtil:
         """
         system.topologies.add_spatial_reaction(
             "Dimerize: "
-            "Actin-Monomer(actin#free_ATP) + Actin-Monomer(actin#free_ATP) -> "
+            "Actin-Monomer-ATP(actin#free_ATP) + Actin-Monomer-ATP(actin#free_ATP) -> "
             "Actin-Dimer(actin#pointed_ATP_1--actin#barbed_ATP_2)",
             rate=parameters["dimerize_rate"],
             radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2221,7 +2229,7 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Trimerize{i}: "
-                f"Actin-Dimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP) -> "
+                f"Actin-Dimer(actin#barbed_ATP_{i}) + Actin-Monomer-ATP(actin#free_ATP) -> "
                 f"Actin-Trimer#Growing(actin#ATP_{i}--actin#new_ATP)",
                 rate=parameters["trimerize_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2253,7 +2261,7 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_Nucleate_ATP{i}: "
-                f"Actin-Trimer(actin#barbed_ATP_{i}) + Actin-Monomer(actin#free_ATP) "
+                f"Actin-Trimer(actin#barbed_ATP_{i}) + Actin-Monomer-ATP(actin#free_ATP) "
                 f"-> Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
                 rate=parameters["nucleate_ATP_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2274,14 +2282,14 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ATP1{i}: Actin-Polymer(actin#pointed_{i}) + "
-                "Actin-Monomer(actin#free_ATP) -> "
+                "Actin-Monomer-ATP(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingPointed(actin#{i}--actin#new_ATP)",
                 rate=parameters["pointed_growth_ATP_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
             )
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ATP2{i}: Actin-Polymer(actin#pointed_ATP_{i}) + "
-                "Actin-Monomer(actin#free_ATP) -> "
+                "Actin-Monomer-ATP(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingPointed(actin#ATP_{i}--actin#new_ATP)",
                 rate=parameters["pointed_growth_ATP_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2339,14 +2347,14 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ATP1{i}: Actin-Polymer(actin#barbed_{i}) + "
-                "Actin-Monomer(actin#free_ATP) -> "
+                "Actin-Monomer-ATP(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#{i}--actin#new_ATP)",
                 rate=parameters["barbed_growth_ATP_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
             )
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ATP2{i}: Actin-Polymer(actin#barbed_ATP_{i}) + "
-                "Actin-Monomer(actin#free_ATP) -> "
+                "Actin-Monomer-ATP(actin#free_ATP) -> "
                 f"Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
                 rate=parameters["barbed_growth_ATP_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2367,14 +2375,14 @@ class ActinUtil:
             )
         system.topologies.add_spatial_reaction(
             "Branch_Barbed_Growth_ATP1: Actin-Polymer(actin#branch_barbed_1) + "
-            "Actin-Monomer(actin#free_ATP) -> "
+            "Actin-Monomer-ATP(actin#free_ATP) -> "
             "Actin-Polymer#GrowingBarbed(actin#branch_1--actin#new_ATP)",
             rate=parameters["barbed_growth_ATP_rate"],
             radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
         )
         system.topologies.add_spatial_reaction(
             "Branch_Barbed_Growth_ATP2: Actin-Polymer(actin#branch_barbed_ATP_1) + "
-            "Actin-Monomer(actin#free_ATP) -> "
+            "Actin-Monomer-ATP(actin#free_ATP) -> "
             "Actin-Polymer#GrowingBarbed(actin#branch_ATP_1--actin#new_ATP)",
             rate=parameters["barbed_growth_ATP_rate"],
             radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2477,7 +2485,7 @@ class ActinUtil:
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ATP2{i}: "
-                f"Actin-Polymer(actin#mid_ATP_{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Actin-Polymer(actin#mid_ATP_{i}) + Arp23-Dimer-ATP(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#ATP_{i}--arp3#new_ATP)",
                 rate=parameters["arp_bind_ATP_rate"],
                 radius=parameters["actin_radius"]
@@ -2495,7 +2503,7 @@ class ActinUtil:
             )
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ADP2{i}: "
-                f"Actin-Polymer(actin#mid_{i}) + Arp23-Dimer(arp3#ATP) -> "
+                f"Actin-Polymer(actin#mid_{i}) + Arp23-Dimer-ATP(arp3#ATP) -> "
                 f"Actin-Polymer#Branching(actin#{i}--arp3#new_ATP)",
                 rate=parameters["arp_bind_ADP_rate"],
                 radius=parameters["actin_radius"]
@@ -2534,7 +2542,7 @@ class ActinUtil:
         """
         system.topologies.add_spatial_reaction(
             "Barbed_Growth_Branch_ATP: "
-            "Actin-Polymer(arp2) + Actin-Monomer(actin#free_ATP) -> "
+            "Actin-Polymer(arp2) + Actin-Monomer-ATP(actin#free_ATP) -> "
             "Actin-Polymer#Branch-Nucleating(arp2#branched--actin#new_ATP)",
             rate=parameters["barbed_growth_branch_ATP_rate"],
             radius=parameters["actin_radius"]
