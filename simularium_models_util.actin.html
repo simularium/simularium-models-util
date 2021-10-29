@@ -191,6 +191,13 @@ with capping protein to all barbed ends over time</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_count_over_time">
+<span class="sig-name descname"><span class="pre">analyze_reaction_count_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reaction_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_reaction_count_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_count_over_time" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of the number of times a reaction happened
+between each analyzed timestep of the given reaction</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_rate_over_time">
 <span class="sig-name descname"><span class="pre">analyze_reaction_rate_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reaction_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer.analyze_reaction_rate_over_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_rate_over_time" title="Permalink to this definition"></a></dt>
 <dd><p>Get a list of the reaction rate per second
@@ -232,8 +239,14 @@ on each filament in each frame of the trajectory</p>
 <p>Generates positions, types, and edges for monomers in actin networks</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.add_bound_arp_monomers">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_bound_arp_monomers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.add_bound_arp_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.add_bound_arp_monomers" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_bound_arp_monomers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.add_bound_arp_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.add_bound_arp_monomers" title="Permalink to this definition"></a></dt>
 <dd><p>add positions, types, and edges for a bound arp2 and arp3</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.attach_daughter_fiber_to_mother_fiber">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">attach_daughter_fiber_to_mother_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nucleated_arp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">junction_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">these_actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mother_particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_daughter_actin_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mother_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.attach_daughter_fiber_to_mother_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.attach_daughter_fiber_to_mother_fiber" title="Permalink to this definition"></a></dt>
+<dd><p>attach daughter fiber monomers to their mother fiber monomers</p>
 </dd></dl>
 
 <dl class="py method">
@@ -252,31 +265,76 @@ shift the branch’s actin numbers so that it is</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_actins_for_linear_fiber">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actins_for_linear_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_axis_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointed_actin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_actins_for_linear_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_actins_for_linear_fiber" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actins_for_linear_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_axis_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointed_actin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_actins_for_linear_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_actins_for_linear_fiber" title="Permalink to this definition"></a></dt>
 <dd><p>get actin monomer data pointed to barbed for a fiber with no daughter branches</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_cropped_fibers">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_cropped_fibers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fibers_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_box_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_cropped_fibers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_cropped_fibers" title="Permalink to this definition"></a></dt>
+<dd><p>crop the fiber data to a cube volume
+defined by child_box_center
+(center of cropped box in parent box coordinates)
+and child_box_size
+and center it around the box_center as the origin</p>
+<p>fibers_data: List[FiberData]
+(FiberData for mother fibers only, which should have
+their daughters’ FiberData attached to their nucleated arps)</p>
+<p># TODO handle daughter fiber connections</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_extents">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_extents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child_box_center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_extents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_extents" title="Permalink to this definition"></a></dt>
+<dd><p>get the min and max extents
+within the coordinates defined by a parent box
+of a child box defined by center and size</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_intersection_point_with_extents">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_intersection_point_with_extents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_extent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_extent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_intersection_point_with_extents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_intersection_point_with_extents" title="Permalink to this definition"></a></dt>
+<dd><p>get the point where the line segment between the given positions intersects the bounds volume,
+assume bounds are a rectangular prism orthogonal to cartesian grid</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_main_monomers_for_fiber">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_main_monomers_for_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_axis_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointed_actin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_main_monomers_for_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_main_monomers_for_fiber" title="Permalink to this definition"></a></dt>
+<dd><p>get the main actins for a fiber (i.e. no branches or arps)</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_monomers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fibers_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_monomers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fibers_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_box_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_box_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_uuids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers" title="Permalink to this definition"></a></dt>
 <dd><p>get all the monomer data for the (branched) fibers in fibers_data</p>
 <p>fibers_data: List[FiberData]
 (FiberData for mother fibers only, which should have
 their daughters’ FiberData attached to their nucleated arps)</p>
-<p>if next_id &lt; 0, use uuids rather than ints</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_branching_fiber">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_monomers_for_branching_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_axis_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointed_actin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_monomers_for_branching_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_branching_fiber" title="Permalink to this definition"></a></dt>
-<dd><p>recursively get all the monomer data for the given branching fiber</p>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_daughter_fiber">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_monomers_for_daughter_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mother_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nucleated_arp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_monomers_for_daughter_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_daughter_fiber" title="Permalink to this definition"></a></dt>
+<dd><p>get any bound arps and any daughter fibers attached to this fiber</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_fiber">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_monomers_for_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_axis_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointed_actin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_monomers_for_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_fiber" title="Permalink to this definition"></a></dt>
-<dd><p>recursively get all the monomer data for the given fiber network</p>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_monomers_for_fiber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_axis_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointed_actin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_monomers_for_fiber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers_for_fiber" title="Permalink to this definition"></a></dt>
+<dd><p>get the main actins for a fiber as well as any bound arps and daughter fibers</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_neighbor_actin_id">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_neighbor_actin_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_neighbor_actin_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_neighbor_actin_id" title="Permalink to this definition"></a></dt>
+<dd><p>get the id for an actin’s actin neighbor in the given direction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_next_id">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_next_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_next_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_next_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_nucleated_arp_monomer_positions">
@@ -285,9 +343,51 @@ their daughters’ FiberData attached to their nucleated arps)</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_point_on_plane_of_intersecting_extent">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_point_on_plane_of_intersecting_extent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_extent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_extent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_point_on_plane_of_intersecting_extent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_point_on_plane_of_intersecting_extent" title="Permalink to this definition"></a></dt>
+<dd><p>get a point (which is also the normal) of the extent plane intersected
+by the line segment between the given points,
+assume bounds are a rectangular prism orthogonal to cartesian grid</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.particles_to_string">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">particles_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.particles_to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.particles_to_string" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.position_is_in_bounds">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">position_is_in_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_extent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_extent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.position_is_in_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.position_is_in_bounds" title="Permalink to this definition"></a></dt>
+<dd><p>check if a position is within the given extents</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.remove_mid_from_actin">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">remove_mid_from_actin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.remove_mid_from_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.remove_mid_from_actin" title="Permalink to this definition"></a></dt>
+<dd><p>remove the “mid” flag in the actin type_name
+for the monomer with particle_id</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.remove_mother_mid_at_junction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">remove_mother_mid_at_junction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.remove_mother_mid_at_junction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.remove_mother_mid_at_junction" title="Permalink to this definition"></a></dt>
+<dd><p>remove “mid” flags from actins near a branch junction,
+including the actin bound to arp2, the actin bound to arp3,
+as well as one actin before and two actins after the arps
+on the mother filament</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.set_next_id">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">set_next_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.set_next_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.set_next_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.set_particle_type_name">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">set_particle_type_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.set_particle_type_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.set_particle_type_name" title="Permalink to this definition"></a></dt>
+<dd><p>set the type name of the particle using it’s same actin number
+with the new type_prefix</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -395,6 +495,21 @@ and capping protein according to concentrations and box size</p>
 <span class="sig-name descname"><span class="pre">create_actin_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.create_actin_system"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.create_actin_system" title="Permalink to this definition"></a></dt>
 <dd><p>Create the ReaDDy system for actin
 including particle types, constraints, and reactions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.get_current_monomers">
+<span class="sig-name descname"><span class="pre">get_current_monomers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.get_current_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.get_current_monomers" title="Permalink to this definition"></a></dt>
+<dd><p>During a running simulation,
+get data for topologies of particles
+from readdy.simulation.current_topologies
+as monomers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.simulate" title="Permalink to this definition"></a></dt>
+<dd><p>Simulate in ReaDDy for the given d_time seconds</p>
 </dd></dl>
 
 </dd></dl>
@@ -822,6 +937,12 @@ actin#2      actin#1   ||   actin#3      actin#2</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_barbed_growth_reaction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_barbed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_barbed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_barbed_growth_reaction" title="Permalink to this definition"></a></dt>
+<dd><p>attach a monomer to the barbed end of a filament</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_barbed_shrink_reaction">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_barbed_shrink_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_barbed_shrink_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_barbed_shrink_reaction" title="Permalink to this definition"></a></dt>
 <dd><p>remove a monomer from the barbed end of a filament</p>
@@ -907,6 +1028,12 @@ inside a box centered at origin with extent</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_dimerize_reaction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_dimerize_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_dimerize_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_dimerize_reaction" title="Permalink to this definition"></a></dt>
+<dd><p>attach two monomers</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_dimerize_reverse_reaction">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_dimerize_reverse_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_dimerize_reverse_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_dimerize_reverse_reaction" title="Permalink to this definition"></a></dt>
 <dd><p>detach two monomers</p>
@@ -973,33 +1100,21 @@ inside a box centered at origin with extent</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_barbed_growth_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nonspatial_barbed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nonspatial_barbed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_barbed_growth_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach an implicit monomer to a barbed end</p>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nucleate_branch_reaction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nucleate_branch_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nucleate_branch_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nucleate_branch_reaction" title="Permalink to this definition"></a></dt>
+<dd><p>add actin to arp2/3 to begin a branch</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_nucleate_branch_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nonspatial_nucleate_branch_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nonspatial_nucleate_branch_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_nucleate_branch_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach implicit actin to arp2/3 to begin a branch</p>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nucleate_reaction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nucleate_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nucleate_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nucleate_reaction" title="Permalink to this definition"></a></dt>
+<dd><p>reversibly attach a monomer to a trimer</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_nucleate_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nonspatial_nucleate_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nonspatial_nucleate_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_nucleate_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach an implicit monomer to a trimer</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_pointed_growth_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nonspatial_pointed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nonspatial_pointed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_pointed_growth_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach an implicit monomer to a pointed end</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_trimerize_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_nonspatial_trimerize_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_nonspatial_trimerize_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_nonspatial_trimerize_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach an implicit monomer to a dimer</p>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_pointed_growth_reaction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_pointed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_pointed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_pointed_growth_reaction" title="Permalink to this definition"></a></dt>
+<dd><p>attach a monomer to the pointed end of a filament</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1021,38 +1136,8 @@ inside a box centered at origin with extent</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_spatial_barbed_growth_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_spatial_barbed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_spatial_barbed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_barbed_growth_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach a monomer to the barbed end of a filament</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_spatial_dimerize_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_spatial_dimerize_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_spatial_dimerize_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_dimerize_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach two monomers</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_spatial_nucleate_branch_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_spatial_nucleate_branch_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_spatial_nucleate_branch_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_nucleate_branch_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>add actin to arp2/3 to begin a branch</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_spatial_nucleate_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_spatial_nucleate_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_spatial_nucleate_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_nucleate_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>reversibly attach a monomer to a trimer</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_spatial_pointed_growth_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_spatial_pointed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_spatial_pointed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_pointed_growth_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>attach a monomer to the pointed end of a filament</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_spatial_trimerize_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_spatial_trimerize_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_spatial_trimerize_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_spatial_trimerize_reaction" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_trimerize_reaction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_trimerize_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_trimerize_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_trimerize_reaction" title="Permalink to this definition"></a></dt>
 <dd><p>attach a monomer to a dimer</p>
 </dd></dl>
 
@@ -1063,36 +1148,32 @@ inside a box centered at origin with extent</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.cancel_branch_reaction">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">cancel_branch_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actin_arp3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arp3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.cancel_branch_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.cancel_branch_reaction" title="Permalink to this definition"></a></dt>
-<dd><p>Undo the branching spatial reaction if the structural reaction fails</p>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.check_arp3_attached_to_neighbors">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">check_arp3_attached_to_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_vertex_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.check_arp3_attached_to_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.check_arp3_attached_to_neighbors" title="Permalink to this definition"></a></dt>
+<dd><p>Check if an arp3 is attached to the vertex’s neighbors within max_edges</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.do_arp23_unbind">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_arp23_unbind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_ATP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_arp23_unbind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_arp23_unbind" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_arp23_unbind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_ATP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_arp23_unbind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_arp23_unbind" title="Permalink to this definition"></a></dt>
 <dd><p>dissociate an arp2/3 from a mother filament</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.do_debranching">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_debranching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_ATP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_debranching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_debranching" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_debranching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_ATP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_debranching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_debranching" title="Permalink to this definition"></a></dt>
 <dd><p>reaction function to detach a branch filament from arp2/3</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.do_nonspatial_growth">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_nonspatial_growth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_ATP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exact_end_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_nonspatial_growth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_nonspatial_growth" title="Permalink to this definition"></a></dt>
-<dd><p>add an implicit monomer to an arp2 or to a barbed or pointed end</p>
-<dl class="simple">
-<dt>“Actin-Polymer(arp2) + Actin-Monomer(actin#free) -&gt; “</dt><dd><p>“Actin-Polymer#Branch-Nucleating(arp2#branched–actin#new)”,</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.do_finish_grow">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_finish_grow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barbed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_finish_grow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_finish_grow" title="Permalink to this definition"></a></dt>
+<dd><p>reaction function for the pointed or barbed end growing</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.do_shrink">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_shrink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barbed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ATP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_shrink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_shrink" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">do_shrink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barbed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.do_shrink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.do_shrink" title="Permalink to this definition"></a></dt>
 <dd><p>remove an (ATP or ADP)-actin from the (barbed or pointed) end</p>
 </dd></dl>
 
@@ -1122,6 +1203,12 @@ next actin position</p>
 <dd><p>get the difference in the actin’s current orientation
 compared to the initial orientation as a rotation matrix
 positions = [prev actin position, middle actin position, next actin position]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_actins_near_branch">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actins_near_branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actins_near_branch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actins_near_branch" title="Permalink to this definition"></a></dt>
+<dd><p>get the 5 mother actins near a branch</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1159,6 +1246,12 @@ meaning the arp2/3 dimer has just bound</p>
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_new_vertex">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_new_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_new_vertex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_new_vertex" title="Permalink to this definition"></a></dt>
 <dd><p>Get the vertex tagged “new”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_next_actin">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_next_actin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_if_not_found</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_next_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_next_actin" title="Permalink to this definition"></a></dt>
+<dd><p>get the next actin toward the pointed or barbed direction</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1285,48 +1378,6 @@ and with or without a branch attached to the arp2</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_barbed_grow_ADP">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_barbed_grow_ADP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_barbed_grow_ADP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_barbed_grow_ADP" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit ADP-monomer to a barbed end</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_barbed_grow_ATP">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_barbed_grow_ATP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_barbed_grow_ATP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_barbed_grow_ATP" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit ATP-monomer to a barbed end</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_nucleate_branch_ADP">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_nucleate_branch_ADP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_nucleate_branch_ADP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_nucleate_branch_ADP" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit ADP-monomer to arp2/3 to begin a branch</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_nucleate_branch_ATP">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_nucleate_branch_ATP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_nucleate_branch_ATP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_nucleate_branch_ATP" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit ATP-monomer to arp2/3 to begin a branch</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_pointed_grow_ADP">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_pointed_grow_ADP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_pointed_grow_ADP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_pointed_grow_ADP" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit ADP-monomer to a pointed end</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_pointed_grow_ATP">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_pointed_grow_ATP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_pointed_grow_ATP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_pointed_grow_ATP" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit ATP-monomer to a pointed end</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_trimerize">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nonspatial_trimerize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nonspatial_trimerize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nonspatial_trimerize" title="Permalink to this definition"></a></dt>
-<dd><p>reaction function for adding an implicit monomer to a dimer</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nucleotide_exchange_actin">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_nucleotide_exchange_actin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_nucleotide_exchange_actin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_nucleotide_exchange_actin" title="Permalink to this definition"></a></dt>
 <dd><p>reaction function to exchange ATP for ADP in free actin</p>
@@ -1360,6 +1411,29 @@ and with or without a branch attached to the arp2</p>
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.reaction_function_reverse_trimerize">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reaction_function_reverse_trimerize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.reaction_function_reverse_trimerize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.reaction_function_reverse_trimerize" title="Permalink to this definition"></a></dt>
 <dd><p>reaction function for removing ATP-actin from a trimer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.set_actin_mid_flag">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">set_actin_mid_flag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.set_actin_mid_flag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.set_actin_mid_flag" title="Permalink to this definition"></a></dt>
+<dd><p>if an actin near a reaction is a “mid” actin,
+add the “mid” flag, otherwise remove it</p>
+<p>actin is “mid” unless:
+- it is pointed, barbed, or branch
+- it is within 2 neighbors from an actin bound to arp3
+- it is neighbor of a pointed or branch actin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.set_actin_mid_flags_at_new_branch">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">set_actin_mid_flags_at_new_branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.set_actin_mid_flags_at_new_branch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.set_actin_mid_flags_at_new_branch" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the “mid” flag on all the mother actins near a branch nucleation reaction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.set_actin_mid_flags_at_removed_branch">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">set_actin_mid_flags_at_removed_branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arp3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.set_actin_mid_flags_at_removed_branch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.set_actin_mid_flags_at_removed_branch" title="Permalink to this definition"></a></dt>
+<dd><p>set the “mid” state on all the actins near a branch dissociation reaction</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1435,7 +1509,7 @@ compared to the initial orientation as a rotation matrix</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.arp_data.ArpData.get_closest_actin_index">
-<span class="sig-name descname"><span class="pre">get_closest_actin_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/arp_data.html#ArpData.get_closest_actin_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.arp_data.ArpData.get_closest_actin_index" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_closest_actin_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actin_arp_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mother_fiber</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">particles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/arp_data.html#ArpData.get_closest_actin_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.arp_data.ArpData.get_closest_actin_index" title="Permalink to this definition"></a></dt>
 <dd><p>get the index of the closest actin monomer to the arp position
 excluding the barbed end (because that monomer would also be bound to this arp)</p>
 </dd></dl>
@@ -1597,12 +1671,6 @@ and return it</p>
 <dt class="sig sig-object py" id="simularium_models_util.actin.fiber_data.FiberData.tangents_reversed">
 <span class="sig-name descname"><span class="pre">tangents_reversed</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#simularium_models_util.actin.fiber_data.FiberData.tangents_reversed" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.fiber_data.FiberData.to_string">
-<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/fiber_data.html#FiberData.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.fiber_data.FiberData.to_string" title="Permalink to this definition"></a></dt>
-<dd><p>string representation</p>
-</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="simularium_models_util.actin.fiber_data.FiberData.type_name">

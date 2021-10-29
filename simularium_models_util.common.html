@@ -572,8 +572,8 @@ readdy.Trajectory(h5_file_path).read_observable_topologies()</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">shape_frame_particle_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_particle_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_particle_data" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_monomer_data">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">shape_frame_monomer_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_monomer_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_monomer_data" title="Permalink to this definition"></a></dt>
 <dd><p>After a simulation has finished,
 get data for topologies of particles</p>
 <p>traj from readdy.Trajectory(h5_file_path)
@@ -582,13 +582,28 @@ ids, types, positions from traj.read_observable_particles()</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">shape_particle_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_particle_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_particle_data" title="Permalink to this definition"></a></dt>
-<dd><p>For each time point, get a dictionary mapping particle id
-to data for each particle:</p>
-<blockquote>
-<div><p>[id] : (type, list of neighbor ids, position)</p>
-</div></blockquote>
+<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_monomer_data">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">shape_monomer_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_monomer_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_monomer_data" title="Permalink to this definition"></a></dt>
+<dd><dl>
+<dt>For each time point, get a dictionary with keys</dt><dd><dl>
+<dt>“topologies”<span class="classifier">mapping of topology id to data for each topology:</span></dt><dd><dl class="simple">
+<dt>[id: int]<span class="classifier">{</span></dt><dd><p>“type_name” : str,
+“particle_ids” : List[int]</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+<dt>“particles”<span class="classifier">mapping of particle id to data for each particle:</span></dt><dd><dl class="simple">
+<dt>[id: int]<span class="classifier">{</span></dt><dd><p>“type_name” : str,
+“position” : np.ndarray,
+“neighbor_ids” : List[int]</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

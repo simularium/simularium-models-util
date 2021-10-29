@@ -127,7 +127,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assigned</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">distance_from_mother_pointed</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
 
-<div class="viewcode-block" id="ArpData.get_closest_actin_index"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.arp_data.ArpData.get_closest_actin_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_closest_actin_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">actin_arp_ids</span><span class="p">,</span> <span class="n">particles</span><span class="p">):</span>
+<div class="viewcode-block" id="ArpData.get_closest_actin_index"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.arp_data.ArpData.get_closest_actin_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_closest_actin_index</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">particle_ids</span><span class="p">,</span> <span class="n">actin_arp_ids</span><span class="p">,</span> <span class="n">mother_fiber</span><span class="p">,</span> <span class="n">particles</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the index of the closest actin monomer to the arp position</span>
 <span class="sd">        excluding the barbed end (because that monomer would also be bound to this arp)</span>
@@ -146,6 +148,33 @@
                 <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="n">min_distance</span><span class="p">:</span>
                     <span class="n">closest_actin_index</span> <span class="o">=</span> <span class="n">index</span>
                     <span class="n">min_distance</span> <span class="o">=</span> <span class="n">distance</span>
+        <span class="k">if</span> <span class="n">mother_fiber</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">daughter_fiber</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if this arp is nucleated, check that the branch will grow roughly</span>
+            <span class="c1"># in the correct direction, otherwise chose a neighbor actin</span>
+            <span class="c1"># so the branch grows the other direction</span>
+            <span class="n">closest_actin_pos</span> <span class="o">=</span> <span class="n">particles</span><span class="p">[</span><span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span>
+            <span class="n">v_daughter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">daughter_fiber</span><span class="o">.</span><span class="n">get_nearest_segment_direction</span><span class="p">(</span>
+                <span class="n">closest_actin_pos</span>
+            <span class="p">)</span>
+            <span class="n">closest_actin_axis_pos</span> <span class="o">=</span> <span class="n">mother_fiber</span><span class="o">.</span><span class="n">get_nearest_position</span><span class="p">(</span>
+                <span class="n">closest_actin_pos</span>
+            <span class="p">)</span>
+            <span class="n">v_closest</span> <span class="o">=</span> <span class="n">closest_actin_pos</span> <span class="o">-</span> <span class="n">closest_actin_axis_pos</span>
+            <span class="n">dot</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">v_daughter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">v_closest</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="o">+</span> <span class="n">v_daughter</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">v_closest</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="o">+</span> <span class="n">v_daughter</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">v_closest</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">dot</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">closest_actin_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">closest_actin_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">closest_actin_index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">closest_actin_index</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s2">&quot;Failed to find actin_arp2 that would nucleate branch &quot;</span>
+                        <span class="s2">&quot;in correct direction&quot;</span>
+                    <span class="p">)</span>
         <span class="k">return</span> <span class="n">closest_actin_index</span></div>
 
 <div class="viewcode-block" id="ArpData.get_bound_arp_rotation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.arp_data.ArpData.get_bound_arp_rotation">[docs]</a>    <span class="k">def</span> <span class="nf">get_bound_arp_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mother_fiber</span><span class="p">,</span> <span class="n">actin_arp2_pos</span><span class="p">):</span>
