@@ -48,14 +48,18 @@ class ActinSimulation:
         Create the ReaDDy system for actin
         including particle types, constraints, and reactions
         """
-        self.system = readdy.ReactionDiffusionSystem([self.parameters["box_size"]] * 3)
+        self.system = readdy.ReactionDiffusionSystem(
+            box_size=[self.parameters["box_size"]] * 3,
+            periodic_boundary_conditions=[self.parameters["periodic_boundary"]] * 3,
+        )
         self.parameters["temperature_K"] = self.parameters["temperature_C"] + 273.15
         self.system.temperature = self.parameters["temperature_K"]
-        self.add_actin_types()
-        self.add_actin_constraints()
-        self.add_actin_reactions()
+        self.add_particle_types()
+        ActinUtil.check_add_global_box_potential(self.system)
+        self.add_constraints()
+        self.add_reactions()
 
-    def add_actin_types(self):
+    def add_particle_types(self):
         """
         Add particle and topology types for actin particles
         to the ReaDDy system
@@ -75,7 +79,7 @@ class ActinSimulation:
         self.actin_util.add_arp23_types(self.system, arp23_diffCoeff)
         self.actin_util.add_cap_types(self.system, cap_diffCoeff)
 
-    def add_actin_constraints(self):
+    def add_constraints(self):
         """
         Add geometric constraints for connected actin particles,
         including bonds, angles, and repulsions, to the ReaDDy system
@@ -103,7 +107,7 @@ class ActinSimulation:
         # box potentials
         self.actin_util.add_monomer_box_potentials(self.system)
 
-    def add_actin_reactions(self):
+    def add_reactions(self):
         """
         Add reactions to the ReaDDy system
         """

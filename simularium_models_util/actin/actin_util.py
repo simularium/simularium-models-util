@@ -96,12 +96,13 @@ class ActinUtil:
         compared to the initial orientation as a rotation matrix
         positions = [prev actin position, middle actin position, next actin position]
         """
-        positions[0] = ReaddyUtil.get_non_periodic_boundary_position(
-            positions[1], positions[0], box_size
-        )
-        positions[2] = ReaddyUtil.get_non_periodic_boundary_position(
-            positions[1], positions[2], box_size
-        )
+        if parameters["periodic_boundary"]:
+            positions[0] = ReaddyUtil.get_non_periodic_boundary_position(
+                positions[1], positions[0], box_size
+            )
+            positions[2] = ReaddyUtil.get_non_periodic_boundary_position(
+                positions[1], positions[2], box_size
+            )
         current_orientation = ReaddyUtil.get_orientation_from_positions(positions)
         return np.matmul(
             current_orientation, np.linalg.inv(ActinStructure.orientation())
@@ -569,6 +570,7 @@ class ActinUtil:
             np.random.uniform(size=(n_fibers, 3)) * parameters["box_size"]
             - parameters["box_size"] * 0.5
         )
+        print("Adding random fibers at \n" + str(positions))
         for fiber in range(n_fibers):
             direction = ReaddyUtil.get_random_unit_vector()
             monomers = ActinGenerator.get_monomers(
@@ -1321,34 +1323,9 @@ class ActinUtil:
         return recipe
 
     @staticmethod
-    def add_arp23_types(system, diffCoeff):
+    def get_all_actin_particle_types():
         """
-        add particle and topology types for Arp2/3 dimer
-        """
-        system.topologies.add_type("Arp23-Dimer-ATP")
-        system.topologies.add_type("Arp23-Dimer")
-        system.add_topology_species("arp2", diffCoeff)
-        system.add_topology_species("arp2#branched", diffCoeff)
-        system.add_topology_species("arp2#free", diffCoeff)
-        system.add_topology_species("arp3", diffCoeff)
-        system.add_topology_species("arp3#ATP", diffCoeff)
-        system.add_topology_species("arp3#new", diffCoeff)
-        system.add_topology_species("arp3#new_ATP", diffCoeff)
-
-    @staticmethod
-    def add_cap_types(system, diffCoeff):
-        """
-        add particle and topology types for capping protein
-        """
-        system.topologies.add_type("Cap")
-        system.add_topology_species("cap", diffCoeff)
-        system.add_topology_species("cap#new", diffCoeff)
-        system.add_topology_species("cap#bound", diffCoeff)
-
-    @staticmethod
-    def add_actin_types(system, diffCoeff):
-        """
-        add particle and topology types for actin
+        get particle types for actin
 
         Actin filaments are polymers and to encode polarity,there are 3 polymer types. 
         These are represented as "actin#N" where N is in [1,3]. At branch points, 
@@ -1378,6 +1355,79 @@ class ActinUtil:
 
                                             + end
         """
+        result = [
+            "actin#free",
+            "actin#free_ATP",
+            "actin#new",
+            "actin#new_ATP",
+            "actin#branch_1",
+            "actin#branch_ATP_1",
+            "actin#branch_barbed_1",
+            "actin#branch_barbed_ATP_1",
+        ]
+        for i in range(1, 4):
+            result += [
+                f"actin#{i}",
+                f"actin#ATP_{i}",
+                f"actin#mid_{i}",
+                f"actin#mid_ATP_{i}",
+                f"actin#pointed_{i}",
+                f"actin#pointed_ATP_{i}",
+                f"actin#barbed_{i}",
+                f"actin#barbed_ATP_{i}",
+            ]
+        return result
+
+    @staticmethod
+    def get_all_arp23_particle_types():
+        """
+        get particle types for Arp2/3 dimer
+        """
+        return [
+            "arp2",
+            "arp2#branched",
+            "arp2#free",
+            "arp3",
+            "arp3#ATP",
+            "arp3#new",
+            "arp3#new_ATP",
+        ]
+
+    @staticmethod
+    def get_all_cap_particle_types():
+        """
+        get particle types for capping protein
+        """
+        return [
+            "cap",
+            "cap#new",
+            "cap#bound",
+        ]
+
+    @staticmethod
+    def get_all_particle_types():
+        """
+        add the given particle_types to the system
+        """
+        return (
+            ActinUtil.get_all_actin_particle_types() +
+            ActinUtil.get_all_arp23_particle_types() + 
+            ActinUtil.get_all_cap_particle_types()
+        )
+
+    @staticmethod
+    def add_particle_types(particle_types, system, diffCoeff):
+        """
+        add the given particle_types to the system
+        """
+        for particle_type in particle_types:
+            system.add_topology_species(particle_type, diffCoeff)
+
+    @staticmethod
+    def add_actin_types(system, diffCoeff):
+        """
+        add particle and topology types for actin
+        """
         system.topologies.add_type("Actin-Monomer-ATP")
         system.topologies.add_type("Actin-Monomer")
         system.topologies.add_type("Actin-Dimer")
@@ -1391,23 +1441,30 @@ class ActinUtil:
         system.topologies.add_type("Actin-Polymer#Branching")
         system.topologies.add_type("Actin-Polymer#Branch-Nucleating")
         system.topologies.add_type("Actin-Polymer#Capping")
-        system.add_topology_species("actin#free", diffCoeff)
-        system.add_topology_species("actin#free_ATP", diffCoeff)
-        system.add_topology_species("actin#new", diffCoeff)
-        system.add_topology_species("actin#new_ATP", diffCoeff)
-        for i in range(1, 4):
-            system.add_topology_species(f"actin#{i}", diffCoeff)
-            system.add_topology_species(f"actin#ATP_{i}", diffCoeff)
-            system.add_topology_species(f"actin#mid_{i}", diffCoeff)
-            system.add_topology_species(f"actin#mid_ATP_{i}", diffCoeff)
-            system.add_topology_species(f"actin#pointed_{i}", diffCoeff)
-            system.add_topology_species(f"actin#pointed_ATP_{i}", diffCoeff)
-            system.add_topology_species(f"actin#barbed_{i}", diffCoeff)
-            system.add_topology_species(f"actin#barbed_ATP_{i}", diffCoeff)
-        system.add_topology_species("actin#branch_1", diffCoeff)
-        system.add_topology_species("actin#branch_ATP_1", diffCoeff)
-        system.add_topology_species("actin#branch_barbed_1", diffCoeff)
-        system.add_topology_species("actin#branch_barbed_ATP_1", diffCoeff)
+        ActinUtil.add_particle_types(
+            ActinUtil.get_all_actin_particle_types(), system, diffCoeff
+        )
+
+    @staticmethod
+    def add_arp23_types(system, diffCoeff):
+        """
+        add particle and topology types for Arp2/3 dimer
+        """
+        system.topologies.add_type("Arp23-Dimer-ATP")
+        system.topologies.add_type("Arp23-Dimer")
+        ActinUtil.add_particle_types(
+            ActinUtil.get_all_arp23_particle_types(), system, diffCoeff
+        )
+
+    @staticmethod
+    def add_cap_types(system, diffCoeff):
+        """
+        add particle and topology types for capping protein
+        """
+        system.topologies.add_type("Cap")
+        ActinUtil.add_particle_types(
+            ActinUtil.get_all_cap_particle_types(), system, diffCoeff
+        )
 
     @staticmethod
     def add_bonds_between_actins(force_constant, system, util):
@@ -2159,6 +2216,24 @@ class ActinUtil:
                 origin=origin,
                 extent=extent,
             )
+
+    @staticmethod
+    def check_add_global_box_potential(system):
+        """
+        If the boundaries are not periodic, 
+        all particles need a box potential to keep them in the box volume
+        """
+        if parameters["periodic_boundary"]:
+            return
+        # 1.0 margin on each side
+        box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)  
+        ActinUtil.add_box_potential(
+            particle_types=ActinUtil.get_all_particle_types(), 
+            origin=-0.5 * box_potential_size, 
+            extent=box_potential_size, 
+            force_constant=parameters["force_constant"], 
+            system=system,
+        )
 
     @staticmethod
     def add_monomer_box_potentials(system):
