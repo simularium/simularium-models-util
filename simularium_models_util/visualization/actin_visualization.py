@@ -122,7 +122,7 @@ class ActinVisualization:
         return ScatterPlotData(
             title="Structural reaction triggers",
             xaxis_title="Time (µs)",
-            yaxis_title="Reaction triggers",
+            yaxis_title="Reactions triggered",
             xtrace=analyzer.times,
             ytraces=ytraces,
             render_mode="lines",
