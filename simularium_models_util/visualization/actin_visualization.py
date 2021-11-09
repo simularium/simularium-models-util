@@ -270,7 +270,7 @@ class ActinVisualization:
         actin_radius = 2.0 + extra_radius
         arp23_radius = 2.0 + extra_radius
         cap_radius = 3.0 + extra_radius
-        obstacle_radius = 20.0
+        obstacle_radius = 35.0
         display_data = {
             "arp2": DisplayData(
                 name="arp2",
@@ -485,7 +485,7 @@ class ActinVisualization:
             "obstacle": DisplayData(
                 name="obstacle",
                 radius=obstacle_radius,
-                color="#666",
+                color="#666666",
             ),
         }
         # convert
