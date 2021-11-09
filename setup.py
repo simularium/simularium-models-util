@@ -9,7 +9,7 @@ with open("README.md") as readme_file:
     readme = readme_file.read()
 
 viz_requirements = [
-    "simulariumio>=1.3.0",
+    "simulariumio>=1.4.0",
 ]
 
 setup_requirements = [
