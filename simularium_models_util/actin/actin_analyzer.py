@@ -13,12 +13,13 @@ TIMESTEP = 0.1  # ns
 
 
 class ActinAnalyzer:
-    def __init__(self, h5_file_path, box_size, stride=1):
+    def __init__(self, h5_file_path, box_size, stride=1, periodic_boundary=True):
         """
         Load data from a ReaDDy trajectory
         """
         self.box_size = box_size
         self.stride = stride
+        self.periodic_boundary = periodic_boundary
         self.traj = readdy.Trajectory(h5_file_path)
         self.times, self.topology_records = self.traj.read_observable_topologies()
         (
@@ -409,7 +410,7 @@ class ActinAnalyzer:
         return np.array(result)
 
     @staticmethod
-    def _get_axis_position_for_actin(frame_particle_data, actin_ids, box_size):
+    def _get_axis_position_for_actin(frame_particle_data, actin_ids, box_size, periodic_boundary=True):
         """
         get the position on the filament axis closest to an actin
         actin_ids = [previous actin id, this actin id, next actin id]
@@ -417,7 +418,7 @@ class ActinAnalyzer:
         positions = []
         for i in range(3):
             positions.append(frame_particle_data[actin_ids[i]]["position"])
-        return ActinUtil.get_actin_axis_position(positions, box_size)
+        return ActinUtil.get_actin_axis_position(positions, box_size, periodic_boundary)
 
     @staticmethod
     def neighbor_types_to_string(particle_id, frame_particle_data):
@@ -541,7 +542,7 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def _get_frame_branch_angles(frame_particle_data, box_size):
+    def _get_frame_branch_angles(frame_particle_data, box_size, periodic_boundary=True):
         """
         get the angle between mother and daughter filament
         at each branch point in the given frame of the trajectory
@@ -551,7 +552,7 @@ class ActinAnalyzer:
         for branch in branch_ids:
             actin_ids = [branch[0], branch[1], branch[2]]
             main_pos1 = ActinAnalyzer._get_axis_position_for_actin(
-                frame_particle_data, actin_ids, box_size
+                frame_particle_data, actin_ids, box_size, periodic_boundary
             )
             if main_pos1 is None or ReaddyUtil.vector_is_invalid(main_pos1):
                 pos_to_string = "None" if main_pos1 is None else main_pos1
@@ -564,7 +565,7 @@ class ActinAnalyzer:
                 )
             actin_ids = [branch[1], branch[2], branch[3]]
             main_pos2 = ActinAnalyzer._get_axis_position_for_actin(
-                frame_particle_data, actin_ids, box_size
+                frame_particle_data, actin_ids, box_size, periodic_boundary
             )
             if main_pos2 is None or ReaddyUtil.vector_is_invalid(main_pos2):
                 pos_to_string = "None" if main_pos2 is None else main_pos2
@@ -578,7 +579,7 @@ class ActinAnalyzer:
             actin_ids = [branch[4], branch[5], branch[6]]
             v_main = ReaddyUtil.normalize(main_pos2 - main_pos1)
             branch_pos1 = ActinAnalyzer._get_axis_position_for_actin(
-                frame_particle_data, actin_ids, box_size
+                frame_particle_data, actin_ids, box_size, periodic_boundary
             )
             if branch_pos1 is None or ReaddyUtil.vector_is_invalid(branch_pos1):
                 pos_to_string = "None" if branch_pos1 is None else branch_pos1
@@ -591,7 +592,7 @@ class ActinAnalyzer:
                 )
             actin_ids = [branch[5], branch[6], branch[7]]
             branch_pos2 = ActinAnalyzer._get_axis_position_for_actin(
-                frame_particle_data, actin_ids, box_size
+                frame_particle_data, actin_ids, box_size, periodic_boundary
             )
             if branch_pos2 is None or ReaddyUtil.vector_is_invalid(branch_pos2):
                 pos_to_string = "None" if branch_pos2 is None else branch_pos2
@@ -614,13 +615,13 @@ class ActinAnalyzer:
         result = []
         for t in range(len(self.monomer_data)):
             branch_angles = ActinAnalyzer._get_frame_branch_angles(
-                self.monomer_data[t]["particles"], self.box_size
+                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
             )
             result.append(branch_angles)
         return result
 
     @staticmethod
-    def _calculate_pitch(frame_particle_data, actin1_ids, actin2_ids, box_size):
+    def _calculate_pitch(frame_particle_data, actin1_ids, actin2_ids, box_size, periodic_boundary=True):
         """
         Calculate the pitch of the helix between two actins
         actin_ids = [previous actin id, this actin id, next actin id]
@@ -628,7 +629,7 @@ class ActinAnalyzer:
         """
         actin1_pos = frame_particle_data[actin1_ids[1]]["position"]
         actin1_axis_pos = ActinAnalyzer._get_axis_position_for_actin(
-            frame_particle_data, actin1_ids, box_size
+            frame_particle_data, actin1_ids, box_size, periodic_boundary
         )
         if actin1_axis_pos is None or ReaddyUtil.vector_is_invalid(actin1_axis_pos):
             raise Exception(
@@ -641,7 +642,7 @@ class ActinAnalyzer:
         v1 = ReaddyUtil.normalize(actin1_axis_pos - actin1_pos)
         actin2_pos = frame_particle_data[actin2_ids[1]]["position"]
         actin2_axis_pos = ActinAnalyzer._get_axis_position_for_actin(
-            frame_particle_data, actin2_ids, box_size
+            frame_particle_data, actin2_ids, box_size, periodic_boundary
         )
         if actin2_axis_pos is None or ReaddyUtil.vector_is_invalid(actin2_axis_pos):
             raise Exception(
@@ -660,7 +661,7 @@ class ActinAnalyzer:
         return (360.0 / angle) * length
 
     @staticmethod
-    def _get_frame_short_helix_pitches(frame_particle_data, box_size):
+    def _get_frame_short_helix_pitches(frame_particle_data, box_size, periodic_boundary=True):
         """
         Get the pitch of the short helix between all actins on each filament
         for a given frame of data
@@ -674,13 +675,14 @@ class ActinAnalyzer:
                     [filament[i - 1], filament[i], filament[i + 1]],
                     [filament[i], filament[i + 1], filament[i + 2]],
                     box_size,
+                    periodic_boundary,
                 )
                 if short_pitch is not None:
                     result.append(short_pitch)
         return result
 
     @staticmethod
-    def _get_frame_long_helix_pitches(frame_particle_data, box_size):
+    def _get_frame_long_helix_pitches(frame_particle_data, box_size, periodic_boundary=True):
         """
         Get the pitch of the long helix between all actins on each filament
         for a given frame of data
@@ -694,6 +696,7 @@ class ActinAnalyzer:
                     [filament[i - 1], filament[i], filament[i + 1]],
                     [filament[i + 1], filament[i + 2], filament[i + 3]],
                     box_size,
+                    periodic_boundary,
                 )
                 if long_pitch is not None:
                     result.append(long_pitch)
@@ -707,7 +710,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(self.monomer_data)):
             helix_pitches = ActinAnalyzer._get_frame_short_helix_pitches(
-                self.monomer_data[t]["particles"], self.box_size
+                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
             )
             result.append(helix_pitches)
         return result
@@ -720,7 +723,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(self.monomer_data)):
             helix_pitches = ActinAnalyzer._get_frame_long_helix_pitches(
-                self.monomer_data[t]["particles"], self.box_size
+                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
             )
             result.append(helix_pitches)
         return result
@@ -748,7 +751,7 @@ class ActinAnalyzer:
         return line[0] + d * lineDir
 
     @staticmethod
-    def _get_frame_distance_from_straight(frame_particle_data, box_size):
+    def _get_frame_distance_from_straight(frame_particle_data, box_size, periodic_boundary=True):
         """
         Get the distance from each actin axis position to the ideal axis position
         if the filament axis was a straight line
@@ -761,7 +764,7 @@ class ActinAnalyzer:
             for i in range(1, len(filament) - 1):
                 actin_ids = [filament[i - 1], filament[i], filament[i + 1]]
                 axis_pos = ActinAnalyzer._get_axis_position_for_actin(
-                    frame_particle_data, actin_ids, box_size
+                    frame_particle_data, actin_ids, box_size, periodic_boundary
                 )
                 if axis_pos is None or ReaddyUtil.vector_is_invalid(axis_pos):
                     raise Exception(
@@ -793,7 +796,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(self.monomer_data)):
             straightness = ActinAnalyzer._get_frame_distance_from_straight(
-                self.monomer_data[t]["particles"], self.box_size
+                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
             )
             result.append(straightness)
         return result

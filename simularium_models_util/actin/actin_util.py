@@ -90,13 +90,13 @@ class ActinUtil:
         ]
 
     @staticmethod
-    def get_actin_rotation(positions, box_size):
+    def get_actin_rotation(positions, box_size, periodic_boundary=True):
         """
         get the difference in the actin's current orientation
         compared to the initial orientation as a rotation matrix
         positions = [prev actin position, middle actin position, next actin position]
         """
-        if parameters["periodic_boundary"]:
+        if periodic_boundary:
             positions[0] = ReaddyUtil.get_non_periodic_boundary_position(
                 positions[1], positions[0], box_size
             )
@@ -109,7 +109,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def get_actin_axis_position(positions, box_size):
+    def get_actin_axis_position(positions, box_size, periodic_boundary=True):
         """
         get the position on the filament axis closest to an actin
         positions = [
@@ -118,7 +118,7 @@ class ActinUtil:
             next actin position
         ]
         """
-        rotation = ActinUtil.get_actin_rotation(positions, box_size)
+        rotation = ActinUtil.get_actin_rotation(positions, box_size, periodic_boundary)
         if rotation is None:
             return None
         vector_to_axis_local = np.squeeze(
@@ -136,7 +136,9 @@ class ActinUtil:
             next actin position
         ]
         """
-        rotation = ActinUtil.get_actin_rotation(positions, parameters["box_size"])
+        rotation = ActinUtil.get_actin_rotation(
+            positions, parameters["box_size"], bool(parameters["periodic_boundary"])
+        )
         if rotation is None:
             return None
         vector_to_new_pos = np.squeeze(np.array(np.dot(rotation, offset_vector)))
@@ -2223,7 +2225,7 @@ class ActinUtil:
         If the boundaries are not periodic, 
         all particles need a box potential to keep them in the box volume
         """
-        if parameters["periodic_boundary"]:
+        if bool(parameters["periodic_boundary"]):
             return
         # 1.0 margin on each side
         box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)  

@@ -50,7 +50,7 @@ class ActinSimulation:
         """
         self.system = readdy.ReactionDiffusionSystem(
             box_size=[self.parameters["box_size"]] * 3,
-            periodic_boundary_conditions=[self.parameters["periodic_boundary"]] * 3,
+            periodic_boundary_conditions=[bool(self.parameters["periodic_boundary"])] * 3,
         )
         self.parameters["temperature_K"] = self.parameters["temperature_C"] + 273.15
         self.system.temperature = self.parameters["temperature_K"]

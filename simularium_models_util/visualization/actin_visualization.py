@@ -236,11 +236,11 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def generate_plots(path_to_readdy_h5, box_size, stride=1):
+    def generate_plots(path_to_readdy_h5, box_size, stride=1, periodic_boundary=True):
         """
         Use an ActinAnalyzer to generate plots of observables
         """
-        analyzer = ActinAnalyzer(path_to_readdy_h5, box_size, stride)
+        analyzer = ActinAnalyzer(path_to_readdy_h5, box_size, stride, periodic_boundary)
         return {
             "scatter": [
                 ActinVisualization.get_bound_monomers_plot(analyzer),
@@ -270,170 +270,212 @@ class ActinVisualization:
             "arp2": DisplayData(
                 name="arp2",
                 radius=arp23_radius,
+                color="#c9df8a",
             ),
             "arp2#branched": DisplayData(
                 name="arp2#branched",
                 radius=arp23_radius,
+                color="#c9df8a",
             ),
             "arp2#free": DisplayData(
                 name="arp2#free",
                 radius=arp23_radius,
+                color="#234d20",
             ),
             "arp3": DisplayData(
                 name="arp3",
                 radius=arp23_radius,
+                color="#36802d",
             ),
             "arp3#new": DisplayData(
                 name="arp3",
                 radius=arp23_radius,
+                color="#36802d",
             ),
             "arp3#ATP": DisplayData(
                 name="arp3#ATP",
                 radius=arp23_radius,
+                color="#77ab59",
             ),
             "arp3#new_ATP": DisplayData(
                 name="arp3#ATP",
                 radius=arp23_radius,
+                color="#77ab59",
             ),
             "cap": DisplayData(
                 name="cap",
                 radius=cap_radius,
+                color="#005073",
             ),
             "cap#new": DisplayData(
                 name="cap",
                 radius=cap_radius,
+                color="#189ad3",
             ),
             "cap#bound": DisplayData(
                 name="cap#bound",
                 radius=cap_radius,
+                color="#189ad3",
             ),
             "actin#free": DisplayData(
                 name="actin#free",
                 radius=actin_radius,
+                color="#8d5524",
             ),
             "actin#free_ATP": DisplayData(
                 name="actin#free_ATP",
                 radius=actin_radius,
+                color="#cd8500",
             ),
             "actin#new": DisplayData(
                 name="actin",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#new_ATP": DisplayData(
                 name="actin#ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#1": DisplayData(
                 name="actin",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#2": DisplayData(
                 name="actin",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#3": DisplayData(
                 name="actin",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#ATP_1": DisplayData(
                 name="actin#ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#ATP_2": DisplayData(
                 name="actin#ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#ATP_3": DisplayData(
                 name="actin#ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#mid_1": DisplayData(
                 name="actin#mid",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#mid_2": DisplayData(
                 name="actin#mid",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#mid_3": DisplayData(
                 name="actin#mid",
                 radius=actin_radius,
+                color="#bf9b30",
             ),
             "actin#mid_ATP_1": DisplayData(
                 name="actin#mid_ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#mid_ATP_2": DisplayData(
                 name="actin#mid_ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#mid_ATP_3": DisplayData(
                 name="actin#mid_ATP",
                 radius=actin_radius,
+                color="#ffbf00",
             ),
             "actin#pointed_1": DisplayData(
                 name="actin#pointed",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#pointed_2": DisplayData(
                 name="actin#pointed",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#pointed_3": DisplayData(
                 name="actin#pointed",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#pointed_ATP_1": DisplayData(
                 name="actin#pointed_ATP",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#pointed_ATP_2": DisplayData(
                 name="actin#pointed_ATP",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#pointed_ATP_3": DisplayData(
                 name="actin#pointed_ATP",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#barbed_1": DisplayData(
                 name="actin#barbed",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#barbed_2": DisplayData(
                 name="actin#barbed",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#barbed_3": DisplayData(
                 name="actin#barbed",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#barbed_ATP_1": DisplayData(
                 name="actin#barbed_ATP",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#barbed_ATP_2": DisplayData(
                 name="actin#barbed_ATP",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#barbed_ATP_3": DisplayData(
                 name="actin#barbed_ATP",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#branch_1": DisplayData(
                 name="actin#branch",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#branch_ATP_1": DisplayData(
                 name="actin#branch_ATP",
                 radius=actin_radius,
+                color="#a67c00",
             ),
             "actin#branch_barbed_1": DisplayData(
                 name="actin#branch_barbed",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
             "actin#branch_barbed_ATP_1": DisplayData(
                 name="actin#branch_barbed_ATP",
                 radius=actin_radius,
+                color="#ffdc73",
             ),
         }
         # convert
