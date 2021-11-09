@@ -331,11 +331,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.generate_plots"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.generate_plots">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">generate_plots</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">generate_plots</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use an ActinAnalyzer to generate plots of observables</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">analyzer</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">)</span>
+        <span class="n">analyzer</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;scatter&quot;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_bound_monomers_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
@@ -365,170 +365,212 @@
             <span class="s2">&quot;arp2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#c9df8a&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;arp2#branched&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#c9df8a&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;arp2#free&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#234d20&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;arp3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#36802d&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;arp3#new&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#36802d&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#77ab59&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">arp23_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#77ab59&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;cap&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cap&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">cap_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#005073&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;cap#new&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cap&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">cap_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#189ad3&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;cap#bound&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;cap#bound&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">cap_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#189ad3&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#free&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#free&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#8d5524&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#cd8500&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#new&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#mid_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#mid_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#mid_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#mid_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#mid_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch_barbed&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch_barbed_ATP&quot;</span><span class="p">,</span>
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">}</span>
         <span class="c1"># convert</span>

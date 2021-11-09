@@ -108,7 +108,7 @@
 <span id="simularium-models-util-actin-actin-analyzer-module"></span><h2>simularium_models_util.actin.actin_analyzer module<a class="headerlink" href="#module-simularium_models_util.actin.actin_analyzer" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_analyzer.ActinAnalyzer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.actin.actin_analyzer.</span></span><span class="sig-name descname"><span class="pre">ActinAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.actin.actin_analyzer.</span></span><span class="sig-name descname"><span class="pre">ActinAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_analyzer.html#ActinAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_analyzer.ActinAnalyzer" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Load data from a ReaDDy trajectory</p>
 <dl class="py method">
@@ -420,23 +420,10 @@ debranching_ATP_rate, debranching_ADP_rate, cap_bind_rate,
 cap_unbind_rate, hydrolysis_actin_rate, hydrolysis_arp_rate,
 nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, verbose</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_constraints">
-<span class="sig-name descname"><span class="pre">add_actin_constraints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_actin_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_constraints" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_constraints">
+<span class="sig-name descname"><span class="pre">add_constraints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_constraints" title="Permalink to this definition"></a></dt>
 <dd><p>Add geometric constraints for connected actin particles,
 including bonds, angles, and repulsions, to the ReaDDy system</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_reactions">
-<span class="sig-name descname"><span class="pre">add_actin_reactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_actin_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_reactions" title="Permalink to this definition"></a></dt>
-<dd><p>Add reactions to the ReaDDy system</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_types">
-<span class="sig-name descname"><span class="pre">add_actin_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_actin_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_types" title="Permalink to this definition"></a></dt>
-<dd><p>Add particle and topology types for actin particles
-to the ReaDDy system</p>
 </dd></dl>
 
 <dl class="py method">
@@ -478,6 +465,13 @@ monomer_data = {</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_particle_types">
+<span class="sig-name descname"><span class="pre">add_particle_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_particle_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_particle_types" title="Permalink to this definition"></a></dt>
+<dd><p>Add particle and topology types for actin particles
+to the ReaDDy system</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_linear_fibers">
 <span class="sig-name descname"><span class="pre">add_random_linear_fibers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_uuids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_random_linear_fibers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_linear_fibers" title="Permalink to this definition"></a></dt>
 <dd><p>Add randomly distributed and oriented linear fibers</p>
@@ -488,6 +482,12 @@ monomer_data = {</p>
 <span class="sig-name descname"><span class="pre">add_random_monomers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_random_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_monomers" title="Permalink to this definition"></a></dt>
 <dd><p>Add randomly distributed actin monomers, Arp2/3 dimers,
 and capping protein according to concentrations and box size</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_reactions">
+<span class="sig-name descname"><span class="pre">add_reactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_reactions" title="Permalink to this definition"></a></dt>
+<dd><p>Add reactions to the ReaDDy system</p>
 </dd></dl>
 
 <dl class="py method">
@@ -866,44 +866,6 @@ which can’t be instance methods, so parameters are global</p>
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_actin_types">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_actin_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffCoeff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_actin_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_actin_types" title="Permalink to this definition"></a></dt>
 <dd><p>add particle and topology types for actin</p>
-<p>Actin filaments are polymers and to encode polarity,there are 3 polymer types.
-These are represented as “actin#N” where N is in [1,3]. At branch points,
-2 particles arp2 and arp3 join the pointed end of a branch to the side
-of its mother filament. Spatially, the types are mapped like so:</p>
-<ul class="simple">
-<li><p>end                                                                    + end</p></li>
-</ul>
-<dl>
-<dt>actin#pointed_1     actin#3      actin#2       actin#1    actin#barbed_3</dt><dd><p>     //        // ||      //        //
-   //        //  ||     //        //
-actin#2      actin#1   ||   actin#3      actin#2</p>
-<blockquote>
-<div><blockquote>
-<div><p>||     ||
-||    arp3
-||   //
-||  //</p>
-</div></blockquote>
-<dl>
-<dt>arp2#branched</dt><dd><blockquote>
-<div><p>actin#branch_1
-//
-//</p>
-</div></blockquote>
-<dl>
-<dt>actin#2</dt><dd><p>actin#barbed_3</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>end</p></li>
-</ul>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1112,6 +1074,12 @@ inside a box centered at origin with extent</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_particle_types">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_particle_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diffCoeff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_particle_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_particle_types" title="Permalink to this definition"></a></dt>
+<dd><p>add the given particle_types to the system</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.add_pointed_growth_reaction">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">add_pointed_growth_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.add_pointed_growth_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.add_pointed_growth_reaction" title="Permalink to this definition"></a></dt>
 <dd><p>attach a monomer to the pointed end of a filament</p>
@@ -1148,6 +1116,13 @@ inside a box centered at origin with extent</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.check_add_global_box_potential">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">check_add_global_box_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.check_add_global_box_potential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.check_add_global_box_potential" title="Permalink to this definition"></a></dt>
+<dd><p>If the boundaries are not periodic,
+all particles need a box potential to keep them in the box volume</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.check_arp3_attached_to_neighbors">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">check_arp3_attached_to_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_vertex_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.check_arp3_attached_to_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.check_arp3_attached_to_neighbors" title="Permalink to this definition"></a></dt>
 <dd><p>Check if an arp3 is attached to the vertex’s neighbors within max_edges</p>
@@ -1179,7 +1154,7 @@ inside a box centered at origin with extent</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_actin_axis_position">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actin_axis_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_axis_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_axis_position" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actin_axis_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_axis_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_axis_position" title="Permalink to this definition"></a></dt>
 <dd><p>get the position on the filament axis closest to an actin
 positions = [</p>
 <blockquote>
@@ -1199,7 +1174,7 @@ next actin position</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actin_rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actin_rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actin_rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation" title="Permalink to this definition"></a></dt>
 <dd><p>get the difference in the actin’s current orientation
 compared to the initial orientation as a rotation matrix
 positions = [prev actin position, middle actin position, next actin position]</p>
@@ -1209,6 +1184,68 @@ positions = [prev actin position, middle actin position, next actin position]</p
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_actins_near_branch">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_actins_near_branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_actin_arp3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_actins_near_branch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_actins_near_branch" title="Permalink to this definition"></a></dt>
 <dd><p>get the 5 mother actins near a branch</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_all_actin_particle_types">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_all_actin_particle_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_all_actin_particle_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_all_actin_particle_types" title="Permalink to this definition"></a></dt>
+<dd><p>get particle types for actin</p>
+<p>Actin filaments are polymers and to encode polarity,there are 3 polymer types.
+These are represented as “actin#N” where N is in [1,3]. At branch points,
+2 particles arp2 and arp3 join the pointed end of a branch to the side
+of its mother filament. Spatially, the types are mapped like so:</p>
+<ul class="simple">
+<li><p>end                                                                    + end</p></li>
+</ul>
+<dl>
+<dt>actin#pointed_1     actin#3      actin#2       actin#1    actin#barbed_3</dt><dd><p>     //        // ||      //        //
+   //        //  ||     //        //
+actin#2      actin#1   ||   actin#3      actin#2</p>
+<blockquote>
+<div><blockquote>
+<div><p>||     ||
+||    arp3
+||   //
+||  //</p>
+</div></blockquote>
+<dl>
+<dt>arp2#branched</dt><dd><blockquote>
+<div><p>actin#branch_1
+//
+//</p>
+</div></blockquote>
+<dl>
+<dt>actin#2</dt><dd><p>actin#barbed_3</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>end</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_all_arp23_particle_types">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_all_arp23_particle_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_all_arp23_particle_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_all_arp23_particle_types" title="Permalink to this definition"></a></dt>
+<dd><p>get particle types for Arp2/3 dimer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_all_cap_particle_types">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_all_cap_particle_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_all_cap_particle_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_all_cap_particle_types" title="Permalink to this definition"></a></dt>
+<dd><p>get particle types for capping protein</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_util.ActinUtil.get_all_particle_types">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_all_particle_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_util.html#ActinUtil.get_all_particle_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_util.ActinUtil.get_all_particle_types" title="Permalink to this definition"></a></dt>
+<dd><p>add the given particle_types to the system</p>
 </dd></dl>
 
 <dl class="py method">

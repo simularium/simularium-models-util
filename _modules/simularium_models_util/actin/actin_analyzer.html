@@ -108,12 +108,13 @@
 
 
 <div class="viewcode-block" id="ActinAnalyzer"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">ActinAnalyzer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_file_path</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_file_path</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load data from a ReaDDy trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span> <span class="o">=</span> <span class="n">box_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span> <span class="o">=</span> <span class="n">periodic_boundary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">traj</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">(</span><span class="n">h5_file_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology_records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">read_observable_topologies</span><span class="p">()</span>
         <span class="p">(</span>
@@ -504,7 +505,7 @@
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_axis_position_for_actin</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_axis_position_for_actin</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the position on the filament axis closest to an actin</span>
 <span class="sd">        actin_ids = [previous actin id, this actin id, next actin id]</span>
@@ -512,7 +513,7 @@
         <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
             <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin_ids</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_axis_position</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">box_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_actin_axis_position</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ActinAnalyzer.neighbor_types_to_string"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.neighbor_types_to_string">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">neighbor_types_to_string</span><span class="p">(</span><span class="n">particle_id</span><span class="p">,</span> <span class="n">frame_particle_data</span><span class="p">):</span>
@@ -636,7 +637,7 @@
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_frame_branch_angles</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_frame_branch_angles</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get the angle between mother and daughter filament</span>
 <span class="sd">        at each branch point in the given frame of the trajectory</span>
@@ -646,7 +647,7 @@
         <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="n">branch_ids</span><span class="p">:</span>
             <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
             <span class="n">main_pos1</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">main_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">main_pos1</span><span class="p">):</span>
                 <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">main_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">main_pos1</span>
@@ -659,7 +660,7 @@
                 <span class="p">)</span>
             <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
             <span class="n">main_pos2</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">main_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">main_pos2</span><span class="p">):</span>
                 <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">main_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">main_pos2</span>
@@ -673,7 +674,7 @@
             <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">6</span><span class="p">]]</span>
             <span class="n">v_main</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">main_pos2</span> <span class="o">-</span> <span class="n">main_pos1</span><span class="p">)</span>
             <span class="n">branch_pos1</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">branch_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">branch_pos1</span><span class="p">):</span>
                 <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch_pos1</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">branch_pos1</span>
@@ -686,7 +687,7 @@
                 <span class="p">)</span>
             <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">branch</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">branch</span><span class="p">[</span><span class="mi">7</span><span class="p">]]</span>
             <span class="n">branch_pos2</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
+                <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">branch_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">branch_pos2</span><span class="p">):</span>
                 <span class="n">pos_to_string</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch_pos2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">branch_pos2</span>
@@ -709,13 +710,13 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">branch_angles</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_branch_angles</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch_angles</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_calculate_pitch</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin1_ids</span><span class="p">,</span> <span class="n">actin2_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_calculate_pitch</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin1_ids</span><span class="p">,</span> <span class="n">actin2_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the pitch of the helix between two actins</span>
 <span class="sd">        actin_ids = [previous actin id, this actin id, next actin id]</span>
@@ -723,7 +724,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">actin1_pos</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin1_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
         <span class="n">actin1_axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin1_ids</span><span class="p">,</span> <span class="n">box_size</span>
+            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin1_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">actin1_axis_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">actin1_axis_pos</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -736,7 +737,7 @@
         <span class="n">v1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">actin1_axis_pos</span> <span class="o">-</span> <span class="n">actin1_pos</span><span class="p">)</span>
         <span class="n">actin2_pos</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">actin2_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
         <span class="n">actin2_axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin2_ids</span><span class="p">,</span> <span class="n">box_size</span>
+            <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin2_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">actin2_axis_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">actin2_axis_pos</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -755,7 +756,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="mf">360.0</span> <span class="o">/</span> <span class="n">angle</span><span class="p">)</span> <span class="o">*</span> <span class="n">length</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_frame_short_helix_pitches</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_frame_short_helix_pitches</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the pitch of the short helix between all actins on each filament</span>
 <span class="sd">        for a given frame of data</span>
@@ -769,13 +770,14 @@
                     <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span>
                     <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]],</span>
                     <span class="n">box_size</span><span class="p">,</span>
+                    <span class="n">periodic_boundary</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">short_pitch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">short_pitch</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_frame_long_helix_pitches</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_frame_long_helix_pitches</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the pitch of the long helix between all actins on each filament</span>
 <span class="sd">        for a given frame of data</span>
@@ -789,6 +791,7 @@
                     <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span>
                     <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]],</span>
                     <span class="n">box_size</span><span class="p">,</span>
+                    <span class="n">periodic_boundary</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">long_pitch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">long_pitch</span><span class="p">)</span>
@@ -802,7 +805,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">helix_pitches</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_short_helix_pitches</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helix_pitches</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -815,7 +818,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">helix_pitches</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_long_helix_pitches</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helix_pitches</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -843,7 +846,7 @@
         <span class="k">return</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span> <span class="o">*</span> <span class="n">lineDir</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_frame_distance_from_straight</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_frame_distance_from_straight</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the distance from each actin axis position to the ideal axis position</span>
 <span class="sd">        if the filament axis was a straight line</span>
@@ -856,7 +859,7 @@
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
                 <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
-                    <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span>
+                    <span class="n">frame_particle_data</span><span class="p">,</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">axis_pos</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
@@ -888,7 +891,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">straightness</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_distance_from_straight</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">straightness</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>

@@ -143,14 +143,18 @@
 <span class="sd">        Create the ReaDDy system for actin</span>
 <span class="sd">        including particle types, constraints, and reactions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">ReactionDiffusionSystem</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">ReactionDiffusionSystem</span><span class="p">(</span>
+            <span class="n">box_size</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="n">periodic_boundary_conditions</span><span class="o">=</span><span class="p">[</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;periodic_boundary&quot;</span><span class="p">])]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_C&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">273.15</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_actin_types</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_actin_constraints</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_actin_reactions</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_particle_types</span><span class="p">()</span>
+        <span class="n">ActinUtil</span><span class="o">.</span><span class="n">check_add_global_box_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_reactions</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ActinSimulation.add_actin_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_types">[docs]</a>    <span class="k">def</span> <span class="nf">add_actin_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinSimulation.add_particle_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_particle_types">[docs]</a>    <span class="k">def</span> <span class="nf">add_particle_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add particle and topology types for actin particles</span>
 <span class="sd">        to the ReaDDy system</span>
@@ -170,7 +174,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">arp23_diffCoeff</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">cap_diffCoeff</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinSimulation.add_actin_constraints"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">add_actin_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinSimulation.add_constraints"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">add_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add geometric constraints for connected actin particles,</span>
 <span class="sd">        including bonds, angles, and repulsions, to the ReaDDy system</span>
@@ -198,7 +202,7 @@
         <span class="c1"># box potentials</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_monomer_box_potentials</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinSimulation.add_actin_reactions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_actin_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">add_actin_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinSimulation.add_reactions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_reactions">[docs]</a>    <span class="k">def</span> <span class="nf">add_reactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add reactions to the ReaDDy system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
