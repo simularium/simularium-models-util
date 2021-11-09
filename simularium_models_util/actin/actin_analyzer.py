@@ -54,9 +54,7 @@ class ActinAnalyzer:
         if reaction_name not in self.reactions:
             print(f"Couldn't find reaction: {reaction_name}")
             return None
-        return np.insert(
-            self.reactions[reaction_name].to_numpy(), 0, 0.0
-        )
+        return np.insert(self.reactions[reaction_name].to_numpy(), 0, 0.0)
 
     def analyze_reaction_rate_over_time(self, reaction_name):
         """
@@ -268,7 +266,8 @@ class ActinAnalyzer:
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._filamentous_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._filamentous_actin_types(),
+                    self.monomer_data[t]["particles"],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -285,7 +284,8 @@ class ActinAnalyzer:
         for t in range(len(self.monomer_data)):
             ATP_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._filamentous_ATP_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._filamentous_ATP_actin_types(),
+                    self.monomer_data[t]["particles"],
                 )
             )
             free_actin = len(
@@ -295,7 +295,8 @@ class ActinAnalyzer:
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._filamentous_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._filamentous_actin_types(),
+                    self.monomer_data[t]["particles"],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -324,7 +325,8 @@ class ActinAnalyzer:
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._filamentous_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._filamentous_actin_types(),
+                    self.monomer_data[t]["particles"],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -369,12 +371,16 @@ class ActinAnalyzer:
         """
         result = []
         for t in range(len(self.monomer_data)):
-            bound_arp23 = len(ReaddyUtil.analyze_frame_get_ids_for_types(
-                ["arp2", "arp2#branched"], self.monomer_data[t]["particles"]
-            ))
-            free_arp23 = len(ReaddyUtil.analyze_frame_get_ids_for_types(
-                ["arp2#free"], self.monomer_data[t]["particles"]
-            ))
+            bound_arp23 = len(
+                ReaddyUtil.analyze_frame_get_ids_for_types(
+                    ["arp2", "arp2#branched"], self.monomer_data[t]["particles"]
+                )
+            )
+            free_arp23 = len(
+                ReaddyUtil.analyze_frame_get_ids_for_types(
+                    ["arp2#free"], self.monomer_data[t]["particles"]
+                )
+            )
             if free_arp23 + bound_arp23 > 0:
                 result.append(bound_arp23 / float(free_arp23 + bound_arp23))
             else:
@@ -410,7 +416,9 @@ class ActinAnalyzer:
         return np.array(result)
 
     @staticmethod
-    def _get_axis_position_for_actin(frame_particle_data, actin_ids, box_size, periodic_boundary=True):
+    def _get_axis_position_for_actin(
+        frame_particle_data, actin_ids, box_size, periodic_boundary=True
+    ):
         """
         get the position on the filament axis closest to an actin
         actin_ids = [previous actin id, this actin id, next actin id]
@@ -621,7 +629,9 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def _calculate_pitch(frame_particle_data, actin1_ids, actin2_ids, box_size, periodic_boundary=True):
+    def _calculate_pitch(
+        frame_particle_data, actin1_ids, actin2_ids, box_size, periodic_boundary=True
+    ):
         """
         Calculate the pitch of the helix between two actins
         actin_ids = [previous actin id, this actin id, next actin id]
@@ -661,7 +671,9 @@ class ActinAnalyzer:
         return (360.0 / angle) * length
 
     @staticmethod
-    def _get_frame_short_helix_pitches(frame_particle_data, box_size, periodic_boundary=True):
+    def _get_frame_short_helix_pitches(
+        frame_particle_data, box_size, periodic_boundary=True
+    ):
         """
         Get the pitch of the short helix between all actins on each filament
         for a given frame of data
@@ -682,7 +694,9 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def _get_frame_long_helix_pitches(frame_particle_data, box_size, periodic_boundary=True):
+    def _get_frame_long_helix_pitches(
+        frame_particle_data, box_size, periodic_boundary=True
+    ):
         """
         Get the pitch of the long helix between all actins on each filament
         for a given frame of data
@@ -751,7 +765,9 @@ class ActinAnalyzer:
         return line[0] + d * lineDir
 
     @staticmethod
-    def _get_frame_distance_from_straight(frame_particle_data, box_size, periodic_boundary=True):
+    def _get_frame_distance_from_straight(
+        frame_particle_data, box_size, periodic_boundary=True
+    ):
         """
         Get the distance from each actin axis position to the ideal axis position
         if the filament axis was a straight line
@@ -811,7 +827,8 @@ class ActinAnalyzer:
                 ReaddyUtil.calculate_concentration(
                     len(
                         ReaddyUtil.analyze_frame_get_ids_for_types(
-                            ActinAnalyzer._free_actin_types(), self.monomer_data[t]["particles"]
+                            ActinAnalyzer._free_actin_types(),
+                            self.monomer_data[t]["particles"],
                         )
                     ),
                     self.box_size,

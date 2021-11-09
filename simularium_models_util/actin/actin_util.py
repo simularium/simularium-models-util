@@ -476,7 +476,9 @@ class ActinUtil:
             )
             and ReaddyUtil.get_neighbor_of_type(topology, vertex, "actin#branch", False)
             is None
-            and ReaddyUtil.get_neighbor_of_type(topology, vertex, "actin#pointed", False)
+            and ReaddyUtil.get_neighbor_of_type(
+                topology, vertex, "actin#pointed", False
+            )
             is None
         ):
             ReaddyUtil.set_flags(topology, recipe, vertex, ["mid"], [""], True)
@@ -772,8 +774,12 @@ class ActinUtil:
         pt_barbed = topology.particle_type_of_vertex(v_barbed)
         pt_pointed = topology.particle_type_of_vertex(v_pointed)
         recipe.remove_edge(v_barbed, v_pointed)
-        recipe.change_particle_type(v_barbed, "actin#free" + ("_ATP" if "ATP" in pt_barbed else ""))
-        recipe.change_particle_type(v_pointed, "actin#free" + ("_ATP" if "ATP" in pt_pointed else ""))
+        recipe.change_particle_type(
+            v_barbed, "actin#free" + ("_ATP" if "ATP" in pt_barbed else "")
+        )
+        recipe.change_particle_type(
+            v_pointed, "actin#free" + ("_ATP" if "ATP" in pt_pointed else "")
+        )
         recipe.change_topology_type("Actin-Monomer-ATP")
         return recipe
 
@@ -981,12 +987,12 @@ class ActinUtil:
         if v_end is None:
             return recipe
         v_arp = ReaddyUtil.get_neighbor_of_types(
-            topology, 
-            v_end, 
-            ["arp3", "arp3#ATP", "arp2", "arp2#branched"], 
-            [], 
-            parameters["verbose"], 
-            "Couldn't remove actin because a branch was attached"
+            topology,
+            v_end,
+            ["arp3", "arp3#ATP", "arp2", "arp2#branched"],
+            [],
+            parameters["verbose"],
+            "Couldn't remove actin because a branch was attached",
         )
         if v_arp is not None:
             return recipe
@@ -1006,19 +1012,24 @@ class ActinUtil:
             return recipe
         if not barbed:
             v_arp2 = ReaddyUtil.get_neighbor_of_types(
-                topology, 
-                v_neighbor, 
-                ["arp2", "arp2#branched"], 
-                [], 
+                topology,
+                v_neighbor,
+                ["arp2", "arp2#branched"],
+                [],
                 parameters["verbose"],
-                "Couldn't remove actin because a branch was attached to its barbed neighbor"
+                "Couldn't remove actin because a branch was attached to its barbed neighbor",
             )
             if v_arp2 is not None:
                 return recipe
             v_neighbor_neighbor = ActinUtil.get_next_actin(topology, v_neighbor, 1)
             if v_neighbor_neighbor is not None:
                 ReaddyUtil.set_flags(
-                    topology, recipe, v_neighbor_neighbor, [], ["mid"], True,
+                    topology,
+                    recipe,
+                    v_neighbor_neighbor,
+                    [],
+                    ["mid"],
+                    True,
                 )
         recipe.remove_edge(v_end, v_neighbor)
         recipe.change_particle_type(
@@ -1077,13 +1088,23 @@ class ActinUtil:
             if v_cap is not None:
                 new_type = "Cap"
             else:
-                v_actin = ReaddyUtil.get_vertex_of_type(topology, "actin", False, error_msg="Failed to find actin to set monomer's ATP state")
-                pt_actin = topology.particle_type_of_vertex(v_actin)  
+                v_actin = ReaddyUtil.get_vertex_of_type(
+                    topology,
+                    "actin",
+                    False,
+                    error_msg="Failed to find actin to set monomer's ATP state",
+                )
+                pt_actin = topology.particle_type_of_vertex(v_actin)
                 new_type = "Actin-Monomer" + ("-ATP" if "ATP" in pt_actin else "")
         elif len(topology.graph.get_vertices()) < 3:
             v_arp2 = ReaddyUtil.get_vertex_of_type(topology, "arp2#free", True)
             if v_arp2 is not None:
-                v_arp3 = ReaddyUtil.get_vertex_of_type(topology, "arp3", False, error_msg="Failed to find arp3 to set arp2/3's ATP state")
+                v_arp3 = ReaddyUtil.get_vertex_of_type(
+                    topology,
+                    "arp3",
+                    False,
+                    error_msg="Failed to find arp3 to set arp2/3's ATP state",
+                )
                 pt_arp3 = topology.particle_type_of_vertex(v_arp3)
                 new_type = "Arp23-Dimer" + ("-ATP" if "ATP" in pt_arp3 else "")
             else:
@@ -1412,9 +1433,10 @@ class ActinUtil:
         add the given particle_types to the system
         """
         return (
-            ActinUtil.get_all_actin_particle_types() +
-            ActinUtil.get_all_arp23_particle_types() + 
-            ActinUtil.get_all_cap_particle_types()
+            ActinUtil.get_all_actin_particle_types()
+            + ActinUtil.get_all_arp23_particle_types()
+            + ActinUtil.get_all_cap_particle_types()
+            + ["obstacle"]
         )
 
     @staticmethod
@@ -1499,7 +1521,7 @@ class ActinUtil:
         )
         util.add_bond(
             [
-                "actin#branch_1", 
+                "actin#branch_1",
                 "actin#branch_ATP_1",
             ],
             [
@@ -1527,7 +1549,7 @@ class ActinUtil:
             ],
             0,
             [
-                "actin#new", 
+                "actin#new",
                 "actin#new_ATP",
             ],
             None,
@@ -1544,7 +1566,7 @@ class ActinUtil:
                 "arp3#ATP",
             ],
             [
-                "actin#new", 
+                "actin#new",
                 "actin#new_ATP",
             ],
             force_constant,
@@ -1569,9 +1591,9 @@ class ActinUtil:
             ],
             -1,
             [
-                "actin#", 
-                "actin#ATP_", 
-                "actin#mid_", 
+                "actin#",
+                "actin#ATP_",
+                "actin#mid_",
                 "actin#mid_ATP_",
             ],
             0,
@@ -1590,11 +1612,11 @@ class ActinUtil:
         )
         util.add_angle(
             [
-                "actin#branch_1", 
+                "actin#branch_1",
                 "actin#branch_ATP_1",
             ],
             [
-                "actin#2", 
+                "actin#2",
                 "actin#ATP_2",
             ],
             [
@@ -1627,16 +1649,16 @@ class ActinUtil:
             ],
             -1,
             [
-                "actin#", 
-                "actin#ATP_", 
-                "actin#mid_", 
+                "actin#",
+                "actin#ATP_",
+                "actin#mid_",
                 "actin#mid_ATP_",
             ],
             0,
             [
-                "actin#", 
-                "actin#ATP_", 
-                "actin#mid_", 
+                "actin#",
+                "actin#ATP_",
+                "actin#mid_",
                 "actin#mid_ATP_",
             ],
             1,
@@ -1655,19 +1677,19 @@ class ActinUtil:
         )
         util.add_dihedral(
             [
-                "actin#branch_1", 
+                "actin#branch_1",
                 "actin#branch_ATP_1",
             ],
             [
-                "actin#2", 
-                "actin#ATP_2", 
-                "actin#mid_2", 
+                "actin#2",
+                "actin#ATP_2",
+                "actin#mid_2",
                 "actin#mid_ATP_2",
             ],
             [
-                "actin#3", 
-                "actin#ATP_3", 
-                "actin#mid_3", 
+                "actin#3",
+                "actin#ATP_3",
+                "actin#mid_3",
                 "actin#mid_ATP_3",
             ],
             [
@@ -1699,8 +1721,8 @@ class ActinUtil:
             ],
             0,
             [
-                "arp2", 
-                "arp2#branched", 
+                "arp2",
+                "arp2#branched",
                 "arp2#free",
             ],
             None,
@@ -1719,9 +1741,9 @@ class ActinUtil:
             ],
             0,
             [
-                "arp3", 
-                "arp3#ATP", 
-                "arp3#new", 
+                "arp3",
+                "arp3#ATP",
+                "arp3#new",
                 "arp3#new_ATP",
             ],
             None,
@@ -1731,14 +1753,14 @@ class ActinUtil:
         )
         util.add_bond(  # arp2 to arp3 bonds
             [
-                "arp2", 
-                "arp2#branched", 
+                "arp2",
+                "arp2#branched",
                 "arp2#free",
             ],
             [
-                "arp3", 
-                "arp3#ATP", 
-                "arp3#new", 
+                "arp3",
+                "arp3#ATP",
+                "arp3#new",
                 "arp3#new_ATP",
             ],
             force_constant,
@@ -1746,9 +1768,7 @@ class ActinUtil:
             system,
         )
         util.add_bond(  # arp2 to daughter filament actin bonds
-            [
-                "arp2#branched"
-            ],
+            ["arp2#branched"],
             [
                 "actin#branch_1",
                 "actin#branch_ATP_1",
@@ -1960,7 +1980,14 @@ class ActinUtil:
             ["arp2#branched"],
             ["actin#branch_1", "actin#branch_ATP_1"],
             ["actin#2", "actin#ATP_2", "actin#barbed_2", "actin#barbed_ATP_2"],
-            ["actin#3", "actin#ATP_3", "actin#mid_3", "actin#mid_ATP_3", "actin#barbed_3", "actin#barbed_ATP_3"],
+            [
+                "actin#3",
+                "actin#ATP_3",
+                "actin#mid_3",
+                "actin#mid_ATP_3",
+                "actin#barbed_3",
+                "actin#barbed_ATP_3",
+            ],
             force_constant,
             ActinStructure.arp2_daughter1_daughter2_daughter3_dihedral_angle(),
             system,
@@ -2129,79 +2156,85 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_repulsions(force_constant, system, util):
+    def add_repulsions(
+        actin_radius,
+        arp23_radius,
+        cap_radius,
+        obstacle_radius,
+        force_constant,
+        system,
+        util,
+    ):
         """
         add repulsions
         """
+        actin_types = ActinUtil.get_all_actin_particle_types()
+        arp_types = ActinUtil.get_all_arp23_particle_types()
+        cap_types = ActinUtil.get_all_cap_particle_types()
+        # actin
         util.add_repulsion(
-            [
-                "actin#pointed_1",
-                "actin#pointed_ATP_1",
-                "actin#pointed_2",
-                "actin#pointed_ATP_2",
-                "actin#pointed_3",
-                "actin#pointed_ATP_3",
-                "actin#1",
-                "actin#ATP_1",
-                "actin#2",
-                "actin#ATP_2",
-                "actin#3",
-                "actin#ATP_3",
-                "actin#branch_1",
-                "actin#branch_ATP_1",
-                "actin#branch_barbed_1",
-                "actin#branch_barbed_ATP_1",
-                "actin#barbed_1",
-                "actin#barbed_ATP_1",
-                "actin#barbed_2",
-                "actin#barbed_ATP_2",
-                "actin#barbed_3",
-                "actin#barbed_ATP_3",
-                "arp2",
-                "arp2#branched",
-                "arp2#free",
-                "arp3",
-                "arp3#ATP",
-                "cap",
-                "cap#bound",
-                "actin#free",
-                "actin#free_ATP",
-            ],
-            [
-                "actin#pointed_1",
-                "actin#pointed_ATP_1",
-                "actin#pointed_2",
-                "actin#pointed_ATP_2",
-                "actin#pointed_3",
-                "actin#pointed_ATP_3",
-                "actin#1",
-                "actin#ATP_1",
-                "actin#2",
-                "actin#ATP_2",
-                "actin#3",
-                "actin#ATP_3",
-                "actin#branch_1",
-                "actin#branch_ATP_1",
-                "actin#branch_barbed_1",
-                "actin#branch_barbed_ATP_1",
-                "actin#barbed_1",
-                "actin#barbed_ATP_1",
-                "actin#barbed_2",
-                "actin#barbed_ATP_2",
-                "actin#barbed_3",
-                "actin#barbed_ATP_3",
-                "arp2",
-                "arp2#branched",
-                "arp2#free",
-                "arp3",
-                "arp3#ATP",
-                "cap",
-                "cap#bound",
-                "actin#free",
-                "actin#free_ATP",
-            ],
+            actin_types,
+            actin_types,
             force_constant,
             ActinStructure.actin_to_actin_repulsion_distance(),
+            system,
+        )
+        util.add_repulsion(
+            actin_types,
+            ["obstacle"],
+            force_constant,
+            actin_radius + obstacle_radius,
+            system,
+        )
+        # arp2/3
+        util.add_repulsion(
+            arp_types,
+            arp_types,
+            force_constant,
+            2.0 * arp23_radius,
+            system,
+        )
+        util.add_repulsion(
+            arp_types,
+            actin_types,
+            force_constant,
+            arp23_radius + actin_radius,
+            system,
+        )
+        util.add_repulsion(
+            arp_types,
+            ["obstacle"],
+            force_constant,
+            arp23_radius + obstacle_radius,
+            system,
+        )
+        # capping protein
+        util.add_repulsion(
+            cap_types,
+            cap_types,
+            force_constant,
+            2.0 * cap_radius,
+            system,
+        )
+        util.add_repulsion(
+            cap_types,
+            actin_types,
+            force_constant,
+            cap_radius + actin_radius,
+            system,
+        )
+        util.add_repulsion(
+            cap_types,
+            arp_types,
+            force_constant,
+            cap_radius + arp23_radius,
+            system,
+        )
+        util.add_repulsion(
+            cap_types,
+            ["obstacle"],
+            force_constant,
+            cap_radius + obstacle_radius,
             system,
         )
 
@@ -2222,18 +2255,18 @@ class ActinUtil:
     @staticmethod
     def check_add_global_box_potential(system):
         """
-        If the boundaries are not periodic, 
+        If the boundaries are not periodic,
         all particles need a box potential to keep them in the box volume
         """
         if bool(parameters["periodic_boundary"]):
             return
         # 1.0 margin on each side
-        box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)  
+        box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)
         ActinUtil.add_box_potential(
-            particle_types=ActinUtil.get_all_particle_types(), 
-            origin=-0.5 * box_potential_size, 
-            extent=box_potential_size, 
-            force_constant=parameters["force_constant"], 
+            particle_types=ActinUtil.get_all_particle_types(),
+            origin=-0.5 * box_potential_size,
+            extent=box_potential_size,
+            force_constant=parameters["force_constant"],
             system=system,
         )
 

@@ -50,7 +50,8 @@ class ActinSimulation:
         """
         self.system = readdy.ReactionDiffusionSystem(
             box_size=[self.parameters["box_size"]] * 3,
-            periodic_boundary_conditions=[bool(self.parameters["periodic_boundary"])] * 3,
+            periodic_boundary_conditions=[bool(self.parameters["periodic_boundary"])]
+            * 3,
         )
         self.parameters["temperature_K"] = self.parameters["temperature_C"] + 273.15
         self.system.temperature = self.parameters["temperature_K"]
@@ -73,11 +74,12 @@ class ActinSimulation:
             self.parameters["arp23_radius"], viscosity, temperature
         )  # nm^2/s
         cap_diffCoeff = ReaddyUtil.calculate_diffusionCoefficient(
-            self.parameters["actin_radius"], viscosity, temperature
+            self.parameters["cap_radius"], viscosity, temperature
         )  # nm^2/s
         self.actin_util.add_actin_types(self.system, actin_diffCoeff)
         self.actin_util.add_arp23_types(self.system, arp23_diffCoeff)
         self.actin_util.add_cap_types(self.system, cap_diffCoeff)
+        self.system.add_species("obstacle", 0.0)
 
     def add_constraints(self):
         """
@@ -103,7 +105,15 @@ class ActinSimulation:
         self.actin_util.add_cap_angles(force_constant, self.system, util)
         self.actin_util.add_cap_dihedrals(force_constant, self.system, util)
         # repulsions
-        self.actin_util.add_repulsions(force_constant, self.system, util)
+        self.actin_util.add_repulsions(
+            self.parameters["actin_radius"],
+            self.parameters["arp23_radius"],
+            self.parameters["cap_radius"],
+            self.parameters["obstacle_radius"],
+            force_constant,
+            self.system,
+            util,
+        )
         # box potentials
         self.actin_util.add_monomer_box_potentials(self.system)
 
@@ -197,6 +207,23 @@ class ActinSimulation:
         self.topologies = self.actin_util.add_monomers_from_data(
             self.simulation, monomer_data
         )
+
+    def add_obstacles(self):
+        """
+        Add obstacle particles
+        """
+        n = 0
+        while f"obstacle{n}_position_x" in self.parameters:
+            self.simulation.add_particle(
+                type="obstacle",
+                position=[
+                    float(self.parameters[f"obstacle{n}_position_x"]),
+                    float(self.parameters[f"obstacle{n}_position_y"]),
+                    float(self.parameters[f"obstacle{n}_position_z"]),
+                ],
+            )
+            n += 1
+        print(f"Added {n} obstacle(s).")
 
     def simulate(self, d_time):
         """

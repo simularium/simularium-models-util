@@ -18,9 +18,7 @@ def main():
         help="the file path of the directory\
          containing the trajectories to parse",
     )
-    parser.add_argument(
-        "box_size", help="width of simulation cube"
-    )
+    parser.add_argument("box_size", help="width of simulation cube")
     parser.add_argument(
         "total_steps", help="total number of iterations during model run"
     )

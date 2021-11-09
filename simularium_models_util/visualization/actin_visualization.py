@@ -109,9 +109,9 @@ class ActinVisualization:
     @staticmethod
     def get_structural_reactions_plot(analyzer):
         """
-        Add a plot of the number of times a structural reaction 
+        Add a plot of the number of times a structural reaction
         was triggered over time
-        Note: triggered != completed, the reaction may have failed 
+        Note: triggered != completed, the reaction may have failed
         to find the required reactants
         """
         ytraces = {}
@@ -138,9 +138,13 @@ class ActinVisualization:
         for rxn_group_name in GROUPED_GROWTH_RXNS:
             group_reaction_events = []
             for total_rxn_name in GROUPED_GROWTH_RXNS[rxn_group_name]:
-                group_reaction_events.append(analyzer.analyze_reaction_count_over_time(total_rxn_name))
+                group_reaction_events.append(
+                    analyzer.analyze_reaction_count_over_time(total_rxn_name)
+                )
             if len(group_reaction_events) > 0:
-                ytraces[rxn_group_name] = np.sum(np.array(group_reaction_events), axis=0)
+                ytraces[rxn_group_name] = np.sum(
+                    np.array(group_reaction_events), axis=0
+                )
         return ScatterPlotData(
             title="Growth vs [actin]",
             xaxis_title="[Actin] (µM)",
@@ -266,6 +270,7 @@ class ActinVisualization:
         actin_radius = 2.0 + extra_radius
         arp23_radius = 2.0 + extra_radius
         cap_radius = 3.0 + extra_radius
+        obstacle_radius = 20.0
         display_data = {
             "arp2": DisplayData(
                 name="arp2",
@@ -476,6 +481,11 @@ class ActinVisualization:
                 name="actin#branch_barbed_ATP",
                 radius=actin_radius,
                 color="#ffdc73",
+            ),
+            "obstacle": DisplayData(
+                name="obstacle",
+                radius=obstacle_radius,
+                color="#666",
             ),
         }
         # convert
