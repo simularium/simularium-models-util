@@ -57,6 +57,8 @@ parameters_rxns_off = {
     "use_box_arp": False,
     "use_box_cap": False,
     "verbose": False,
+    "periodic_boundary": True,
+    "obstacle_radius": 1.0,
 }
 
 

@@ -241,7 +241,7 @@ class ActinTestData:
                 },
                 1: {
                     "unique_id": 1,
-                    "type_name": "actin#mid_ATP_2",
+                    "type_name": "actin#ATP_2",
                     "position": np.array([-64.39380247, 1.23818016, 1.04137719]),
                     "neighbor_ids": [0, 2],
                 },
@@ -600,7 +600,7 @@ class ActinTestData:
                 },
                 9: {
                     "unique_id": 9,
-                    "type_name": "actin#mid_ATP_2",
+                    "type_name": "actin#ATP_2",
                     "position": np.array([-45.4950335, -0.38936756, -1.57033419]),
                     "neighbor_ids": [8, 10],
                 },
@@ -612,7 +612,7 @@ class ActinTestData:
                 },
                 11: {
                     "unique_id": 11,
-                    "type_name": "actin#mid_ATP_3",
+                    "type_name": "actin#ATP_3",
                     "position": np.array([-17.46404587, 1.44677311, 0.72415752]),
                     "neighbor_ids": [0, 12, 58],
                 },
@@ -660,7 +660,7 @@ class ActinTestData:
                 },
                 19: {
                     "unique_id": 19,
-                    "type_name": "actin#mid_ATP_2",
+                    "type_name": "actin#ATP_2",
                     "position": np.array([4.96074423, -1.06146421, 1.2210038]),
                     "neighbor_ids": [18, 20],
                 },
@@ -672,7 +672,7 @@ class ActinTestData:
                 },
                 21: {
                     "unique_id": 21,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([10.56694176, -1.49042498, 0.62943619]),
                     "neighbor_ids": [20, 22, 108],
                 },
@@ -702,7 +702,7 @@ class ActinTestData:
                 },
                 26: {
                     "unique_id": 26,
-                    "type_name": "actin#mid_ATP_3",
+                    "type_name": "actin#ATP_3",
                     "position": np.array([24.58243557, 1.19545429, 1.09015852]),
                     "neighbor_ids": [25, 27],
                 },
@@ -714,7 +714,7 @@ class ActinTestData:
                 },
                 28: {
                     "unique_id": 28,
-                    "type_name": "actin#mid_ATP_2",
+                    "type_name": "actin#ATP_2",
                     "position": np.array([30.1886331, 0.5938675, 1.50495114]),
                     "neighbor_ids": [27, 29, 124],
                 },
@@ -726,7 +726,7 @@ class ActinTestData:
                 },
                 30: {
                     "unique_id": 30,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([35.79483062, -0.12886327, 1.61274636]),
                     "neighbor_ids": [29, 31],
                 },
@@ -810,7 +810,7 @@ class ActinTestData:
                 },
                 44: {
                     "unique_id": 44,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([-5.10795212, 33.89185863, -0.64413277]),
                     "neighbor_ids": [43, 45, 55],
                 },
@@ -822,7 +822,7 @@ class ActinTestData:
                 },
                 46: {
                     "unique_id": 46,
-                    "type_name": "actin#mid_ATP_3",
+                    "type_name": "actin#ATP_3",
                     "position": np.array([-3.60227777, 39.30955497, -1.23143282]),
                     "neighbor_ids": [45, 47],
                 },
@@ -930,7 +930,7 @@ class ActinTestData:
                 },
                 64: {
                     "unique_id": 64,
-                    "type_name": "actin#mid_ATP_2",
+                    "type_name": "actin#ATP_2",
                     "position": np.array([6.58290355, -21.63595362, 1.07694941]),
                     "neighbor_ids": [63, 65, 93],
                 },
@@ -942,7 +942,7 @@ class ActinTestData:
                 },
                 66: {
                     "unique_id": 66,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([8.16919975, -27.02446952, 0.43587917]),
                     "neighbor_ids": [65, 67],
                 },
@@ -960,7 +960,7 @@ class ActinTestData:
                 },
                 69: {
                     "unique_id": 69,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([13.90138082, -33.88806636, 0.64578438]),
                     "neighbor_ids": [68, 70, 99],
                 },
@@ -972,7 +972,7 @@ class ActinTestData:
                 },
                 71: {
                     "unique_id": 71,
-                    "type_name": "actin#mid_ATP_3",
+                    "type_name": "actin#ATP_3",
                     "position": np.array([15.40803747, -39.30554209, 1.23260009]),
                     "neighbor_ids": [70, 72],
                 },
@@ -1038,7 +1038,7 @@ class ActinTestData:
                 },
                 82: {
                     "unique_id": 82,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([-20.60586008, -42.52377663, 0.64059503]),
                     "neighbor_ids": [81, 83, 90],
                 },
@@ -1050,7 +1050,7 @@ class ActinTestData:
                 },
                 84: {
                     "unique_id": 84,
-                    "type_name": "actin#mid_ATP_3",
+                    "type_name": "actin#ATP_3",
                     "position": np.array([-25.18314611, -45.7896189, 1.22892927]),
                     "neighbor_ids": [83, 85],
                 },
@@ -1224,7 +1224,7 @@ class ActinTestData:
                 },
                 113: {
                     "unique_id": 113,
-                    "type_name": "actin#mid_ATP_1",
+                    "type_name": "actin#ATP_1",
                     "position": np.array([26.66919128, 18.25711988, 1.31674956]),
                     "neighbor_ids": [112, 114, 117],
                 },
@@ -1236,7 +1236,7 @@ class ActinTestData:
                 },
                 115: {
                     "unique_id": 115,
-                    "type_name": "actin#mid_ATP_3",
+                    "type_name": "actin#ATP_3",
                     "position": np.array([29.04669112, 23.35718734, 0.7688292]),
                     "neighbor_ids": [114, 116],
                 },

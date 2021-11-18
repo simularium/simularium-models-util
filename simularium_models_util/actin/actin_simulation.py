@@ -193,12 +193,13 @@ class ActinSimulation:
         monomer_data = {
             "topologies": {
                 [topology ID] : {
-                    "type": "[topology type]",
-                    "particle_ids": []
+                    "type_name": "[topology type]",
+                    "particle_ids": [],
                 },
+            },
             "particles": {
                 [particle ID] : {
-                    "type": "[particle type]",
+                    "type_name": "[particle type]",
                     "position": np.zeros(3),
                     "neighbor_ids": [],
                 },
