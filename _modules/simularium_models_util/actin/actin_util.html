@@ -571,7 +571,9 @@
             <span class="p">)</span>
             <span class="ow">and</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="s2">&quot;actin#branch&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
             <span class="ow">is</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_type</span><span class="p">(</span>
+                <span class="n">topology</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="p">)</span>
             <span class="ow">is</span> <span class="kc">None</span>
         <span class="p">):</span>
             <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;mid&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
@@ -867,8 +869,12 @@
         <span class="n">pt_barbed</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">)</span>
         <span class="n">pt_pointed</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_pointed</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">,</span> <span class="n">v_pointed</span><span class="p">)</span>
-        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">v_barbed</span><span class="p">,</span> <span class="s2">&quot;actin#free&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_ATP&quot;</span> <span class="k">if</span> <span class="s2">&quot;ATP&quot;</span> <span class="ow">in</span> <span class="n">pt_barbed</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">v_pointed</span><span class="p">,</span> <span class="s2">&quot;actin#free&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_ATP&quot;</span> <span class="k">if</span> <span class="s2">&quot;ATP&quot;</span> <span class="ow">in</span> <span class="n">pt_pointed</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span>
+            <span class="n">v_barbed</span><span class="p">,</span> <span class="s2">&quot;actin#free&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_ATP&quot;</span> <span class="k">if</span> <span class="s2">&quot;ATP&quot;</span> <span class="ow">in</span> <span class="n">pt_barbed</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span>
+            <span class="n">v_pointed</span><span class="p">,</span> <span class="s2">&quot;actin#free&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_ATP&quot;</span> <span class="k">if</span> <span class="s2">&quot;ATP&quot;</span> <span class="ow">in</span> <span class="n">pt_pointed</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_topology_type</span><span class="p">(</span><span class="s2">&quot;Actin-Monomer-ATP&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">recipe</span></div>
 
@@ -1076,12 +1082,12 @@
         <span class="k">if</span> <span class="n">v_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="n">v_arp</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-            <span class="n">topology</span><span class="p">,</span> 
-            <span class="n">v_end</span><span class="p">,</span> 
-            <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> 
-            <span class="p">[],</span> 
-            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span> 
-            <span class="s2">&quot;Couldn&#39;t remove actin because a branch was attached&quot;</span>
+            <span class="n">topology</span><span class="p">,</span>
+            <span class="n">v_end</span><span class="p">,</span>
+            <span class="p">[</span><span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
+            <span class="p">[],</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;Couldn&#39;t remove actin because a branch was attached&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">v_arp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">recipe</span>
@@ -1101,19 +1107,24 @@
             <span class="k">return</span> <span class="n">recipe</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">barbed</span><span class="p">:</span>
             <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_neighbor_of_types</span><span class="p">(</span>
-                <span class="n">topology</span><span class="p">,</span> 
-                <span class="n">v_neighbor</span><span class="p">,</span> 
-                <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> 
-                <span class="p">[],</span> 
+                <span class="n">topology</span><span class="p">,</span>
+                <span class="n">v_neighbor</span><span class="p">,</span>
+                <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
+                <span class="p">[],</span>
                 <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;Couldn&#39;t remove actin because a branch was attached to its barbed neighbor&quot;</span>
+                <span class="s2">&quot;Couldn&#39;t remove actin because a branch was attached to its barbed neighbor&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">recipe</span>
             <span class="n">v_neighbor_neighbor</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_next_actin</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">v_neighbor</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">v_neighbor_neighbor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">set_flags</span><span class="p">(</span>
-                    <span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_neighbor_neighbor</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;mid&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="n">topology</span><span class="p">,</span>
+                    <span class="n">recipe</span><span class="p">,</span>
+                    <span class="n">v_neighbor_neighbor</span><span class="p">,</span>
+                    <span class="p">[],</span>
+                    <span class="p">[</span><span class="s2">&quot;mid&quot;</span><span class="p">],</span>
+                    <span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="n">v_end</span><span class="p">,</span> <span class="n">v_neighbor</span><span class="p">)</span>
         <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span>
@@ -1172,13 +1183,23 @@
             <span class="k">if</span> <span class="n">v_cap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">new_type</span> <span class="o">=</span> <span class="s2">&quot;Cap&quot;</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">v_actin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;actin&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find actin to set monomer&#39;s ATP state&quot;</span><span class="p">)</span>
-                <span class="n">pt_actin</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_actin</span><span class="p">)</span>  
+                <span class="n">v_actin</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+                    <span class="n">topology</span><span class="p">,</span>
+                    <span class="s2">&quot;actin&quot;</span><span class="p">,</span>
+                    <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find actin to set monomer&#39;s ATP state&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">pt_actin</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_actin</span><span class="p">)</span>
                 <span class="n">new_type</span> <span class="o">=</span> <span class="s2">&quot;Actin-Monomer&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;-ATP&quot;</span> <span class="k">if</span> <span class="s2">&quot;ATP&quot;</span> <span class="ow">in</span> <span class="n">pt_actin</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">topology</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_vertices</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">v_arp2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">v_arp2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">v_arp3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="s2">&quot;arp3&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find arp3 to set arp2/3&#39;s ATP state&quot;</span><span class="p">)</span>
+                <span class="n">v_arp3</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_vertex_of_type</span><span class="p">(</span>
+                    <span class="n">topology</span><span class="p">,</span>
+                    <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
+                    <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find arp3 to set arp2/3&#39;s ATP state&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
                 <span class="n">pt_arp3</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">v_arp3</span><span class="p">)</span>
                 <span class="n">new_type</span> <span class="o">=</span> <span class="s2">&quot;Arp23-Dimer&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;-ATP&quot;</span> <span class="k">if</span> <span class="s2">&quot;ATP&quot;</span> <span class="ow">in</span> <span class="n">pt_arp3</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -1507,9 +1528,10 @@
 <span class="sd">        add the given particle_types to the system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">()</span> <span class="o">+</span>
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_arp23_particle_types</span><span class="p">()</span> <span class="o">+</span> 
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_cap_particle_types</span><span class="p">()</span>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">()</span>
+            <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_arp23_particle_types</span><span class="p">()</span>
+            <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_cap_particle_types</span><span class="p">()</span>
+            <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;obstacle&quot;</span><span class="p">]</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_particle_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_particle_types">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -1594,7 +1616,7 @@
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
@@ -1622,7 +1644,7 @@
             <span class="p">],</span>
             <span class="mi">0</span><span class="p">,</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#new&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#new&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="kc">None</span><span class="p">,</span>
@@ -1639,7 +1661,7 @@
                 <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#new&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#new&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#new_ATP&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="n">force_constant</span><span class="p">,</span>
@@ -1664,9 +1686,9 @@
             <span class="p">],</span>
             <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#mid_ATP_&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="mi">0</span><span class="p">,</span>
@@ -1685,11 +1707,11 @@
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_angle</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
@@ -1722,16 +1744,16 @@
             <span class="p">],</span>
             <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#mid_ATP_&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="mi">0</span><span class="p">,</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#mid_ATP_&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="mi">1</span><span class="p">,</span>
@@ -1750,19 +1772,19 @@
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#mid_2&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_2&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#mid_ATP_2&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s2">&quot;actin#3&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;actin#3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#mid_ATP_3&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
@@ -1794,8 +1816,8 @@
             <span class="p">],</span>
             <span class="mi">0</span><span class="p">,</span>
             <span class="p">[</span>
-                <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="kc">None</span><span class="p">,</span>
@@ -1814,9 +1836,9 @@
             <span class="p">],</span>
             <span class="mi">0</span><span class="p">,</span>
             <span class="p">[</span>
-                <span class="s2">&quot;arp3&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="kc">None</span><span class="p">,</span>
@@ -1826,14 +1848,14 @@
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>  <span class="c1"># arp2 to arp3 bonds</span>
             <span class="p">[</span>
-                <span class="s2">&quot;arp2&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="p">[</span>
-                <span class="s2">&quot;arp3&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span> 
-                <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;arp3#new&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;arp3#new_ATP&quot;</span><span class="p">,</span>
             <span class="p">],</span>
             <span class="n">force_constant</span><span class="p">,</span>
@@ -1841,9 +1863,7 @@
             <span class="n">system</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>  <span class="c1"># arp2 to daughter filament actin bonds</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;arp2#branched&quot;</span>
-            <span class="p">],</span>
+            <span class="p">[</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
             <span class="p">[</span>
                 <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
@@ -2055,7 +2075,14 @@
             <span class="p">[</span><span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
             <span class="p">[</span><span class="s2">&quot;actin#2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">],</span>
-            <span class="p">[</span><span class="s2">&quot;actin#3&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#mid_ATP_3&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">],</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;actin#3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_ATP_3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_daughter1_daughter2_daughter3_dihedral_angle</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
@@ -2224,79 +2251,85 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_repulsions"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_repulsions">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_repulsions</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_repulsions</span><span class="p">(</span>
+        <span class="n">actin_radius</span><span class="p">,</span>
+        <span class="n">arp23_radius</span><span class="p">,</span>
+        <span class="n">cap_radius</span><span class="p">,</span>
+        <span class="n">obstacle_radius</span><span class="p">,</span>
+        <span class="n">force_constant</span><span class="p">,</span>
+        <span class="n">system</span><span class="p">,</span>
+        <span class="n">util</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add repulsions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actin_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">()</span>
+        <span class="n">arp_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_arp23_particle_types</span><span class="p">()</span>
+        <span class="n">cap_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_cap_particle_types</span><span class="p">()</span>
+        <span class="c1"># actin</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;cap&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;cap#bound&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#free&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp2#free&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;cap&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;cap#bound&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#free&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#free_ATP&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_repulsion_distance</span><span class="p">(),</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="s2">&quot;obstacle&quot;</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">actin_radius</span> <span class="o">+</span> <span class="n">obstacle_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># arp2/3</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">arp_types</span><span class="p">,</span>
+            <span class="n">arp_types</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">2.0</span> <span class="o">*</span> <span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">arp_types</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">arp23_radius</span> <span class="o">+</span> <span class="n">actin_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">arp_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="s2">&quot;obstacle&quot;</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">arp23_radius</span> <span class="o">+</span> <span class="n">obstacle_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># capping protein</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">cap_types</span><span class="p">,</span>
+            <span class="n">cap_types</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="mf">2.0</span> <span class="o">*</span> <span class="n">cap_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">cap_types</span><span class="p">,</span>
+            <span class="n">actin_types</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">cap_radius</span> <span class="o">+</span> <span class="n">actin_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">cap_types</span><span class="p">,</span>
+            <span class="n">arp_types</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">cap_radius</span> <span class="o">+</span> <span class="n">arp23_radius</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_repulsion</span><span class="p">(</span>
+            <span class="n">cap_types</span><span class="p">,</span>
+            <span class="p">[</span><span class="s2">&quot;obstacle&quot;</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">cap_radius</span> <span class="o">+</span> <span class="n">obstacle_radius</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
         <span class="p">)</span></div>
 
@@ -2317,18 +2350,18 @@
 <div class="viewcode-block" id="ActinUtil.check_add_global_box_potential"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.check_add_global_box_potential">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">check_add_global_box_potential</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        If the boundaries are not periodic, </span>
+<span class="sd">        If the boundaries are not periodic,</span>
 <span class="sd">        all particles need a box potential to keep them in the box volume</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;periodic_boundary&quot;</span><span class="p">]):</span>
             <span class="k">return</span>
         <span class="c1"># 1.0 margin on each side</span>
-        <span class="n">box_potential_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>  
+        <span class="n">box_potential_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_box_potential</span><span class="p">(</span>
-            <span class="n">particle_types</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_particle_types</span><span class="p">(),</span> 
-            <span class="n">origin</span><span class="o">=-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">box_potential_size</span><span class="p">,</span> 
-            <span class="n">extent</span><span class="o">=</span><span class="n">box_potential_size</span><span class="p">,</span> 
-            <span class="n">force_constant</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">],</span> 
+            <span class="n">particle_types</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_particle_types</span><span class="p">(),</span>
+            <span class="n">origin</span><span class="o">=-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">box_potential_size</span><span class="p">,</span>
+            <span class="n">extent</span><span class="o">=</span><span class="n">box_potential_size</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">],</span>
             <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span>
         <span class="p">)</span></div>
 

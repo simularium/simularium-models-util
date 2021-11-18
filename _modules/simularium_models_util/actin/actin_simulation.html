@@ -145,7 +145,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">ReactionDiffusionSystem</span><span class="p">(</span>
             <span class="n">box_size</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
-            <span class="n">periodic_boundary_conditions</span><span class="o">=</span><span class="p">[</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;periodic_boundary&quot;</span><span class="p">])]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="n">periodic_boundary_conditions</span><span class="o">=</span><span class="p">[</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;periodic_boundary&quot;</span><span class="p">])]</span>
+            <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_C&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">273.15</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
@@ -168,11 +169,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
         <span class="p">)</span>  <span class="c1"># nm^2/s</span>
         <span class="n">cap_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
         <span class="p">)</span>  <span class="c1"># nm^2/s</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_diffCoeff</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">arp23_diffCoeff</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">cap_diffCoeff</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">cap_diffCoeff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="s2">&quot;obstacle&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinSimulation.add_constraints"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">add_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -198,7 +200,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
         <span class="c1"># repulsions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_repulsions</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_repulsions</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;arp23_radius&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_radius&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;obstacle_radius&quot;</span><span class="p">],</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
+            <span class="n">util</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="c1"># box potentials</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_monomer_box_potentials</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
 
@@ -292,6 +302,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">topologies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span> <span class="n">monomer_data</span>
         <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_obstacles"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_obstacles">[docs]</a>    <span class="k">def</span> <span class="nf">add_obstacles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add obstacle particles</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="sa">f</span><span class="s2">&quot;obstacle</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">_position_x&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="o">.</span><span class="n">add_particle</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;obstacle&quot;</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="p">[</span>
+                    <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;obstacle</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">_position_x&quot;</span><span class="p">]),</span>
+                    <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;obstacle</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">_position_y&quot;</span><span class="p">]),</span>
+                    <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;obstacle</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">_position_z&quot;</span><span class="p">]),</span>
+                <span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> obstacle(s).&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinSimulation.simulate"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_time</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

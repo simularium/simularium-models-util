@@ -740,10 +740,12 @@
             <span class="k">for</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">types2</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">t3</span> <span class="ow">in</span> <span class="n">types3</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">t4</span> <span class="ow">in</span> <span class="n">types4</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="p">(</span>
-                            <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t4</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span> <span class="ow">and</span> 
-                            <span class="p">(</span><span class="n">t4</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span>
-                        <span class="p">):</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t4</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span> <span class="ow">and</span> <span class="p">(</span>
+                            <span class="n">t4</span><span class="p">,</span>
+                            <span class="n">t3</span><span class="p">,</span>
+                            <span class="n">t2</span><span class="p">,</span>
+                            <span class="n">t1</span><span class="p">,</span>
+                        <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedral_quads</span><span class="p">:</span>
                             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">configure_cosine_dihedral</span><span class="p">(</span>
                                 <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t4</span><span class="p">,</span> <span class="n">force_const</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">angle</span>
                             <span class="p">)</span>
@@ -1162,8 +1164,8 @@
 <span class="sd">            }</span>
 <span class="sd">          &quot;particles&quot; : mapping of particle id to data for each particle:</span>
 <span class="sd">            [id: int] : {</span>
-<span class="sd">                &quot;type_name&quot; : str, </span>
-<span class="sd">                &quot;position&quot; : np.ndarray, </span>
+<span class="sd">                &quot;type_name&quot; : str,</span>
+<span class="sd">                &quot;position&quot; : np.ndarray,</span>
 <span class="sd">                &quot;neighbor_ids&quot; : List[int]</span>
 <span class="sd">            }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
