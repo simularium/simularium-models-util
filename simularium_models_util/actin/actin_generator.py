@@ -612,8 +612,9 @@ class ActinGenerator:
     @staticmethod
     def get_intersection_point_with_extents(point1, point2, min_extent, max_extent):
         """
-        get the point where the line segment between the given positions intersects the bounds volume,
-        assume bounds are a rectangular prism orthogonal to cartesian grid
+        get the point where the line segment between the given positions 
+        intersects the bounds volume, assume bounds are 
+        a rectangular prism orthogonal to cartesian grid
         """
         plane = ActinGenerator.get_point_on_plane_of_intersecting_extent(
             point1, point2, min_extent, max_extent

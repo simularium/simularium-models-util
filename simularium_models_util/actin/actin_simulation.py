@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import readdy
+import numpy as np
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
+from .actin_structure import ActinStructure
 
 
 class ActinSimulation:
@@ -191,12 +193,13 @@ class ActinSimulation:
         monomer_data = {
             "topologies": {
                 [topology ID] : {
-                    "type": "[topology type]",
-                    "particle_ids": []
+                    "type_name": "[topology type]",
+                    "particle_ids": [],
                 },
+            },
             "particles": {
                 [particle ID] : {
-                    "type": "[particle type]",
+                    "type_name": "[particle type]",
                     "position": np.zeros(3),
                     "neighbor_ids": [],
                 },
@@ -224,6 +227,63 @@ class ActinSimulation:
             )
             n += 1
         print(f"Added {n} obstacle(s).")
+
+    def add_crystal_structure_monomers(self):
+        """
+        Add monomers exactly from the branched actin crystal structure
+        """
+        type_names = [
+            "actin#pointed_ATP_1",
+            "actin#ATP_2",
+            "actin#ATP_3",
+            "actin#ATP_1",
+            "actin#ATP_2",
+            "actin#ATP_3",
+            "actin#ATP_1",
+            "actin#barbed_ATP_2",
+            "arp2#branched",
+            "arp3#ATP",
+            "actin#branch_ATP_1",
+            "actin#ATP_2",
+            "actin#barbed_ATP_3",
+        ]
+        positions = np.zeros((13, 3))
+        positions[:8, :] = ActinStructure.mother_positions
+        positions[8, :] = ActinStructure.arp2_position
+        positions[9, :] = ActinStructure.arp3_position
+        positions[10:, :] = ActinStructure.daughter_positions
+        neighbor_ids = [
+            [1],
+            [0, 2],
+            [1, 3],
+            [2, 4, 8],
+            [3, 5, 9],
+            [4, 6],
+            [5, 7],
+            [6],
+            [3, 9, 10],
+            [4, 8],
+            [8, 11],
+            [10, 12],
+            [11],
+        ]
+        monomer_data = {
+            "topologies": {
+                0: {
+                    "type_name": "Actin-Polymer",
+                    "particle_ids": [],
+                }
+            },
+            "particles": {},
+        }
+        for index in range(len(type_names)):
+            monomer_data["topologies"][0]["particle_ids"].append(index)
+            monomer_data["particles"][index] = {
+                "type_name": type_names[index],
+                "position": np.array(positions[index]),
+                "neighbor_ids": neighbor_ids[index],
+            }
+        self.add_monomers_from_data(monomer_data)
 
     def simulate(self, d_time):
         """
