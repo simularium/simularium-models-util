@@ -294,8 +294,9 @@ of a child box defined by center and size</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_generator.ActinGenerator.get_intersection_point_with_extents">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_intersection_point_with_extents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_extent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_extent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_generator.html#ActinGenerator.get_intersection_point_with_extents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_generator.ActinGenerator.get_intersection_point_with_extents" title="Permalink to this definition"></a></dt>
-<dd><p>get the point where the line segment between the given positions intersects the bounds volume,
-assume bounds are a rectangular prism orthogonal to cartesian grid</p>
+<dd><p>get the point where the line segment between the given positions
+intersects the bounds volume, assume bounds are
+a rectangular prism orthogonal to cartesian grid</p>
 </dd></dl>
 
 <dl class="py method">
@@ -427,6 +428,12 @@ including bonds, angles, and repulsions, to the ReaDDy system</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_crystal_structure_monomers">
+<span class="sig-name descname"><span class="pre">add_crystal_structure_monomers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_crystal_structure_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_crystal_structure_monomers" title="Permalink to this definition"></a></dt>
+<dd><p>Add monomers exactly from the branched actin crystal structure</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.actin.actin_simulation.ActinSimulation.add_fibers_from_data">
 <span class="sig-name descname"><span class="pre">add_fibers_from_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fibers_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_uuids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/actin/actin_simulation.html#ActinSimulation.add_fibers_from_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.actin.actin_simulation.ActinSimulation.add_fibers_from_data" title="Permalink to this definition"></a></dt>
 <dd><p>Add fibers specified in a list of FiberData</p>
@@ -443,21 +450,24 @@ monomer_data = {</p>
 <blockquote>
 <div><dl>
 <dt>“topologies”: {</dt><dd><dl class="simple">
-<dt>[topology ID]<span class="classifier">{</span></dt><dd><p>“type”: “[topology type]”,
-“particle_ids”: []</p>
+<dt>[topology ID]<span class="classifier">{</span></dt><dd><p>“type_name”: “[topology type]”,
+“particle_ids”: [],</p>
 </dd>
 </dl>
 <p>},</p>
 </dd>
-<dt>“particles”: {</dt><dd><dl class="simple">
-<dt>[particle ID]<span class="classifier">{</span></dt><dd><p>“type”: “[particle type]”,
+</dl>
+<p>},
+“particles”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>[particle ID]<span class="classifier">{</span></dt><dd><p>“type_name”: “[particle type]”,
 “position”: np.zeros(3),
 “neighbor_ids”: [],</p>
 </dd>
 </dl>
 <p>},</p>
-</dd>
-</dl>
+</div></blockquote>
 <p>},</p>
 </div></blockquote>
 <p>}

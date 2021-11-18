@@ -97,9 +97,11 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">import</span> <span class="nn">readdy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 <span class="kn">from</span> <span class="nn">.actin_util</span> <span class="kn">import</span> <span class="n">ActinUtil</span>
+<span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span>
 
 
 <div class="viewcode-block" id="ActinSimulation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation">[docs]</a><span class="k">class</span> <span class="nc">ActinSimulation</span><span class="p">:</span>
@@ -286,12 +288,13 @@
 <span class="sd">        monomer_data = {</span>
 <span class="sd">            &quot;topologies&quot;: {</span>
 <span class="sd">                [topology ID] : {</span>
-<span class="sd">                    &quot;type&quot;: &quot;[topology type]&quot;,</span>
-<span class="sd">                    &quot;particle_ids&quot;: []</span>
+<span class="sd">                    &quot;type_name&quot;: &quot;[topology type]&quot;,</span>
+<span class="sd">                    &quot;particle_ids&quot;: [],</span>
 <span class="sd">                },</span>
+<span class="sd">            },</span>
 <span class="sd">            &quot;particles&quot;: {</span>
 <span class="sd">                [particle ID] : {</span>
-<span class="sd">                    &quot;type&quot;: &quot;[particle type]&quot;,</span>
+<span class="sd">                    &quot;type_name&quot;: &quot;[particle type]&quot;,</span>
 <span class="sd">                    &quot;position&quot;: np.zeros(3),</span>
 <span class="sd">                    &quot;neighbor_ids&quot;: [],</span>
 <span class="sd">                },</span>
@@ -319,6 +322,63 @@
             <span class="p">)</span>
             <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Added </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> obstacle(s).&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.add_crystal_structure_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_crystal_structure_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">add_crystal_structure_monomers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add monomers exactly from the branched actin crystal structure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">type_names</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arp2#branched&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;arp3#ATP&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">positions</span><span class="p">[:</span><span class="mi">8</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span>
+        <span class="n">positions</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_position</span>
+        <span class="n">positions</span><span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_position</span>
+        <span class="n">positions</span><span class="p">[</span><span class="mi">10</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">daughter_positions</span>
+        <span class="n">neighbor_ids</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">11</span><span class="p">],</span>
+        <span class="p">]</span>
+        <span class="n">monomer_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;topologies&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="mi">0</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;particles&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">type_names</span><span class="p">)):</span>
+            <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;type_name&quot;</span><span class="p">:</span> <span class="n">type_names</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
+                <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">[</span><span class="n">index</span><span class="p">]),</span>
+                <span class="s2">&quot;neighbor_ids&quot;</span><span class="p">:</span> <span class="n">neighbor_ids</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinSimulation.simulate"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_time</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

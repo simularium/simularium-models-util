@@ -707,8 +707,9 @@
 <div class="viewcode-block" id="ActinGenerator.get_intersection_point_with_extents"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_intersection_point_with_extents">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_intersection_point_with_extents</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        get the point where the line segment between the given positions intersects the bounds volume,</span>
-<span class="sd">        assume bounds are a rectangular prism orthogonal to cartesian grid</span>
+<span class="sd">        get the point where the line segment between the given positions </span>
+<span class="sd">        intersects the bounds volume, assume bounds are </span>
+<span class="sd">        a rectangular prism orthogonal to cartesian grid</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">plane</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_point_on_plane_of_intersecting_extent</span><span class="p">(</span>
             <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span>
