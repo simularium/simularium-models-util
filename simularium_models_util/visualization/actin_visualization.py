@@ -261,7 +261,7 @@ class ActinVisualization:
         }
 
     @staticmethod
-    def visualize_actin(path_to_readdy_h5, box_size, total_steps, plots={}):
+    def visualize_actin(path_to_readdy_h5, box_size, total_steps, plots=None):
         """
         visualize an actin trajectory in Simularium
         """
@@ -508,9 +508,10 @@ class ActinVisualization:
                 "OverflowError during SimulariumIO conversion !!!!!!!!!!!!!!\n" + str(e)
             )
             return
-        for plot_type in plots:
-            for plot in plots[plot_type]:
-                converter.add_plot(plot, plot_type)
+        if plots is not None:
+            for plot_type in plots:
+                for plot in plots[plot_type]:
+                    converter.add_plot(plot, plot_type)
         filtered_data = converter.filter_data(
             [
                 MultiplyTimeFilter(
