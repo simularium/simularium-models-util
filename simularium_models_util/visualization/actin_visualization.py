@@ -462,6 +462,126 @@ class ActinVisualization:
                 radius=actin_radius,
                 color="#ffdc73",
             ),
+            "actin#fixed_1": DisplayData(
+                name="actin#fixed",
+                radius=actin_radius,
+                color="#bf9b30",
+            ),
+            "actin#fixed_2": DisplayData(
+                name="actin#fixed",
+                radius=actin_radius,
+                color="#bf9b30",
+            ),
+            "actin#fixed_3": DisplayData(
+                name="actin#fixed",
+                radius=actin_radius,
+                color="#bf9b30",
+            ),
+            "actin#fixed_ATP_1": DisplayData(
+                name="actin#fixed_ATP",
+                radius=actin_radius,
+                color="#ffbf00",
+            ),
+            "actin#fixed_ATP_2": DisplayData(
+                name="actin#fixed_ATP",
+                radius=actin_radius,
+                color="#ffbf00",
+            ),
+            "actin#fixed_ATP_3": DisplayData(
+                name="actin#fixed_ATP",
+                radius=actin_radius,
+                color="#ffbf00",
+            ),
+            "actin#mid_fixed_1": DisplayData(
+                name="actin#mid_fixed",
+                radius=actin_radius,
+                color="#bf9b30",
+            ),
+            "actin#mid_fixed_2": DisplayData(
+                name="actin#mid_fixed",
+                radius=actin_radius,
+                color="#bf9b30",
+            ),
+            "actin#mid_fixed_3": DisplayData(
+                name="actin#mid_fixed",
+                radius=actin_radius,
+                color="#bf9b30",
+            ),
+            "actin#mid_fixed_ATP_1": DisplayData(
+                name="actin#mid_fixed_ATP",
+                radius=actin_radius,
+                color="#ffbf00",
+            ),
+            "actin#mid_fixed_ATP_2": DisplayData(
+                name="actin#mid_fixed_ATP",
+                radius=actin_radius,
+                color="#ffbf00",
+            ),
+            "actin#mid_fixed_ATP_3": DisplayData(
+                name="actin#mid_fixed_ATP",
+                radius=actin_radius,
+                color="#ffbf00",
+            ),
+            "actin#pointed_fixed_1": DisplayData(
+                name="actin#pointed_fixed",
+                radius=actin_radius,
+                color="#a67c00",
+            ),
+            "actin#pointed_fixed_2": DisplayData(
+                name="actin#pointed_fixed",
+                radius=actin_radius,
+                color="#a67c00",
+            ),
+            "actin#pointed_fixed_3": DisplayData(
+                name="actin#pointed_fixed",
+                radius=actin_radius,
+                color="#a67c00",
+            ),
+            "actin#pointed_fixed_ATP_1": DisplayData(
+                name="actin#pointed_fixed_ATP",
+                radius=actin_radius,
+                color="#a67c00",
+            ),
+            "actin#pointed_fixed_ATP_2": DisplayData(
+                name="actin#pointed_fixed_ATP",
+                radius=actin_radius,
+                color="#a67c00",
+            ),
+            "actin#pointed_fixed_ATP_3": DisplayData(
+                name="actin#pointed_fixed_ATP",
+                radius=actin_radius,
+                color="#a67c00",
+            ),
+            "actin#fixed_barbed_1": DisplayData(
+                name="actin#fixed_barbed",
+                radius=actin_radius,
+                color="#ffdc73",
+            ),
+            "actin#fixed_barbed_2": DisplayData(
+                name="actin#fixed_barbed",
+                radius=actin_radius,
+                color="#ffdc73",
+            ),
+            "actin#fixed_barbed_3": DisplayData(
+                name="actin#fixed_barbed",
+                radius=actin_radius,
+                color="#ffdc73",
+            ),
+            "actin#fixed_barbed_ATP_1": DisplayData(
+                name="actin#fixed_barbed_ATP",
+                radius=actin_radius,
+                color="#ffdc73",
+            ),
+            "actin#fixed_barbed_ATP_2": DisplayData(
+                name="actin#fixed_barbed_ATP",
+                radius=actin_radius,
+                color="#ffdc73",
+            ),
+            "actin#fixed_barbed_ATP_3": DisplayData(
+                name="actin#fixed_barbed_ATP",
+                radius=actin_radius,
+                color="#ffdc73",
+            ),
             "actin#branch_1": DisplayData(
                 name="actin#branch",
                 radius=actin_radius,

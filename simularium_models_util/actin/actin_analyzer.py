@@ -110,6 +110,8 @@ class ActinAnalyzer:
         for i in range(1, 4):
             result.append(f"actin#pointed_{i}")
             result.append(f"actin#pointed_ATP_{i}")
+            result.append(f"actin#pointed_fixed_{i}")
+            result.append(f"actin#pointed_fixed_ATP_{i}")
         return result
 
     @staticmethod
@@ -123,6 +125,10 @@ class ActinAnalyzer:
             result.append(f"actin#ATP_{i}")
             result.append(f"actin#mid_{i}")
             result.append(f"actin#mid_ATP_{i}")
+            result.append(f"actin#fixed_{i}")
+            result.append(f"actin#fixed_ATP_{i}")
+            result.append(f"actin#mid_fixed_{i}")
+            result.append(f"actin#mid_fixed_ATP_{i}")
         return result
 
     @staticmethod
@@ -134,6 +140,8 @@ class ActinAnalyzer:
         for i in range(1, 4):
             result.append(f"actin#barbed_{i}")
             result.append(f"actin#barbed_ATP_{i}")
+            result.append(f"actin#fixed_barbed_{i}")
+            result.append(f"actin#fixed_barbed_ATP_{i}")
         return result
 
     @staticmethod
@@ -171,6 +179,10 @@ class ActinAnalyzer:
             result.append(f"actin#mid_ATP_{i}")
             result.append(f"actin#pointed_ATP_{i}")
             result.append(f"actin#barbed_ATP_{i}")
+            result.append(f"actin#fixed_ATP_{i}")
+            result.append(f"actin#mid_fixed_ATP_{i}")
+            result.append(f"actin#pointed_fixed_ATP_{i}")
+            result.append(f"actin#fixed_barbed_ATP_{i}")
         result.append("actin#branch_ATP_1")
         result.append("actin#branch_barbed_ATP_1")
         return result
@@ -186,6 +198,10 @@ class ActinAnalyzer:
             result.append(f"actin#mid_{i}")
             result.append(f"actin#pointed_{i}")
             result.append(f"actin#barbed_{i}")
+            result.append(f"actin#fixed_{i}")
+            result.append(f"actin#mid_fixed_{i}")
+            result.append(f"actin#pointed_fixed_{i}")
+            result.append(f"actin#fixed_barbed_{i}")
         result.append("actin#branch_1")
         result.append("actin#branch_barbed_1")
         return result
