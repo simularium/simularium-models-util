@@ -12,16 +12,20 @@ from .fiber_data import FiberData
 
 
 parameters = {}
-
-
 def set_parameters(p):
     global parameters
     parameters = p
     return p
 
+displacements = {}
+def set_displacements(d):
+    global displacements
+    displacements = d
+    return d
+
 
 class ActinUtil:
-    def __init__(self, parameters):
+    def __init__(self, parameters, displacements=None):
         """
         Utility functions for ReaDDy branched actin models
 
@@ -29,6 +33,8 @@ class ActinUtil:
         which can't be instance methods, so parameters are global
         """
         set_parameters(parameters)
+        if displacements is not None:
+            set_displacements(displacements)
 
     @staticmethod
     def get_new_vertex(topology):
@@ -1344,6 +1350,20 @@ class ActinUtil:
         ReaddyUtil.set_flags(topology, recipe, v_cap, [], ["bound"], True)
         ReaddyUtil.set_flags(topology, recipe, v_actin, ["barbed"], [], True)
         recipe.change_topology_type("Actin-Polymer#Shrinking")
+        return recipe
+
+    @staticmethod
+    def reaction_function_translate(topology):
+        """
+        reaction function to translate particles by the displacements
+        """
+        recipe = readdy.StructuralReactionRecipe(topology)
+        for vertex_id in displacements:
+            v = ReaddyUtil.get_vertex_with_id(
+                topology, vertex_id, error_msg=f"Couldn't find particle {vertex_id} to displace"
+            )
+            pos = ReaddyUtil.get_vertex_position(topology, v)
+            recipe.change_particle_position(v, pos + displacements[vertex_id])
         return recipe
 
     @staticmethod
@@ -3056,4 +3076,16 @@ class ActinUtil:
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_cap_unbind,
             rate_function=lambda x: parameters["cap_unbind_rate"],
+        )
+
+    @staticmethod
+    def add_translate_reaction(system):
+        """
+        translate particles by the displacements each timestep
+        """
+        system.topologies.add_structural_reaction(
+            "Translate",
+            topology_type="Actin-Polymer",
+            reaction_function=ActinUtil.reaction_function_translate,
+            rate_function=ReaddyUtil.rate_function_infinity,
         )

@@ -10,7 +10,7 @@ from .actin_structure import ActinStructure
 
 
 class ActinSimulation:
-    def __init__(self, parameters, record=False, save_checkpoints=False):
+    def __init__(self, parameters, record=False, save_checkpoints=False, displacements=None):
         """
         Creates a ReaDDy branched actin simulation
 
@@ -34,7 +34,7 @@ class ActinSimulation:
         nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, verbose
         """
         self.parameters = parameters
-        self.actin_util = ActinUtil(self.parameters)
+        self.actin_util = ActinUtil(self.parameters, displacements)
         self.create_actin_system()
         self.simulation = ReaddyUtil.create_readdy_simulation(
             self.system,
@@ -141,6 +141,7 @@ class ActinSimulation:
         self.actin_util.add_arp23_unbind_reaction(self.system)
         self.actin_util.add_debranch_reaction(self.system)
         self.actin_util.add_cap_unbind_reaction(self.system)
+        self.actin_util.add_translate_reaction(self.system)
 
     def add_random_monomers(self):
         """

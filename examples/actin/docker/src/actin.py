@@ -56,18 +56,38 @@ def main():
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
-    actin_simulation = ActinSimulation(parameters, True, False)
+    displacements = {
+        0 : np.array([5e-4, 0., 0.]),
+        1 : np.array([5e-4, 0., 0.]),
+        2 : np.array([5e-4, 0., 0.]),
+    }
+    actin_simulation = ActinSimulation(parameters, True, False, displacements)
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()
     if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
         print("ortho")
-        actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0)
-        )
+        fiber_data = [
+            FiberData(
+                28,
+                [
+                    np.array([-70, 0, 0]),
+                    np.array([70, 0, 0]),
+                ],
+                "Actin-Polymer",
+            )
+        ]
+        monomers = ActinGenerator.get_monomers(fiber_data, use_uuids=False)
+        monomers["particles"][0]["type_name"] = "actin#pointed_fixed_ATP_1"
+        monomers["particles"][1]["type_name"] = "actin#fixed_ATP_2"
+        monomers["particles"][2]["type_name"] = "actin#mid_fixed_ATP_3"
+        monomers["particles"][46]["type_name"] = "actin#mid_fixed_ATP_2"
+        monomers["particles"][47]["type_name"] = "actin#mid_fixed_ATP_3"
+        monomers["particles"][48]["type_name"] = "actin#fixed_barbed_ATP_1"
+        actin_simulation.add_monomers_from_data(monomers)
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), 0)
+            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), use_uuids=False)
         )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
