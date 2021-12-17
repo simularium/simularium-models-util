@@ -6,7 +6,7 @@ import numpy as np
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData, ScatterPlotData, DisplayData, DISPLAY_TYPE
 from simulariumio.filters import MultiplyTimeFilter
-from simulariumio.orientations import OrientationData
+from simulariumio.orientations import OrientationData, NeighborData
 from ..actin import ActinAnalyzer
 
 TIMESTEP = 0.1  # ns
@@ -272,10 +272,14 @@ class ActinVisualization:
         arp23_radius = 2.0 + extra_radius
         cap_radius = 3.0 + extra_radius
         obstacle_radius = 35.0
-        actin_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/actin.pdb"
-        arp2_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/arp2.pdb"
-        arp3_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/arp3.pdb"
-        display_type = DISPLAY_TYPE.PDB
+        # actin_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/actin.pdb"
+        # arp2_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/arp2.pdb"
+        # arp3_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/arp3.pdb"
+        # display_type = DISPLAY_TYPE.PDB
+        actin_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/gizmo_small.obj"
+        arp2_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/gizmo_small.obj"
+        arp3_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/gizmo_small.obj"
+        display_type = DISPLAY_TYPE.OBJ
         display_data = {
             "arp2": DisplayData(
                 name="arp2",
@@ -455,114 +459,114 @@ class ActinVisualization:
             ),
             "actin#pointed_1": DisplayData(
                 name="actin#pointed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#pointed_2": DisplayData(
                 name="actin#pointed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#pointed_3": DisplayData(
                 name="actin#pointed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#pointed_ATP_1": DisplayData(
                 name="actin#pointed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#pointed_ATP_2": DisplayData(
                 name="actin#pointed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#pointed_ATP_3": DisplayData(
                 name="actin#pointed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#barbed_1": DisplayData(
                 name="actin#barbed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#barbed_2": DisplayData(
                 name="actin#barbed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#barbed_3": DisplayData(
                 name="actin#barbed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#barbed_ATP_1": DisplayData(
                 name="actin#barbed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#barbed_ATP_2": DisplayData(
                 name="actin#barbed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#barbed_ATP_3": DisplayData(
                 name="actin#barbed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#branch_1": DisplayData(
                 name="actin#branch",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#branch_ATP_1": DisplayData(
                 name="actin#branch_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#a67c00",
             ),
             "actin#branch_barbed_1": DisplayData(
                 name="actin#branch_barbed",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
             "actin#branch_barbed_ATP_1": DisplayData(
                 name="actin#branch_barbed_ATP",
-                radius=0.5 * actin_radius,
-                # display_type=display_type,
-                # url=actin_geometry_url,
+                radius=actin_radius,
+                display_type=display_type,
+                url=actin_geometry_url,
                 color="#ffdc73",
             ),
         }
@@ -577,69 +581,99 @@ class ActinVisualization:
             zero_orientations=[
                 OrientationData(
                     type_name_substrings=["actin", "2"],
-                    neighbor1_type_name_substrings=["actin", "1"],
-                    neighbor1_relative_position=(
-                        np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148])
-                    ),
-                    neighbor2_type_name_substrings=["actin", "3"],
-                    neighbor2_relative_position=(
-                        np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148])
-                    ),
+                    neighbor_data=[
+                        NeighborData(
+                            type_name_substrings=["actin", "1"],
+                            relative_position=np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148]),
+                            neighbor_type_name_substrings=["actin", "3"],
+                            neighbor_relative_position=np.array([16.236, 23.926, 26.754]),
+                        ),
+                        NeighborData(
+                            type_name_substrings=["actin", "3"],
+                            relative_position=np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148]),
+                            neighbor_type_name_substrings=["actin", "1"],
+                            neighbor_relative_position=np.array([27.609, 24.061, 27.598]),
+                        ),
+                    ],
                 ),
                 OrientationData(
                     type_name_substrings=["actin", "3"],
-                    neighbor1_type_name_substrings=["actin", "2"],
-                    neighbor1_relative_position=(
-                        np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148])
-                    ),
-                    neighbor2_type_name_substrings=["actin", "1"],
-                    neighbor2_relative_position=(
-                        np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148])
-                    ),
+                    neighbor_data=[
+                        NeighborData(
+                            type_name_substrings=["actin", "2"],
+                            relative_position=np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148]),
+                            neighbor_type_name_substrings=["actin", "1"],
+                            neighbor_relative_position=np.array([16.236, 23.926, 26.754]),
+                        ),
+                        NeighborData(
+                            type_name_substrings=["actin", "1"],
+                            relative_position=np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148]),
+                            neighbor_type_name_substrings=["actin", "2"],
+                            neighbor_relative_position=np.array([27.609, 24.061, 27.598]),
+                        ),
+                    ],
                 ),
                 OrientationData(
                     type_name_substrings=["actin", "1"],
-                    neighbor1_type_name_substrings=["actin", "3"],
-                    neighbor1_relative_position=(
-                        np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148])
-                    ),
-                    neighbor2_type_name_substrings=["actin", "2"],
-                    neighbor2_relative_position=(
-                        np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148])
-                    ),
+                    neighbor_data=[
+                        NeighborData(
+                            type_name_substrings=["actin", "3"],
+                            relative_position=np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148]),
+                            neighbor_type_name_substrings=["actin", "2"],
+                            neighbor_relative_position=np.array([16.236, 23.926, 26.754]),
+                        ),
+                        NeighborData(
+                            type_name_substrings=["actin", "2"],
+                            relative_position=np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148]),
+                            neighbor_type_name_substrings=["actin", "3"],
+                            neighbor_relative_position=np.array([27.609, 24.061, 27.598]),
+                        ),
+                    ],
                 ),
                 OrientationData(
                     type_name_substrings=["arp3"],
-                    neighbor1_type_name_substrings=["arp2"],
-                    neighbor1_relative_position=(
-                        np.array([28.087, 30.872, 26.657]) - np.array([29.275, 27.535, 23.944])
-                    ),
-                    neighbor2_type_name_substrings=["actin"],
-                    neighbor2_relative_position=(
-                        np.array([30.382, 21.190, 25.725]) - np.array([29.275, 27.535, 23.944])
-                    ),
+                    neighbor_data=[
+                        NeighborData(
+                            type_name_substrings=["arp2"],
+                            relative_position=np.array([28.087, 30.872, 26.657])
+                            - np.array([29.275, 27.535, 23.944]),
+                        ),
+                        NeighborData(
+                            type_name_substrings=["actin"],
+                            relative_position=np.array([30.382, 21.190, 25.725])
+                            - np.array([29.275, 27.535, 23.944]),
+                        ),
+                    ],
                 ),
                 OrientationData(
                     type_name_substrings=["arp2#branched"],
-                    neighbor1_type_name_substrings=["arp3"],
-                    neighbor1_relative_position=(
-                        np.array([29.275, 27.535, 23.944]) - np.array([28.087, 30.872, 26.657])
-                    ),
-                    neighbor2_type_name_substrings=["actin#branch"],
-                    neighbor2_relative_position=(
-                        np.array([29.821, 33.088, 23.356]) - np.array([28.087, 30.872, 26.657])
-                    ),
+                    neighbor_data=[
+                        NeighborData(
+                            type_name_substrings=["arp3"],
+                            relative_position=np.array([29.275, 27.535, 23.944])
+                            - np.array([28.087, 30.872, 26.657]),
+                        ),
+                        NeighborData(
+                            type_name_substrings=["actin#branch"],
+                            relative_position=np.array([29.821, 33.088, 23.356])
+                            - np.array([28.087, 30.872, 26.657]),
+                        ),
+                    ],
                 ),
                 OrientationData(
                     type_name_substrings=["actin#branch"],
-                    neighbor1_type_name_substrings=["arp2#branched"],
-                    neighbor1_relative_position=(
-                        np.array([28.087, 30.872, 26.657]) - np.array([29.821, 33.088, 23.356])
-                    ),
-                    neighbor2_type_name_substrings=["actin", "2"],
-                    neighbor2_relative_position=(
-                        np.array([30.476, 36.034, 26.528]) - np.array([29.821, 33.088, 23.356])
-                    ),
+                    neighbor_data=[
+                        NeighborData(
+                            type_name_substrings=["arp2#branched"],
+                            relative_position=np.array([28.087, 30.872, 26.657])
+                            - np.array([29.821, 33.088, 23.356]),
+                        ),
+                        NeighborData(
+                            type_name_substrings=["actin", "2"],
+                            relative_position=np.array([30.476, 36.034, 26.528])
+                            - np.array([29.821, 33.088, 23.356]),
+                        ),
+                    ],
                 ),
             ],
             time_units=UnitData("µs"),
