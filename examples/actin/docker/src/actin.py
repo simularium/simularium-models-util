@@ -94,14 +94,14 @@ def main():
             int(parameters["total_steps"]), parameters["timestep"]
         )
         try:
-            plots = ActinVisualization.generate_plots(
-                parameters["name"] + ".h5", parameters["box_size"], 10
-            )
+            # plots = ActinVisualization.generate_plots(
+            #     parameters["name"] + ".h5", parameters["box_size"], 10
+            # )
             ActinVisualization.visualize_actin(
                 parameters["name"] + ".h5",
                 parameters["box_size"],
                 parameters["total_steps"],
-                plots,
+                # plots,
             )
         except Exception as e:
             print("Failed viz!!!!!!!!!!\n" + str(type(e)) + " " + str(e))
