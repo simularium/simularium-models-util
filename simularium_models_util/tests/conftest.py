@@ -57,12 +57,12 @@ parameters_rxns_off = {
     "use_box_arp": False,
     "use_box_cap": False,
     "verbose": False,
+    "periodic_boundary": True,
+    "obstacle_radius": 1.0,
 }
 
 
-def assert_topologies_equal(
-    topology_monomers1, topology_monomers2, test_position=False
-):
+def assert_monomers_equal(topology_monomers1, topology_monomers2, test_position=False):
     """
     Assert two topologies (in monomer form) are equivalent
     """
@@ -89,6 +89,22 @@ def assert_topologies_equal(
         if test_position:
             np.testing.assert_almost_equal(
                 particle1["position"], particle2["position"], decimal=2
+            )
+
+
+def assert_fibers_equal(topology_fibers1, topology_fibers2, test_position=False):
+    """
+    Assert two topologies (in fiber form) are equivalent
+    """
+    # check topology has the correct type_name
+    # and contains the correct points (in order)
+    assert len(topology_fibers1) == len(topology_fibers2)
+    for f in range(len(topology_fibers1)):
+        assert topology_fibers1[f].type_name == topology_fibers2[f].type_name
+        assert len(topology_fibers1[f].points) == len(topology_fibers2[f].points)
+        for p in range(len(topology_fibers1[f].points)):
+            np.testing.assert_allclose(
+                topology_fibers1[f].points[p], topology_fibers2[f].points[p]
             )
 
 
