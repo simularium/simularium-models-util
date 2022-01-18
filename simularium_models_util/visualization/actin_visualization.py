@@ -271,15 +271,13 @@ class ActinVisualization:
         actin_radius = 2.0 + extra_radius
         arp23_radius = 2.0 + extra_radius
         cap_radius = 3.0 + extra_radius
-        obstacle_radius = 35.0
-        # actin_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/actin.pdb"
-        # arp2_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/arp2.pdb"
-        # arp3_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/arp3.pdb"
-        # display_type = DISPLAY_TYPE.PDB
-        actin_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/gizmo_small.obj"
-        arp2_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/gizmo_small.obj"
-        arp3_geometry_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com/geometry/gizmo_small.obj"
-        display_type = DISPLAY_TYPE.OBJ
+        # obstacle_radius = 35.0
+        bucket_url = "https://aics-simularium-data.s3.us-east-2.amazonaws.com"
+        test_geo = f"{bucket_url}/geometry/gizmo_small.obj"
+        actin_geometry_url = test_geo  # f"{bucket_url}/geometry/actin.pdb"
+        arp2_geometry_url = test_geo  # f"{bucket_url}/geometry/arp2.pdb"
+        arp3_geometry_url = test_geo  # f"{bucket_url}/geometry/arp3.pdb"
+        display_type = DISPLAY_TYPE.OBJ  # DISPLAY_TYPE.PDB
         display_data = {
             "arp2": DisplayData(
                 name="arp2",
@@ -585,15 +583,21 @@ class ActinVisualization:
                     neighbor_data=[
                         NeighborData(
                             type_name_substrings=["actin", "1"],
-                            relative_position=np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148]),
+                            relative_position=np.array([19.126, 20.838, 27.757])
+                            - np.array([21.847, 24.171, 27.148]),
                             neighbor_type_name_substrings=["actin", "3"],
-                            neighbor_relative_position=np.array([16.236, 23.926, 26.754]),
+                            neighbor_relative_position=np.array(
+                                [16.236, 23.926, 26.754]
+                            ),
                         ),
                         NeighborData(
                             type_name_substrings=["actin", "3"],
-                            relative_position=np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148]),
+                            relative_position=np.array([24.738, 20.881, 26.671])
+                            - np.array([21.847, 24.171, 27.148]),
                             neighbor_type_name_substrings=["actin", "1"],
-                            neighbor_relative_position=np.array([27.609, 24.061, 27.598]),
+                            neighbor_relative_position=np.array(
+                                [27.609, 24.061, 27.598]
+                            ),
                         ),
                     ],
                 ),
@@ -602,15 +606,21 @@ class ActinVisualization:
                     neighbor_data=[
                         NeighborData(
                             type_name_substrings=["actin", "2"],
-                            relative_position=np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148]),
+                            relative_position=np.array([19.126, 20.838, 27.757])
+                            - np.array([21.847, 24.171, 27.148]),
                             neighbor_type_name_substrings=["actin", "1"],
-                            neighbor_relative_position=np.array([16.236, 23.926, 26.754]),
+                            neighbor_relative_position=np.array(
+                                [16.236, 23.926, 26.754]
+                            ),
                         ),
                         NeighborData(
                             type_name_substrings=["actin", "1"],
-                            relative_position=np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148]),
+                            relative_position=np.array([24.738, 20.881, 26.671])
+                            - np.array([21.847, 24.171, 27.148]),
                             neighbor_type_name_substrings=["actin", "2"],
-                            neighbor_relative_position=np.array([27.609, 24.061, 27.598]),
+                            neighbor_relative_position=np.array(
+                                [27.609, 24.061, 27.598]
+                            ),
                         ),
                     ],
                 ),
@@ -619,15 +629,21 @@ class ActinVisualization:
                     neighbor_data=[
                         NeighborData(
                             type_name_substrings=["actin", "3"],
-                            relative_position=np.array([19.126, 20.838, 27.757]) - np.array([21.847, 24.171, 27.148]),
+                            relative_position=np.array([19.126, 20.838, 27.757])
+                            - np.array([21.847, 24.171, 27.148]),
                             neighbor_type_name_substrings=["actin", "2"],
-                            neighbor_relative_position=np.array([16.236, 23.926, 26.754]),
+                            neighbor_relative_position=np.array(
+                                [16.236, 23.926, 26.754]
+                            ),
                         ),
                         NeighborData(
                             type_name_substrings=["actin", "2"],
-                            relative_position=np.array([24.738, 20.881, 26.671]) - np.array([21.847, 24.171, 27.148]),
+                            relative_position=np.array([24.738, 20.881, 26.671])
+                            - np.array([21.847, 24.171, 27.148]),
                             neighbor_type_name_substrings=["actin", "3"],
-                            neighbor_relative_position=np.array([27.609, 24.061, 27.598]),
+                            neighbor_relative_position=np.array(
+                                [27.609, 24.061, 27.598]
+                            ),
                         ),
                     ],
                 ),
