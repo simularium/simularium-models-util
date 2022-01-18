@@ -10,7 +10,9 @@ from .actin_structure import ActinStructure
 
 
 class ActinSimulation:
-    def __init__(self, parameters, record=False, save_checkpoints=False, displacements=None):
+    def __init__(
+        self, parameters, record=False, save_checkpoints=False, displacements=None
+    ):
         """
         Creates a ReaDDy branched actin simulation
 
