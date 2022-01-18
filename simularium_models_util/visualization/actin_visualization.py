@@ -490,12 +490,12 @@ class ActinVisualization:
         }
         # convert
         data = ReaddyData(
-            meta_data=MetaData(
-                box_size=np.array([box_size, box_size, box_size]),
-            ),
             # assume 1e3 recorded steps
             timestep=TIMESTEP * total_steps * 1e-3,
             path_to_readdy_h5=path_to_readdy_h5,
+            meta_data=MetaData(
+                box_size=np.array([box_size, box_size, box_size]),
+            ),
             display_data=display_data,
             time_units=UnitData("µs"),
             spatial_units=UnitData("nm"),

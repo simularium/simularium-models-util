@@ -61,8 +61,27 @@ def main():
     actin_simulation.add_random_monomers()
     if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
         print("ortho")
+        fibers = [
+            FiberData(
+                2,
+                [
+                    np.array([-70, 0, 20]),
+                    np.array([10, 60, 20]),
+                ],
+                "Actin-Polymer",
+            ),
+            FiberData(
+                3,
+                [
+                    np.array([0, 20, -70]),
+                    np.array([60, 20, 10]),
+                ],
+                "Actin-Polymer",
+            ),
+        ]
         actin_simulation.add_monomers_from_data(
             ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0)
+            # ActinGenerator.get_monomers(fibers, 0)
         )
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
