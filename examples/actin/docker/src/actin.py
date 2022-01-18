@@ -80,8 +80,8 @@ def main():
             ),
         ]
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0)
-            # ActinGenerator.get_monomers(fibers, 0)
+            # ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0)
+            ActinGenerator.get_monomers(fibers, 0)
         )
     if "branched_seed" in parameters and parameters["branched_seed"]:
         print("branched")
