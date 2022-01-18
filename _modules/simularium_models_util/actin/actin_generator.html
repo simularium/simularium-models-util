@@ -683,7 +683,7 @@
 
 <div class="viewcode-block" id="ActinGenerator.get_point_on_plane_of_intersecting_extent"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_point_on_plane_of_intersecting_extent">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_point_on_plane_of_intersecting_extent</span><span class="p">(</span>
-        <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span>
+        <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">,</span> <span class="n">direction</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get a point (which is also the normal) of the extent plane intersected</span>
@@ -695,30 +695,48 @@
             <span class="k">if</span> <span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="ow">and</span> <span class="n">point2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
                 <span class="n">point2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="ow">and</span> <span class="n">point1</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
             <span class="p">):</span>
+                <span class="c1"># points straddle both extents</span>
+                <span class="k">if</span> <span class="n">direction</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">result</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="ow">and</span> <span class="n">point2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">point2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="ow">and</span> <span class="n">point1</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="c1"># points straddle min extent</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
                 <span class="k">return</span> <span class="n">result</span>
             <span class="k">elif</span> <span class="p">(</span><span class="n">point1</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">max_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="ow">and</span> <span class="n">point2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
                 <span class="n">point2</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">max_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="ow">and</span> <span class="n">point1</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
             <span class="p">):</span>
+                <span class="c1"># points straddle max extent</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_extent</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
                 <span class="k">return</span> <span class="n">result</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_intersection_point_with_extents"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_intersection_point_with_extents">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_intersection_point_with_extents</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_intersection_point_with_extents</span><span class="p">(</span>
+        <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        get the point where the line segment between the given positions </span>
-<span class="sd">        intersects the bounds volume, assume bounds are </span>
+<span class="sd">        get the point where the line segment between the given positions</span>
+<span class="sd">        intersects the bounds volume, assume bounds are</span>
 <span class="sd">        a rectangular prism orthogonal to cartesian grid</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">plane</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_point_on_plane_of_intersecting_extent</span><span class="p">(</span>
-            <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span>
+            <span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">,</span> <span class="n">direction</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">plane</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">direction</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">point2</span> <span class="o">-</span> <span class="n">point1</span><span class="p">)</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">plane</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">point1</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">direction</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">point1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">direction</span></div>
+        <span class="n">v_direction</span> <span class="o">=</span> <span class="n">direction</span> <span class="o">*</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">point2</span> <span class="o">-</span> <span class="n">point1</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">plane</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">point1</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">v_direction</span><span class="p">)</span>
+        <span class="n">intersection</span> <span class="o">=</span> <span class="n">point1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">v_direction</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">position_is_in_bounds</span><span class="p">(</span>
+            <span class="n">intersection</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">intersection</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_cropped_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_cropped_fibers">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_cropped_fibers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="n">child_box_center</span><span class="p">,</span> <span class="n">child_box_size</span><span class="p">):</span>
@@ -740,23 +758,26 @@
         <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_extents</span><span class="p">(</span>
             <span class="n">child_box_center</span><span class="p">,</span> <span class="n">child_box_size</span>
         <span class="p">)</span>
-        <span class="n">position_offset</span> <span class="o">=</span> <span class="o">-</span><span class="n">child_box_center</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="n">fibers_data</span><span class="p">:</span>
             <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">tracing</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">)):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> -----&quot;</span><span class="p">)</span>
                 <span class="n">position_is_in_bounds</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">position_is_in_bounds</span><span class="p">(</span>
                     <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">tracing</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">position_is_in_bounds</span><span class="p">:</span>
-                        <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
-                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FiberData</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">))</span>
                         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">]</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not tracing but in bounds at start&quot;</span><span class="p">)</span>
+                            <span class="c1"># start at the current point</span>
+                            <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                            <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
                         <span class="k">else</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not tracing but in bounds in middle&quot;</span><span class="p">)</span>
+                            <span class="c1"># start at the intersection with the bounds</span>
+                            <span class="c1"># between the prev and current points</span>
                             <span class="n">intersection</span> <span class="o">=</span> <span class="p">(</span>
                                 <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_intersection_point_with_extents</span><span class="p">(</span>
                                     <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
@@ -764,29 +785,80 @@
                                     <span class="n">min_extent</span><span class="p">,</span>
                                     <span class="n">max_extent</span><span class="p">,</span>
                                 <span class="p">)</span>
-                                <span class="o">+</span> <span class="n">position_offset</span>
                             <span class="p">)</span>
-                            <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span>
-                                <span class="n">intersection</span><span class="p">,</span>
-                                <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">,</span>
-                            <span class="p">]</span>
+                            <span class="k">if</span> <span class="n">intersection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start at intersection before point&quot;</span><span class="p">)</span>
+                                <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span>
+                                    <span class="n">intersection</span><span class="p">,</span>
+                                    <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                <span class="p">]</span>
+                                <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not tracing and not in bounds&quot;</span><span class="p">)</span>
+                        <span class="c1"># start at the intersection with the bounds</span>
+                        <span class="c1"># between the current and next points</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="n">intersection</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_intersection_point_with_extents</span><span class="p">(</span>
+                                    <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                    <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span>
+                                    <span class="n">min_extent</span><span class="p">,</span>
+                                    <span class="n">max_extent</span><span class="p">,</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">intersection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start at intersection after point&quot;</span><span class="p">)</span>
+                                <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span>
+                                    <span class="n">intersection</span><span class="p">,</span>
+                                <span class="p">]</span>
+                                <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">position_is_in_bounds</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tracing and not in bounds&quot;</span><span class="p">)</span>
+                        <span class="c1"># end at the intersection with the bounds</span>
+                        <span class="c1"># between the prev and current points</span>
                         <span class="n">tracing</span> <span class="o">=</span> <span class="kc">False</span>
-                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">intersection</span> <span class="o">=</span> <span class="p">(</span>
                                 <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_intersection_point_with_extents</span><span class="p">(</span>
                                     <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
                                     <span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                                     <span class="n">min_extent</span><span class="p">,</span>
                                     <span class="n">max_extent</span><span class="p">,</span>
+                                    <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
                                 <span class="p">)</span>
-                                <span class="o">+</span> <span class="n">position_offset</span>
                             <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">intersection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;end at intersection&quot;</span><span class="p">)</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;add </span><span class="si">{</span><span class="n">intersection</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intersection</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">):</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">point</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">child_box_center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                    <span class="n">current_chunk</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">point</span> <span class="o">-</span> <span class="n">child_box_center</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;finished chunk&quot;</span><span class="p">)</span>
+                                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                    <span class="n">FiberData</span><span class="p">(</span>
+                                        <span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">,</span> <span class="n">fiber</span><span class="o">.</span><span class="n">type_name</span>
+                                    <span class="p">)</span>
+                                <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FiberData</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">))</span>
+                        <span class="c1"># continue adding points within the volume</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tracing and in bounds&quot;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;add </span><span class="si">{</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;end at last point&quot;</span><span class="p">)</span>
+                            <span class="c1"># end if this is the last point</span>
+                            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">):</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">point</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">child_box_center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">current_chunk</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">point</span> <span class="o">-</span> <span class="n">child_box_center</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;finished chunk&quot;</span><span class="p">)</span>
+                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                <span class="n">FiberData</span><span class="p">(</span>
+                                    <span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">,</span> <span class="n">fiber</span><span class="o">.</span><span class="n">type_name</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers">[docs]</a>    <span class="nd">@staticmethod</span>

@@ -356,7 +356,7 @@
         <span class="p">}</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.visualize_actin"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.visualize_actin">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">visualize_actin</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">total_steps</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">def</span> <span class="nf">visualize_actin</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">total_steps</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        visualize an actin trajectory in Simularium</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -585,12 +585,12 @@
         <span class="p">}</span>
         <span class="c1"># convert</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ReaddyData</span><span class="p">(</span>
-            <span class="n">meta_data</span><span class="o">=</span><span class="n">MetaData</span><span class="p">(</span>
-                <span class="n">box_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]),</span>
-            <span class="p">),</span>
             <span class="c1"># assume 1e3 recorded steps</span>
             <span class="n">timestep</span><span class="o">=</span><span class="n">TIMESTEP</span> <span class="o">*</span> <span class="n">total_steps</span> <span class="o">*</span> <span class="mf">1e-3</span><span class="p">,</span>
             <span class="n">path_to_readdy_h5</span><span class="o">=</span><span class="n">path_to_readdy_h5</span><span class="p">,</span>
+            <span class="n">meta_data</span><span class="o">=</span><span class="n">MetaData</span><span class="p">(</span>
+                <span class="n">box_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]),</span>
+            <span class="p">),</span>
             <span class="n">display_data</span><span class="o">=</span><span class="n">display_data</span><span class="p">,</span>
             <span class="n">time_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;µs&quot;</span><span class="p">),</span>
             <span class="n">spatial_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;nm&quot;</span><span class="p">),</span>
@@ -603,9 +603,10 @@
                 <span class="s2">&quot;OverflowError during SimulariumIO conversion !!!!!!!!!!!!!!</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="k">return</span>
-        <span class="k">for</span> <span class="n">plot_type</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">[</span><span class="n">plot_type</span><span class="p">]:</span>
-                <span class="n">converter</span><span class="o">.</span><span class="n">add_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plots</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">plot_type</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">[</span><span class="n">plot_type</span><span class="p">]:</span>
+                    <span class="n">converter</span><span class="o">.</span><span class="n">add_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">)</span>
         <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">filter_data</span><span class="p">(</span>
             <span class="p">[</span>
                 <span class="n">MultiplyTimeFilter</span><span class="p">(</span>

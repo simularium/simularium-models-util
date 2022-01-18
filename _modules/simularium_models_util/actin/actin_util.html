@@ -2435,8 +2435,8 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Trimerize</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Actin-Dimer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) &quot;</span>
-                <span class="s2">&quot;+ Actin-Monomer-ATP(actin#free_ATP) -&gt; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Dimer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
+                <span class="s2">&quot;Actin-Monomer-ATP(actin#free_ATP) -&gt; &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Trimer#Growing(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new_ATP)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;trimerize_rate&quot;</span><span class="p">],</span>
                 <span class="n">radius</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reaction_distance&quot;</span><span class="p">],</span>
@@ -2468,8 +2468,8 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_Nucleate_ATP</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Actin-Trimer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) &quot;</span>
-                <span class="s2">&quot;+ Actin-Monomer-ATP(actin#free_ATP) &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Actin-Trimer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
+                <span class="s2">&quot;Actin-Monomer-ATP(actin#free_ATP) &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;-&gt; Actin-Polymer#GrowingBarbed(actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--actin#new_ATP)&quot;</span><span class="p">,</span>
                 <span class="n">rate</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;nucleate_ATP_rate&quot;</span><span class="p">],</span>
                 <span class="n">radius</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;reaction_distance&quot;</span><span class="p">],</span>
