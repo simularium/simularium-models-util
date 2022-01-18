@@ -2681,8 +2681,8 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Trimerize{i}: "
-                f"Actin-Dimer(actin#barbed_ATP_{i}) "
-                "+ Actin-Monomer-ATP(actin#free_ATP) -> "
+                f"Actin-Dimer(actin#barbed_ATP_{i}) + "
+                "Actin-Monomer-ATP(actin#free_ATP) -> "
                 f"Actin-Trimer#Growing(actin#ATP_{i}--actin#new_ATP)",
                 rate=parameters["trimerize_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],
@@ -2714,8 +2714,8 @@ class ActinUtil:
         for i in range(1, 4):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_Nucleate_ATP{i}: "
-                f"Actin-Trimer(actin#barbed_ATP_{i}) "
-                "+ Actin-Monomer-ATP(actin#free_ATP) "
+                f"Actin-Trimer(actin#barbed_ATP_{i}) + "
+                "Actin-Monomer-ATP(actin#free_ATP) "
                 f"-> Actin-Polymer#GrowingBarbed(actin#ATP_{i}--actin#new_ATP)",
                 rate=parameters["nucleate_ATP_rate"],
                 radius=2 * parameters["actin_radius"] + parameters["reaction_distance"],

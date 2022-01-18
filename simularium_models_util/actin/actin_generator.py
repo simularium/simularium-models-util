@@ -588,7 +588,7 @@ class ActinGenerator:
 
     @staticmethod
     def get_point_on_plane_of_intersecting_extent(
-        point1, point2, min_extent, max_extent
+        point1, point2, min_extent, max_extent, direction
     ):
         """
         get a point (which is also the normal) of the extent plane intersected
@@ -600,30 +600,48 @@ class ActinGenerator:
             if (point1[dim] < min_extent[dim] and point2[dim] > min_extent[dim]) or (
                 point2[dim] < min_extent[dim] and point1[dim] > min_extent[dim]
             ):
+                # points straddle both extents
+                if direction > 0:
+                    result[dim] = min_extent[dim]
+                else:
+                    result[dim] = max_extent[dim]
+                return result
+            if (point1[dim] < min_extent[dim] and point2[dim] > min_extent[dim]) or (
+                point2[dim] < min_extent[dim] and point1[dim] > min_extent[dim]
+            ):
+                # points straddle min extent
                 result[dim] = min_extent[dim]
                 return result
             elif (point1[dim] < max_extent[dim] and point2[dim] > max_extent[dim]) or (
                 point2[dim] < max_extent[dim] and point1[dim] > max_extent[dim]
             ):
+                # points straddle max extent
                 result[dim] = max_extent[dim]
                 return result
         return None
 
     @staticmethod
-    def get_intersection_point_with_extents(point1, point2, min_extent, max_extent):
+    def get_intersection_point_with_extents(
+        point1, point2, min_extent, max_extent, direction=1
+    ):
         """
-        get the point where the line segment between the given positions 
-        intersects the bounds volume, assume bounds are 
+        get the point where the line segment between the given positions
+        intersects the bounds volume, assume bounds are
         a rectangular prism orthogonal to cartesian grid
         """
         plane = ActinGenerator.get_point_on_plane_of_intersecting_extent(
-            point1, point2, min_extent, max_extent
+            point1, point2, min_extent, max_extent, direction
         )
         if plane is None:
             return None
-        direction = ReaddyUtil.normalize(point2 - point1)
-        t = (np.dot(plane, plane) - np.dot(plane, point1)) / np.dot(plane, direction)
-        return point1 + t * direction
+        v_direction = direction * ReaddyUtil.normalize(point2 - point1)
+        t = (np.dot(plane, plane) - np.dot(plane, point1)) / np.dot(plane, v_direction)
+        intersection = point1 + t * v_direction
+        if not ActinGenerator.position_is_in_bounds(
+            intersection, min_extent, max_extent
+        ):
+            return None
+        return intersection
 
     @staticmethod
     def get_cropped_fibers(fibers_data, child_box_center, child_box_size):
@@ -645,23 +663,26 @@ class ActinGenerator:
         min_extent, max_extent = ActinGenerator.get_extents(
             child_box_center, child_box_size
         )
-        position_offset = -child_box_center
         result = []
         for fiber in fibers_data:
             current_chunk = []
             tracing = False
             for i in range(len(fiber.points)):
+                print(f"{i} -----")
                 position_is_in_bounds = ActinGenerator.position_is_in_bounds(
                     fiber.points[i], min_extent, max_extent
                 )
                 if not tracing:
                     if position_is_in_bounds:
-                        tracing = True
-                        if len(current_chunk) > 0:
-                            result.append(FiberData(fiber.fiber_id, current_chunk))
                         if i == 0:
-                            current_chunk = [fiber.points[i] + position_offset]
+                            print("not tracing but in bounds at start")
+                            # start at the current point
+                            current_chunk = [fiber.points[i]]
+                            tracing = True
                         else:
+                            print("not tracing but in bounds in middle")
+                            # start at the intersection with the bounds
+                            # between the prev and current points
                             intersection = (
                                 ActinGenerator.get_intersection_point_with_extents(
                                     fiber.points[i - 1],
@@ -669,29 +690,80 @@ class ActinGenerator:
                                     min_extent,
                                     max_extent,
                                 )
-                                + position_offset
                             )
-                            current_chunk = [
-                                intersection,
-                                fiber.points[i] + position_offset,
-                            ]
+                            if intersection is not None:
+                                print("start at intersection before point")
+                                current_chunk = [
+                                    intersection,
+                                    fiber.points[i],
+                                ]
+                                tracing = True
+                    else:
+                        print("not tracing and not in bounds")
+                        # start at the intersection with the bounds
+                        # between the current and next points
+                        if i < len(fiber.points) - 1:
+                            intersection = (
+                                ActinGenerator.get_intersection_point_with_extents(
+                                    fiber.points[i],
+                                    fiber.points[i + 1],
+                                    min_extent,
+                                    max_extent,
+                                )
+                            )
+                            if intersection is not None:
+                                print("start at intersection after point")
+                                current_chunk = [
+                                    intersection,
+                                ]
+                                tracing = True
                 else:
                     if not position_is_in_bounds:
+                        print("tracing and not in bounds")
+                        # end at the intersection with the bounds
+                        # between the prev and current points
                         tracing = False
-                        if len(current_chunk) > 0:
-                            current_chunk.append(
+                        if i > 0 and len(current_chunk) > 0:
+                            intersection = (
                                 ActinGenerator.get_intersection_point_with_extents(
                                     fiber.points[i - 1],
                                     fiber.points[i],
                                     min_extent,
                                     max_extent,
+                                    -1,
                                 )
-                                + position_offset
                             )
+                            if intersection is not None:
+                                print("end at intersection")
+                                print(f"add {intersection}")
+                                current_chunk.append(intersection)
+                            if len(current_chunk) > 1:
+                                for index, point in enumerate(current_chunk):
+                                    print(f"{point} - {child_box_center}")
+                                    current_chunk[index] = point - child_box_center
+                                print("finished chunk")
+                                result.append(
+                                    FiberData(
+                                        fiber.fiber_id, current_chunk, fiber.type_name
+                                    )
+                                )
                     else:
-                        current_chunk.append(fiber.points[i] + position_offset)
-            if len(current_chunk) > 0:
-                result.append(FiberData(fiber.fiber_id, current_chunk))
+                        # continue adding points within the volume
+                        print("tracing and in bounds")
+                        print(f"add {fiber.points[i]}")
+                        current_chunk.append(fiber.points[i])
+                        if i == len(fiber.points) - 1 and len(current_chunk) > 1:
+                            print("end at last point")
+                            # end if this is the last point
+                            for index, point in enumerate(current_chunk):
+                                print(f"{point} - {child_box_center}")
+                                current_chunk[index] = point - child_box_center
+                            print("finished chunk")
+                            result.append(
+                                FiberData(
+                                    fiber.fiber_id, current_chunk, fiber.type_name
+                                )
+                            )
         return result
 
     @staticmethod
