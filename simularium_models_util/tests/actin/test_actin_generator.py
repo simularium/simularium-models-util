@@ -115,7 +115,7 @@ from simularium_models_util.tests.conftest import (
                     type_name="Actin-Polymer",
                 ),
             ],
-            0.5 * np.array(3 * [4000.0]),
+            np.array(3 * [2000.0]),
             1000.0,
             [
                 FiberData(
