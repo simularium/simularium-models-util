@@ -644,13 +644,11 @@ class ActinGenerator:
         return intersection
 
     @staticmethod
-    def get_cropped_fibers(fibers_data, child_box_center, child_box_size):
+    def get_cropped_fibers(fibers_data, min_extent, max_extent, position_offset=None):
         """
         crop the fiber data to a cube volume
-        defined by child_box_center
-        (center of cropped box in parent box coordinates)
-        and child_box_size
-        and center it around the box_center as the origin
+        defined by min_extent and max_extent
+        and apply the position_offset
 
         fibers_data: List[FiberData]
         (FiberData for mother fibers only, which should have
@@ -658,11 +656,10 @@ class ActinGenerator:
 
         # TODO handle daughter fiber connections
         """
-        if child_box_center is None or child_box_size is None:
+        if min_extent is None or max_extent is None:
             return fibers_data
-        min_extent, max_extent = ActinGenerator.get_extents(
-            child_box_center, child_box_size
-        )
+        if position_offset is None:
+            position_offset = np.zeros(3)
         result = []
         for fiber in fibers_data:
             current_chunk = []
@@ -674,7 +671,7 @@ class ActinGenerator:
                 if not tracing:
                     if i == 0 and position_is_in_bounds:
                         # start at the first point if it's in bounds
-                        current_chunk = [fiber.points[i] - child_box_center]
+                        current_chunk = [fiber.points[i] + position_offset]
                         tracing = True
                     elif i < len(fiber.points) - 1 or position_is_in_bounds:
                         # start at the intersection with the bounds
@@ -691,12 +688,12 @@ class ActinGenerator:
                             )
                         )
                         if intersection is not None:
-                            current_chunk = [intersection - child_box_center]
+                            current_chunk = [intersection + position_offset]
                             tracing = True
                 else:
                     if position_is_in_bounds:
                         # continue adding points within the volume
-                        current_chunk.append(fiber.points[i] - child_box_center)
+                        current_chunk.append(fiber.points[i] + position_offset)
                         if i == len(fiber.points) - 1 and len(current_chunk) > 0:
                             # end if this is the last point
                             result.append(
@@ -718,7 +715,7 @@ class ActinGenerator:
                             )
                         )
                         if intersection is not None and len(current_chunk) > 0:
-                            current_chunk.append(intersection - child_box_center)
+                            current_chunk.append(intersection + position_offset)
                             result.append(
                                 FiberData(
                                     fiber.fiber_id, current_chunk, fiber.type_name
@@ -742,9 +739,15 @@ class ActinGenerator:
             "particles": {},
         }
         ActinGenerator.set_next_id(-1 if use_uuids else 0)
-        cropped_fiber_data = ActinGenerator.get_cropped_fibers(
-            fibers_data, child_box_center, child_box_size
-        )
+        if child_box_center is not None and child_box_size is not None:
+            min_extent, max_extent = ActinGenerator.get_extents(
+                child_box_center, child_box_size
+            )
+            cropped_fiber_data = ActinGenerator.get_cropped_fibers(
+                fibers_data, min_extent, max_extent, -1 * child_box_center
+            )
+        else:
+            cropped_fiber_data = fibers_data
         for fiber in cropped_fiber_data:
             particles, particle_ids = ActinGenerator.get_monomers_for_fiber(
                 fiber,
