@@ -122,72 +122,72 @@ from simularium_models_util.tests.conftest import (
                 FiberData(
                     fiber_id=1,
                     points=[
-                        np.array([-50.0, .0, .0]),
-                        np.array([50.0, .0, .0]),
+                        np.array([-50.0, 0.0, 0.0]),
+                        np.array([50.0, 0.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=2,
                     points=[
-                        np.array([-50.0, .0, .0]),
-                        np.array([50.0, .0, .0]),
+                        np.array([-50.0, 0.0, 0.0]),
+                        np.array([50.0, 0.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=3,
                     points=[
-                        np.array([-50.0, .0, .0]),
-                        np.array([20.0, .0, .0]),
+                        np.array([-50.0, 0.0, 0.0]),
+                        np.array([20.0, 0.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=4,
                     points=[
-                        np.array([-30.0, .0, .0]),
-                        np.array([50.0, .0, .0]),
+                        np.array([-30.0, 0.0, 0.0]),
+                        np.array([50.0, 0.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=5,
                     points=[
-                        np.array([-50.0, 50.0, .0]),
-                        np.array([.0, .0, .0]),
+                        np.array([-50.0, 50.0, 0.0]),
+                        np.array([0.0, 0.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=6,
                     points=[
-                        np.array([.0, .0, .0]),
-                        np.array([50.0, 50.0, .0]),
+                        np.array([0.0, 0.0, 0.0]),
+                        np.array([50.0, 50.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=7,
                     points=[
-                        np.array([-50.0, 50.0, .0]),
-                        np.array([50.0, -50.0, .0]),
+                        np.array([-50.0, 50.0, 0.0]),
+                        np.array([50.0, -50.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=9,
                     points=[
-                        np.array([-30.0, 20.0, .0]),
-                        np.array([50.0, 20.0, .0]),
+                        np.array([-30.0, 20.0, 0.0]),
+                        np.array([50.0, 20.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
                 FiberData(
                     fiber_id=10,
                     points=[
-                        np.array([50.0, -20.0, .0]),
-                        np.array([.0, -20.0, .0]),
+                        np.array([50.0, -20.0, 0.0]),
+                        np.array([0.0, -20.0, 0.0]),
                     ],
                     type_name="Actin-Polymer",
                 ),
