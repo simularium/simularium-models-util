@@ -644,6 +644,29 @@ class ActinGenerator:
         return intersection
 
     @staticmethod
+    def _get_max_fiber_id(fibers_data):
+        """
+        get the largest fiber id
+        """
+        max_id = 0
+        for fiber in fibers_data:
+            if fiber.fiber_id > max_id:
+                max_id = fiber.fiber_id
+        return max_id
+
+    @staticmethod
+    def _create_fiber(current_chunk, source_fiber, found_chunk, max_fiber_id):
+        """
+        create a FiberData for a cropped chunk of a source fiber
+        """
+        if not found_chunk:
+            fiber_id = source_fiber.fiber_id
+        else:
+            max_fiber_id += 1
+            fiber_id = max_fiber_id
+        return FiberData(fiber_id, current_chunk, source_fiber.type_name), max_fiber_id
+            
+    @staticmethod
     def get_cropped_fibers(fibers_data, min_extent, max_extent, position_offset=None):
         """
         crop the fiber data to a cube volume
@@ -660,25 +683,36 @@ class ActinGenerator:
             return fibers_data
         if position_offset is None:
             position_offset = np.zeros(3)
+        max_fiber_id = ActinGenerator._get_max_fiber_id(fibers_data)
+        found_chunk = False
         result = []
+        s = ""
         for fiber in fibers_data:
+            s += f"fiber id = {fiber.fiber_id}\n"
             current_chunk = []
+            s += f"d\n"
             tracing = False
             for i in range(len(fiber.points)):
                 position_is_in_bounds = ActinGenerator.position_is_in_bounds(
                     fiber.points[i], min_extent, max_extent
                 )
+                s += f"in bounds? {position_is_in_bounds}\n"
+                s += f"tracing? {tracing}\n"
                 if not tracing:
                     if i == 0 and position_is_in_bounds:
+                        s += "start at the first point\n"
                         # start at the first point if it's in bounds
                         current_chunk = [fiber.points[i] + position_offset]
+                        s += f"a\n"
                         tracing = True
                     elif i < len(fiber.points) - 1 or position_is_in_bounds:
+                        s += "start at bounds intersect\n"
                         # start at the intersection with the bounds
                         # between the current and either prev or next points
                         # depending on whether the current point is in bounds
                         point1_index = i - 1 if position_is_in_bounds else i
                         point2_index = i if position_is_in_bounds else i + 1
+                        s += f"{point1_index} {point2_index}\n"
                         intersection = (
                             ActinGenerator.get_intersection_point_with_extents(
                                 fiber.points[point1_index],
@@ -689,21 +723,29 @@ class ActinGenerator:
                         )
                         if intersection is not None:
                             current_chunk = [intersection + position_offset]
+                            s += f"b\n"
                             tracing = True
+                        else:
+                            s += f"no intersect\n"
+                            
                 else:
                     if position_is_in_bounds:
+                        s += "add point\n"
                         # continue adding points within the volume
                         current_chunk.append(fiber.points[i] + position_offset)
                         if i == len(fiber.points) - 1 and len(current_chunk) > 0:
+                            s += "end at point\n"
                             # end if this is the last point
-                            result.append(
-                                FiberData(
-                                    fiber.fiber_id, current_chunk, fiber.type_name
-                                )
+                            new_fiber, max_fiber_id = ActinGenerator._create_fiber(
+                                current_chunk, fiber, found_chunk, max_fiber_id
                             )
+                            result.append(new_fiber)
+                            found_chunk = True
                     else:
+                        s += "end at bounds intersect\n"
                         # end at the intersection with the bounds
                         # between the prev and current points
+                        s += f"c\n"
                         tracing = False
                         intersection = (
                             ActinGenerator.get_intersection_point_with_extents(
@@ -716,11 +758,12 @@ class ActinGenerator:
                         )
                         if intersection is not None and len(current_chunk) > 0:
                             current_chunk.append(intersection + position_offset)
-                            result.append(
-                                FiberData(
-                                    fiber.fiber_id, current_chunk, fiber.type_name
-                                )
+                            new_fiber, max_fiber_id = ActinGenerator._create_fiber(
+                                current_chunk, fiber, found_chunk, max_fiber_id
                             )
+                            result.append(new_fiber)
+                            found_chunk = True
+        # raise Exception(s)
         return result
 
     @staticmethod
