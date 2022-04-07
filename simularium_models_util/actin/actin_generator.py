@@ -8,7 +8,8 @@ import numpy as np
 from ..common import ReaddyUtil, ParticleData
 from .actin_structure import ActinStructure, FiberData
 
-next_id = 0
+next_monomer_id = 0
+next_fiber_id = -1
 
 
 class ActinGenerator:
@@ -17,16 +18,48 @@ class ActinGenerator:
     """
 
     @staticmethod
-    def set_next_id(_id):
-        global next_id
-        next_id = _id
+    def set_next_monomer_id(use_uuids=True):
+        global next_monomer_id
+        next_monomer_id = -1 if use_uuids else 0
 
     @staticmethod
-    def get_next_id():
-        global next_id
-        if next_id >= 0:
-            result = next_id
-            next_id += 1
+    def get_next_monomer_id():
+        global next_monomer_id
+        if next_monomer_id >= 0:
+            result = next_monomer_id
+            next_monomer_id += 1
+        else:
+            result = str(uuid.uuid4())
+        return result
+
+    @staticmethod
+    def _get_max_fiber_id(fibers_data):
+        """
+        get the largest fiber id
+        """
+        max_id = 0
+        for fiber in fibers_data:
+            if fiber.fiber_id > max_id:
+                max_id = fiber.fiber_id
+        return max_id
+
+    @staticmethod
+    def set_next_fiber_id(fibers_data):
+        global next_fiber_id
+        if len(fibers_data) > 0:
+            if isinstance(fibers_data[0].fiber_id, str):
+                next_fiber_id = -1
+            else:
+                next_fiber_id = ActinGenerator._get_max_fiber_id(fibers_data) + 1
+        else:
+            next_fiber_id = -1
+
+    @staticmethod
+    def get_next_fiber_id():
+        global next_fiber_id
+        if next_fiber_id >= 0:
+            result = next_fiber_id
+            next_fiber_id += 1
         else:
             result = str(uuid.uuid4())
         return result
@@ -182,7 +215,7 @@ class ActinGenerator:
                     fiber_tangents[i],
                     direction * ActinStructure.actin_to_actin_axis_angle(),
                 )
-                new_particle_id = ActinGenerator.get_next_id()
+                new_particle_id = ActinGenerator.get_next_monomer_id()
                 particle_ids.append(new_particle_id)
                 particles[new_particle_id] = ParticleData(
                     unique_id=new_particle_id,
@@ -222,8 +255,8 @@ class ActinGenerator:
             if closest_actin_index < 0:
                 return particles, particle_ids
             # create arp2 and arp3
-            arp2_id = ActinGenerator.get_next_id()
-            arp3_id = ActinGenerator.get_next_id()
+            arp2_id = ActinGenerator.get_next_monomer_id()
+            arp3_id = ActinGenerator.get_next_monomer_id()
             actin_arp2_id = particle_ids[closest_actin_index]
             actin_arp3_id = particle_ids[closest_actin_index + 1]
             actin_arp_ids += [actin_arp2_id, actin_arp3_id]
@@ -329,9 +362,9 @@ class ActinGenerator:
             particles,
         )
         # create branch junction monomers (arp2, arp3, first daughter actin)
-        arp2_id = ActinGenerator.get_next_id()
-        arp3_id = ActinGenerator.get_next_id()
-        branch_actin_id = ActinGenerator.get_next_id()
+        arp2_id = ActinGenerator.get_next_monomer_id()
+        arp3_id = ActinGenerator.get_next_monomer_id()
+        branch_actin_id = ActinGenerator.get_next_monomer_id()
         branch_state = "_barbed" if len(daughter_particle_ids) == 0 else ""
         particles[branch_actin_id] = ParticleData(
             unique_id=branch_actin_id,
@@ -446,7 +479,7 @@ class ActinGenerator:
                         pointed_particle_ids[1], particles
                     )
             # get mother actin bound to arp2
-            actin_arp2_id = ActinGenerator.get_next_id()
+            actin_arp2_id = ActinGenerator.get_next_monomer_id()
             last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
             particles[actin_arp2_id] = ParticleData(
                 unique_id=actin_arp2_id,
@@ -644,27 +677,16 @@ class ActinGenerator:
         return intersection
 
     @staticmethod
-    def _get_max_fiber_id(fibers_data):
-        """
-        get the largest fiber id
-        """
-        max_id = 0
-        for fiber in fibers_data:
-            if fiber.fiber_id > max_id:
-                max_id = fiber.fiber_id
-        return max_id
-
-    @staticmethod
-    def _create_fiber(current_chunk, source_fiber, found_chunk, max_fiber_id):
+    def _create_fiber(current_chunk, source_fiber, found_chunk):
         """
         create a FiberData for a cropped chunk of a source fiber
         """
         if not found_chunk:
             fiber_id = source_fiber.fiber_id
         else:
-            max_fiber_id += 1
-            fiber_id = max_fiber_id
-        return FiberData(fiber_id, current_chunk, source_fiber.type_name), max_fiber_id
+            new_fiber_id = ActinGenerator.get_next_fiber_id()
+            fiber_id = new_fiber_id
+        return FiberData(fiber_id, current_chunk, source_fiber.type_name)
 
     @staticmethod
     def get_cropped_fibers(fibers_data, min_extent, max_extent, position_offset=None):
@@ -683,7 +705,7 @@ class ActinGenerator:
             return fibers_data
         if position_offset is None:
             position_offset = np.zeros(3)
-        max_fiber_id = ActinGenerator._get_max_fiber_id(fibers_data)
+        ActinGenerator.set_next_fiber_id(fibers_data)
         found_chunk = False
         result = []
         for fiber in fibers_data:
@@ -722,8 +744,8 @@ class ActinGenerator:
                         current_chunk.append(fiber.points[i] + position_offset)
                         if i == len(fiber.points) - 1 and len(current_chunk) > 0:
                             # end if this is the last point
-                            new_fiber, max_fiber_id = ActinGenerator._create_fiber(
-                                current_chunk, fiber, found_chunk, max_fiber_id
+                            new_fiber = ActinGenerator._create_fiber(
+                                current_chunk, fiber, found_chunk
                             )
                             result.append(new_fiber)
                             found_chunk = True
@@ -742,8 +764,8 @@ class ActinGenerator:
                         )
                         if intersection is not None and len(current_chunk) > 0:
                             current_chunk.append(intersection + position_offset)
-                            new_fiber, max_fiber_id = ActinGenerator._create_fiber(
-                                current_chunk, fiber, found_chunk, max_fiber_id
+                            new_fiber = ActinGenerator._create_fiber(
+                                current_chunk, fiber, found_chunk
                             )
                             result.append(new_fiber)
                             found_chunk = True
@@ -764,7 +786,7 @@ class ActinGenerator:
             "topologies": {},
             "particles": {},
         }
-        ActinGenerator.set_next_id(-1 if use_uuids else 0)
+        ActinGenerator.set_next_monomer_id(use_uuids)
         if child_box_center is not None and child_box_size is not None:
             min_extent, max_extent = ActinGenerator.get_extents(
                 child_box_center, child_box_size
@@ -773,7 +795,7 @@ class ActinGenerator:
                 fibers_data, min_extent, max_extent, -1 * child_box_center
             )
         else:
-            cropped_fiber_data = fibers_data
+            cropped_fiber_data = fibers_data        
         for fiber in cropped_fiber_data:
             particles, particle_ids = ActinGenerator.get_monomers_for_fiber(
                 fiber,
@@ -784,7 +806,7 @@ class ActinGenerator:
                 np.zeros(3),
                 1,
             )
-            result["topologies"][ActinGenerator.get_next_id()] = {
+            result["topologies"][ActinGenerator.get_next_monomer_id()] = {
                 "type_name": "Actin-Polymer",
                 "particle_ids": particle_ids,
             }
