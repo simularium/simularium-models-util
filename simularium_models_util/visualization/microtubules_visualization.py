@@ -80,7 +80,9 @@ class MicrotubulesVisualization:
                 display_type=display_type,
             ),
         }
-        display_data = MicrotubulesVisualization.get_display_data_for_all_polymer_types(polymer_display_data)
+        display_data = MicrotubulesVisualization.get_display_data_for_all_polymer_types(
+            polymer_display_data
+        )
         dimer_display_data = {
             "tubulinA#free": DisplayData(
                 name="tubulinA#free",
