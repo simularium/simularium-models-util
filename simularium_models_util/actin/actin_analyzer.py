@@ -13,38 +13,44 @@ TIMESTEP = 0.1  # ns
 
 
 class ActinAnalyzer:
-    def __init__(self, h5_file_path, box_size, stride=1, periodic_boundary=True):
+    def __init__(
+        self, 
+        box_size, 
+        h5_file_path=None, 
+        monomers_data=None,
+        stride=1, 
+        periodic_boundary=True
+    ):
         """
         Load data from a ReaDDy trajectory
         """
         self.box_size = box_size
-        self.stride = stride
         self.periodic_boundary = periodic_boundary
-        self.traj = readdy.Trajectory(h5_file_path)
-        self.times, self.topology_records = self.traj.read_observable_topologies()
+        trajectory = readdy.Trajectory(h5_file_path)
+        _, topology_records = trajectory.read_observable_topologies()
         (
-            self.times,
-            self.types,
-            self.ids,
-            self.positions,
-        ) = self.traj.read_observable_particles()
-        recorded_steps = len(self.times) - 1
-        self.monomer_data, self.times = ReaddyUtil.shape_monomer_data(
+            times,
+            types,
+            ids,
+            positions,
+        ) = trajectory.read_observable_particles()
+        self.monomer_data, times = ReaddyUtil.shape_monomer_data(
             0,
-            self.times.shape[0],
-            self.stride,
-            self.times,
-            self.topology_records,
-            self.ids,
-            self.types,
-            self.positions,
-            self.traj,
+            times.shape[0],
+            stride,
+            times,
+            topology_records,
+            ids,
+            types,
+            positions,
+            trajectory,
         )
-        self.times = TIMESTEP / 1e3 * self.times  # index --> microseconds
+        recorded_steps = len(times) - 1
+        times = TIMESTEP / 1e3 * times  # index --> microseconds
         self.reactions = ReaddyUtil.load_reactions(
-            self.traj, self.stride, ACTIN_REACTIONS, recorded_steps
+            trajectory, stride, ACTIN_REACTIONS, recorded_steps
         )
-        self.time_inc_s = self.times[-1] * 1e-6 / (len(self.times) - 1)
+        self.time_inc_s = times[-1] * 1e-6 / (len(times) - 1)
 
     def analyze_reaction_count_over_time(self, reaction_name):
         """
