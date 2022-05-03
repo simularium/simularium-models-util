@@ -6,73 +6,37 @@ import readdy
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
-from .actin_reactions import ACTIN_REACTIONS
 
 
 TIMESTEP = 0.1  # ns
 
 
 class ActinAnalyzer:
-    def __init__(
-        self, 
-        box_size, 
-        h5_file_path=None, 
-        monomers_data=None,
-        stride=1, 
-        periodic_boundary=True
-    ):
-        """
-        Load data from a ReaDDy trajectory
-        """
-        self.box_size = box_size
-        self.periodic_boundary = periodic_boundary
-        trajectory = readdy.Trajectory(h5_file_path)
-        _, topology_records = trajectory.read_observable_topologies()
-        (
-            times,
-            types,
-            ids,
-            positions,
-        ) = trajectory.read_observable_particles()
-        self.monomer_data, times = ReaddyUtil.shape_monomer_data(
-            0,
-            times.shape[0],
-            stride,
-            times,
-            topology_records,
-            ids,
-            types,
-            positions,
-            trajectory,
-        )
-        recorded_steps = len(times) - 1
-        times = TIMESTEP / 1e3 * times  # index --> microseconds
-        self.reactions = ReaddyUtil.load_reactions(
-            trajectory, stride, ACTIN_REACTIONS, recorded_steps
-        )
-        self.time_inc_s = times[-1] * 1e-6 / (len(times) - 1)
+    """
+    Analyze data from a ReaDDy actin trajectory
+    """
 
-    def analyze_reaction_count_over_time(self, reaction_name):
+    @staticmethod
+    def analyze_reaction_count_over_time(reactions, reaction_name):
         """
         Get a list of the number of times a reaction happened
         between each analyzed timestep of the given reaction
         """
-        if reaction_name not in self.reactions:
+        if reaction_name not in reactions:
             print(f"Couldn't find reaction: {reaction_name}")
             return None
-        return np.insert(self.reactions[reaction_name].to_numpy(), 0, 0.0)
+        return np.insert(reactions[reaction_name].to_numpy(), 0, 0.0)
 
-    def analyze_reaction_rate_over_time(self, reaction_name):
+    @staticmethod
+    def analyze_reaction_rate_over_time(reactions, time_inc_s, reaction_name):
         """
         Get a list of the reaction rate per second
         at each analyzed timestep of the given reaction
         """
-        if reaction_name not in self.reactions:
+        if reaction_name not in reactions:
             print(f"Couldn't find reaction: {reaction_name}")
             return None
-        return np.insert(
-            self.reactions[reaction_name].to_numpy() / self.time_inc_s, 0, 0.0
-        )
+        return np.insert(reactions[reaction_name].to_numpy() / time_inc_s, 0, 0.0)
 
     @staticmethod
     def analyze_average_over_time(data):
@@ -259,21 +223,22 @@ class ActinAnalyzer:
             frame_particle_data
         ) + ActinAnalyzer._frame_daughter_filaments(frame_particle_data)
 
-    def analyze_ratio_of_filamentous_to_total_actin(self):
+    @staticmethod
+    def analyze_ratio_of_filamentous_to_total_actin(monomer_data):
         """
         Get a list of the ratio of actin in filaments to total actin over time
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._free_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._free_actin_types(), monomer_data[t]["particles"]
                 )
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_actin_types(),
-                    self.monomer_data[t]["particles"],
+                    monomer_data[t]["particles"],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -282,27 +247,28 @@ class ActinAnalyzer:
                 result.append(0)
         return np.array(result)
 
-    def analyze_ratio_of_bound_ATP_actin_to_total_actin(self):
+    @staticmethod
+    def analyze_ratio_of_bound_ATP_actin_to_total_actin(monomer_data):
         """
         Get a list of the ratio of bound ATP-actin to total actin over time
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             ATP_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_ATP_actin_types(),
-                    self.monomer_data[t]["particles"],
+                    monomer_data[t]["particles"],
                 )
             )
             free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._free_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._free_actin_types(), monomer_data[t]["particles"]
                 )
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_actin_types(),
-                    self.monomer_data[t]["particles"],
+                    monomer_data[t]["particles"],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -311,28 +277,29 @@ class ActinAnalyzer:
                 result.append(1.0)
         return np.array(result)
 
-    def analyze_ratio_of_daughter_to_total_actin(self):
+    @staticmethod
+    def analyze_ratio_of_daughter_to_total_actin(monomer_data):
         """
         Get a list of the ratio
         [daughter filament actin] / [total actin] over time
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             daughter_actin = 0
             daughter_filaments = ActinAnalyzer._frame_daughter_filaments(
-                self.monomer_data[t]["particles"]
+                monomer_data[t]["particles"]
             )
             for daughter_filament in daughter_filaments:
                 daughter_actin += len(daughter_filament)
             free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._free_actin_types(), self.monomer_data[t]["particles"]
+                    ActinAnalyzer._free_actin_types(), monomer_data[t]["particles"]
                 )
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_actin_types(),
-                    self.monomer_data[t]["particles"],
+                    monomer_data[t]["particles"],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -341,50 +308,53 @@ class ActinAnalyzer:
                 result.append(0)
         return np.array(result)
 
-    def analyze_mother_filament_lengths(self):
+    @staticmethod
+    def analyze_mother_filament_lengths(monomer_data):
         """
         Get a list of the number of monomers in each mother filament
         in each frame of the trajectory
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             mother_filaments = ActinAnalyzer._frame_mother_filaments(
-                self.monomer_data[t]["particles"]
+                monomer_data[t]["particles"]
             )
             result.append([])
             for filament in mother_filaments:
                 result[t].append(len(filament))
         return result
 
-    def analyze_daughter_filament_lengths(self):
+    @staticmethod
+    def analyze_daughter_filament_lengths(monomer_data):
         """
         Get a list of the number of monomers in each daughter filament
         in each frame of the trajectory
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             daughter_filaments = ActinAnalyzer._frame_daughter_filaments(
-                self.monomer_data[t]["particles"]
+                monomer_data[t]["particles"]
             )
             result.append([])
             for filament in daughter_filaments:
                 result[t].append(len(filament))
         return result
 
-    def analyze_ratio_of_bound_to_total_arp23(self):
+    @staticmethod
+    def analyze_ratio_of_bound_to_total_arp23(monomer_data):
         """
         Get a list of the ratio of bound to total arp2/3 complexes over time
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             bound_arp23 = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ["arp2", "arp2#branched"], self.monomer_data[t]["particles"]
+                    ["arp2", "arp2#branched"], monomer_data[t]["particles"]
                 )
             )
             free_arp23 = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ["arp2#free"], self.monomer_data[t]["particles"]
+                    ["arp2#free"], monomer_data[t]["particles"]
                 )
             )
             if free_arp23 + bound_arp23 > 0:
@@ -393,7 +363,8 @@ class ActinAnalyzer:
                 result.append(0)
         return np.array(result)
 
-    def analyze_ratio_of_capped_ends_to_total_ends(self):
+    @staticmethod
+    def analyze_ratio_of_capped_ends_to_total_ends(monomer_data):
         """
         Get a list of the ratio of barbed ends capped
         with capping protein to all barbed ends over time
@@ -404,15 +375,15 @@ class ActinAnalyzer:
             "actin#branch_barbed_ATP_1",
         ]
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             capped_ends = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    capped_end_types, self.monomer_data[t]["particles"]
+                    capped_end_types, monomer_data[t]["particles"]
                 )
             )
             growing_ends = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    growing_end_types, self.monomer_data[t]["particles"]
+                    growing_end_types, monomer_data[t]["particles"]
                 )
             )
             if growing_ends + capped_ends > 0:
@@ -621,15 +592,16 @@ class ActinAnalyzer:
             result.append(ReaddyUtil.get_angle_between_vectors(v_main, v_branch, True))
         return result
 
-    def analyze_branch_angles(self):
+    @staticmethod
+    def analyze_branch_angles(monomer_data, box_size, periodic_boundary):
         """
         Get a list of the angles between mother and daughter filaments
         at each branch point in each frame of the trajectory
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             branch_angles = ActinAnalyzer._get_frame_branch_angles(
-                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
+                monomer_data[t]["particles"], box_size, periodic_boundary
             )
             result.append(branch_angles)
         return result
@@ -722,28 +694,30 @@ class ActinAnalyzer:
                     result.append(long_pitch)
         return result
 
-    def analyze_short_helix_pitches(self):
+    @staticmethod
+    def analyze_short_helix_pitches(monomer_data, box_size, periodic_boundary):
         """
         Get a list of the pitch of short helices between all actins
         on each filament in each frame of the trajectory
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             helix_pitches = ActinAnalyzer._get_frame_short_helix_pitches(
-                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
+                monomer_data[t]["particles"], box_size, periodic_boundary
             )
             result.append(helix_pitches)
         return result
 
-    def analyze_long_helix_pitches(self):
+    @staticmethod
+    def analyze_long_helix_pitches(monomer_data, box_size, periodic_boundary):
         """
         Get a list of the pitch of long helices between all actins
         on each filament in each frame of the trajectory
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             helix_pitches = ActinAnalyzer._get_frame_long_helix_pitches(
-                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
+                monomer_data[t]["particles"], box_size, periodic_boundary
             )
             result.append(helix_pitches)
         return result
@@ -810,34 +784,36 @@ class ActinAnalyzer:
                     result.append(np.linalg.norm(line_pos - pos))
         return result
 
-    def analyze_filament_straightness(self):
+    @staticmethod
+    def analyze_filament_straightness(monomer_data, box_size, periodic_boundary):
         """
         Get a list of the distances from each actin axis position
         to the ideal axis position on each filament in each frame of the trajectory
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             straightness = ActinAnalyzer._get_frame_distance_from_straight(
-                self.monomer_data[t]["particles"], self.box_size, self.periodic_boundary
+                monomer_data[t]["particles"], box_size, periodic_boundary
             )
             result.append(straightness)
         return result
 
-    def analyze_free_actin_concentration_over_time(self):
+    @staticmethod
+    def analyze_free_actin_concentration_over_time(monomer_data, box_size):
         """
         Get an array of the concentration of free actin at each step
         """
         result = []
-        for t in range(len(self.monomer_data)):
+        for t in range(len(monomer_data)):
             result.append(
                 ReaddyUtil.calculate_concentration(
                     len(
                         ReaddyUtil.analyze_frame_get_ids_for_types(
                             ActinAnalyzer._free_actin_types(),
-                            self.monomer_data[t]["particles"],
+                            monomer_data[t]["particles"],
                         )
                     ),
-                    self.box_size,
+                    box_size,
                 )
             )
         return np.array(result)

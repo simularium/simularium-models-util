@@ -956,7 +956,6 @@ class ReaddyUtil:
         """
         During a running simulation,
         get data for topologies of particles
-        from readdy.simulation.current_topologies
         """
         edges = ReaddyUtil.get_current_particle_edges(current_topologies)
         result = {
@@ -985,7 +984,7 @@ class ReaddyUtil:
         return result
 
     @staticmethod
-    def shape_frame_edge_data(time_index, topology_records):
+    def _shape_frame_edge_data_from_file(time_index, topology_records):
         """
         After a simulation has finished,
         get all the edges at the given time index
@@ -1004,7 +1003,7 @@ class ReaddyUtil:
         return result
 
     @staticmethod
-    def shape_frame_monomer_data(
+    def _shape_frame_monomer_data_from_file(
         time_index, topology_records, ids, types, positions, traj
     ):
         """
@@ -1015,7 +1014,9 @@ class ReaddyUtil:
         topology_records from traj.read_observable_topologies()
         ids, types, positions from traj.read_observable_particles()
         """
-        edges = ReaddyUtil.shape_frame_edge_data(time_index, topology_records)
+        edges = ReaddyUtil._shape_frame_edge_data_from_file(
+            time_index, topology_records
+        )
         result = {
             "topologies": {},
             "particles": {},
@@ -1042,7 +1043,7 @@ class ReaddyUtil:
         return result
 
     @staticmethod
-    def shape_monomer_data(
+    def _shape_monomer_data_from_file(
         min_time,
         max_time,
         time_inc,
@@ -1054,7 +1055,33 @@ class ReaddyUtil:
         traj,
     ):
         """
-        For each time point, get a dictionary with keys
+        For each time point, get monomer data and times
+        """
+        print("Shaping data for analysis...")
+        result = []
+        new_times = []
+        for t in range(len(times)):
+            if t >= min_time and t <= max_time and t % time_inc == 0:
+                result.append(
+                    ReaddyUtil._shape_frame_monomer_data_from_file(
+                        t, topology_records, ids, types, positions, traj
+                    )
+                )
+                new_times.append(times[t])
+        return result, np.array(new_times)
+
+    @staticmethod
+    def monomer_data_and_reactions_from_file(
+        h5_file_path,
+        stride=1,
+        timestep=0.1,
+        reaction_names=None,
+    ):
+        """
+        For data saved in a ReaDDy .h5 file:
+
+        For each time point, get monomer data as a dictionary:
+        {
           "topologies" : mapping of topology id to data for each topology:
             [id: int] : {
                 "type_name" : str,
@@ -1066,19 +1093,41 @@ class ReaddyUtil:
                 "position" : np.ndarray,
                 "neighbor_ids" : List[int]
             }
+        }
+
+        Also return the counts of reactions over time,
+        the timestamps for each frame,
+        and the reaction time increment in seconds
         """
-        print("Shaping data for analysis...")
-        result = []
-        new_times = []
-        for t in range(len(times)):
-            if t >= min_time and t <= max_time and t % time_inc == 0:
-                result.append(
-                    ReaddyUtil.shape_frame_monomer_data(
-                        t, topology_records, ids, types, positions, traj
-                    )
-                )
-                new_times.append(times[t])
-        return result, np.array(new_times)
+        trajectory = readdy.Trajectory(h5_file_path)
+        _, topology_records = trajectory.read_observable_topologies()
+        (
+            times,
+            types,
+            ids,
+            positions,
+        ) = trajectory.read_observable_particles()
+        monomer_data, times = ReaddyUtil._shape_monomer_data_from_file(
+            0,
+            times.shape[0],
+            stride,
+            times,
+            topology_records,
+            ids,
+            types,
+            positions,
+            trajectory,
+        )
+        times = timestep / 1e3 * times  # index --> microseconds
+        reactions = None
+        time_inc_s = None
+        if reaction_names is not None:
+            recorded_steps = stride * (len(times) - 1)
+            reactions = ReaddyUtil.load_reactions(
+                trajectory, stride, reaction_names, recorded_steps
+            )
+            time_inc_s = times[-1] * 1e-6 / (len(times) - 1)
+        return monomer_data, reactions, times, time_inc_s
 
     @staticmethod
     def vector_is_invalid(v):

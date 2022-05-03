@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import readdy
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData, ScatterPlotData, DisplayData
 from simulariumio.filters import MultiplyTimeFilter
-from ..actin import ActinAnalyzer
+from ..actin import ActinAnalyzer, ACTIN_REACTIONS
+from ..common import ReaddyUtil
+
 
 TIMESTEP = 0.1  # ns
 GROWTH_RXNS = [
@@ -45,7 +48,7 @@ class ActinVisualization:
     """
 
     @staticmethod
-    def get_bound_monomers_plot(analyzer):
+    def get_bound_monomers_plot(monomer_data, times):
         """
         Add a plot of percent actin in filaments
         """
@@ -53,20 +56,22 @@ class ActinVisualization:
             title="Monomers over time",
             xaxis_title="Time (µs)",
             yaxis_title="Monomers (%)",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces={
                 "Actin in filaments": 100.0
-                * analyzer.analyze_ratio_of_filamentous_to_total_actin(),
+                * ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin(
+                    monomer_data
+                ),
                 "Arp2/3 in filaments": 100.0
-                * analyzer.analyze_ratio_of_bound_to_total_arp23(),
+                * ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23(monomer_data),
                 "Actin in daughter filaments": 100.0
-                * analyzer.analyze_ratio_of_daughter_to_total_actin(),
+                * ActinAnalyzer.analyze_ratio_of_daughter_to_total_actin(monomer_data),
             },
             render_mode="lines",
         )
 
     @staticmethod
-    def get_avg_length_plot(analyzer):
+    def get_avg_length_plot(monomer_data, times):
         """
         Add a plot of average mother and daughter filament length
         """
@@ -74,40 +79,42 @@ class ActinVisualization:
             title="Average length of filaments",
             xaxis_title="Time (µs)",
             yaxis_title="Average length (monomers)",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces={
                 "Mother filaments": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_mother_filament_lengths()
+                    ActinAnalyzer.analyze_mother_filament_lengths(monomer_data)
                 ),
                 "Daughter filaments": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_daughter_filament_lengths()
+                    ActinAnalyzer.analyze_daughter_filament_lengths(monomer_data)
                 ),
             },
             render_mode="lines",
         )
 
     @staticmethod
-    def get_growth_reactions_plot(analyzer):
+    def get_growth_reactions_plot(reactions, times):
         """
         Add a plot of reaction events over time
         for each total growth reaction
         """
         ytraces = {}
         for total_rxn_name in GROWTH_RXNS:
-            rxn_events = analyzer.analyze_reaction_count_over_time(total_rxn_name)
+            rxn_events = ActinAnalyzer.analyze_reaction_count_over_time(
+                reactions, total_rxn_name
+            )
             if rxn_events is not None:
                 ytraces[total_rxn_name] = rxn_events
         return ScatterPlotData(
             title="Growth reactions",
             xaxis_title="Time (µs)",
             yaxis_title="Reaction events",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces=ytraces,
             render_mode="lines",
         )
 
     @staticmethod
-    def get_structural_reactions_plot(analyzer):
+    def get_structural_reactions_plot(reactions, times):
         """
         Add a plot of the number of times a structural reaction
         was triggered over time
@@ -116,20 +123,22 @@ class ActinVisualization:
         """
         ytraces = {}
         for total_rxn_name in STRUCTURAL_RXNS:
-            rxn_events = analyzer.analyze_reaction_count_over_time(total_rxn_name)
+            rxn_events = ActinAnalyzer.analyze_reaction_count_over_time(
+                reactions, total_rxn_name
+            )
             if rxn_events is not None:
                 ytraces[total_rxn_name] = rxn_events
         return ScatterPlotData(
             title="Structural reaction triggers",
             xaxis_title="Time (µs)",
             yaxis_title="Reactions triggered",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces=ytraces,
             render_mode="lines",
         )
 
     @staticmethod
-    def get_growth_reactions_vs_actin_plot(analyzer):
+    def get_growth_reactions_vs_actin_plot(reactions, monomer_data, box_size):
         """
         Add a plot of average reaction events over time
         for each total growth reaction
@@ -139,7 +148,9 @@ class ActinVisualization:
             group_reaction_events = []
             for total_rxn_name in GROUPED_GROWTH_RXNS[rxn_group_name]:
                 group_reaction_events.append(
-                    analyzer.analyze_reaction_count_over_time(total_rxn_name)
+                    ActinAnalyzer.analyze_reaction_count_over_time(
+                        reactions, total_rxn_name
+                    )
                 )
             if len(group_reaction_events) > 0:
                 ytraces[rxn_group_name] = np.sum(
@@ -149,13 +160,15 @@ class ActinVisualization:
             title="Growth vs [actin]",
             xaxis_title="[Actin] (µM)",
             yaxis_title="Reaction events",
-            xtrace=analyzer.analyze_free_actin_concentration_over_time(),
+            xtrace=ActinAnalyzer.analyze_free_actin_concentration_over_time(
+                monomer_data, box_size
+            ),
             ytraces=ytraces,
             render_mode="lines",
         )
 
     @staticmethod
-    def get_capped_ends_plot(analyzer):
+    def get_capped_ends_plot(monomer_data, times):
         """
         Add a plot of percent barbed ends that are capped
         """
@@ -163,29 +176,33 @@ class ActinVisualization:
             title="Capped barbed ends",
             xaxis_title="Time (µs)",
             yaxis_title="Capped ends (%)",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces={
                 "Capped ends": 100.0
-                * analyzer.analyze_ratio_of_capped_ends_to_total_ends(),
+                * ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends(
+                    monomer_data
+                ),
             },
             render_mode="lines",
         )
 
     @staticmethod
-    def get_branch_angle_plot(analyzer):
+    def get_branch_angle_plot(monomer_data, box_size, periodic_boundary, times):
         """
         Add a plot of branch angle mean and std dev
         """
-        angles = analyzer.analyze_branch_angles()
+        angles = ActinAnalyzer.analyze_branch_angles(
+            monomer_data, box_size, periodic_boundary
+        )
         mean = ActinAnalyzer.analyze_average_over_time(angles)
         stddev = ActinAnalyzer.analyze_stddev_over_time(angles)
         return ScatterPlotData(
             title="Average branch angle",
             xaxis_title="Time (µs)",
             yaxis_title="Branch angle (°)",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces={
-                "Ideal": np.array(analyzer.times.shape[0] * [70.9]),
+                "Ideal": np.array(times.shape[0] * [70.9]),
                 "Mean": mean,
                 "Mean - std": mean - stddev,
                 "Mean + std": mean + stddev,
@@ -194,7 +211,7 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def get_helix_pitch_plot(analyzer):
+    def get_helix_pitch_plot(monomer_data, box_size, periodic_boundary, times):
         """
         Add a plot of average helix pitch
         for both the short and long helices
@@ -204,22 +221,28 @@ class ActinVisualization:
             title="Average helix pitch",
             xaxis_title="Time (µs)",
             yaxis_title="Pitch (nm)",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces={
-                "Ideal short pitch": np.array(analyzer.times.shape[0] * [5.9]),
+                "Ideal short pitch": np.array(times.shape[0] * [5.9]),
                 "Mean short pitch": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_short_helix_pitches()
+                    ActinAnalyzer.analyze_short_helix_pitches(
+                        monomer_data, box_size, periodic_boundary
+                    )
                 ),
-                "Ideal long pitch": np.array(analyzer.times.shape[0] * [72]),
+                "Ideal long pitch": np.array(times.shape[0] * [72]),
                 "Mean long pitch": ActinAnalyzer.analyze_average_over_time(
-                    analyzer.analyze_long_helix_pitches()
+                    ActinAnalyzer.analyze_long_helix_pitches(
+                        monomer_data, box_size, periodic_boundary
+                    )
                 ),
             },
             render_mode="lines",
         )
 
     @staticmethod
-    def get_filament_straightness_plot(analyzer):
+    def get_filament_straightness_plot(
+        monomer_data, box_size, periodic_boundary, times
+    ):
         """
         Add a plot of how many nm each monomer is away
         from ideal position in a straight filament
@@ -228,11 +251,13 @@ class ActinVisualization:
             title="Filament bending",
             xaxis_title="Time (µs)",
             yaxis_title="Filament bending",
-            xtrace=analyzer.times,
+            xtrace=times,
             ytraces={
                 "Filament bending": (
                     ActinAnalyzer.analyze_average_over_time(
-                        analyzer.analyze_filament_straightness()
+                        ActinAnalyzer.analyze_filament_straightness(
+                            monomer_data, box_size, periodic_boundary
+                        )
                     )
                 ),
             },
@@ -244,18 +269,36 @@ class ActinVisualization:
         """
         Use an ActinAnalyzer to generate plots of observables
         """
-        analyzer = ActinAnalyzer(path_to_readdy_h5, box_size, stride, periodic_boundary)
+        (
+            monomer_data,
+            reactions,
+            times,
+            _,
+        ) = ReaddyUtil.monomer_data_and_reactions_from_file(
+            h5_file_path=path_to_readdy_h5,
+            stride=stride,
+            timestep=0.1,
+            reaction_names=ACTIN_REACTIONS,
+        )
         return {
             "scatter": [
-                ActinVisualization.get_bound_monomers_plot(analyzer),
-                ActinVisualization.get_avg_length_plot(analyzer),
-                ActinVisualization.get_growth_reactions_plot(analyzer),
-                ActinVisualization.get_growth_reactions_vs_actin_plot(analyzer),
-                # ActinVisualization.get_capped_ends_plot(analyzer),
-                ActinVisualization.get_branch_angle_plot(analyzer),
-                ActinVisualization.get_helix_pitch_plot(analyzer),
-                ActinVisualization.get_filament_straightness_plot(analyzer),
-                ActinVisualization.get_structural_reactions_plot(analyzer),
+                ActinVisualization.get_bound_monomers_plot(monomer_data, times),
+                ActinVisualization.get_avg_length_plot(monomer_data, times),
+                ActinVisualization.get_growth_reactions_plot(reactions, times),
+                ActinVisualization.get_growth_reactions_vs_actin_plot(
+                    reactions, monomer_data, box_size
+                ),
+                # ActinVisualization.get_capped_ends_plot(monomer_data, times),
+                ActinVisualization.get_branch_angle_plot(
+                    monomer_data, box_size, periodic_boundary, times
+                ),
+                ActinVisualization.get_helix_pitch_plot(
+                    monomer_data, box_size, periodic_boundary, times
+                ),
+                ActinVisualization.get_filament_straightness_plot(
+                    monomer_data, box_size, periodic_boundary, times
+                ),
+                ActinVisualization.get_structural_reactions_plot(reactions, times),
             ],
             "histogram": [],
         }
