@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import readdy
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
