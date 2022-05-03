@@ -795,7 +795,7 @@ class ActinGenerator:
                 fibers_data, min_extent, max_extent, -1 * child_box_center
             )
         else:
-            cropped_fiber_data = fibers_data        
+            cropped_fiber_data = fibers_data
         for fiber in cropped_fiber_data:
             particles, particle_ids = ActinGenerator.get_monomers_for_fiber(
                 fiber,

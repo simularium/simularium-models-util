@@ -143,8 +143,8 @@ class ReaddyUtil:
         return (
             (1.38065 * 10 ** (-23) * T)
             / (6 * np.pi * eta * 10 ** (-3) * r0 * 10 ** (-9))
-            * 10 ** 18
-            / 10 ** 9
+            * 10**18
+            / 10**9
         )
 
     @staticmethod
@@ -1170,6 +1170,8 @@ class ReaddyUtil:
         in the given frame of data
         """
         for n_id in frame_particle_data[particle_id]["neighbor_ids"]:
+            if n_id not in frame_particle_data:
+                n_id = str(n_id)
             if n_id in exclude_ids:
                 continue
             nt = frame_particle_data[n_id]["type_name"]
