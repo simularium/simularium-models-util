@@ -17,12 +17,20 @@ This repository is part of the Simularium project ([simularium.allencell.org](ht
 
 Tools for building computational biology models and example models from the Simularium project.
 
+Currently includes coarse-grained monomer ReaDDy models for actin, microtubules, and kinesin.
+
 ---
+
+## Quickstart
+
+See [examples/README.md](examples/README.md) to run example actin, microtubules, or kinesin models either locally or on AWS with Docker.
 
 ## Installation
 
 **Stable Release:** `pip install simularium_models_util`<br>
-**Development Head:** `pip install git+https://github.com/allen-cell-animated/simularium_models_util.git`
+**Development Head:** `pip install git+https://github.com/allen-cell-animated/simularium_models_util.git`<br>
+**Local Editable Install** `pip install -e .[dev]` (or `pip install -e .\[dev\]` on mac) from repo root directory
+
 
 ## Documentation
 
