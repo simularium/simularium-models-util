@@ -372,8 +372,7 @@ in radians unless in_degrees is True</p>
 <dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.get_current_monomers">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_current_monomers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_topologies</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_current_monomers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_current_monomers" title="Permalink to this definition"></a></dt>
 <dd><p>During a running simulation,
-get data for topologies of particles
-from readdy.simulation.current_topologies</p>
+get data for topologies of particles</p>
 </dd></dl>
 
 <dl class="py method">
@@ -531,6 +530,37 @@ by each time step / stride</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.monomer_data_and_reactions_from_file">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">monomer_data_and_reactions_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h5_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reaction_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.monomer_data_and_reactions_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.monomer_data_and_reactions_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>For data saved in a ReaDDy .h5 file:</p>
+<p>For each time point, get monomer data as a dictionary:
+{</p>
+<blockquote>
+<div><dl>
+<dt>“topologies”<span class="classifier">mapping of topology id to data for each topology:</span></dt><dd><dl class="simple">
+<dt>[id: int]<span class="classifier">{</span></dt><dd><p>“type_name” : str,
+“particle_ids” : List[int]</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+<dt>“particles”<span class="classifier">mapping of particle id to data for each particle:</span></dt><dd><dl class="simple">
+<dt>[id: int]<span class="classifier">{</span></dt><dd><p>“type_name” : str,
+“position” : np.ndarray,
+“neighbor_ids” : List[int]</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+<p>Also return the counts of reactions over time,
+the timestamps for each frame,
+and the reaction time increment in seconds</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.normalize">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.normalize" title="Permalink to this definition"></a></dt>
 <dd><p>normalize a vector</p>
@@ -559,51 +589,6 @@ whenever reactants are available</p>
 <dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.set_flags">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_flags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_flags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse_sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.set_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.set_flags" title="Permalink to this definition"></a></dt>
 <dd><p>set flags on a vertex</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_edge_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape_frame_edge_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_edge_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_edge_data" title="Permalink to this definition"></a></dt>
-<dd><p>After a simulation has finished,
-get all the edges at the given time index
-as (particle1 id, particle2 id)</p>
-<p>topology_records from
-readdy.Trajectory(h5_file_path).read_observable_topologies()</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_monomer_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape_frame_monomer_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_frame_monomer_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_monomer_data" title="Permalink to this definition"></a></dt>
-<dd><p>After a simulation has finished,
-get data for topologies of particles</p>
-<p>traj from readdy.Trajectory(h5_file_path)
-topology_records from traj.read_observable_topologies()
-ids, types, positions from traj.read_observable_particles()</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.shape_monomer_data">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape_monomer_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_inc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topology_records</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.shape_monomer_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.shape_monomer_data" title="Permalink to this definition"></a></dt>
-<dd><dl>
-<dt>For each time point, get a dictionary with keys</dt><dd><dl>
-<dt>“topologies”<span class="classifier">mapping of topology id to data for each topology:</span></dt><dd><dl class="simple">
-<dt>[id: int]<span class="classifier">{</span></dt><dd><p>“type_name” : str,
-“particle_ids” : List[int]</p>
-</dd>
-</dl>
-<p>}</p>
-</dd>
-<dt>“particles”<span class="classifier">mapping of particle id to data for each particle:</span></dt><dd><dl class="simple">
-<dt>[id: int]<span class="classifier">{</span></dt><dd><p>“type_name” : str,
-“position” : np.ndarray,
-“neighbor_ids” : List[int]</p>
-</dd>
-</dl>
-<p>}</p>
-</dd>
-</dl>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">

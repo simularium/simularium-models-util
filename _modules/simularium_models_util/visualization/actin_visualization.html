@@ -101,7 +101,9 @@
 <span class="kn">from</span> <span class="nn">simulariumio.readdy</span> <span class="kn">import</span> <span class="n">ReaddyConverter</span><span class="p">,</span> <span class="n">ReaddyData</span>
 <span class="kn">from</span> <span class="nn">simulariumio</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">UnitData</span><span class="p">,</span> <span class="n">ScatterPlotData</span><span class="p">,</span> <span class="n">DisplayData</span>
 <span class="kn">from</span> <span class="nn">simulariumio.filters</span> <span class="kn">import</span> <span class="n">MultiplyTimeFilter</span>
-<span class="kn">from</span> <span class="nn">..actin</span> <span class="kn">import</span> <span class="n">ActinAnalyzer</span>
+<span class="kn">from</span> <span class="nn">..actin</span> <span class="kn">import</span> <span class="n">ActinAnalyzer</span><span class="p">,</span> <span class="n">ACTIN_REACTIONS</span>
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
+
 
 <span class="n">TIMESTEP</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># ns</span>
 <span class="n">GROWTH_RXNS</span> <span class="o">=</span> <span class="p">[</span>
@@ -140,7 +142,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="ActinVisualization.get_bound_monomers_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_bound_monomers_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_bound_monomers_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_bound_monomers_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of percent actin in filaments</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -148,20 +150,22 @@
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Monomers over time&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Monomers (%)&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;Actin in filaments&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
-                <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_filamentous_to_total_actin</span><span class="p">(),</span>
+                <span class="o">*</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_filamentous_to_total_actin</span><span class="p">(</span>
+                    <span class="n">monomer_data</span>
+                <span class="p">),</span>
                 <span class="s2">&quot;Arp2/3 in filaments&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
-                <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_bound_to_total_arp23</span><span class="p">(),</span>
+                <span class="o">*</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_bound_to_total_arp23</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">),</span>
                 <span class="s2">&quot;Actin in daughter filaments&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
-                <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_daughter_to_total_actin</span><span class="p">(),</span>
+                <span class="o">*</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_daughter_to_total_actin</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">),</span>
             <span class="p">},</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_avg_length_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_avg_length_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_avg_length_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_avg_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of average mother and daughter filament length</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -169,40 +173,42 @@
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average length of filaments&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Average length (monomers)&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;Mother filaments&quot;</span><span class="p">:</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_over_time</span><span class="p">(</span>
-                    <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_mother_filament_lengths</span><span class="p">()</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_mother_filament_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)</span>
                 <span class="p">),</span>
                 <span class="s2">&quot;Daughter filaments&quot;</span><span class="p">:</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_over_time</span><span class="p">(</span>
-                    <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_daughter_filament_lengths</span><span class="p">()</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_daughter_filament_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)</span>
                 <span class="p">),</span>
             <span class="p">},</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_growth_reactions_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_growth_reactions_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_growth_reactions_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_growth_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of reaction events over time</span>
 <span class="sd">        for each total growth reaction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ytraces</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">GROWTH_RXNS</span><span class="p">:</span>
-            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span><span class="n">total_rxn_name</span><span class="p">)</span>
+            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+                <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="n">rxn_events</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">ytraces</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rxn_events</span>
         <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Growth reactions&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Reaction events&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="n">ytraces</span><span class="p">,</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_structural_reactions_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_structural_reactions_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_structural_reactions_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_structural_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of the number of times a structural reaction</span>
 <span class="sd">        was triggered over time</span>
@@ -211,20 +217,22 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ytraces</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">STRUCTURAL_RXNS</span><span class="p">:</span>
-            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span><span class="n">total_rxn_name</span><span class="p">)</span>
+            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+                <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="n">rxn_events</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">ytraces</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rxn_events</span>
         <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Structural reaction triggers&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Reactions triggered&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="n">ytraces</span><span class="p">,</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_growth_reactions_vs_actin_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_growth_reactions_vs_actin_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_growth_reactions_vs_actin_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_growth_reactions_vs_actin_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of average reaction events over time</span>
 <span class="sd">        for each total growth reaction</span>
@@ -234,7 +242,9 @@
             <span class="n">group_reaction_events</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">GROUPED_GROWTH_RXNS</span><span class="p">[</span><span class="n">rxn_group_name</span><span class="p">]:</span>
                 <span class="n">group_reaction_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span><span class="n">total_rxn_name</span><span class="p">)</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+                        <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
+                    <span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_reaction_events</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">ytraces</span><span class="p">[</span><span class="n">rxn_group_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
@@ -244,13 +254,15 @@
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Growth vs [actin]&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;[Actin] (µM)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Reaction events&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_free_actin_concentration_over_time</span><span class="p">(),</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_free_actin_concentration_over_time</span><span class="p">(</span>
+                <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span>
+            <span class="p">),</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="n">ytraces</span><span class="p">,</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_capped_ends_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_capped_ends_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_capped_ends_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_capped_ends_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of percent barbed ends that are capped</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -258,29 +270,33 @@
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Capped barbed ends&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Capped ends (%)&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;Capped ends&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
-                <span class="o">*</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_capped_ends_to_total_ends</span><span class="p">(),</span>
+                <span class="o">*</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_ratio_of_capped_ends_to_total_ends</span><span class="p">(</span>
+                    <span class="n">monomer_data</span>
+                <span class="p">),</span>
             <span class="p">},</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_branch_angle_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_branch_angle_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_branch_angle_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_branch_angle_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of branch angle mean and std dev</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">angles</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_branch_angles</span><span class="p">()</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_branch_angles</span><span class="p">(</span>
+            <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
+        <span class="p">)</span>
         <span class="n">mean</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_over_time</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
         <span class="n">stddev</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_stddev_over_time</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average branch angle&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Branch angle (°)&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;Ideal&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mf">70.9</span><span class="p">]),</span>
+                <span class="s2">&quot;Ideal&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mf">70.9</span><span class="p">]),</span>
                 <span class="s2">&quot;Mean&quot;</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span>
                 <span class="s2">&quot;Mean - std&quot;</span><span class="p">:</span> <span class="n">mean</span> <span class="o">-</span> <span class="n">stddev</span><span class="p">,</span>
                 <span class="s2">&quot;Mean + std&quot;</span><span class="p">:</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">stddev</span><span class="p">,</span>
@@ -289,7 +305,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_helix_pitch_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_helix_pitch_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_helix_pitch_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_helix_pitch_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of average helix pitch</span>
 <span class="sd">        for both the short and long helices</span>
@@ -299,22 +315,28 @@
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average helix pitch&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Pitch (nm)&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;Ideal short pitch&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">]),</span>
+                <span class="s2">&quot;Ideal short pitch&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mf">5.9</span><span class="p">]),</span>
                 <span class="s2">&quot;Mean short pitch&quot;</span><span class="p">:</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_over_time</span><span class="p">(</span>
-                    <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_short_helix_pitches</span><span class="p">()</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_short_helix_pitches</span><span class="p">(</span>
+                        <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
+                    <span class="p">)</span>
                 <span class="p">),</span>
-                <span class="s2">&quot;Ideal long pitch&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mi">72</span><span class="p">]),</span>
+                <span class="s2">&quot;Ideal long pitch&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">[</span><span class="mi">72</span><span class="p">]),</span>
                 <span class="s2">&quot;Mean long pitch&quot;</span><span class="p">:</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_over_time</span><span class="p">(</span>
-                    <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_long_helix_pitches</span><span class="p">()</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_long_helix_pitches</span><span class="p">(</span>
+                        <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
+                    <span class="p">)</span>
                 <span class="p">),</span>
             <span class="p">},</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_filament_straightness_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_filament_straightness_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_filament_straightness_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_filament_straightness_plot</span><span class="p">(</span>
+        <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of how many nm each monomer is away</span>
 <span class="sd">        from ideal position in a straight filament</span>
@@ -323,11 +345,13 @@
             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Filament bending&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
             <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Filament bending&quot;</span><span class="p">,</span>
-            <span class="n">xtrace</span><span class="o">=</span><span class="n">analyzer</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span>
                 <span class="s2">&quot;Filament bending&quot;</span><span class="p">:</span> <span class="p">(</span>
                     <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_over_time</span><span class="p">(</span>
-                        <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_filament_straightness</span><span class="p">()</span>
+                        <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_filament_straightness</span><span class="p">(</span>
+                            <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
+                        <span class="p">)</span>
                     <span class="p">)</span>
                 <span class="p">),</span>
             <span class="p">},</span>
@@ -339,18 +363,36 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use an ActinAnalyzer to generate plots of observables</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">analyzer</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">)</span>
+        <span class="p">(</span>
+            <span class="n">monomer_data</span><span class="p">,</span>
+            <span class="n">reactions</span><span class="p">,</span>
+            <span class="n">times</span><span class="p">,</span>
+            <span class="n">_</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">monomer_data_and_reactions_from_file</span><span class="p">(</span>
+            <span class="n">h5_file_path</span><span class="o">=</span><span class="n">path_to_readdy_h5</span><span class="p">,</span>
+            <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">reaction_names</span><span class="o">=</span><span class="n">ACTIN_REACTIONS</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;scatter&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_bound_monomers_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_avg_length_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_growth_reactions_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_growth_reactions_vs_actin_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="c1"># ActinVisualization.get_capped_ends_plot(analyzer),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_branch_angle_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_helix_pitch_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_filament_straightness_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
-                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_structural_reactions_plot</span><span class="p">(</span><span class="n">analyzer</span><span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_bound_monomers_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_avg_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_growth_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_growth_reactions_vs_actin_plot</span><span class="p">(</span>
+                    <span class="n">reactions</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span>
+                <span class="p">),</span>
+                <span class="c1"># ActinVisualization.get_capped_ends_plot(monomer_data, times),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_branch_angle_plot</span><span class="p">(</span>
+                    <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
+                <span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_helix_pitch_plot</span><span class="p">(</span>
+                    <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
+                <span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_filament_straightness_plot</span><span class="p">(</span>
+                    <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
+                <span class="p">),</span>
+                <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_structural_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
             <span class="p">],</span>
             <span class="s2">&quot;histogram&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="p">}</span></div>

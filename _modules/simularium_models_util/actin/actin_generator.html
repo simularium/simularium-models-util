@@ -103,7 +103,8 @@
 <span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span><span class="p">,</span> <span class="n">ParticleData</span>
 <span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span><span class="p">,</span> <span class="n">FiberData</span>
 
-<span class="n">next_id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">next_monomer_id</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">next_fiber_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
 
 <div class="viewcode-block" id="ActinGenerator"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator">[docs]</a><span class="k">class</span> <span class="nc">ActinGenerator</span><span class="p">:</span>
@@ -111,17 +112,49 @@
 <span class="sd">    Generates positions, types, and edges for monomers in actin networks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ActinGenerator.set_next_id"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.set_next_id">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">set_next_id</span><span class="p">(</span><span class="n">_id</span><span class="p">):</span>
-        <span class="k">global</span> <span class="n">next_id</span>
-        <span class="n">next_id</span> <span class="o">=</span> <span class="n">_id</span></div>
+<div class="viewcode-block" id="ActinGenerator.set_next_monomer_id"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.set_next_monomer_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">set_next_monomer_id</span><span class="p">(</span><span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">next_monomer_id</span>
+        <span class="n">next_monomer_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="ActinGenerator.get_next_id"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_next_id">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_next_id</span><span class="p">():</span>
-        <span class="k">global</span> <span class="n">next_id</span>
-        <span class="k">if</span> <span class="n">next_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">next_id</span>
-            <span class="n">next_id</span> <span class="o">+=</span> <span class="mi">1</span>
+<div class="viewcode-block" id="ActinGenerator.get_next_monomer_id"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_next_monomer_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_next_monomer_id</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">next_monomer_id</span>
+        <span class="k">if</span> <span class="n">next_monomer_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">next_monomer_id</span>
+            <span class="n">next_monomer_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_max_fiber_id</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get the largest fiber id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="n">fibers_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span> <span class="o">&gt;</span> <span class="n">max_id</span><span class="p">:</span>
+                <span class="n">max_id</span> <span class="o">=</span> <span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span>
+        <span class="k">return</span> <span class="n">max_id</span>
+
+<div class="viewcode-block" id="ActinGenerator.set_next_fiber_id"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.set_next_fiber_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">set_next_fiber_id</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">next_fiber_id</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">next_fiber_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_fiber_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">_get_max_fiber_id</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_fiber_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="ActinGenerator.get_next_fiber_id"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_next_fiber_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_next_fiber_id</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">next_fiber_id</span>
+        <span class="k">if</span> <span class="n">next_fiber_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">next_fiber_id</span>
+            <span class="n">next_fiber_id</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -277,7 +310,7 @@
                     <span class="n">fiber_tangents</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                     <span class="n">direction</span> <span class="o">*</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_axis_angle</span><span class="p">(),</span>
                 <span class="p">)</span>
-                <span class="n">new_particle_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
+                <span class="n">new_particle_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
                 <span class="n">particle_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_particle_id</span><span class="p">)</span>
                 <span class="n">particles</span><span class="p">[</span><span class="n">new_particle_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
                     <span class="n">unique_id</span><span class="o">=</span><span class="n">new_particle_id</span><span class="p">,</span>
@@ -317,8 +350,8 @@
             <span class="k">if</span> <span class="n">closest_actin_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span>
             <span class="c1"># create arp2 and arp3</span>
-            <span class="n">arp2_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
-            <span class="n">arp3_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
+            <span class="n">arp2_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
+            <span class="n">arp3_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
             <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span><span class="p">]</span>
             <span class="n">actin_arp3_id</span> <span class="o">=</span> <span class="n">particle_ids</span><span class="p">[</span><span class="n">closest_actin_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
             <span class="n">actin_arp_ids</span> <span class="o">+=</span> <span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">,</span> <span class="n">actin_arp3_id</span><span class="p">]</span>
@@ -424,9 +457,9 @@
             <span class="n">particles</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># create branch junction monomers (arp2, arp3, first daughter actin)</span>
-        <span class="n">arp2_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
-        <span class="n">arp3_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
-        <span class="n">branch_actin_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
+        <span class="n">arp2_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
+        <span class="n">arp3_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
+        <span class="n">branch_actin_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
         <span class="n">branch_state</span> <span class="o">=</span> <span class="s2">&quot;_barbed&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">daughter_particle_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">particles</span><span class="p">[</span><span class="n">branch_actin_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
             <span class="n">unique_id</span><span class="o">=</span><span class="n">branch_actin_id</span><span class="p">,</span>
@@ -541,7 +574,7 @@
                         <span class="n">pointed_particle_ids</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">particles</span>
                     <span class="p">)</span>
             <span class="c1"># get mother actin bound to arp2</span>
-            <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()</span>
+            <span class="n">actin_arp2_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()</span>
             <span class="n">last_pointed_id</span> <span class="o">=</span> <span class="n">pointed_particle_ids</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pointed_particle_ids</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
             <span class="n">particles</span><span class="p">[</span><span class="n">actin_arp2_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ParticleData</span><span class="p">(</span>
                 <span class="n">unique_id</span><span class="o">=</span><span class="n">actin_arp2_id</span><span class="p">,</span>
@@ -738,14 +771,24 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">intersection</span></div>
 
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_create_fiber</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">,</span> <span class="n">source_fiber</span><span class="p">,</span> <span class="n">found_chunk</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        create a FiberData for a cropped chunk of a source fiber</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found_chunk</span><span class="p">:</span>
+            <span class="n">fiber_id</span> <span class="o">=</span> <span class="n">source_fiber</span><span class="o">.</span><span class="n">fiber_id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_fiber_id</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_fiber_id</span><span class="p">()</span>
+            <span class="n">fiber_id</span> <span class="o">=</span> <span class="n">new_fiber_id</span>
+        <span class="k">return</span> <span class="n">FiberData</span><span class="p">(</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">,</span> <span class="n">source_fiber</span><span class="o">.</span><span class="n">type_name</span><span class="p">)</span>
+
 <div class="viewcode-block" id="ActinGenerator.get_cropped_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_cropped_fibers">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_cropped_fibers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="n">child_box_center</span><span class="p">,</span> <span class="n">child_box_size</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_cropped_fibers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">,</span> <span class="n">position_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        crop the fiber data to a cube volume</span>
-<span class="sd">        defined by child_box_center</span>
-<span class="sd">        (center of cropped box in parent box coordinates)</span>
-<span class="sd">        and child_box_size</span>
-<span class="sd">        and center it around the box_center as the origin</span>
+<span class="sd">        defined by min_extent and max_extent</span>
+<span class="sd">        and apply the position_offset</span>
 
 <span class="sd">        fibers_data: List[FiberData]</span>
 <span class="sd">        (FiberData for mother fibers only, which should have</span>
@@ -753,11 +796,12 @@
 
 <span class="sd">        # TODO handle daughter fiber connections</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">child_box_center</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">child_box_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">min_extent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">max_extent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">fibers_data</span>
-        <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_extents</span><span class="p">(</span>
-            <span class="n">child_box_center</span><span class="p">,</span> <span class="n">child_box_size</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">position_offset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">position_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">set_next_fiber_id</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">)</span>
+        <span class="n">found_chunk</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="n">fibers_data</span><span class="p">:</span>
             <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[]</span>
@@ -769,7 +813,7 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">tracing</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">position_is_in_bounds</span><span class="p">:</span>
                         <span class="c1"># start at the first point if it&#39;s in bounds</span>
-                        <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">child_box_center</span><span class="p">]</span>
+                        <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">]</span>
                         <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">elif</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">position_is_in_bounds</span><span class="p">:</span>
                         <span class="c1"># start at the intersection with the bounds</span>
@@ -786,19 +830,20 @@
                             <span class="p">)</span>
                         <span class="p">)</span>
                         <span class="k">if</span> <span class="n">intersection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                            <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">intersection</span> <span class="o">-</span> <span class="n">child_box_center</span><span class="p">]</span>
+                            <span class="n">current_chunk</span> <span class="o">=</span> <span class="p">[</span><span class="n">intersection</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">]</span>
                             <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
+
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">position_is_in_bounds</span><span class="p">:</span>
                         <span class="c1"># continue adding points within the volume</span>
-                        <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">child_box_center</span><span class="p">)</span>
+                        <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">fiber</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                             <span class="c1"># end if this is the last point</span>
-                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                                <span class="n">FiberData</span><span class="p">(</span>
-                                    <span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">,</span> <span class="n">fiber</span><span class="o">.</span><span class="n">type_name</span>
-                                <span class="p">)</span>
+                            <span class="n">new_fiber</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">_create_fiber</span><span class="p">(</span>
+                                <span class="n">current_chunk</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="n">found_chunk</span>
                             <span class="p">)</span>
+                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_fiber</span><span class="p">)</span>
+                            <span class="n">found_chunk</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># end at the intersection with the bounds</span>
                         <span class="c1"># between the prev and current points</span>
@@ -813,12 +858,12 @@
                             <span class="p">)</span>
                         <span class="p">)</span>
                         <span class="k">if</span> <span class="n">intersection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_chunk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intersection</span> <span class="o">-</span> <span class="n">child_box_center</span><span class="p">)</span>
-                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                                <span class="n">FiberData</span><span class="p">(</span>
-                                    <span class="n">fiber</span><span class="o">.</span><span class="n">fiber_id</span><span class="p">,</span> <span class="n">current_chunk</span><span class="p">,</span> <span class="n">fiber</span><span class="o">.</span><span class="n">type_name</span>
-                                <span class="p">)</span>
+                            <span class="n">current_chunk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intersection</span> <span class="o">+</span> <span class="n">position_offset</span><span class="p">)</span>
+                            <span class="n">new_fiber</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">_create_fiber</span><span class="p">(</span>
+                                <span class="n">current_chunk</span><span class="p">,</span> <span class="n">fiber</span><span class="p">,</span> <span class="n">found_chunk</span>
                             <span class="p">)</span>
+                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_fiber</span><span class="p">)</span>
+                            <span class="n">found_chunk</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ActinGenerator.get_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_generator.ActinGenerator.get_monomers">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -836,10 +881,16 @@
             <span class="s2">&quot;topologies&quot;</span><span class="p">:</span> <span class="p">{},</span>
             <span class="s2">&quot;particles&quot;</span><span class="p">:</span> <span class="p">{},</span>
         <span class="p">}</span>
-        <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">set_next_id</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">cropped_fiber_data</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_cropped_fibers</span><span class="p">(</span>
-            <span class="n">fibers_data</span><span class="p">,</span> <span class="n">child_box_center</span><span class="p">,</span> <span class="n">child_box_size</span>
-        <span class="p">)</span>
+        <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">set_next_monomer_id</span><span class="p">(</span><span class="n">use_uuids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">child_box_center</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">child_box_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_extents</span><span class="p">(</span>
+                <span class="n">child_box_center</span><span class="p">,</span> <span class="n">child_box_size</span>
+            <span class="p">)</span>
+            <span class="n">cropped_fiber_data</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_cropped_fibers</span><span class="p">(</span>
+                <span class="n">fibers_data</span><span class="p">,</span> <span class="n">min_extent</span><span class="p">,</span> <span class="n">max_extent</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">child_box_center</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cropped_fiber_data</span> <span class="o">=</span> <span class="n">fibers_data</span>
         <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="n">cropped_fiber_data</span><span class="p">:</span>
             <span class="n">particles</span><span class="p">,</span> <span class="n">particle_ids</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers_for_fiber</span><span class="p">(</span>
                 <span class="n">fiber</span><span class="p">,</span>
@@ -850,7 +901,7 @@
                 <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
                 <span class="mi">1</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_id</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_next_monomer_id</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;type_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Actin-Polymer&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;particle_ids&quot;</span><span class="p">:</span> <span class="n">particle_ids</span><span class="p">,</span>
             <span class="p">}</span>

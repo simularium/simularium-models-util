@@ -1051,7 +1051,6 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        During a running simulation,</span>
 <span class="sd">        get data for topologies of particles</span>
-<span class="sd">        from readdy.simulation.current_topologies</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">edges</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_current_particle_edges</span><span class="p">(</span><span class="n">current_topologies</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
@@ -1079,8 +1078,8 @@
             <span class="p">}</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="ReaddyUtil.shape_frame_edge_data"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_edge_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">shape_frame_edge_data</span><span class="p">(</span><span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_shape_frame_edge_data_from_file</span><span class="p">(</span><span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        After a simulation has finished,</span>
 <span class="sd">        get all the edges at the given time index</span>
@@ -1096,10 +1095,10 @@
                     <span class="n">ix1</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">particles</span><span class="p">[</span><span class="n">e1</span><span class="p">]</span>
                     <span class="n">ix2</span> <span class="o">=</span> <span class="n">top</span><span class="o">.</span><span class="n">particles</span><span class="p">[</span><span class="n">e2</span><span class="p">]</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ix1</span><span class="p">,</span> <span class="n">ix2</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="ReaddyUtil.shape_frame_monomer_data"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.shape_frame_monomer_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">shape_frame_monomer_data</span><span class="p">(</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_shape_frame_monomer_data_from_file</span><span class="p">(</span>
         <span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1110,7 +1109,9 @@
 <span class="sd">        topology_records from traj.read_observable_topologies()</span>
 <span class="sd">        ids, types, positions from traj.read_observable_particles()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">edges</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_frame_edge_data</span><span class="p">(</span><span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">_shape_frame_edge_data_from_file</span><span class="p">(</span>
+            <span class="n">time_index</span><span class="p">,</span> <span class="n">topology_records</span>
+        <span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;topologies&quot;</span><span class="p">:</span> <span class="p">{},</span>
             <span class="s2">&quot;particles&quot;</span><span class="p">:</span> <span class="p">{},</span>
@@ -1134,10 +1135,10 @@
                 <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">2</span><span class="p">]]),</span>
                 <span class="s2">&quot;neighbor_ids&quot;</span><span class="p">:</span> <span class="n">neighbor_ids</span><span class="p">,</span>
             <span class="p">}</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="ReaddyUtil.shape_monomer_data"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.shape_monomer_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">shape_monomer_data</span><span class="p">(</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_shape_monomer_data_from_file</span><span class="p">(</span>
         <span class="n">min_time</span><span class="p">,</span>
         <span class="n">max_time</span><span class="p">,</span>
         <span class="n">time_inc</span><span class="p">,</span>
@@ -1149,7 +1150,33 @@
         <span class="n">traj</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        For each time point, get a dictionary with keys</span>
+<span class="sd">        For each time point, get monomer data and times</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shaping data for analysis...&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">new_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">min_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">max_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">%</span> <span class="n">time_inc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">_shape_frame_monomer_data_from_file</span><span class="p">(</span>
+                        <span class="n">t</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">new_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_times</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ReaddyUtil.monomer_data_and_reactions_from_file"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.monomer_data_and_reactions_from_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">monomer_data_and_reactions_from_file</span><span class="p">(</span>
+        <span class="n">h5_file_path</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">timestep</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">reaction_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For data saved in a ReaDDy .h5 file:</span>
+
+<span class="sd">        For each time point, get monomer data as a dictionary:</span>
+<span class="sd">        {</span>
 <span class="sd">          &quot;topologies&quot; : mapping of topology id to data for each topology:</span>
 <span class="sd">            [id: int] : {</span>
 <span class="sd">                &quot;type_name&quot; : str,</span>
@@ -1161,19 +1188,41 @@
 <span class="sd">                &quot;position&quot; : np.ndarray,</span>
 <span class="sd">                &quot;neighbor_ids&quot; : List[int]</span>
 <span class="sd">            }</span>
+<span class="sd">        }</span>
+
+<span class="sd">        Also return the counts of reactions over time,</span>
+<span class="sd">        the timestamps for each frame,</span>
+<span class="sd">        and the reaction time increment in seconds</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shaping data for analysis...&quot;</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">new_times</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">min_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">max_time</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">%</span> <span class="n">time_inc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_frame_monomer_data</span><span class="p">(</span>
-                        <span class="n">t</span><span class="p">,</span> <span class="n">topology_records</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">traj</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-                <span class="n">new_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_times</span><span class="p">)</span></div>
+        <span class="n">trajectory</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">(</span><span class="n">h5_file_path</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">topology_records</span> <span class="o">=</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">read_observable_topologies</span><span class="p">()</span>
+        <span class="p">(</span>
+            <span class="n">times</span><span class="p">,</span>
+            <span class="n">types</span><span class="p">,</span>
+            <span class="n">ids</span><span class="p">,</span>
+            <span class="n">positions</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">read_observable_particles</span><span class="p">()</span>
+        <span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">_shape_monomer_data_from_file</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">stride</span><span class="p">,</span>
+            <span class="n">times</span><span class="p">,</span>
+            <span class="n">topology_records</span><span class="p">,</span>
+            <span class="n">ids</span><span class="p">,</span>
+            <span class="n">types</span><span class="p">,</span>
+            <span class="n">positions</span><span class="p">,</span>
+            <span class="n">trajectory</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">timestep</span> <span class="o">/</span> <span class="mf">1e3</span> <span class="o">*</span> <span class="n">times</span>  <span class="c1"># index --&gt; microseconds</span>
+        <span class="n">reactions</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">time_inc_s</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">reaction_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">recorded_steps</span> <span class="o">=</span> <span class="n">stride</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">reactions</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">load_reactions</span><span class="p">(</span>
+                <span class="n">trajectory</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">reaction_names</span><span class="p">,</span> <span class="n">recorded_steps</span>
+            <span class="p">)</span>
+            <span class="n">time_inc_s</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">monomer_data</span><span class="p">,</span> <span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">time_inc_s</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.vector_is_invalid"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.vector_is_invalid">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">vector_is_invalid</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
@@ -1216,6 +1265,8 @@
 <span class="sd">        in the given frame of data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">n_id</span> <span class="ow">in</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">particle_id</span><span class="p">][</span><span class="s2">&quot;neighbor_ids&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">n_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">frame_particle_data</span><span class="p">:</span>
+                <span class="n">n_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n_id</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">n_id</span> <span class="ow">in</span> <span class="n">exclude_ids</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">nt</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="n">n_id</span><span class="p">][</span><span class="s2">&quot;type_name&quot;</span><span class="p">]</span>

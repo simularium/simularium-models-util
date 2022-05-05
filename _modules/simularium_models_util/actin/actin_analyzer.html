@@ -97,71 +97,40 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">readdy</span>
 
 <span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 <span class="kn">from</span> <span class="nn">.actin_util</span> <span class="kn">import</span> <span class="n">ActinUtil</span>
-<span class="kn">from</span> <span class="nn">.actin_reactions</span> <span class="kn">import</span> <span class="n">ACTIN_REACTIONS</span>
 
 
 <span class="n">TIMESTEP</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># ns</span>
 
 
 <div class="viewcode-block" id="ActinAnalyzer"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">ActinAnalyzer</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h5_file_path</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load data from a ReaDDy trajectory</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span> <span class="o">=</span> <span class="n">box_size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span> <span class="o">=</span> <span class="n">periodic_boundary</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">traj</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">Trajectory</span><span class="p">(</span><span class="n">h5_file_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology_records</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">read_observable_topologies</span><span class="p">()</span>
-        <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">types</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span>
-        <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="o">.</span><span class="n">read_observable_particles</span><span class="p">()</span>
-        <span class="n">recorded_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">shape_monomer_data</span><span class="p">(</span>
-            <span class="mi">0</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">topology_records</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">types</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">times</span> <span class="o">=</span> <span class="n">TIMESTEP</span> <span class="o">/</span> <span class="mf">1e3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span>  <span class="c1"># index --&gt; microseconds</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">load_reactions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">traj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="n">ACTIN_REACTIONS</span><span class="p">,</span> <span class="n">recorded_steps</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time_inc_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Analyze data from a ReaDDy actin trajectory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_reaction_count_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_count_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_reaction_count_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction_name</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_reaction_count_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_count_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_reaction_count_over_time</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">reaction_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the number of times a reaction happened</span>
 <span class="sd">        between each analyzed timestep of the given reaction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">reaction_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">reaction_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reactions</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find reaction: </span><span class="si">{</span><span class="n">reaction_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">[</span><span class="n">reaction_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">reactions</span><span class="p">[</span><span class="n">reaction_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_reaction_rate_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_rate_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_reaction_rate_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction_name</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_reaction_rate_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_reaction_rate_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_reaction_rate_over_time</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">time_inc_s</span><span class="p">,</span> <span class="n">reaction_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the reaction rate per second</span>
 <span class="sd">        at each analyzed timestep of the given reaction</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">reaction_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">reaction_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reactions</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Couldn&#39;t find reaction: </span><span class="si">{</span><span class="n">reaction_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">[</span><span class="n">reaction_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_inc_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">reactions</span><span class="p">[</span><span class="n">reaction_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">/</span> <span class="n">time_inc_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinAnalyzer.analyze_average_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">analyze_average_over_time</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
@@ -348,21 +317,22 @@
             <span class="n">frame_particle_data</span>
         <span class="p">)</span> <span class="o">+</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_daughter_filaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_filamentous_to_total_actin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_filamentous_to_total_actin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_ratio_of_filamentous_to_total_actin</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the ratio of actin in filaments to total actin over time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">free_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">filamentous_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
                     <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_filamentous_actin_types</span><span class="p">(),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
+                    <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">free_actin</span> <span class="o">+</span> <span class="n">filamentous_actin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -371,27 +341,28 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_bound_ATP_actin_to_total_actin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_bound_ATP_actin_to_total_actin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_ratio_of_bound_ATP_actin_to_total_actin</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the ratio of bound ATP-actin to total actin over time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">ATP_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
                     <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_filamentous_ATP_actin_types</span><span class="p">(),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
+                    <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">free_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">filamentous_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
                     <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_filamentous_actin_types</span><span class="p">(),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
+                    <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">free_actin</span> <span class="o">+</span> <span class="n">filamentous_actin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -400,28 +371,29 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_daughter_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_daughter_to_total_actin">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_daughter_to_total_actin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_daughter_to_total_actin"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_daughter_to_total_actin">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_ratio_of_daughter_to_total_actin</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the ratio</span>
 <span class="sd">        [daughter filament actin] / [total actin] over time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">daughter_actin</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">daughter_filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_daughter_filaments</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">daughter_filament</span> <span class="ow">in</span> <span class="n">daughter_filaments</span><span class="p">:</span>
                 <span class="n">daughter_actin</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">daughter_filament</span><span class="p">)</span>
             <span class="n">free_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">filamentous_actin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
                     <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_filamentous_actin_types</span><span class="p">(),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
+                    <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">free_actin</span> <span class="o">+</span> <span class="n">filamentous_actin</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -430,50 +402,53 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_mother_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_mother_filament_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_mother_filament_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_mother_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_mother_filament_lengths">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_mother_filament_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the number of monomers in each mother filament</span>
 <span class="sd">        in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">mother_filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_mother_filaments</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
             <span class="k">for</span> <span class="n">filament</span> <span class="ow">in</span> <span class="n">mother_filaments</span><span class="p">:</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_daughter_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_daughter_filament_lengths">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_daughter_filament_lengths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_daughter_filament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_daughter_filament_lengths">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_daughter_filament_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the number of monomers in each daughter filament</span>
 <span class="sd">        in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">daughter_filaments</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_daughter_filaments</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
             <span class="k">for</span> <span class="n">filament</span> <span class="ow">in</span> <span class="n">daughter_filaments</span><span class="p">:</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_bound_to_total_arp23</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_bound_to_total_arp23">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_ratio_of_bound_to_total_arp23</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the ratio of bound to total arp2/3 complexes over time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">bound_arp23</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">free_arp23</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="p">[</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="p">[</span><span class="s2">&quot;arp2#free&quot;</span><span class="p">],</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">free_arp23</span> <span class="o">+</span> <span class="n">bound_arp23</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -482,7 +457,8 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_ratio_of_capped_ends_to_total_ends</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_ratio_of_capped_ends_to_total_ends">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_ratio_of_capped_ends_to_total_ends</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the ratio of barbed ends capped</span>
 <span class="sd">        with capping protein to all barbed ends over time</span>
@@ -493,15 +469,15 @@
             <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">capped_ends</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="n">capped_end_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="n">capped_end_types</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">growing_ends</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
-                    <span class="n">growing_end_types</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+                    <span class="n">growing_end_types</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">growing_ends</span> <span class="o">+</span> <span class="n">capped_ends</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -710,15 +686,16 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span><span class="n">v_main</span><span class="p">,</span> <span class="n">v_branch</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_branch_angles"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_branch_angles">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_branch_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_branch_angles"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_branch_angles">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_branch_angles</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the angles between mother and daughter filaments</span>
 <span class="sd">        at each branch point in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">branch_angles</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_branch_angles</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch_angles</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -811,28 +788,30 @@
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">long_pitch</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_short_helix_pitches"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_short_helix_pitches">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_short_helix_pitches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_short_helix_pitches"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_short_helix_pitches">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_short_helix_pitches</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the pitch of short helices between all actins</span>
 <span class="sd">        on each filament in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">helix_pitches</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_short_helix_pitches</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helix_pitches</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_long_helix_pitches"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_long_helix_pitches">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_long_helix_pitches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_long_helix_pitches"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_long_helix_pitches">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_long_helix_pitches</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the pitch of long helices between all actins</span>
 <span class="sd">        on each filament in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">helix_pitches</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_long_helix_pitches</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helix_pitches</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -899,34 +878,36 @@
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">line_pos</span> <span class="o">-</span> <span class="n">pos</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_filament_straightness"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_filament_straightness">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_filament_straightness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_filament_straightness"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_filament_straightness">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_filament_straightness</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a list of the distances from each actin axis position</span>
 <span class="sd">        to the ideal axis position on each filament in each frame of the trajectory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">straightness</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_frame_distance_from_straight</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic_boundary</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
             <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">straightness</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_free_actin_concentration_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_free_actin_concentration_over_time">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_free_actin_concentration_over_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_free_actin_concentration_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_free_actin_concentration_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_free_actin_concentration_over_time</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an array of the concentration of free actin at each step</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_concentration</span><span class="p">(</span>
                     <span class="nb">len</span><span class="p">(</span>
                         <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
                             <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_free_actin_types</span><span class="p">(),</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
+                            <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span>
                         <span class="p">)</span>
                     <span class="p">),</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">box_size</span><span class="p">,</span>
+                    <span class="n">box_size</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div></div>
