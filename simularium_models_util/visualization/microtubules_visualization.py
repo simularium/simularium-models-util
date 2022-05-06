@@ -117,7 +117,7 @@ class MicrotubulesVisualization:
         # convert
         data = ReaddyData(
             meta_data=MetaData(
-                box_size=np.array([box_size, box_size, box_size]),
+                box_size=box_size,
             ),
             timestep=0.1,
             path_to_readdy_h5=path_to_readdy_h5,

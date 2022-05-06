@@ -4,7 +4,7 @@
     "containerProperties": {
         "image": "108503617402.dkr.ecr.us-west-2.amazonaws.com/blairl/readdy-microtubules",
         "vcpus": 4,
-        "memory": 1000,
+        "memory": 15000,
         "environment": [
             {"name": "SIMULATION_TYPE", "value": "AWS"},
             {"name": "S3_INPUT_URL", "value": "s3://readdy-working-bucket/"},

@@ -126,8 +126,8 @@ class ReaddyUtil:
         """
         result = np.copy(pos2)
         for dim in range(3):
-            if abs(pos2[dim] - pos1[dim]) > box_size / 2.0:
-                result[dim] -= pos2[dim] / abs(pos2[dim]) * box_size
+            if abs(pos2[dim] - pos1[dim]) > box_size[dim] / 2.0:
+                result[dim] -= pos2[dim] / abs(pos2[dim]) * box_size[dim]
         return result
 
     @staticmethod
@@ -152,22 +152,22 @@ class ReaddyUtil:
         """
         calculates the number of particles for a species
             at concentration C [uM]
-            in cube container with dimensions dim [nm]
+            in a cuboidal container with dimensions dim = dimx, dimy, dimz [nm]
 
             returns unitless number
         """
-        return int(round(C * 1e-30 * 6.022e23 * np.power(dim, 3.0)))
+        return int(round(C * 1e-30 * 6.022e23 * np.prod(dim)))
 
     @staticmethod
     def calculate_concentration(n, dim):
         """
         calculates the concentration for a species
             with number of particles n
-            in cube container with dimensions dim [nm]
+            in a cuboidal container with dimensions dim = dimx, dimy, dimz [nm]
 
             returns concentration [uM]
         """
-        return n / (1e-30 * 6.022e23 * np.power(dim, 3.0))
+        return n / (1e-30 * 6.022e23 * np.prod(dim))
 
     @staticmethod
     def vertex_not_found(topology, verbose, error_msg, debug_msg):
@@ -556,17 +556,17 @@ class ReaddyUtil:
         pos = box_size * np.random.uniform(size=(3)) - box_size / 2
         face = random.randint(0, 5)
         if face == 0:
-            pos[0] = -box_size / 2
+            pos[0] = -box_size[0] / 2
         elif face == 1:
-            pos[0] = box_size / 2
+            pos[0] = box_size[0] / 2
         elif face == 2:
-            pos[1] = -box_size / 2
+            pos[1] = -box_size[1] / 2
         elif face == 3:
-            pos[1] = box_size / 2
+            pos[1] = box_size[1] / 2
         elif face == 4:
-            pos[2] = -box_size / 2
+            pos[2] = -box_size[2] / 2
         else:
-            pos[2] = box_size / 2
+            pos[2] = box_size[2] / 2
         return pos
 
     @staticmethod
@@ -1195,3 +1195,14 @@ class ReaddyUtil:
                 else:
                     print(f"Couldn't find {rxn_name} in ReaDDy reactions.")
         return reactions_df
+
+    # read in box size
+    @staticmethod
+    def get_box_size(input_size):
+        if isinstance(input_size, str):
+            lengths = input_size.split(',')
+            if len(lengths) != 3:
+                print('INCORRECT BOX SIZE. PLEASE CHECK INPUT FILE.')
+            return np.array([float(length) for length in lengths])
+        else:
+            return np.array([input_size]*3)

@@ -9,7 +9,7 @@ import psutil
 
 from simularium_models_util.microtubules import MicrotubulesSimulation
 from simularium_models_util.visualization import MicrotubulesVisualization
-from simularium_models_util import RepeatedTimer
+from simularium_models_util import RepeatedTimer, ReaddyUtil
 
 
 def report_memory_usage():
@@ -37,6 +37,8 @@ def main():
     parameters.transpose()
     run_name = list(parameters)[0]
     parameters = parameters[run_name]
+    # read in box size
+    parameters["box_size"] = ReaddyUtil.get_box_size(parameters["box_size"])
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + run_name
