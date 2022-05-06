@@ -1256,4 +1256,4 @@ class ReaddyUtil:
                 print('INCORRECT BOX SIZE. PLEASE CHECK INPUT FILE.')
             return np.array([float(length) for length in lengths])
         else:
-            return np.array([input_size]*3)
+            return np.array([float(input_size)]*3)

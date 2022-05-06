@@ -2260,7 +2260,7 @@ class ActinUtil:
         if bool(parameters["periodic_boundary"]):
             return
         # 1.0 margin on each side
-        box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)
+        box_potential_size = np.array(parameters["box_size"] - 2.0)
         ActinUtil.add_box_potential(
             particle_types=ActinUtil.get_all_particle_types(),
             origin=-0.5 * box_potential_size,

@@ -31,7 +31,10 @@ def main():
     )
     args = parser.parse_args()
     parameters = pandas.read_excel(
-        args.params_path, sheet_name="microtubules", usecols=[0, int(args.data_column)]
+        args.params_path,
+        sheet_name="microtubules",
+        usecols=[0, int(args.data_column)],
+        dtype=object,
     )
     parameters.set_index("name", inplace=True)
     parameters.transpose()

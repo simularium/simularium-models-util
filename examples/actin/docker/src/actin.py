@@ -19,7 +19,7 @@ from simularium_models_util.actin import (
     ActinTestData,
 )
 from simularium_models_util.visualization import ActinVisualization
-from simularium_models_util import RepeatedTimer
+from simularium_models_util import RepeatedTimer, ReaddyUtil
 
 
 def report_hardware_usage():
@@ -47,12 +47,17 @@ def main():
     )
     args = parser.parse_args()
     parameters = pandas.read_excel(
-        args.params_path, sheet_name="actin", usecols=[0, int(args.data_column)]
+        args.params_path,
+        sheet_name="actin",
+        usecols=[0, int(args.data_column)],
+        dtype=object,
     )
     parameters.set_index("name", inplace=True)
     parameters.transpose()
     run_name = list(parameters)[0]
     parameters = parameters[run_name]
+    # read in box size
+    parameters["box_size"] = ReaddyUtil.get_box_size(parameters["box_size"])
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
