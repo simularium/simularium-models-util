@@ -817,6 +817,30 @@ class ActinGenerator:
         return result
 
     @staticmethod
+    def setup_fixed_monomers(monomers, parameters):
+        """
+        Fix monomers at either end of the orthogonal actin seed
+        """
+        if not parameters["orthogonal_seed"]:
+            return monomers
+        top_id = list(monomers["topologies"].keys())[0]
+        n_monomers = len(monomers["topologies"][top_id]["particle_ids"])
+        for monomer_index in range(int(parameters["n_fixed_monomers_pointed"])):
+            type_name = monomers["particles"][monomer_index]["type_name"]
+            type_name = ReaddyUtil.particle_type_with_flags(
+                type_name, ["fixed"], [], reverse_sort=True
+            )
+            monomers["particles"][monomer_index]["type_name"] = type_name
+        for i in range(int(parameters["n_fixed_monomers_barbed"])):
+            monomer_index = n_monomers - 1 - i
+            type_name = monomers["particles"][monomer_index]["type_name"]
+            type_name = ReaddyUtil.particle_type_with_flags(
+                type_name, ["fixed"], [], reverse_sort=True
+            )
+            monomers["particles"][monomer_index]["type_name"] = type_name
+        return monomers
+
+    @staticmethod
     def particles_to_string(particle_ids, particles, info=""):
         result = ""
         for particle_id in particle_ids:

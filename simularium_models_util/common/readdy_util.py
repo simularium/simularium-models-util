@@ -382,42 +382,52 @@ class ReaddyUtil:
         return True
 
     @staticmethod
+    def particle_type_with_flags(
+        particle_type, add_flags, remove_flags, reverse_sort=False
+    ):
+        """
+        get particle type with the flags added and removed
+        """
+        if "#" not in particle_type:
+            for f in range(len(add_flags)):
+                particle_type = particle_type + ("_" if f > 0 else "#") + add_flags[f]
+            return particle_type
+        flag_string = particle_type[particle_type.index("#") + 1 :]
+        flags = flag_string.split("_")
+        polymer_indices = ""
+        if "tubulin" in particle_type and len(flags) > 1:
+            polymer_indices = f"_{flags[-2]}_{flags[-1]}"
+            flags = flags[:-2]
+        for flag in remove_flags:
+            if flag in flags:
+                flags.remove(flag)
+        for flag in add_flags:
+            if flag not in flags:
+                flags.append(flag)
+        if "" in flags:
+            flags.remove("")
+        if len(flags) < 1:
+            return particle_type[: particle_type.index("#")]
+        flags.sort(reverse=reverse_sort)
+        flag_string = ""
+        for f in range(len(flags)):
+            flag_string = flag_string + ("_" if f > 0 else "") + flags[f]
+        particle_type = particle_type[: particle_type.index("#")]
+        new_type = f"{particle_type}#{flag_string}{polymer_indices}"
+        return new_type
+
+    @staticmethod
     def set_flags(
         topology, recipe, vertex, add_flags, remove_flags, reverse_sort=False
     ):
         """
         set flags on a vertex
         """
-        pt = topology.particle_type_of_vertex(vertex)
-        if "#" not in pt:
-            for f in range(len(add_flags)):
-                pt = pt + ("_" if f > 0 else "#") + add_flags[f]
-            recipe.change_particle_type(vertex, pt)
-        else:
-            flag_string = pt[pt.index("#") + 1 :]
-            flags = flag_string.split("_")
-            polymer_indices = ""
-            if "tubulin" in pt and len(flags) > 1:
-                polymer_indices = f"_{flags[-2]}_{flags[-1]}"
-                flags = flags[:-2]
-            for flag in remove_flags:
-                if flag in flags:
-                    flags.remove(flag)
-            for flag in add_flags:
-                if flag not in flags:
-                    flags.append(flag)
-            if "" in flags:
-                flags.remove("")
-            if len(flags) < 1:
-                recipe.change_particle_type(vertex, pt[: pt.index("#")])
-                return
-            flags.sort(reverse=reverse_sort)
-            flag_string = ""
-            for f in range(len(flags)):
-                flag_string = flag_string + ("_" if f > 0 else "") + flags[f]
-            particle_type = pt[: pt.index("#")]
-            new_type = f"{particle_type}#{flag_string}{polymer_indices}"
-            recipe.change_particle_type(vertex, new_type)
+        particle_type = topology.particle_type_of_vertex(vertex)
+        particle_type = ReaddyUtil.particle_type_with_flags(
+            particle_type, add_flags, remove_flags, reverse_sort
+        )
+        recipe.change_particle_type(vertex, particle_type)
 
     @staticmethod
     def calculate_polymer_number(number, offset):

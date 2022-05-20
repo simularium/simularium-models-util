@@ -29,6 +29,11 @@ def set_displacements(d):
     return d
 
 
+time_index = 0
+init_monomer_positions = {}
+pointed_monomer_positions = []
+
+
 class ActinUtil:
     def __init__(self, parameters, displacements=None):
         """
@@ -1360,6 +1365,7 @@ class ActinUtil:
         """
         reaction function to translate particles by the displacements
         """
+        global time_index
         recipe = readdy.StructuralReactionRecipe(topology)
         for vertex_id in displacements:
             v = ReaddyUtil.get_vertex_with_id(
@@ -1367,8 +1373,15 @@ class ActinUtil:
                 vertex_id,
                 error_msg=f"Couldn't find particle {vertex_id} to displace",
             )
-            pos = ReaddyUtil.get_vertex_position(topology, v)
-            recipe.change_particle_position(v, pos + displacements[vertex_id])
+            vertex_pos = ReaddyUtil.get_vertex_position(topology, v)
+            new_pos = displacements[vertex_id]["get_translation"](
+                time_index,
+                vertex_id,
+                vertex_pos,
+                displacements[vertex_id]["parameters"],
+            )
+            recipe.change_particle_position(v, new_pos)
+        time_index += 1
         return recipe
 
     @staticmethod
@@ -3096,4 +3109,50 @@ class ActinUtil:
             topology_type="Actin-Polymer",
             reaction_function=ActinUtil.reaction_function_translate,
             rate_function=ReaddyUtil.rate_function_infinity,
+        )
+
+    @staticmethod
+    def get_position_for_tangent_translation(
+        time_index, monomer_id, monomer_pos, displacement_parameters
+    ):
+        return (
+            displacement_parameters["total_displacement_nm"]
+            / displacement_parameters["total_steps"]
+        )
+
+    @staticmethod
+    def get_position_for_radial_translation(
+        time_index, monomer_id, monomer_pos, displacement_parameters
+    ):
+        global init_monomer_positions, pointed_monomer_positions
+        if time_index == 0 and monomer_id > 0:
+            init_monomer_positions[monomer_id] = monomer_pos
+        if monomer_id == 0:
+            pointed_monomer_positions.append(monomer_pos)
+        radius = displacement_parameters["radius_nm"]
+        theta_init = displacement_parameters["theta_init_radians"]
+        theta_final = displacement_parameters["theta_final_radians"]
+        d_theta = (theta_final - theta_init) / displacement_parameters["total_steps"]
+        theta_1 = theta_init + time_index * d_theta
+        theta_2 = theta_init + (time_index + 1) * d_theta
+        dx = radius * (np.cos(theta_2) - np.cos(theta_1))
+        dy = radius * (np.sin(theta_2) - np.sin(theta_1))
+        d_pos_0 = np.array([dx, dy, 0])
+        if monomer_id == 0:
+            return monomer_pos + d_pos_0
+        v_pos_init = init_monomer_positions[monomer_id] - pointed_monomer_positions[0]
+        pos_magnitude = np.linalg.norm(v_pos_init)
+        v_pos_init = ReaddyUtil.normalize(v_pos_init)
+        v_pos_1 = ReaddyUtil.rotate(
+            v=v_pos_init,
+            axis=np.array([0, 0, 1]),
+            angle=time_index * d_theta,
+        )
+        v_pos_2 = ReaddyUtil.rotate(
+            v=v_pos_init,
+            axis=np.array([0, 0, 1]),
+            angle=(time_index + 1) * d_theta,
+        )
+        return (monomer_pos - pos_magnitude * v_pos_1) + (
+            d_pos_0 + pos_magnitude * v_pos_2
         )

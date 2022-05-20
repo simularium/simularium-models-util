@@ -46,7 +46,7 @@ def main():
     rt = RepeatedTimer(600, report_memory_usage)  # every 10 min
     try:
         kinesin_simulation.simulation.run(
-            int(parameters["total_steps"]), parameters["timestep"]
+            int(parameters["total_steps"]), parameters["internal_timestep"]
         )
         KinesinVisualization.visualize_kinesin(
             parameters["name"] + ".h5", parameters["box_size"], []

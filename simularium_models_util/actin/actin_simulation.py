@@ -11,7 +11,10 @@ from .actin_structure import ActinStructure
 
 class ActinSimulation:
     def __init__(
-        self, parameters, record=False, save_checkpoints=False, displacements=None
+        self,
+        parameters,
+        record=False,
+        save_checkpoints=False,
     ):
         """
         Creates a ReaDDy branched actin simulation
@@ -36,7 +39,9 @@ class ActinSimulation:
         nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, verbose
         """
         self.parameters = parameters
-        self.actin_util = ActinUtil(self.parameters, displacements)
+        self.actin_util = ActinUtil(
+            self.parameters, self.get_pointed_end_displacements()
+        )
         self.create_actin_system()
         self.simulation = ReaddyUtil.create_readdy_simulation(
             self.system,
@@ -143,7 +148,59 @@ class ActinSimulation:
         self.actin_util.add_arp23_unbind_reaction(self.system)
         self.actin_util.add_debranch_reaction(self.system)
         self.actin_util.add_cap_unbind_reaction(self.system)
-        self.actin_util.add_translate_reaction(self.system)
+        if self.do_pointed_end_translation():
+            self.actin_util.add_translate_reaction(self.system)
+
+    def do_pointed_end_translation(self):
+        return (
+            self.parameters["orthogonal_seed"]
+            and int(self.parameters["n_fixed_monomers_pointed"]) > 0
+            and (
+                self.parameters["displace_pointed_end_tangent"]
+                or self.parameters["displace_pointed_end_radial"]
+            )
+        )
+
+    def get_pointed_end_displacements(self):
+        """
+        Get parameters for translation of the pointed end of an orthogonal seed
+        """
+        if not self.do_pointed_end_translation():
+            return {}
+        if (
+            self.parameters["displace_pointed_end_tangent"]
+            and self.parameters["displace_pointed_end_radial"]
+        ):
+            raise Exception(
+                "Cannot apply tangent and radial displacements simultaneously"
+            )
+        if self.parameters["displace_pointed_end_tangent"]:
+            displacement = {
+                "get_translation": ActinUtil.get_position_for_tangent_translation,
+                "parameters": {
+                    "total_displacement_nm": np.array(
+                        [self.parameters["tangent_displacement_nm"], 0, 0]
+                    ),
+                    "total_steps": float(self.parameters["total_steps"]),
+                },
+            }
+        if self.parameters["displace_pointed_end_radial"]:
+            displacement = {
+                "get_translation": ActinUtil.get_position_for_radial_translation,
+                "parameters": {
+                    "radius_nm": self.parameters["radial_displacement_radius_nm"],
+                    "theta_init_radians": np.pi,
+                    "theta_final_radians": (
+                        1 + np.deg2rad(self.parameters["radial_displacement_angle_deg"])
+                    )
+                    * np.pi,  # 20 deg
+                    "total_steps": float(self.parameters["total_steps"]),
+                },
+            }
+        result = {}
+        for monomer_index in range(int(self.parameters["n_fixed_monomers_pointed"])):
+            result[monomer_index] = displacement
+        return result
 
     def add_random_monomers(self):
         """
