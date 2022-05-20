@@ -114,3 +114,7 @@ ENV/
 # Simularium
 *.simularium
 *.h5
+
+# outputs
+*_logs.txt
+*~$template.xlsx

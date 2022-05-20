@@ -646,7 +646,6 @@ class ActinUtil:
                 topology["type_name"], types, np.array(positions)
             )
             added_edges = []
-            test = []
             for index, particle_id in enumerate(topology["particle_ids"]):
                 for neighbor_id in monomer_data["particles"][particle_id][
                     "neighbor_ids"
@@ -659,7 +658,6 @@ class ActinUtil:
                         top.get_graph().add_edge(index, neighbor_index)
                         added_edges.append((index, neighbor_index))
                         added_edges.append((neighbor_index, index))
-                        test.append((index, neighbor_index))
             topologies.append(top)
         return topologies
 

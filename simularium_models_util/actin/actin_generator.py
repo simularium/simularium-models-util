@@ -8,7 +8,8 @@ import numpy as np
 from ..common import ReaddyUtil, ParticleData
 from .actin_structure import ActinStructure, FiberData
 
-next_id = 0
+next_monomer_id = 0
+next_fiber_id = -1
 
 
 class ActinGenerator:
@@ -17,16 +18,48 @@ class ActinGenerator:
     """
 
     @staticmethod
-    def set_next_id(_id):
-        global next_id
-        next_id = _id
+    def set_next_monomer_id(use_uuids=True):
+        global next_monomer_id
+        next_monomer_id = -1 if use_uuids else 0
 
     @staticmethod
-    def get_next_id():
-        global next_id
-        if next_id >= 0:
-            result = next_id
-            next_id += 1
+    def get_next_monomer_id():
+        global next_monomer_id
+        if next_monomer_id >= 0:
+            result = next_monomer_id
+            next_monomer_id += 1
+        else:
+            result = str(uuid.uuid4())
+        return result
+
+    @staticmethod
+    def _get_max_fiber_id(fibers_data):
+        """
+        get the largest fiber id
+        """
+        max_id = 0
+        for fiber in fibers_data:
+            if fiber.fiber_id > max_id:
+                max_id = fiber.fiber_id
+        return max_id
+
+    @staticmethod
+    def set_next_fiber_id(fibers_data):
+        global next_fiber_id
+        if len(fibers_data) > 0:
+            if isinstance(fibers_data[0].fiber_id, str):
+                next_fiber_id = -1
+            else:
+                next_fiber_id = ActinGenerator._get_max_fiber_id(fibers_data) + 1
+        else:
+            next_fiber_id = -1
+
+    @staticmethod
+    def get_next_fiber_id():
+        global next_fiber_id
+        if next_fiber_id >= 0:
+            result = next_fiber_id
+            next_fiber_id += 1
         else:
             result = str(uuid.uuid4())
         return result
@@ -182,7 +215,7 @@ class ActinGenerator:
                     fiber_tangents[i],
                     direction * ActinStructure.actin_to_actin_axis_angle(),
                 )
-                new_particle_id = ActinGenerator.get_next_id()
+                new_particle_id = ActinGenerator.get_next_monomer_id()
                 particle_ids.append(new_particle_id)
                 particles[new_particle_id] = ParticleData(
                     unique_id=new_particle_id,
@@ -222,8 +255,8 @@ class ActinGenerator:
             if closest_actin_index < 0:
                 return particles, particle_ids
             # create arp2 and arp3
-            arp2_id = ActinGenerator.get_next_id()
-            arp3_id = ActinGenerator.get_next_id()
+            arp2_id = ActinGenerator.get_next_monomer_id()
+            arp3_id = ActinGenerator.get_next_monomer_id()
             actin_arp2_id = particle_ids[closest_actin_index]
             actin_arp3_id = particle_ids[closest_actin_index + 1]
             actin_arp_ids += [actin_arp2_id, actin_arp3_id]
@@ -329,9 +362,9 @@ class ActinGenerator:
             particles,
         )
         # create branch junction monomers (arp2, arp3, first daughter actin)
-        arp2_id = ActinGenerator.get_next_id()
-        arp3_id = ActinGenerator.get_next_id()
-        branch_actin_id = ActinGenerator.get_next_id()
+        arp2_id = ActinGenerator.get_next_monomer_id()
+        arp3_id = ActinGenerator.get_next_monomer_id()
+        branch_actin_id = ActinGenerator.get_next_monomer_id()
         branch_state = "_barbed" if len(daughter_particle_ids) == 0 else ""
         particles[branch_actin_id] = ParticleData(
             unique_id=branch_actin_id,
@@ -446,7 +479,7 @@ class ActinGenerator:
                         pointed_particle_ids[1], particles
                     )
             # get mother actin bound to arp2
-            actin_arp2_id = ActinGenerator.get_next_id()
+            actin_arp2_id = ActinGenerator.get_next_monomer_id()
             last_pointed_id = pointed_particle_ids[len(pointed_particle_ids) - 1]
             particles[actin_arp2_id] = ParticleData(
                 unique_id=actin_arp2_id,
@@ -644,13 +677,23 @@ class ActinGenerator:
         return intersection
 
     @staticmethod
-    def get_cropped_fibers(fibers_data, child_box_center, child_box_size):
+    def _create_fiber(current_chunk, source_fiber, found_chunk):
+        """
+        create a FiberData for a cropped chunk of a source fiber
+        """
+        if not found_chunk:
+            fiber_id = source_fiber.fiber_id
+        else:
+            new_fiber_id = ActinGenerator.get_next_fiber_id()
+            fiber_id = new_fiber_id
+        return FiberData(fiber_id, current_chunk, source_fiber.type_name)
+
+    @staticmethod
+    def get_cropped_fibers(fibers_data, min_extent, max_extent, position_offset=None):
         """
         crop the fiber data to a cube volume
-        defined by child_box_center
-        (center of cropped box in parent box coordinates)
-        and child_box_size
-        and center it around the box_center as the origin
+        defined by min_extent and max_extent
+        and apply the position_offset
 
         fibers_data: List[FiberData]
         (FiberData for mother fibers only, which should have
@@ -658,112 +701,74 @@ class ActinGenerator:
 
         # TODO handle daughter fiber connections
         """
-        if child_box_center is None or child_box_size is None:
+        if min_extent is None or max_extent is None:
             return fibers_data
-        min_extent, max_extent = ActinGenerator.get_extents(
-            child_box_center, child_box_size
-        )
+        if position_offset is None:
+            position_offset = np.zeros(3)
+        ActinGenerator.set_next_fiber_id(fibers_data)
+        found_chunk = False
         result = []
         for fiber in fibers_data:
             current_chunk = []
             tracing = False
             for i in range(len(fiber.points)):
-                print(f"{i} -----")
                 position_is_in_bounds = ActinGenerator.position_is_in_bounds(
                     fiber.points[i], min_extent, max_extent
                 )
                 if not tracing:
-                    if position_is_in_bounds:
-                        if i == 0:
-                            print("not tracing but in bounds at start")
-                            # start at the current point
-                            current_chunk = [fiber.points[i]]
-                            tracing = True
-                        else:
-                            print("not tracing but in bounds in middle")
-                            # start at the intersection with the bounds
-                            # between the prev and current points
-                            intersection = (
-                                ActinGenerator.get_intersection_point_with_extents(
-                                    fiber.points[i - 1],
-                                    fiber.points[i],
-                                    min_extent,
-                                    max_extent,
-                                )
-                            )
-                            if intersection is not None:
-                                print("start at intersection before point")
-                                current_chunk = [
-                                    intersection,
-                                    fiber.points[i],
-                                ]
-                                tracing = True
-                    else:
-                        print("not tracing and not in bounds")
+                    if i == 0 and position_is_in_bounds:
+                        # start at the first point if it's in bounds
+                        current_chunk = [fiber.points[i] + position_offset]
+                        tracing = True
+                    elif i < len(fiber.points) - 1 or position_is_in_bounds:
                         # start at the intersection with the bounds
-                        # between the current and next points
-                        if i < len(fiber.points) - 1:
-                            intersection = (
-                                ActinGenerator.get_intersection_point_with_extents(
-                                    fiber.points[i],
-                                    fiber.points[i + 1],
-                                    min_extent,
-                                    max_extent,
-                                )
+                        # between the current and either prev or next points
+                        # depending on whether the current point is in bounds
+                        point1_index = i - 1 if position_is_in_bounds else i
+                        point2_index = i if position_is_in_bounds else i + 1
+                        intersection = (
+                            ActinGenerator.get_intersection_point_with_extents(
+                                fiber.points[point1_index],
+                                fiber.points[point2_index],
+                                min_extent,
+                                max_extent,
                             )
-                            if intersection is not None:
-                                print("start at intersection after point")
-                                current_chunk = [
-                                    intersection,
-                                ]
-                                tracing = True
+                        )
+                        if intersection is not None:
+                            current_chunk = [intersection + position_offset]
+                            tracing = True
+
                 else:
-                    if not position_is_in_bounds:
-                        print("tracing and not in bounds")
+                    if position_is_in_bounds:
+                        # continue adding points within the volume
+                        current_chunk.append(fiber.points[i] + position_offset)
+                        if i == len(fiber.points) - 1 and len(current_chunk) > 0:
+                            # end if this is the last point
+                            new_fiber = ActinGenerator._create_fiber(
+                                current_chunk, fiber, found_chunk
+                            )
+                            result.append(new_fiber)
+                            found_chunk = True
+                    else:
                         # end at the intersection with the bounds
                         # between the prev and current points
                         tracing = False
-                        if i > 0 and len(current_chunk) > 0:
-                            intersection = (
-                                ActinGenerator.get_intersection_point_with_extents(
-                                    fiber.points[i - 1],
-                                    fiber.points[i],
-                                    min_extent,
-                                    max_extent,
-                                    -1,
-                                )
+                        intersection = (
+                            ActinGenerator.get_intersection_point_with_extents(
+                                fiber.points[i - 1],
+                                fiber.points[i],
+                                min_extent,
+                                max_extent,
+                                -1,
                             )
-                            if intersection is not None:
-                                print("end at intersection")
-                                print(f"add {intersection}")
-                                current_chunk.append(intersection)
-                            if len(current_chunk) > 1:
-                                for index, point in enumerate(current_chunk):
-                                    print(f"{point} - {child_box_center}")
-                                    current_chunk[index] = point - child_box_center
-                                print("finished chunk")
-                                result.append(
-                                    FiberData(
-                                        fiber.fiber_id, current_chunk, fiber.type_name
-                                    )
-                                )
-                    else:
-                        # continue adding points within the volume
-                        print("tracing and in bounds")
-                        print(f"add {fiber.points[i]}")
-                        current_chunk.append(fiber.points[i])
-                        if i == len(fiber.points) - 1 and len(current_chunk) > 1:
-                            print("end at last point")
-                            # end if this is the last point
-                            for index, point in enumerate(current_chunk):
-                                print(f"{point} - {child_box_center}")
-                                current_chunk[index] = point - child_box_center
-                            print("finished chunk")
-                            result.append(
-                                FiberData(
-                                    fiber.fiber_id, current_chunk, fiber.type_name
-                                )
+                        )
+                        if intersection is not None and len(current_chunk) > 0:
+                            current_chunk.append(intersection + position_offset)
+                            new_fiber = ActinGenerator._create_fiber(
+                                current_chunk, fiber, found_chunk
                             )
+                            result.append(new_fiber)
+                            found_chunk = True
         return result
 
     @staticmethod
@@ -781,10 +786,16 @@ class ActinGenerator:
             "topologies": {},
             "particles": {},
         }
-        ActinGenerator.set_next_id(-1 if use_uuids else 0)
-        cropped_fiber_data = ActinGenerator.get_cropped_fibers(
-            fibers_data, child_box_center, child_box_size
-        )
+        ActinGenerator.set_next_monomer_id(use_uuids)
+        if child_box_center is not None and child_box_size is not None:
+            min_extent, max_extent = ActinGenerator.get_extents(
+                child_box_center, child_box_size
+            )
+            cropped_fiber_data = ActinGenerator.get_cropped_fibers(
+                fibers_data, min_extent, max_extent, -1 * child_box_center
+            )
+        else:
+            cropped_fiber_data = fibers_data
         for fiber in cropped_fiber_data:
             particles, particle_ids = ActinGenerator.get_monomers_for_fiber(
                 fiber,
@@ -795,7 +806,7 @@ class ActinGenerator:
                 np.zeros(3),
                 1,
             )
-            result["topologies"][ActinGenerator.get_next_id()] = {
+            result["topologies"][ActinGenerator.get_next_monomer_id()] = {
                 "type_name": "Actin-Polymer",
                 "particle_ids": particle_ids,
             }

@@ -1,3 +1,20 @@
+# Develop locally
+
+To set up your environment with a local editable install of `simularium_model_utils`:
+```bash
+cd [path to root of repo]
+conda env create -f env.yml
+conda activate myenv
+pip install -e .[dev]
+# or on mac
+pip install -e .\[dev\]
+```
+Run example model, create outputs/ directory and logs:
+```bash
+cd [model]
+python docker/src/[model].py template.xlsx 1 test
+```
+
 # Build Docker Image
 
 To install docker:<br/>

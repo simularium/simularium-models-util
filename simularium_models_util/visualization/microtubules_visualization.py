@@ -6,7 +6,7 @@ import os
 import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import MetaData, UnitData
+from simulariumio import MetaData, UnitData, DisplayData, DISPLAY_TYPE
 from ..microtubules import MicrotubulesUtil
 
 
@@ -16,7 +16,7 @@ class MicrotubulesVisualization:
     """
 
     @staticmethod
-    def get_mapping_for_all_polymer_types(types_mapping):
+    def get_display_data_for_all_polymer_types(raw_display_data):
         """
         creates a dictionary mapping particle type for all polymer types to a value
         for a dictionary of types and values
@@ -24,10 +24,10 @@ class MicrotubulesVisualization:
         returns dictionary mapping all types to values
         """
         result = {}
-        for particle_type in types_mapping:
+        for particle_type in raw_display_data:
             types = MicrotubulesUtil.get_all_polymer_tubulin_types(particle_type)
             for t in types:
-                result[t] = types_mapping[particle_type]
+                result[t] = raw_display_data[particle_type]
         return result
 
     @staticmethod
@@ -37,35 +37,65 @@ class MicrotubulesVisualization:
         """
         # radii
         tubulin_radius = 2.0
-        radii = {
-            "tubulinA#GTP_": tubulin_radius,
-            "tubulinA#GDP_": tubulin_radius,
-            "tubulinB#GTP_": tubulin_radius,
-            "tubulinB#GDP_": tubulin_radius,
-            "tubulinA#GTP_bent_": tubulin_radius,
-            "tubulinA#GDP_bent_": tubulin_radius,
-            "tubulinB#GTP_bent_": tubulin_radius,
-            "tubulinB#GDP_bent_": tubulin_radius,
+        display_type = DISPLAY_TYPE.SPHERE
+        polymer_display_data = {
+            "tubulinA#GTP_": DisplayData(
+                name="tubulinA#GTP",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinA#GDP_": DisplayData(
+                name="tubulinA#GDP",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinB#GTP_": DisplayData(
+                name="tubulinB#GTP",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinB#GDP_": DisplayData(
+                name="tubulinB#GDP",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinA#GTP_bent_": DisplayData(
+                name="tubulinA#GTP_bent",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinA#GDP_bent_": DisplayData(
+                name="tubulinA#GDP_bent",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinB#GTP_bent_": DisplayData(
+                name="tubulinB#GTP_bent",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinB#GDP_bent_": DisplayData(
+                name="tubulinB#GDP_bent",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
         }
-        radii = MicrotubulesVisualization.get_mapping_for_all_polymer_types(radii)
-        radii["tubulinA#free"] = tubulin_radius
-        radii["tubulinB#free"] = tubulin_radius
-        # type grouping
-        type_grouping = {}
-        group_types = {
-            "tubulinA#GTP",
-            "tubulinA#GDP",
-            "tubulinB#GTP",
-            "tubulinB#GDP",
-            "tubulinA#GTP_bent",
-            "tubulinA#GDP_bent",
-            "tubulinB#GTP_bent",
-            "tubulinB#GDP_bent",
+        display_data = MicrotubulesVisualization.get_display_data_for_all_polymer_types(
+            polymer_display_data
+        )
+        dimer_display_data = {
+            "tubulinA#free": DisplayData(
+                name="tubulinA#free",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
+            "tubulinB#free": DisplayData(
+                name="tubulinB#free",
+                radius=tubulin_radius,
+                display_type=display_type,
+            ),
         }
-        for group_type in group_types:
-            type_grouping[group_type] = MicrotubulesUtil.get_all_polymer_tubulin_types(
-                group_type + "_"
-            )
+        display_data = dict(display_data, **dimer_display_data)
         # types to ignore
         ignore_types = [
             "site#out",
@@ -91,8 +121,7 @@ class MicrotubulesVisualization:
             ),
             timestep=0.1,
             path_to_readdy_h5=path_to_readdy_h5,
-            radii=radii,
-            type_grouping=type_grouping,
+            display_data=display_data,
             time_units=UnitData("ns"),
             spatial_units=UnitData("nm"),
             ignore_types=ignore_types,
