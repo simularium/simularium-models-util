@@ -25,17 +25,28 @@ def main():
     parser.add_argument(
         "periodic_boundary", help="is there a periodic boundary condition?"
     )
+    parser.add_argument(
+        "plot_bend_twist", help="calculate bend/twist plots? otherwise calculate polymerization plots"
+    )
     args = parser.parse_args()
     dir_path = args.dir_path
     for file in os.listdir(dir_path):
         if file.endswith(".h5"):
             file_path = os.path.join(dir_path, file)
             print(f"visualize {file_path}")
-            plots = ActinVisualization.generate_plots(
-                file_path, float(args.box_size), 10, args.periodic_boundary
-            )
+            if args.plot_bend_twist:
+                plots = ActinVisualization.generate_bend_twist_plots(
+                    file_path, float(args.box_size), 10, args.periodic_boundary
+                )
+            else:
+                plots = ActinVisualization.generate_polymerization_plots(
+                    file_path, float(args.box_size), 10, args.periodic_boundary
+                )
             ActinVisualization.visualize_actin(
-                file_path, float(args.box_size), float(args.total_steps), plots
+                file_path,
+                float(args.box_size),
+                float(args.total_steps),
+                plots,
             )
 
 

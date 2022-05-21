@@ -87,10 +87,10 @@ class ActinVisualization:
             yaxis_title="Average length (monomers)",
             xtrace=times,
             ytraces={
-                "Mother filaments": ActinAnalyzer.analyze_average_over_time(
+                "Mother filaments": ActinAnalyzer.analyze_average_for_series(
                     ActinAnalyzer.analyze_mother_filament_lengths(monomer_data)
                 ),
-                "Daughter filaments": ActinAnalyzer.analyze_average_over_time(
+                "Daughter filaments": ActinAnalyzer.analyze_average_for_series(
                     ActinAnalyzer.analyze_daughter_filament_lengths(monomer_data)
                 ),
             },
@@ -200,8 +200,8 @@ class ActinVisualization:
         angles = ActinAnalyzer.analyze_branch_angles(
             monomer_data, box_size, periodic_boundary
         )
-        mean = ActinAnalyzer.analyze_average_over_time(angles)
-        stddev = ActinAnalyzer.analyze_stddev_over_time(angles)
+        mean = ActinAnalyzer.analyze_average_for_series(angles)
+        stddev = ActinAnalyzer.analyze_stddev_for_series(angles)
         return ScatterPlotData(
             title="Average branch angle",
             xaxis_title="Time (µs)",
@@ -230,13 +230,13 @@ class ActinVisualization:
             xtrace=times,
             ytraces={
                 "Ideal short pitch": np.array(times.shape[0] * [5.9]),
-                "Mean short pitch": ActinAnalyzer.analyze_average_over_time(
+                "Mean short pitch": ActinAnalyzer.analyze_average_for_series(
                     ActinAnalyzer.analyze_short_helix_pitches(
                         monomer_data, box_size, periodic_boundary
                     )
                 ),
                 "Ideal long pitch": np.array(times.shape[0] * [72]),
-                "Mean long pitch": ActinAnalyzer.analyze_average_over_time(
+                "Mean long pitch": ActinAnalyzer.analyze_average_for_series(
                     ActinAnalyzer.analyze_long_helix_pitches(
                         monomer_data, box_size, periodic_boundary
                     )
@@ -260,7 +260,7 @@ class ActinVisualization:
             xtrace=times,
             ytraces={
                 "Filament bending": (
-                    ActinAnalyzer.analyze_average_over_time(
+                    ActinAnalyzer.analyze_average_for_series(
                         ActinAnalyzer.analyze_filament_straightness(
                             monomer_data, box_size, periodic_boundary
                         )
@@ -271,10 +271,16 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def generate_plots(path_to_readdy_h5, box_size, stride=1, periodic_boundary=True):
+    def generate_polymerization_plots(path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None):
         """
         Use an ActinAnalyzer to generate plots of observables
+        for polymerizing actin
         """
+        if plots is None:
+            plots = {
+                "scatter": [],
+                "histogram": [],
+            }
         (
             monomer_data,
             reactions,
@@ -286,28 +292,104 @@ class ActinVisualization:
             timestep=0.1,
             reaction_names=ACTIN_REACTIONS,
         )
-        return {
-            "scatter": [
-                ActinVisualization.get_bound_monomers_plot(monomer_data, times),
-                ActinVisualization.get_avg_length_plot(monomer_data, times),
-                ActinVisualization.get_growth_reactions_plot(reactions, times),
-                ActinVisualization.get_growth_reactions_vs_actin_plot(
-                    reactions, monomer_data, box_size
+        plots["scatter"] += [
+            ActinVisualization.get_bound_monomers_plot(monomer_data, times),
+            ActinVisualization.get_avg_length_plot(monomer_data, times),
+            ActinVisualization.get_growth_reactions_plot(reactions, times),
+            ActinVisualization.get_growth_reactions_vs_actin_plot(
+                reactions, monomer_data, box_size
+            ),
+            # ActinVisualization.get_capped_ends_plot(monomer_data, times),
+            ActinVisualization.get_branch_angle_plot(
+                monomer_data, box_size, periodic_boundary, times
+            ),
+            ActinVisualization.get_helix_pitch_plot(
+                monomer_data, box_size, periodic_boundary, times
+            ),
+            ActinVisualization.get_filament_straightness_plot(
+                monomer_data, box_size, periodic_boundary, times
+            ),
+            ActinVisualization.get_structural_reactions_plot(reactions, times),
+        ]
+        return plots
+
+    @staticmethod
+    def get_total_twist_plot(monomer_data, box_size, periodic_boundary, times):
+        """
+        Add a plot of total twist vs end displacement
+        """
+        return ScatterPlotData(
+            title="Twist along filament",
+            xaxis_title="Pointed end displacement (nm)",
+            yaxis_title="Twist (rotations)",
+            xtrace=ActinAnalyzer.analyze_pointed_end_displacement(monomer_data, box_size, periodic_boundary),
+            ytraces={
+                "Total twist along filament (degrees)": ActinAnalyzer.analyze_total_twist(
+                    monomer_data, box_size, periodic_boundary
                 ),
-                # ActinVisualization.get_capped_ends_plot(monomer_data, times),
-                ActinVisualization.get_branch_angle_plot(
-                    monomer_data, box_size, periodic_boundary, times
-                ),
-                ActinVisualization.get_helix_pitch_plot(
-                    monomer_data, box_size, periodic_boundary, times
-                ),
-                ActinVisualization.get_filament_straightness_plot(
-                    monomer_data, box_size, periodic_boundary, times
-                ),
-                ActinVisualization.get_structural_reactions_plot(reactions, times),
-            ],
-            "histogram": [],
-        }
+            },
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def get_bond_length_plot(monomer_data, box_size, periodic_boundary, times):
+        """
+        Add a plot of bond lengths (lat and long) vs end displacement 
+        (normalize bond lengths relative to theoretical lengths, plot average ± std)
+        """
+        lateral_bond_lengths = ActinAnalyzer.analyze_lateral_bond_lengths(monomer_data, box_size, periodic_boundary)
+        mean_lat = ActinAnalyzer.analyze_average_for_series(lateral_bond_lengths)
+        stddev_lat = ActinAnalyzer.analyze_stddev_for_series(lateral_bond_lengths)
+        longitudinal_bond_lengths = ActinAnalyzer.analyze_longitudinal_bond_lengths(monomer_data, box_size, periodic_boundary)
+        mean_long = ActinAnalyzer.analyze_average_for_series(longitudinal_bond_lengths)
+        stddev_long = ActinAnalyzer.analyze_stddev_for_series(longitudinal_bond_lengths)
+        return ScatterPlotData(
+            title="Bond lengths",
+            xaxis_title="Pointed end displacement (nm)",
+            yaxis_title="Normalized bond length",
+            xtrace=ActinAnalyzer.analyze_pointed_end_displacement(monomer_data, box_size, periodic_boundary),
+            ytraces={
+                "Lateral mean": mean_lat,
+                "Lateral mean - std ": mean_lat - stddev_lat,
+                "Lateral mean + std": mean_lat + stddev_lat,
+                "Longitudinal mean": mean_long,
+                "Longitudinal mean - std": mean_long - stddev_long,
+                "Longitudinal mean + std": mean_long + stddev_long,
+            },
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def generate_bend_twist_plots(path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None):
+        """
+        Use an ActinAnalyzer to generate plots of observables
+        for actin being bent or twisted
+        """
+        if plots is None:
+            plots = {
+                "scatter": [],
+                "histogram": [],
+            }
+        (
+            monomer_data,
+            reactions,
+            times,
+            _,
+        ) = ReaddyUtil.monomer_data_and_reactions_from_file(
+            h5_file_path=path_to_readdy_h5,
+            stride=stride,
+            timestep=0.1,
+            reaction_names=ACTIN_REACTIONS,
+        )
+        plots["scatter"] += [
+            ActinVisualization.get_total_twist_plot(
+                monomer_data, box_size, periodic_boundary, times
+            ),
+            ActinVisualization.get_bond_length_plot(
+                monomer_data, box_size, periodic_boundary, times
+            ),
+        ]
+        return plots
 
     @staticmethod
     def visualize_actin(path_to_readdy_h5, box_size, total_steps, plots=None):

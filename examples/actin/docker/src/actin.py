@@ -65,8 +65,8 @@ def main():
             FiberData(
                 28,
                 [
-                    np.array([-70, 0, 0]),
-                    np.array([70, 0, 0]),
+                    np.array([-75, 0, 0]),
+                    np.array([75, 0, 0]),
                 ],
                 "Actin-Polymer",
             )
@@ -85,9 +85,15 @@ def main():
             int(parameters["total_steps"]), parameters["internal_timestep"]
         )
         try:
-            plots = ActinVisualization.generate_plots(
-                parameters["name"] + ".h5", parameters["box_size"], 10
-            )
+            plots = None
+            if parameters["plot_polymerization"]:
+                plots = ActinVisualization.generate_polymerization_plots(
+                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                )
+            if parameters["plot_bend_twist"]:
+                plots = ActinVisualization.generate_bend_twist_plots(
+                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                )
             ActinVisualization.visualize_actin(
                 parameters["name"] + ".h5",
                 parameters["box_size"],
