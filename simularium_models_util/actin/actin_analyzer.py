@@ -866,6 +866,7 @@ class ActinAnalyzer:
         """
         result = []
         for t in range(len(monomer_data)):
+            skip = False
             filament = ActinAnalyzer._frame_mother_filaments(monomer_data[t]["particles"])[0]
             filament_length = len(filament)
             normals = []
@@ -875,11 +876,21 @@ class ActinAnalyzer:
                 axis_pos = ActinAnalyzer._get_axis_position_for_actin(
                     monomer_data[t]["particles"], actin_ids, box_size, periodic_boundary
                 )
+                if ReaddyUtil.vector_is_invalid(axis_pos):
+                    print(
+                        "Something is wrong with actin structure at "
+                        f"monomer {filament[index]}, skipping twist calculation"
+                    )
+                    skip = True
+                    break
                 if periodic_boundary:
                     axis_pos = ReaddyUtil.get_non_periodic_boundary_position(
                         position, axis_pos, box_size
                     )
                 normals.append(ReaddyUtil.normalize(position - axis_pos))
+            if skip:
+                result.append(0.)
+                continue
             total_angle = 0
             for index in range(len(normals) - 2):
                 total_angle += ReaddyUtil.get_angle_between_vectors(normals[index], normals[index + 2], in_degrees=True)
