@@ -3115,7 +3115,7 @@ class ActinUtil:
     def get_position_for_tangent_translation(
         time_index, monomer_id, monomer_pos, displacement_parameters
     ):
-        return (
+        return monomer_pos + (
             displacement_parameters["total_displacement_nm"]
             / displacement_parameters["total_steps"]
         )
