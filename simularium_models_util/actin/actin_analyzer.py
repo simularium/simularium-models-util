@@ -859,7 +859,7 @@ class ActinAnalyzer:
         return np.array(result)
 
     @staticmethod
-    def analyze_total_twist(monomer_data, box_size, periodic_boundary):
+    def analyze_total_twist(monomer_data, box_size, periodic_boundary, remove_bend=True):
         """
         Get the total twist from monomer normal to monomer normal 
         along the first mother filament in degrees
@@ -870,6 +870,7 @@ class ActinAnalyzer:
             filament = ActinAnalyzer._frame_mother_filaments(monomer_data[t]["particles"])[0]
             filament_length = len(filament)
             normals = []
+            axis_positions = []
             for index in range(1, filament_length - 1):
                 position = monomer_data[t]["particles"][filament[index]]["position"]
                 actin_ids = [filament[index - 1], filament[index], filament[index + 1]]
@@ -887,13 +888,20 @@ class ActinAnalyzer:
                     axis_pos = ReaddyUtil.get_non_periodic_boundary_position(
                         position, axis_pos, box_size
                     )
+                axis_positions.append(axis_pos)
                 normals.append(ReaddyUtil.normalize(position - axis_pos))
             if skip:
                 result.append(0.)
                 continue
             total_angle = 0
             for index in range(len(normals) - 2):
-                total_angle += ReaddyUtil.get_angle_between_vectors(normals[index], normals[index + 2], in_degrees=True)
+                if remove_bend:
+                    tangent = axis_positions[index + 2] - axis_positions[index]
+                    normal1 = ReaddyUtil.get_perpendicular_components_of_vector(normals[index], tangent)
+                    normal2 = ReaddyUtil.get_perpendicular_components_of_vector(normals[index + 2], tangent)                
+                    total_angle += ReaddyUtil.get_angle_between_vectors(normal1, normal2, in_degrees=True)
+                else:               
+                    total_angle += ReaddyUtil.get_angle_between_vectors(normals[index], normals[index + 2], in_degrees=True)                    
             result.append(total_angle / 360.)
         return np.array(result)
 

@@ -324,8 +324,11 @@ class ActinVisualization:
             yaxis_title="Twist (rotations)",
             xtrace=ActinAnalyzer.analyze_pointed_end_displacement(monomer_data, box_size, periodic_boundary),
             ytraces={
-                "Total twist along filament (degrees)": ActinAnalyzer.analyze_total_twist(
-                    monomer_data, box_size, periodic_boundary
+                "Total twist (degrees)": ActinAnalyzer.analyze_total_twist(
+                    monomer_data, box_size, periodic_boundary, remove_bend=False
+                ),
+                "Total twist excluding bend (degrees)": ActinAnalyzer.analyze_total_twist(
+                    monomer_data, box_size, periodic_boundary, remove_bend=True
                 ),
             },
             render_mode="lines",
