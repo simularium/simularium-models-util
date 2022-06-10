@@ -13,6 +13,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -105,7 +106,12 @@
 
 
 <div class="viewcode-block" id="ActinSimulation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation">[docs]</a><span class="k">class</span> <span class="nc">ActinSimulation</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="p">,</span>
+        <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">save_checkpoints</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a ReaDDy branched actin simulation</span>
 
@@ -129,7 +135,9 @@
 <span class="sd">        nucleotide_exchange_actin_rate, nucleotide_exchange_arp_rate, verbose</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pointed_end_displacements</span><span class="p">()</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_actin_system</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">create_readdy_simulation</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
@@ -235,7 +243,58 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_nucleotide_exchange_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_debranch_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_unbind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_pointed_end_translation</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_translate_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.do_pointed_end_translation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.do_pointed_end_translation">[docs]</a>    <span class="k">def</span> <span class="nf">do_pointed_end_translation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;orthogonal_seed&quot;</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;n_fixed_monomers_pointed&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="ow">and</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;displace_pointed_end_tangent&quot;</span><span class="p">]</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;displace_pointed_end_radial&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinSimulation.get_pointed_end_displacements"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.get_pointed_end_displacements">[docs]</a>    <span class="k">def</span> <span class="nf">get_pointed_end_displacements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get parameters for translation of the pointed end of an orthogonal seed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_pointed_end_translation</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;displace_pointed_end_tangent&quot;</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;displace_pointed_end_radial&quot;</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot apply tangent and radial displacements simultaneously&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;displace_pointed_end_tangent&quot;</span><span class="p">]:</span>
+            <span class="n">displacement</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;get_translation&quot;</span><span class="p">:</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_position_for_tangent_translation</span><span class="p">,</span>
+                <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;total_displacement_nm&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;tangent_displacement_nm&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="p">),</span>
+                    <span class="s2">&quot;total_steps&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;total_steps&quot;</span><span class="p">]),</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;displace_pointed_end_radial&quot;</span><span class="p">]:</span>
+            <span class="n">displacement</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;get_translation&quot;</span><span class="p">:</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_position_for_radial_translation</span><span class="p">,</span>
+                <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;radius_nm&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;radial_displacement_radius_nm&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;theta_init_radians&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span>
+                    <span class="s2">&quot;theta_final_radians&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+                    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;radial_displacement_angle_deg&quot;</span><span class="p">]),</span>
+                    <span class="s2">&quot;total_steps&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;total_steps&quot;</span><span class="p">]),</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">monomer_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;n_fixed_monomers_pointed&quot;</span><span class="p">])):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">monomer_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">displacement</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ActinSimulation.add_random_monomers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_simulation.ActinSimulation.add_random_monomers">[docs]</a>    <span class="k">def</span> <span class="nf">add_random_monomers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

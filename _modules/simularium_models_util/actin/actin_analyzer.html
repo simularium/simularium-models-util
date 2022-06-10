@@ -13,6 +13,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -100,6 +101,7 @@
 
 <span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 <span class="kn">from</span> <span class="nn">.actin_util</span> <span class="kn">import</span> <span class="n">ActinUtil</span>
+<span class="kn">from</span> <span class="nn">.actin_structure</span> <span class="kn">import</span> <span class="n">ActinStructure</span>
 
 
 <span class="n">TIMESTEP</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># ns</span>
@@ -132,10 +134,10 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">reactions</span><span class="p">[</span><span class="n">reaction_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">/</span> <span class="n">time_inc_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_average_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">analyze_average_over_time</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_average_for_series"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_average_for_series">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_average_for_series</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a list of the average per time frame of the given data</span>
+<span class="sd">        Get a list of the average per item of the given 2D data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
@@ -147,10 +149,10 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame_sum</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ActinAnalyzer.analyze_stddev_over_time"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_stddev_over_time">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">analyze_stddev_over_time</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="ActinAnalyzer.analyze_stddev_for_series"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_stddev_for_series">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_stddev_for_series</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a list of the std deviation per time frame of the given data</span>
+<span class="sd">        Get a list of the std deviation per item of the given 2D data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
@@ -174,6 +176,8 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
@@ -187,6 +191,10 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
@@ -198,6 +206,8 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
@@ -235,6 +245,10 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
@@ -250,6 +264,10 @@
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#mid_fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#pointed_fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;actin#fixed_barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
@@ -910,6 +928,141 @@
                     <span class="n">box_size</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinAnalyzer.analyze_pointed_end_displacement"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_pointed_end_displacement">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_pointed_end_displacement</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the distance the pointed end has moved since it&#39;s initial position</span>
+<span class="sd">        over the time course of a simulation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">initial_pointed_pos</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
+            <span class="n">pointed_id</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_ids_for_types</span><span class="p">(</span>
+                <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_pointed_actin_types</span><span class="p">(),</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pointed_position</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">pointed_id</span><span class="p">][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">initial_pointed_pos</span> <span class="o">=</span> <span class="n">pointed_position</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">periodic_boundary</span><span class="p">:</span>
+                <span class="n">pointed_position</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span>
+                    <span class="n">initial_pointed_pos</span><span class="p">,</span> <span class="n">pointed_position</span><span class="p">,</span> <span class="n">box_size</span>
+                <span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pointed_position</span> <span class="o">-</span> <span class="n">initial_pointed_pos</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinAnalyzer.analyze_total_twist"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_total_twist">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_total_twist</span><span class="p">(</span>
+        <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">remove_bend</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the total twist from monomer normal to monomer normal</span>
+<span class="sd">        along the first mother filament in degrees</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
+            <span class="n">skip</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">filament</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_mother_filaments</span><span class="p">(</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">filament_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span>
+            <span class="n">normals</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">axis_positions</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">filament_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+                <span class="n">actin_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">filament</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]]</span>
+                <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_get_axis_position_for_actin</span><span class="p">(</span>
+                    <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">],</span> <span class="n">actin_ids</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">vector_is_invalid</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s2">&quot;Something is wrong with actin structure at &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;monomer </span><span class="si">{</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="si">}</span><span class="s2">, skipping twist calculation&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">skip</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">periodic_boundary</span><span class="p">:</span>
+                    <span class="n">axis_pos</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span>
+                        <span class="n">position</span><span class="p">,</span> <span class="n">axis_pos</span><span class="p">,</span> <span class="n">box_size</span>
+                    <span class="p">)</span>
+                <span class="n">axis_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">axis_pos</span><span class="p">)</span>
+                <span class="n">normals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">position</span> <span class="o">-</span> <span class="n">axis_pos</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">total_angle</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">normals</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">remove_bend</span><span class="p">:</span>
+                    <span class="n">tangent</span> <span class="o">=</span> <span class="n">axis_positions</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">axis_positions</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                    <span class="n">normal1</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_perpendicular_components_of_vector</span><span class="p">(</span>
+                        <span class="n">normals</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">tangent</span>
+                    <span class="p">)</span>
+                    <span class="n">normal2</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_perpendicular_components_of_vector</span><span class="p">(</span>
+                        <span class="n">normals</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">tangent</span>
+                    <span class="p">)</span>
+                    <span class="n">total_angle</span> <span class="o">+=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span>
+                        <span class="n">normal1</span><span class="p">,</span> <span class="n">normal2</span><span class="p">,</span> <span class="n">in_degrees</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">total_angle</span> <span class="o">+=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_angle_between_vectors</span><span class="p">(</span>
+                        <span class="n">normals</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">normals</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">in_degrees</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">total_angle</span> <span class="o">/</span> <span class="mf">360.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinAnalyzer.analyze_lateral_bond_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_lateral_bond_lengths">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_lateral_bond_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the distance between bonds along the first mother filament,</span>
+<span class="sd">        normalized to the ideal distance,</span>
+<span class="sd">        trace the explicit lateral bonds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ideal_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="n">filament</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_mother_filaments</span><span class="p">(</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+                <span class="n">pos_lat</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">periodic_boundary</span><span class="p">:</span>
+                    <span class="n">pos_lat</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span>
+                        <span class="n">pos</span><span class="p">,</span> <span class="n">pos_lat</span><span class="p">,</span> <span class="n">box_size</span>
+                    <span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pos_lat</span> <span class="o">-</span> <span class="n">pos</span><span class="p">)</span> <span class="o">/</span> <span class="n">ideal_length</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinAnalyzer.analyze_longitudinal_bond_lengths"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_analyzer.ActinAnalyzer.analyze_longitudinal_bond_lengths">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">analyze_longitudinal_bond_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the distance between bonds along the first mother filament,</span>
+<span class="sd">        normalized to the ideal distance,</span>
+<span class="sd">        trace the implicit longitudinal bonds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ideal_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_positions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+            <span class="n">filament</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">_frame_mother_filaments</span><span class="p">(</span>
+                <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">]</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+                <span class="n">pos_long</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">filament</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">periodic_boundary</span><span class="p">:</span>
+                    <span class="n">pos_long</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_non_periodic_boundary_position</span><span class="p">(</span>
+                        <span class="n">pos</span><span class="p">,</span> <span class="n">pos_long</span><span class="p">,</span> <span class="n">box_size</span>
+                    <span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pos_long</span> <span class="o">-</span> <span class="n">pos</span><span class="p">)</span> <span class="o">/</span> <span class="n">ideal_length</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div></div>
 </pre></div>
 

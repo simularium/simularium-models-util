@@ -14,6 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -100,12 +101,12 @@
            <div itemprop="articleBody">
              
   <section id="simularium-models-util-common-package">
-<h1>simularium_models_util.common package<a class="headerlink" href="#simularium-models-util-common-package" title="Permalink to this headline"></a></h1>
+<h1>simularium_models_util.common package<a class="headerlink" href="#simularium-models-util-common-package" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-simularium_models_util.common.particle_data">
-<span id="simularium-models-util-common-particle-data-module"></span><h2>simularium_models_util.common.particle_data module<a class="headerlink" href="#module-simularium_models_util.common.particle_data" title="Permalink to this headline"></a></h2>
+<span id="simularium-models-util-common-particle-data-module"></span><h2>simularium_models_util.common.particle_data module<a class="headerlink" href="#module-simularium_models_util.common.particle_data" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="simularium_models_util.common.particle_data.ParticleData">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.common.particle_data.</span></span><span class="sig-name descname"><span class="pre">ParticleData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unique_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/particle_data.html#ParticleData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.particle_data.ParticleData" title="Permalink to this definition"></a></dt>
@@ -141,7 +142,7 @@
 
 </section>
 <section id="module-simularium_models_util.common.readdy_util">
-<span id="simularium-models-util-common-readdy-util-module"></span><h2>simularium_models_util.common.readdy_util module<a class="headerlink" href="#module-simularium_models_util.common.readdy_util" title="Permalink to this headline"></a></h2>
+<span id="simularium-models-util-common-readdy-util-module"></span><h2>simularium_models_util.common.readdy_util module<a class="headerlink" href="#module-simularium_models_util.common.readdy_util" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.common.readdy_util.</span></span><span class="sig-name descname"><span class="pre">ReaddyUtil</span></span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil" title="Permalink to this definition"></a></dt>
@@ -437,6 +438,12 @@ positions = [position 1, position 2, position 3]</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.get_perpendicular_components_of_vector">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_perpendicular_components_of_vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_perpendicular</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_perpendicular_components_of_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_perpendicular_components_of_vector" title="Permalink to this definition"></a></dt>
+<dd><p>Get the components of v that are perpendicular to v_perpendicular</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.get_random_boundary_position">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_random_boundary_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.get_random_boundary_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.get_random_boundary_position" title="Permalink to this definition"></a></dt>
 <dd><p>get a random position on one of the boundary faces</p>
@@ -567,6 +574,12 @@ and the reaction time increment in seconds</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.particle_type_with_flags">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">particle_type_with_flags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_flags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_flags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse_sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.particle_type_with_flags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.particle_type_with_flags" title="Permalink to this definition"></a></dt>
+<dd><p>get particle type with the flags added and removed</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.common.readdy_util.ReaddyUtil.rate_function_infinity">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rate_function_infinity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topology</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/readdy_util.html#ReaddyUtil.rate_function_infinity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.readdy_util.ReaddyUtil.rate_function_infinity" title="Permalink to this definition"></a></dt>
 <dd><p>rate function for a reaction that should trigger immediately
@@ -646,7 +659,7 @@ If not verbose or debug_msg == “”, don’t print the message</p>
 
 </section>
 <section id="module-simularium_models_util.common.repeated_timer">
-<span id="simularium-models-util-common-repeated-timer-module"></span><h2>simularium_models_util.common.repeated_timer module<a class="headerlink" href="#module-simularium_models_util.common.repeated_timer" title="Permalink to this headline"></a></h2>
+<span id="simularium-models-util-common-repeated-timer-module"></span><h2>simularium_models_util.common.repeated_timer module<a class="headerlink" href="#module-simularium_models_util.common.repeated_timer" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="simularium_models_util.common.repeated_timer.RepeatedTimer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.common.repeated_timer.</span></span><span class="sig-name descname"><span class="pre">RepeatedTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/common/repeated_timer.html#RepeatedTimer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.common.repeated_timer.RepeatedTimer" title="Permalink to this definition"></a></dt>
@@ -665,7 +678,7 @@ If not verbose or debug_msg == “”, don’t print the message</p>
 
 </section>
 <section id="module-simularium_models_util.common">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simularium_models_util.common" title="Permalink to this headline"></a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simularium_models_util.common" title="Permalink to this heading"></a></h2>
 </section>
 </section>
 

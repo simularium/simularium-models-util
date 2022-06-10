@@ -13,6 +13,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -123,6 +124,17 @@
 <span class="sd">        normalize a vector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">v</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReaddyUtil.get_perpendicular_components_of_vector"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_perpendicular_components_of_vector">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_perpendicular_components_of_vector</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v_perpendicular</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the components of v that are perpendicular to v_perpendicular</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">v</span>
+            <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v_perpendicular</span><span class="p">)</span> <span class="o">/</span> <span class="nb">pow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_perpendicular</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="o">*</span> <span class="n">v_perpendicular</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.get_angle_between_vectors"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.get_angle_between_vectors">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_angle_between_vectors</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">in_degrees</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -476,6 +488,41 @@
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
+<div class="viewcode-block" id="ReaddyUtil.particle_type_with_flags"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.particle_type_with_flags">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">particle_type_with_flags</span><span class="p">(</span>
+        <span class="n">particle_type</span><span class="p">,</span> <span class="n">add_flags</span><span class="p">,</span> <span class="n">remove_flags</span><span class="p">,</span> <span class="n">reverse_sort</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get particle type with the flags added and removed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;#&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">particle_type</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">add_flags</span><span class="p">)):</span>
+                <span class="n">particle_type</span> <span class="o">=</span> <span class="n">particle_type</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="k">if</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">add_flags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">particle_type</span>
+        <span class="n">flag_string</span> <span class="o">=</span> <span class="n">particle_type</span><span class="p">[</span><span class="n">particle_type</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="n">flag_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+        <span class="n">polymer_indices</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;tubulin&quot;</span> <span class="ow">in</span> <span class="n">particle_type</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">polymer_indices</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">flags</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">flags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">remove_flags</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+                <span class="n">flags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">add_flags</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">flag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+                <span class="n">flags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;&quot;</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
+            <span class="n">flags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">particle_type</span><span class="p">[:</span> <span class="n">particle_type</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)]</span>
+        <span class="n">flags</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="n">reverse_sort</span><span class="p">)</span>
+        <span class="n">flag_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)):</span>
+            <span class="n">flag_string</span> <span class="o">=</span> <span class="n">flag_string</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="k">if</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">flags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+        <span class="n">particle_type</span> <span class="o">=</span> <span class="n">particle_type</span><span class="p">[:</span> <span class="n">particle_type</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)]</span>
+        <span class="n">new_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">flag_string</span><span class="si">}{</span><span class="n">polymer_indices</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">new_type</span></div>
+
 <div class="viewcode-block" id="ReaddyUtil.set_flags"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.set_flags">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">set_flags</span><span class="p">(</span>
         <span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">add_flags</span><span class="p">,</span> <span class="n">remove_flags</span><span class="p">,</span> <span class="n">reverse_sort</span><span class="o">=</span><span class="kc">False</span>
@@ -483,36 +530,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        set flags on a vertex</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">pt</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;#&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pt</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">add_flags</span><span class="p">)):</span>
-                <span class="n">pt</span> <span class="o">=</span> <span class="n">pt</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="k">if</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">add_flags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
-            <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">flag_string</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[</span><span class="n">pt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
-            <span class="n">flags</span> <span class="o">=</span> <span class="n">flag_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
-            <span class="n">polymer_indices</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">if</span> <span class="s2">&quot;tubulin&quot;</span> <span class="ow">in</span> <span class="n">pt</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">polymer_indices</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">flags</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">flags</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="n">flags</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">remove_flags</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
-                    <span class="n">flags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">flag</span> <span class="ow">in</span> <span class="n">add_flags</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">flag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
-                    <span class="n">flags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;&quot;</span> <span class="ow">in</span> <span class="n">flags</span><span class="p">:</span>
-                <span class="n">flags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">pt</span><span class="p">[:</span> <span class="n">pt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)])</span>
-                <span class="k">return</span>
-            <span class="n">flags</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="n">reverse_sort</span><span class="p">)</span>
-            <span class="n">flag_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)):</span>
-                <span class="n">flag_string</span> <span class="o">=</span> <span class="n">flag_string</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="k">if</span> <span class="n">f</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">flags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
-            <span class="n">particle_type</span> <span class="o">=</span> <span class="n">pt</span><span class="p">[:</span> <span class="n">pt</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)]</span>
-            <span class="n">new_type</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">particle_type</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">flag_string</span><span class="si">}{</span><span class="n">polymer_indices</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">new_type</span><span class="p">)</span></div>
+        <span class="n">particle_type</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">particle_type_of_vertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+        <span class="n">particle_type</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">particle_type_with_flags</span><span class="p">(</span>
+            <span class="n">particle_type</span><span class="p">,</span> <span class="n">add_flags</span><span class="p">,</span> <span class="n">remove_flags</span><span class="p">,</span> <span class="n">reverse_sort</span>
+        <span class="p">)</span>
+        <span class="n">recipe</span><span class="o">.</span><span class="n">change_particle_type</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">particle_type</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReaddyUtil.calculate_polymer_number"><a class="viewcode-back" href="../../../simularium_models_util.common.html#simularium_models_util.common.readdy_util.ReaddyUtil.calculate_polymer_number">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">calculate_polymer_number</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
