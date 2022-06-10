@@ -10,7 +10,7 @@ from simulariumio import (
     ScatterPlotData,
     DisplayData,
     DISPLAY_TYPE,
-    JsonWriter,
+    # JsonWriter,
 )
 from simulariumio.filters import MultiplyTimeFilter
 from ..actin import ActinAnalyzer, ACTIN_REACTIONS
@@ -855,4 +855,5 @@ class ActinVisualization:
                 ),
             ]
         )
-        JsonWriter.save(filtered_data, path_to_readdy_h5)
+        ReaddyConverter.write_external_JSON(filtered_data, path_to_readdy_h5)
+        # JsonWriter.save(filtered_data, path_to_readdy_h5)
