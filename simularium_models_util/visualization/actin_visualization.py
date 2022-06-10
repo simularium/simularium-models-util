@@ -271,7 +271,9 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def generate_polymerization_plots(path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None):
+    def generate_polymerization_plots(
+        path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None
+    ):
         """
         Use an ActinAnalyzer to generate plots of observables
         for polymerizing actin
@@ -322,13 +324,17 @@ class ActinVisualization:
             title="Twist along filament",
             xaxis_title="Pointed end displacement (nm)",
             yaxis_title="Twist (rotations)",
-            xtrace=ActinAnalyzer.analyze_pointed_end_displacement(monomer_data, box_size, periodic_boundary),
+            xtrace=ActinAnalyzer.analyze_pointed_end_displacement(
+                monomer_data, box_size, periodic_boundary
+            ),
             ytraces={
                 "Total twist (degrees)": ActinAnalyzer.analyze_total_twist(
                     monomer_data, box_size, periodic_boundary, remove_bend=False
                 ),
-                "Total twist excluding bend (degrees)": ActinAnalyzer.analyze_total_twist(
-                    monomer_data, box_size, periodic_boundary, remove_bend=True
+                "Total twist excluding bend (degrees)": (
+                    ActinAnalyzer.analyze_total_twist(
+                        monomer_data, box_size, periodic_boundary, remove_bend=True
+                    )
                 ),
             },
             render_mode="lines",
@@ -337,20 +343,26 @@ class ActinVisualization:
     @staticmethod
     def get_bond_length_plot(monomer_data, box_size, periodic_boundary, times):
         """
-        Add a plot of bond lengths (lat and long) vs end displacement 
+        Add a plot of bond lengths (lat and long) vs end displacement
         (normalize bond lengths relative to theoretical lengths, plot average ± std)
         """
-        lateral_bond_lengths = ActinAnalyzer.analyze_lateral_bond_lengths(monomer_data, box_size, periodic_boundary)
+        lateral_bond_lengths = ActinAnalyzer.analyze_lateral_bond_lengths(
+            monomer_data, box_size, periodic_boundary
+        )
         mean_lat = ActinAnalyzer.analyze_average_for_series(lateral_bond_lengths)
         stddev_lat = ActinAnalyzer.analyze_stddev_for_series(lateral_bond_lengths)
-        longitudinal_bond_lengths = ActinAnalyzer.analyze_longitudinal_bond_lengths(monomer_data, box_size, periodic_boundary)
+        longitudinal_bond_lengths = ActinAnalyzer.analyze_longitudinal_bond_lengths(
+            monomer_data, box_size, periodic_boundary
+        )
         mean_long = ActinAnalyzer.analyze_average_for_series(longitudinal_bond_lengths)
         stddev_long = ActinAnalyzer.analyze_stddev_for_series(longitudinal_bond_lengths)
         return ScatterPlotData(
             title="Bond lengths",
             xaxis_title="Pointed end displacement (nm)",
             yaxis_title="Normalized bond length",
-            xtrace=ActinAnalyzer.analyze_pointed_end_displacement(monomer_data, box_size, periodic_boundary),
+            xtrace=ActinAnalyzer.analyze_pointed_end_displacement(
+                monomer_data, box_size, periodic_boundary
+            ),
             ytraces={
                 "Lateral mean": mean_lat,
                 "Lateral mean - std ": mean_lat - stddev_lat,
@@ -363,7 +375,9 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def generate_bend_twist_plots(path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None):
+    def generate_bend_twist_plots(
+        path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None
+    ):
         """
         Use an ActinAnalyzer to generate plots of observables
         for actin being bent or twisted

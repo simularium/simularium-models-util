@@ -190,7 +190,8 @@ class ActinSimulation:
                 "parameters": {
                     "radius_nm": self.parameters["radial_displacement_radius_nm"],
                     "theta_init_radians": np.pi,
-                    "theta_final_radians": np.pi + np.deg2rad(self.parameters["radial_displacement_angle_deg"]),
+                    "theta_final_radians": np.pi
+                    + np.deg2rad(self.parameters["radial_displacement_angle_deg"]),
                     "total_steps": float(self.parameters["total_steps"]),
                 },
             }

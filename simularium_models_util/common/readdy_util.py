@@ -34,7 +34,11 @@ class ReaddyUtil:
         """
         Get the components of v that are perpendicular to v_perpendicular
         """
-        return v - (np.dot(v, v_perpendicular) / pow(np.linalg.norm(v_perpendicular), 2)) * v_perpendicular
+        return (
+            v
+            - (np.dot(v, v_perpendicular) / pow(np.linalg.norm(v_perpendicular), 2))
+            * v_perpendicular
+        )
 
     @staticmethod
     def get_angle_between_vectors(v1, v2, in_degrees=False):
