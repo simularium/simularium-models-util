@@ -1385,7 +1385,7 @@ class ActinUtil:
         return recipe
 
     @staticmethod
-    def get_all_actin_particle_types():
+    def get_all_actin_particle_types(actin_number_types):
         """
         get particle types for actin
 
@@ -1427,7 +1427,7 @@ class ActinUtil:
             "actin#branch_barbed_1",
             "actin#branch_barbed_ATP_1",
         ]
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             result += [
                 f"actin#{i}",
                 f"actin#ATP_{i}",
@@ -1486,12 +1486,12 @@ class ActinUtil:
         ]
 
     @staticmethod
-    def get_all_particle_types():
+    def get_all_particle_types(actin_number_types):
         """
         add the given particle_types to the system
         """
         return (
-            ActinUtil.get_all_actin_particle_types()
+            ActinUtil.get_all_actin_particle_types(actin_number_types)
             + ActinUtil.get_all_fixed_actin_particle_types()
             + ActinUtil.get_all_arp23_particle_types()
             + ActinUtil.get_all_cap_particle_types()
@@ -1507,7 +1507,7 @@ class ActinUtil:
             system.add_topology_species(particle_type, diffCoeff)
 
     @staticmethod
-    def add_actin_types(system, diffCoeff):
+    def add_actin_types(system, diffCoeff, actin_number_types):
         """
         add particle and topology types for actin
         """
@@ -1525,7 +1525,7 @@ class ActinUtil:
         system.topologies.add_type("Actin-Polymer#Branch-Nucleating")
         system.topologies.add_type("Actin-Polymer#Capping")
         ActinUtil.add_particle_types(
-            ActinUtil.get_all_actin_particle_types(), system, diffCoeff
+            ActinUtil.get_all_actin_particle_types(actin_number_types), system, diffCoeff
         )
         ActinUtil.add_particle_types(
             ActinUtil.get_all_fixed_actin_particle_types(), system, 0.0
@@ -2524,12 +2524,13 @@ class ActinUtil:
         force_constant,
         system,
         util,
+        actin_number_types
     ):
         """
         add repulsions
         """
         actin_types = (
-            ActinUtil.get_all_actin_particle_types()
+            ActinUtil.get_all_actin_particle_types(actin_number_types)
             + ActinUtil.get_all_fixed_actin_particle_types()
         )
         arp_types = ActinUtil.get_all_arp23_particle_types()
@@ -3156,3 +3157,9 @@ class ActinUtil:
         return (monomer_pos - pos_magnitude * v_pos_1) + (
             d_pos_0 + pos_magnitude * v_pos_2
         )
+
+    @staticmethod
+    def actin_number_range(actin_number_types):
+        if (actin_number_types < 3 or actin_number_types > 5) or actin_number_types == 4:
+            raise Exception("Only polymer number values of 3 and 5 are supported.")
+        return range(1, actin_number_types+1)
