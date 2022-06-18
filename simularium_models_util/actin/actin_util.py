@@ -5,6 +5,8 @@ import numpy as np
 import readdy
 import random
 
+from simularium_models_util import actin
+
 from ..common import ReaddyUtil
 from .actin_generator import ActinGenerator
 from .actin_structure import ActinStructure
@@ -103,6 +105,8 @@ class ActinUtil:
             f"{vertex_type}{spacer}1",
             f"{vertex_type}{spacer}2",
             f"{vertex_type}{spacer}3",
+            f"{vertex_type}{spacer}4",
+            f"{vertex_type}{spacer}5"
         ]
 
     @staticmethod
@@ -1441,12 +1445,12 @@ class ActinUtil:
         return result
 
     @staticmethod
-    def get_all_fixed_actin_particle_types():
+    def get_all_fixed_actin_particle_types(actin_number_types):
         """
         get particle types for actins that don't diffuse
         """
         result = []
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             result += [
                 f"actin#fixed_{i}",
                 f"actin#fixed_ATP_{i}",
@@ -1492,7 +1496,7 @@ class ActinUtil:
         """
         return (
             ActinUtil.get_all_actin_particle_types(actin_number_types)
-            + ActinUtil.get_all_fixed_actin_particle_types()
+            + ActinUtil.get_all_fixed_actin_particle_types(actin_number_types)
             + ActinUtil.get_all_arp23_particle_types()
             + ActinUtil.get_all_cap_particle_types()
             + ["obstacle"]
@@ -1528,7 +1532,7 @@ class ActinUtil:
             ActinUtil.get_all_actin_particle_types(actin_number_types), system, diffCoeff
         )
         ActinUtil.add_particle_types(
-            ActinUtil.get_all_fixed_actin_particle_types(), system, 0.0
+            ActinUtil.get_all_fixed_actin_particle_types(actin_number_types), system, 0.0
         )
 
     @staticmethod
@@ -2531,7 +2535,7 @@ class ActinUtil:
         """
         actin_types = (
             ActinUtil.get_all_actin_particle_types(actin_number_types)
-            + ActinUtil.get_all_fixed_actin_particle_types()
+            + ActinUtil.get_all_fixed_actin_particle_types(actin_number_types)
         )
         arp_types = ActinUtil.get_all_arp23_particle_types()
         cap_types = ActinUtil.get_all_cap_particle_types()
@@ -2617,7 +2621,7 @@ class ActinUtil:
             )
 
     @staticmethod
-    def check_add_global_box_potential(system):
+    def check_add_global_box_potential(system, actin_number_types):
         """
         If the boundaries are not periodic,
         all particles need a box potential to keep them in the box volume
@@ -2627,7 +2631,7 @@ class ActinUtil:
         # 1.0 margin on each side
         box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)
         ActinUtil.add_box_potential(
-            particle_types=ActinUtil.get_all_particle_types(),
+            particle_types=ActinUtil.get_all_particle_types(actin_number_types),
             origin=-0.5 * box_potential_size,
             extent=box_potential_size,
             force_constant=parameters["force_constant"],
@@ -2696,11 +2700,11 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_trimerize_reaction(system):
+    def add_trimerize_reaction(system, actin_number_types):
         """
         attach a monomer to a dimer
         """
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             system.topologies.add_spatial_reaction(
                 f"Trimerize{i}: "
                 f"Actin-Dimer(actin#barbed_ATP_{i}) + "
@@ -2729,11 +2733,11 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_nucleate_reaction(system):
+    def add_nucleate_reaction(system, actin_number_types):
         """
         reversibly attach a monomer to a trimer
         """
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_Nucleate_ATP{i}: "
                 f"Actin-Trimer(actin#barbed_ATP_{i}) + "
@@ -2751,11 +2755,11 @@ class ActinUtil:
             )
 
     @staticmethod
-    def add_pointed_growth_reaction(system):
+    def add_pointed_growth_reaction(system, actin_number_types):
         """
-        attach a monomer to the pointed end of a filament
+        attach a monomer to the pointed (-) end of a filament
         """
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             system.topologies.add_spatial_reaction(
                 f"Pointed_Growth_ATP1{i}: Actin-Polymer(actin#pointed_{i}) + "
                 "Actin-Monomer-ATP(actin#free_ATP) -> "
@@ -2794,7 +2798,7 @@ class ActinUtil:
     @staticmethod
     def add_pointed_shrink_reaction(system):
         """
-        remove a monomer from the pointed end of a filament
+        remove a monomer from the pointed (-) end of a filament
         """
         system.topologies.add_structural_reaction(
             "Pointed_Shrink_ATP",
@@ -2816,11 +2820,11 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_barbed_growth_reaction(system):
+    def add_barbed_growth_reaction(system, actin_number_types):
         """
-        attach a monomer to the barbed end of a filament
+        attach a monomer to the barbed (+) end of a filament
         """
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             system.topologies.add_spatial_reaction(
                 f"Barbed_Growth_ATP1{i}: Actin-Polymer(actin#barbed_{i}) + "
                 "Actin-Monomer-ATP(actin#free_ATP) -> "
@@ -2887,7 +2891,7 @@ class ActinUtil:
     @staticmethod
     def add_barbed_shrink_reaction(system):
         """
-        remove a monomer from the barbed end of a filament
+        remove a monomer from the barbed (+) end of a filament
         """
         system.topologies.add_structural_reaction(
             "Barbed_Shrink_ATP",
