@@ -518,7 +518,7 @@ class ReaddyUtil:
         return offsets
 
     @staticmethod
-    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset):
+    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset): #
         """
         creates a list of types with 1D polymer numbers
             for each type in particle types
@@ -713,7 +713,7 @@ class ReaddyUtil:
             with force constant force_const
             and length bond_length [nm]
         """
-        for x in range(1, 4):
+        for x in range(1, 4): #
             self.add_bond(
                 (
                     ReaddyUtil.get_types_with_polymer_numbers_1D(
@@ -753,7 +753,7 @@ class ReaddyUtil:
             with force constant force_const
             and length bond_length [nm]
         """
-        for x in range(1, 4):
+        for x in range(1, 4): #dont change 2D for now 
             for y in range(1, 4):
                 offsets1 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets1)
                 offsets2 = ReaddyUtil.clamp_polymer_offsets_2D(x, polymer_offsets2)
@@ -788,7 +788,7 @@ class ReaddyUtil:
             with force constant force_const
             and angle [radians]
         """
-        for x in range(1, 4):
+        for x in range(1, 4): #
             self.add_angle(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
                     particle_types1, x, polymer_offset1

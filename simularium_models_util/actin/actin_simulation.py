@@ -65,7 +65,7 @@ class ActinSimulation:
         self.parameters["temperature_K"] = self.parameters["temperature_C"] + 273.15
         self.system.temperature = self.parameters["temperature_K"]
         self.add_particle_types()
-        ActinUtil.check_add_global_box_potential(self.system)
+        ActinUtil.check_add_global_box_potential(self.system, int(self.parameters["actin_number_types"]))
         self.add_constraints()
         self.add_reactions()
 
@@ -85,7 +85,7 @@ class ActinSimulation:
         cap_diffCoeff = ReaddyUtil.calculate_diffusionCoefficient(
             self.parameters["cap_radius"], viscosity, temperature
         )  # nm^2/s
-        self.actin_util.add_actin_types(self.system, actin_diffCoeff)
+        self.actin_util.add_actin_types(self.system, actin_diffCoeff, int(self.parameters["actin_number_types"]))
         self.actin_util.add_arp23_types(self.system, arp23_diffCoeff)
         self.actin_util.add_cap_types(self.system, cap_diffCoeff)
         self.system.add_species("obstacle", 0.0)
@@ -131,11 +131,12 @@ class ActinSimulation:
         """
         Add reactions to the ReaDDy system
         """
+        actin_number_types = int(self.parameters["actin_number_types"])
         self.actin_util.add_dimerize_reaction(self.system)
-        self.actin_util.add_trimerize_reaction(self.system)
-        self.actin_util.add_nucleate_reaction(self.system)
-        self.actin_util.add_pointed_growth_reaction(self.system)
-        self.actin_util.add_barbed_growth_reaction(self.system)
+        self.actin_util.add_trimerize_reaction(self.system, actin_number_types)
+        self.actin_util.add_nucleate_reaction(self.system, actin_number_types)
+        self.actin_util.add_pointed_growth_reaction(self.system, actin_number_types)
+        self.actin_util.add_barbed_growth_reaction(self.system, actin_number_types)
         self.actin_util.add_nucleate_branch_reaction(self.system)
         self.actin_util.add_arp23_bind_reaction(self.system)
         self.actin_util.add_cap_bind_reaction(self.system)

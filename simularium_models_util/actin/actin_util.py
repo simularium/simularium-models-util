@@ -1945,7 +1945,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_branch_angles(force_constant, system, util):
+    def add_branch_angles(force_constant, system, util): #
         """
         add angles for branching
         """
