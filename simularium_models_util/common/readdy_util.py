@@ -11,6 +11,8 @@ from shutil import rmtree
 import math
 import pandas as pd
 
+from simularium_models_util.actin.actin_util import ActinUtil
+
 
 class ReaddyUtil:
     def __init__(self):
@@ -441,19 +443,19 @@ class ReaddyUtil:
         recipe.change_particle_type(vertex, particle_type)
 
     @staticmethod
-    def calculate_polymer_number(number, offset):
+    def calculate_polymer_number(number, offset): #add actin_number_types?
         """
         calculates the polymer number
             from number
             by offset in [-2, 2]
 
-            returns number in [1,3]
+            returns number in [1,5]
         """
         n = number + offset
-        if n > 3:
-            n -= 3
+        if n > 3: #change to actin_number_types?
+            n -= 3 #change to actin_number_types?
         if n < 1:
-            n += 3
+            n += 3 #change to actin_number_types?
         return n
 
     @staticmethod
@@ -462,7 +464,7 @@ class ReaddyUtil:
         get the position of a vertex
         """
         pos = topology.position_of_vertex(vertex)
-        return np.array([pos[0], pos[1], pos[2]])
+        return np.array([pos[0], pos[1], pos[2], pos[3], pos[4]])
 
     @staticmethod
     def vertices_are_equal(topology, vertex1, vertex2):
@@ -518,7 +520,7 @@ class ReaddyUtil:
         return offsets
 
     @staticmethod
-    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset): #
+    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset, actin_number_types): #make such that a list of 5 types of actin is returned
         """
         creates a list of types with 1D polymer numbers
             for each type in particle types
@@ -622,7 +624,7 @@ class ReaddyUtil:
                     self.bond_pairs.append((t1, t2))
                     self.bond_pairs.append((t2, t1))
 
-    def add_angle(self, types1, types2, types3, force_const, angle, system):
+    def add_angle(self, types1, types2, types3, force_const, angle, system): #change "types" to actin_number_types, to include 5 actin? 
         """
         adds an angle to the system (if it hasn't been added already)
             from each type in types1
@@ -703,6 +705,7 @@ class ReaddyUtil:
         force_const,
         bond_length,
         system,
+        actin_number_types
     ):
         """
         adds a bond between all polymer numbers
@@ -713,7 +716,7 @@ class ReaddyUtil:
             with force constant force_const
             and length bond_length [nm]
         """
-        for x in range(1, 4): #
+        for x in ActinUtil.actin_number_range(actin_number_types): #
             self.add_bond(
                 (
                     ReaddyUtil.get_types_with_polymer_numbers_1D(
@@ -788,7 +791,7 @@ class ReaddyUtil:
             with force constant force_const
             and angle [radians]
         """
-        for x in range(1, 4): #
+        for x in range(1, 4): #change range ActinUtil.actin_number_range(actin_number_types)
             self.add_angle(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
                     particle_types1, x, polymer_offset1
