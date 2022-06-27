@@ -113,21 +113,31 @@
 # addGrade(dallas, 100)
 
 
-@staticmethod
-    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset, actin_number_types): #make such that a list of 5 types of actin is returned
-        """
-        creates a list of types with 1D polymer numbers
-            for each type in particle types
-            at polymer number x
-            with polymer_offset dx in [-2, 2]
+# @staticmethod
+#     def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset, actin_number_types): #make such that a list of 5 types of actin is returned
+#         """
+#         creates a list of types with 1D polymer numbers
+#             for each type in particle types
+#             at polymer number x
+#             with polymer_offset dx in [-2, 2]
 
-            returns list of types
-        """
-        types = []
-        for t in particle_types:
-            types.append(
-                (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offset)))
-                if polymer_offset is not None
-                else t
-            )
-        return types
+#             returns list of types
+#         """
+#         types = []
+#         for t in particle_types:
+#             types.append(
+#                 (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offset)))
+#                 if polymer_offset is not None
+#                 else t
+#             )
+#         return types
+
+import pandas as pd 
+def actin_numbers_excel():
+    actin_number_types = pd.read_excel("/Users/manasa/Documents/GitHub/simularium-models-util/examples/actin/template.xlsx", sheet_name="actin")
+    actin_number_types = int(actin_number_types.loc[actin_number_types['name'] == "actin_number_types","run0"].iloc[0])
+    # print(pd.DataFrame(parameter))
+    print(actin_number_types)
+    # actin_number_types = int(parameter["actin_number_types"])
+
+actin_numbers_excel()

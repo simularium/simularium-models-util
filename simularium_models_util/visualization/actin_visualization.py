@@ -193,12 +193,12 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def get_branch_angle_plot(monomer_data, box_size, periodic_boundary, times):
+    def get_branch_angle_plot(monomer_data, box_size, periodic_boundary, times, actin_number_types):
         """
         Add a plot of branch angle mean and std dev
         """
         angles = ActinAnalyzer.analyze_branch_angles(
-            monomer_data, box_size, periodic_boundary
+            monomer_data, box_size, periodic_boundary, actin_number_types
         )
         mean = ActinAnalyzer.analyze_average_for_series(angles)
         stddev = ActinAnalyzer.analyze_stddev_for_series(angles)
@@ -272,7 +272,7 @@ class ActinVisualization:
 
     @staticmethod
     def generate_polymerization_plots(
-        path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None
+        path_to_readdy_h5, box_size, actin_number_types, stride=1, periodic_boundary=True, plots=None
     ):
         """
         Use an ActinAnalyzer to generate plots of observables
@@ -303,7 +303,7 @@ class ActinVisualization:
             ),
             # ActinVisualization.get_capped_ends_plot(monomer_data, times),
             ActinVisualization.get_branch_angle_plot(
-                monomer_data, box_size, periodic_boundary, times
+                monomer_data, box_size, periodic_boundary, times, actin_number_types
             ),
             ActinVisualization.get_helix_pitch_plot(
                 monomer_data, box_size, periodic_boundary, times

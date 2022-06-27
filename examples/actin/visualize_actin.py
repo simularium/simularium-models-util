@@ -39,8 +39,9 @@ def main():
                     file_path, float(args.box_size), 10, args.periodic_boundary
                 )
             else:
+                actin_number_types = ###
                 plots = ActinVisualization.generate_polymerization_plots(
-                    file_path, float(args.box_size), 10, args.periodic_boundary
+                    file_path, float(args.box_size), actin_number_types, 10, args.periodic_boundary
                 )
             ActinVisualization.visualize_actin(
                 file_path,

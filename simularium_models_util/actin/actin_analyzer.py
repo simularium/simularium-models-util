@@ -444,7 +444,7 @@ class ActinAnalyzer:
         return str(positions)
 
     @staticmethod
-    def _get_frame_branch_ids(frame_particle_data):
+    def _get_frame_branch_ids(frame_particle_data, actin_number_types):
         """
         for each branch point at a time frame, get list of ids for (in order):
         - [0,1,2,3] 4 actins after branch on main filament
@@ -497,7 +497,7 @@ class ActinAnalyzer:
                 )
                 continue
             n = ReaddyUtil.calculate_polymer_number(
-                int(frame_particle_data[actin_arp2_id]["type_name"][-1:]), 1
+                int(frame_particle_data[actin_arp2_id]["type_name"][-1:]), 1, actin_number_types
             )
             actin_arp3_types = [
                 f"actin#{n}",
@@ -543,12 +543,12 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def _get_frame_branch_angles(frame_particle_data, box_size, periodic_boundary=True):
+    def _get_frame_branch_angles(frame_particle_data, box_size, actin_number_types, periodic_boundary=True):
         """
         get the angle between mother and daughter filament
         at each branch point in the given frame of the trajectory
         """
-        branch_ids = ActinAnalyzer._get_frame_branch_ids(frame_particle_data)
+        branch_ids = ActinAnalyzer._get_frame_branch_ids(frame_particle_data, actin_number_types)
         result = []
         for branch in branch_ids:
             actin_ids = [branch[0], branch[1], branch[2]]
@@ -609,7 +609,7 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def analyze_branch_angles(monomer_data, box_size, periodic_boundary):
+    def analyze_branch_angles(monomer_data, box_size, periodic_boundary, actin_number_types):
         """
         Get a list of the angles between mother and daughter filaments
         at each branch point in each frame of the trajectory
@@ -617,7 +617,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             branch_angles = ActinAnalyzer._get_frame_branch_angles(
-                monomer_data[t]["particles"], box_size, periodic_boundary
+                monomer_data[t]["particles"], box_size, actin_number_types, periodic_boundary
             )
             result.append(branch_angles)
         return result
