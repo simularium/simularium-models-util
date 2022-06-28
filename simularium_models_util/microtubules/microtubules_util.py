@@ -841,6 +841,26 @@ class MicrotubulesUtil:
         system.add_species("site#remove", 0)
         for site_type in site_types:
             system.add_topology_species(site_type, diffCoeff)
+    
+    @staticmethod
+    def get_all_tubulin_types():
+        """
+        returns the list of all tubulin types
+        """
+        tube_tubulin_types = [
+            "tubulinA#GTP_",
+            "tubulinA#GDP_",
+            "tubulinB#GTP_",
+            "tubulinB#GDP_",
+        ]
+        bent_tubulin_types = [
+            "tubulinA#GTP_bent_",
+            "tubulinA#GDP_bent_",
+            "tubulinB#GTP_bent_",
+            "tubulinB#GDP_bent_",
+        ]
+        all_tubulin_types = tube_tubulin_types + bent_tubulin_types
+        return all_tubulin_types
 
     @staticmethod
     def do_grow1(topology, GTP_state):

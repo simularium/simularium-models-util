@@ -6,9 +6,9 @@ import os
 import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
-from simulariumio import MetaData, UnitData, DisplayData, DISPLAY_TYPE
-from ..microtubules import MicrotubulesUtil
-
+from simulariumio import MetaData, UnitData, DisplayData, ScatterPlotData, DISPLAY_TYPE
+from ..microtubules import MicrotubulesUtil, MicrotubulesAnalyzer, MICROTUBULES_REACTIONS
+from ..common import ReaddyUtil
 
 class MicrotubulesVisualization:
     """
@@ -29,9 +29,139 @@ class MicrotubulesVisualization:
             for t in types:
                 result[t] = raw_display_data[particle_type]
         return result
+    
+    @staticmethod
+    def get_avg_length_plot(monomer_data, times):
+        """
+        Add a plot of average mother and daughter filament length
+        """
+        protofilament_list = MicrotubulesAnalyzer.analyze_protofilament_lengths(monomer_data)
+        protofilaments = {}
+        for count, protofilament in enumerate(protofilament_list):
+            protofilaments["Filament " + str(count+1)] = protofilament
+        
+        return ScatterPlotData(
+            title="Average length of protofilaments",
+            xaxis_title="Time (µs)",
+            yaxis_title="Average length (monomers)",
+            xtrace=times,
+            ytraces=protofilaments,
+            render_mode="lines",
+        )
 
     @staticmethod
-    def visualize_microtubules(path_to_readdy_h5, box_size, plots):
+    def get_growth_reactions_plot(reactions, times):
+        """
+        Add a plot of reaction events over time
+        for each total growth reaction
+        """
+        reaction_events = {}
+        for total_rxn_name in MICROTUBULES_REACTIONS["Grow"]:
+            reaction_counts = ReaddyUtil.analyze_reaction_count_over_time(
+                reactions, total_rxn_name
+            )
+            if reaction_counts is not None:            
+                reaction_events[total_rxn_name] = reaction_counts
+                if "Total Grow" not in reaction_events:
+                    tmp = reaction_counts
+                else:
+                    tmp += reaction_counts
+        reaction_events["Total Grow"] = tmp
+
+        return ScatterPlotData(
+            title="Growth reactions",
+            xaxis_title="Time (µs)",
+            yaxis_title="Reaction events",
+            xtrace=times,
+            ytraces=reaction_events,
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def get_shrink_reactions_plot(reactions, times):
+        """
+        Add a plot of reaction events over time
+        for each total shrink reaction
+        """
+        reaction_events = {}
+        
+        reaction_counts = ReaddyUtil.analyze_reaction_count_over_time(
+            reactions, MICROTUBULES_REACTIONS["MT Shrink"][0]
+        )
+        if reaction_counts is not None:            
+            reaction_events[MICROTUBULES_REACTIONS["MT Shrink"][0]] = reaction_counts
+
+        return ScatterPlotData(
+            title="Shrink reactions",
+            xaxis_title="Time (µs)",
+            yaxis_title="Reaction events",
+            xtrace=times,
+            ytraces=reaction_events,
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def get_attach_reactions_plot(reactions, times):
+        """
+        Add a plot of attachment events over time
+        for each total attach reaction
+        """
+        reaction_events = {}
+        for total_rxn_name in MICROTUBULES_REACTIONS["Lateral Attach"]:
+            reaction_counts = ReaddyUtil.analyze_reaction_count_over_time(
+                reactions, total_rxn_name
+            )
+            if reaction_counts is not None:            
+                if "Total Attach" not in reaction_events:
+                    tmp = reaction_counts
+                else:
+                    tmp += reaction_counts
+        reaction_events["Total Attach"] = tmp
+
+        return ScatterPlotData(
+            title="Attach reactions",
+            xaxis_title="Time (µs)",
+            yaxis_title="Reaction events",
+            xtrace=times,
+            ytraces=reaction_events,
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def generate_plots(
+            path_to_readdy_h5,
+            box_size,
+            stride=1,
+            periodic_boundary=True,
+            save_pickle_file=False,
+            pickle_file_path=None,):
+        """
+        Use an MicrotubulesAnalyzer to generate plots of observables
+        """
+        (
+            monomer_data,
+            reactions,
+            times,
+            _,
+        ) = ReaddyUtil.monomer_data_and_reactions_from_file(
+            h5_file_path=path_to_readdy_h5,
+            stride=stride,
+            timestep=0.1,
+            reaction_names=MICROTUBULES_REACTIONS,
+            save_pickle_file=save_pickle_file,
+            pickle_file_path=pickle_file_path,
+        )
+        return {
+            "scatter": [
+                MicrotubulesVisualization.get_avg_length_plot(monomer_data, times),
+                MicrotubulesVisualization.get_growth_reactions_plot(reactions, times),
+                MicrotubulesVisualization.get_shrink_reactions_plot(reactions, times),
+                MicrotubulesVisualization.get_attach_reactions_plot(reactions, times),
+            ],
+        }
+
+    @staticmethod
+    def visualize_microtubules(path_to_readdy_h5, box_size, scaled_time_step_us, plots):
         """
         visualize a microtubule trajectory in Simularium
         """
@@ -113,21 +243,32 @@ class MicrotubulesVisualization:
             "site#4_GDP",
             "site#new",
             "site#remove",
+            "tubulinA#free",
+            "tubulinB#free",
         ]
-        # convert
+        # convert        
         data = ReaddyData(
             meta_data=MetaData(
                 box_size=box_size,
             ),
-            timestep=0.1,
+            timestep=scaled_time_step_us,
             path_to_readdy_h5=path_to_readdy_h5,
             display_data=display_data,
-            time_units=UnitData("ns"),
+            time_units=UnitData("µs"),
             spatial_units=UnitData("nm"),
             ignore_types=ignore_types,
-            plots=plots,
+            plots=[],
         )
-        ReaddyConverter(data).write_JSON(path_to_readdy_h5)
+        try:
+            converter = ReaddyConverter(data)
+        except Exception as e:
+            print(str(e))
+        if plots is not None:
+            for plot_type in plots:
+                for plot in plots[plot_type]:
+                    converter.add_plot(plot, plot_type)
+        
+        converter.write_JSON(path_to_readdy_h5)
 
 
 def main():

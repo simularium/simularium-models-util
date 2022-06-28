@@ -16,17 +16,6 @@ class ActinAnalyzer:
     """
 
     @staticmethod
-    def analyze_reaction_count_over_time(reactions, reaction_name):
-        """
-        Get a list of the number of times a reaction happened
-        between each analyzed timestep of the given reaction
-        """
-        if reaction_name not in reactions:
-            print(f"Couldn't find reaction: {reaction_name}")
-            return None
-        return np.insert(reactions[reaction_name].to_numpy(), 0, 0.0)
-
-    @staticmethod
     def analyze_reaction_rate_over_time(reactions, time_inc_s, reaction_name):
         """
         Get a list of the reaction rate per second

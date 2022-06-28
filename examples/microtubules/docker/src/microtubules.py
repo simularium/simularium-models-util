@@ -53,9 +53,21 @@ def main():
         mt_simulation.simulation.run(
             int(parameters["total_steps"]), parameters["timestep"]
         )
-        MicrotubulesVisualization.visualize_microtubules(
-            parameters["name"] + ".h5", parameters["box_size"], []
-        )
+        try:
+            plots = MicrotubulesVisualization.generate_plots(
+                parameters["name"] + ".h5", parameters["box_size"], 10
+            )
+            viz_stepsize = max(int(parameters["total_steps"] / 1000.0), 1)
+            scaled_time_step_us = parameters["timestep"] * 1e-3 * viz_stepsize
+            MicrotubulesVisualization.visualize_microtubules(
+                parameters["name"] + ".h5",
+                parameters["box_size"],
+                scaled_time_step_us =  scaled_time_step_us,
+                plots=plots,
+            )
+        except Exception as e:
+            print("Failed viz!!!!!!!!!!\n" + str(type(e)) + " " + str(e))
+            sys.exit(88888888)
     finally:
         rt.stop()
     sys.exit(0)
