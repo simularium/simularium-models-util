@@ -136,8 +136,7 @@ import pandas as pd
 def actin_numbers_excel():
     actin_number_types = pd.read_excel("/Users/manasa/Documents/GitHub/simularium-models-util/examples/actin/template.xlsx", sheet_name="actin")
     actin_number_types = int(actin_number_types.loc[actin_number_types['name'] == "actin_number_types","run0"].iloc[0])
-    # print(pd.DataFrame(parameter))
     print(actin_number_types)
-    # actin_number_types = int(parameter["actin_number_types"])
+
 
 actin_numbers_excel()

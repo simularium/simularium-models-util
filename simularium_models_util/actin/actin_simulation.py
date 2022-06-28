@@ -110,7 +110,7 @@ class ActinSimulation:
         self.actin_util.add_branch_angles(10 * force_constant, self.system, util)
         self.actin_util.add_branch_dihedrals(force_constant, self.system, util)
         # capping protein
-        self.actin_util.add_cap_bonds(force_constant, self.system, util)
+        self.actin_util.add_cap_bonds(force_constant, self.system, util, int(self.parameters["actin_number_types"]))
         self.actin_util.add_cap_angles(force_constant, self.system, util)
         self.actin_util.add_cap_dihedrals(force_constant, self.system, util)
         # repulsions

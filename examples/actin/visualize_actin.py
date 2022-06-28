@@ -28,6 +28,9 @@ def main():
     parser.add_argument(
         "plot_bend_twist", help="calculate bend/twist plots? otherwise calculate polymerization plots"
     )
+    parser.add_argument(
+        "actin_number_types", help="number of possible actin monomer types. can be either 3 or 5."
+    )
     args = parser.parse_args()
     dir_path = args.dir_path
     for file in os.listdir(dir_path):
@@ -39,9 +42,9 @@ def main():
                     file_path, float(args.box_size), 10, args.periodic_boundary
                 )
             else:
-                actin_number_types = ###
+
                 plots = ActinVisualization.generate_polymerization_plots(
-                    file_path, float(args.box_size), actin_number_types, 10, args.periodic_boundary
+                    file_path, float(args.box_size), args.actin_number_types, 10, args.periodic_boundary
                 )
             ActinVisualization.visualize_actin(
                 file_path,

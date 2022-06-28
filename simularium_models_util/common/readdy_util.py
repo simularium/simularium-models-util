@@ -15,7 +15,7 @@ from simularium_models_util.actin.actin_util import ActinUtil
 
 
 class ReaddyUtil:
-    def __init__(self, parameters):
+    def __init__(self):
         """
         Utilities used for Simularium ReaDDy models
         """
@@ -23,7 +23,7 @@ class ReaddyUtil:
         self.angle_triples = []
         self.dihedral_quads = []
         self.repulse_pairs = []
-        self.parameters = parameters
+       
 
     @staticmethod
     def normalize(v):
@@ -460,12 +460,12 @@ class ReaddyUtil:
         return n
 
     @staticmethod
-    def get_vertex_position(topology, vertex): #possible to incorporate actin_number_types here?
+    def get_vertex_position(topology, vertex): 
         """
         get the position of a vertex
         """
         pos = topology.position_of_vertex(vertex)
-        return np.array([pos[0], pos[1], pos[2], pos[3], pos[4]])
+        return np.array([pos[0], pos[1], pos[2]])
 
     @staticmethod
     def vertices_are_equal(topology, vertex1, vertex2):
@@ -608,7 +608,7 @@ class ReaddyUtil:
         recipe.remove_edge(vertex1, vertex2)
         return True, ""
 
-    def add_bond(self, types1, types2, force_const, bond_length, system): #BONDS: need to describe new longitudinal bonds between actins, here?
+    def add_bond(self, types1, types2, force_const, bond_length, system): 
         """
         adds a bond to the system (if it hasn't been added already)
             from each type in types1
@@ -706,6 +706,7 @@ class ReaddyUtil:
         force_const,
         bond_length,
         system,
+        actin_number_types
     ):
         """
         adds a bond between all polymer numbers
@@ -716,8 +717,7 @@ class ReaddyUtil:
             with force constant force_const
             and length bond_length [nm]
         """
-        actin_number_types = int(self.parameters["actin_number_types"])
-
+        
         for x in ActinUtil.actin_number_range(actin_number_types): 
             self.add_bond(
                 (
@@ -782,13 +782,10 @@ class ReaddyUtil:
         polymer_offset2,
         particle_types3,
         polymer_offset3,
-        particle_types4,
-        polymer_offset4,
-        particle_types5,
-        polymer_offset5,
         force_const,
         angle,
         system,
+        actin_number_types
     ):
         """
         adds an angle between all polymer numbers
@@ -797,7 +794,6 @@ class ReaddyUtil:
             with force constant force_const
             and angle [radians]
         """
-        actin_number_types = int(self.parameters["actin_number_types"])
 
         for x in ActinUtil.actin_number_range(actin_number_types):
             self.add_angle(
@@ -809,12 +805,6 @@ class ReaddyUtil:
                 ),
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
                     particle_types3, x, polymer_offset3, actin_number_types
-                ),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types4, x, polymer_offset4, actin_number_types
-                ),
-                ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types5, x, polymer_offset5, actin_number_types
                 ),
                 force_const,
                 angle,
@@ -873,6 +863,7 @@ class ReaddyUtil:
         force_const,
         angle,
         system,
+        actin_number_types
     ):
         """
         adds a cosine dihedral between all polymer numbers
@@ -881,7 +872,6 @@ class ReaddyUtil:
             with force constant force_const
             and angle [radians]
         """
-        actin_number_types = int(self.parameters["actin_number_types"])
 
         for x in ActinUtil.actin_number_range(actin_number_types):
             self.add_dihedral(

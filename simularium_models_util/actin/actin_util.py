@@ -78,7 +78,7 @@ class ActinUtil:
         return None, None
 
     @staticmethod
-    def get_actin_number(topology, vertex, offset, actin_number_types):
+    def get_actin_number(topology, vertex, offset):
         """
         get the type number for an actin plus the given offset in range [-1, 1]
         (i.e. return 3 for type = "actin#ATP_1" and offset = -1)
@@ -89,7 +89,7 @@ class ActinUtil:
                 f"Failed to get actin number: {pt} is not actin\n"
                 f"{ReaddyUtil.topology_to_string(topology)}"
             )
-        return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset, actin_number_types)
+        return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset, parameters["actin_number_types"])
 
     @staticmethod
     def get_all_polymer_actin_types(vertex_type):
@@ -169,7 +169,7 @@ class ActinUtil:
         """
         get the next actin toward the pointed or barbed direction
         """
-        n = ActinUtil.get_actin_number(topology, v_actin, direction, parameters["actin_number_types"])
+        n = ActinUtil.get_actin_number(topology, v_actin, direction)
         end_type = "barbed" if direction > 0 else "pointed"
         actin_types = [
             f"actin#ATP_{n}",
@@ -261,7 +261,7 @@ class ActinUtil:
             [],
             error_msg="Failed to set position: couldn't find actin_arp3",
         )
-        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp3, -1, parameters["actin_number_types"])
+        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp3, -1)
         actin_types = [f"actin#ATP_{n_pointed}", f"actin#{n_pointed}"]
         v_actin_arp2 = ReaddyUtil.get_neighbor_of_types(
             topology,
@@ -270,7 +270,7 @@ class ActinUtil:
             [],
             error_msg="Failed to set position: couldn't find actin_arp2",
         )
-        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1, parameters["actin_number_types"])
+        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1)
         actin_types = [
             f"actin#ATP_{n_pointed}",
             f"actin#{n_pointed}",
@@ -510,7 +510,7 @@ class ActinUtil:
         """
         get the 5 mother actins near a branch
         """
-        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1, parameters["actin_number_types"])
+        n_pointed = ActinUtil.get_actin_number(topology, v_actin_arp2, -1)
         pointed_types = [
             f"actin#ATP_{n_pointed}",
             f"actin#{n_pointed}",
@@ -524,7 +524,7 @@ class ActinUtil:
         v_actin_pointed = ReaddyUtil.get_neighbor_of_types(
             topology, v_actin_arp2, pointed_types, []
         )
-        n_barbed = ActinUtil.get_actin_number(topology, v_actin_arp3, 1, parameters["actin_number_types"])
+        n_barbed = ActinUtil.get_actin_number(topology, v_actin_arp3, 1)
         barbed_types = [
             f"actin#ATP_{n_barbed}",
             f"actin#{n_barbed}",
@@ -538,7 +538,7 @@ class ActinUtil:
         )
         v_actin_barbed2 = None
         if v_actin_barbed1 is not None:
-            n_barbed = ActinUtil.get_actin_number(topology, v_actin_barbed1, 1, parameters["actin_number_types"])
+            n_barbed = ActinUtil.get_actin_number(topology, v_actin_barbed1, 1)
             barbed_types = [
                 f"actin#ATP_{n_barbed}",
                 f"actin#{n_barbed}",
@@ -826,7 +826,7 @@ class ActinUtil:
             topology,
             recipe,
             v_new,
-            ["barbed", str(ActinUtil.get_actin_number(topology, v_neighbor1, 1, parameters["actin_number_types"]))],
+            ["barbed", str(ActinUtil.get_actin_number(topology, v_neighbor1, 1))],
             ["new"],
             True,
         )
@@ -897,7 +897,7 @@ class ActinUtil:
                 end_type,
                 str(
                     ActinUtil.get_actin_number(
-                        topology, v_neighbor, 1 if barbed else -1, parameters["actin_number_types"]
+                        topology, v_neighbor, 1 if barbed else -1
                     )
                 ),
             ],
@@ -1557,7 +1557,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_bonds_between_actins(force_constant, system, util):
+    def add_bonds_between_actins(force_constant, system, util, actin_number_types):
         """
         add bonds between actins
         """
@@ -1596,6 +1596,7 @@ class ActinUtil:
             force_constant,
             bond_length,
             system,
+            actin_number_types
         )
         util.add_bond(
             [
@@ -1648,6 +1649,7 @@ class ActinUtil:
             force_constant,
             bond_length,
             system,
+            actin_number_types
         )
         util.add_bond(  # temporary during growth reactions
             [
@@ -1687,17 +1689,6 @@ class ActinUtil:
                 "actin#pointed_fixed_",
                 "actin#pointed_fixed_ATP_",
             ],
-            -2,
-            [
-                "actin#",
-                "actin#ATP_",
-                "actin#mid_",
-                "actin#mid_ATP_",
-                "actin#fixed_",
-                "actin#fixed_ATP_",
-                "actin#mid_fixed_",
-                "actin#mid_fixed_ATP_",
-            ],
             -1,
             [
                 "actin#",
@@ -1715,17 +1706,6 @@ class ActinUtil:
                 "actin#ATP_",
                 "actin#mid_",
                 "actin#mid_ATP_",
-                "actin#fixed_",
-                "actin#fixed_ATP_",
-                "actin#mid_fixed_",
-                "actin#mid_fixed_ATP_",
-            ],
-            1
-            [
-                "actin#",
-                "actin#ATP_",
-                "actin#mid_",
-                "actin#mid_ATP_",
                 "actin#barbed_",
                 "actin#barbed_ATP_",
                 "actin#fixed_",
@@ -1735,7 +1715,7 @@ class ActinUtil:
                 "actin#fixed_barbed_",
                 "actin#fixed_barbed_ATP_",
             ],
-            2,
+            1,
             force_constant,
             angle,
             system,
@@ -1878,7 +1858,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_branch_bonds(force_constant, system, util):
+    def add_branch_bonds(force_constant, system, util, actin_number_types):
         """
         add bonds between arp2, arp3, and actins
         """
@@ -1907,6 +1887,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.arp2_to_mother_distance(),
             system,
+            actin_number_types
         )
         util.add_polymer_bond_1D(  # mother filament actin to arp3 bonds
             [
@@ -1934,6 +1915,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.arp3_to_mother_distance(),
             system,
+            actin_number_types
         )
         util.add_bond(  # arp2 to arp3 bonds
             [
@@ -2432,7 +2414,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_cap_bonds(force_constant, system, util):
+    def add_cap_bonds(force_constant, system, util, actin_number_types):
         """
         add capping protein to actin bonds
         """
@@ -2444,6 +2426,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.actin_to_actin_distance() + 1.0,
             system,
+            actin_number_types
         )
 
     @staticmethod
@@ -3189,10 +3172,3 @@ class ActinUtil:
         if (actin_number_types < 3 or actin_number_types > 5) or actin_number_types == 4:
             raise Exception("Only polymer number values of 3 and 5 are supported.")
         return range(1, actin_number_types+1)
-
-    @staticmethod
-    def actin_numbers_excel(parameter):
-        parameter = pandas.read_excel(
-        args.params_path, sheet_name="actin", usecols=[0, int(args.data_column)]
-    )
-    actin_number_types = int(parameter["actin_number_types"])
