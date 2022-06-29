@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from examples.test import actin_numbers_excel
+
 import readdy
 import numpy as np
 
