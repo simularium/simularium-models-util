@@ -11,7 +11,6 @@ from shutil import rmtree
 import math
 import pandas as pd
 
-from simularium_models_util.actin.actin_util import ActinUtil
 
 
 class ReaddyUtil:
@@ -444,7 +443,7 @@ class ReaddyUtil:
         recipe.change_particle_type(vertex, particle_type)
 
     @staticmethod
-    def calculate_polymer_number(number, offset, actin_number_types):
+    def calculate_polymer_number(number, offset, polymer_number_types):
         """
         calculates the polymer number
             from number
@@ -453,10 +452,10 @@ class ReaddyUtil:
             returns number in [1,5]
         """
         n = number + offset
-        if n > actin_number_types: 
-            n -= actin_number_types 
+        if n > polymer_number_types: 
+            n -= polymer_number_types 
         if n < 1:
-            n += actin_number_types
+            n += polymer_number_types
         return n
 
     @staticmethod
@@ -521,7 +520,7 @@ class ReaddyUtil:
         return offsets
 
     @staticmethod
-    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset, actin_number_types): 
+    def get_types_with_polymer_numbers_1D(particle_types, x, polymer_offset, polymer_number_types): 
         """
         creates a list of types with 1D polymer numbers
             for each type in particle types
@@ -533,14 +532,14 @@ class ReaddyUtil:
         types = []
         for t in particle_types:
             types.append(
-                (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offset, actin_number_types)))
+                (t + str(ReaddyUtil.calculate_polymer_number(x, polymer_offset, polymer_number_types)))
                 if polymer_offset is not None
                 else t
             )
         return types
 
     @staticmethod
-    def get_types_with_polymer_numbers_2D(particle_types, x, y, polymer_offsets): #might need to add actin_number_types
+    def get_types_with_polymer_numbers_2D(particle_types, x, y, polymer_offsets): 
         """
         creates a list of types with 2D polymer numbers
             for each type in particle types
@@ -554,9 +553,9 @@ class ReaddyUtil:
             types.append(
                 (
                     t
-                    + str(ReaddyUtil.calculate_polymer_number(x, polymer_offsets[0])) #might need to add actin_number_types
+                    + str(ReaddyUtil.calculate_polymer_number(x, polymer_offsets[0])) 
                     + "_"
-                    + str(ReaddyUtil.calculate_polymer_number(y, polymer_offsets[1])) #might need to add actin_number_types
+                    + str(ReaddyUtil.calculate_polymer_number(y, polymer_offsets[1])) 
                 )
                 if len(polymer_offsets) > 0
                 else t
@@ -706,7 +705,7 @@ class ReaddyUtil:
         force_const,
         bond_length,
         system,
-        actin_number_types
+        polymer_number_types
     ):
         """
         adds a bond between all polymer numbers
@@ -718,18 +717,18 @@ class ReaddyUtil:
             and length bond_length [nm]
         """
         
-        for x in ActinUtil.actin_number_range(actin_number_types): 
+        for x in range(1, polymer_number_types+1): 
             self.add_bond(
                 (
                     ReaddyUtil.get_types_with_polymer_numbers_1D(
-                        particle_types1, x, polymer_offset1, actin_number_types
+                        particle_types1, x, polymer_offset1, polymer_number_types
                     )
                     if polymer_offset1 is not None
                     else particle_types1
                 ),
                 (
                     ReaddyUtil.get_types_with_polymer_numbers_1D(
-                        particle_types2, x, polymer_offset2, actin_number_types
+                        particle_types2, x, polymer_offset2, polymer_number_types
                     )
                     if polymer_offset2 is not None
                     else particle_types2
@@ -785,7 +784,7 @@ class ReaddyUtil:
         force_const,
         angle,
         system,
-        actin_number_types
+        polymer_number_types
     ):
         """
         adds an angle between all polymer numbers
@@ -795,16 +794,16 @@ class ReaddyUtil:
             and angle [radians]
         """
 
-        for x in ActinUtil.actin_number_range(actin_number_types):
+        for x in range(1, polymer_number_types+1)):
             self.add_angle(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types1, x, polymer_offset1, actin_number_types
+                    particle_types1, x, polymer_offset1, polymer_number_types
                 ),
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types2, x, polymer_offset2, actin_number_types
+                    particle_types2, x, polymer_offset2, polymer_number_types
                 ),
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types3, x, polymer_offset3, actin_number_types
+                    particle_types3, x, polymer_offset3, polymer_number_types
                 ),
                 force_const,
                 angle,
@@ -863,7 +862,7 @@ class ReaddyUtil:
         force_const,
         angle,
         system,
-        actin_number_types
+        polymer_number_types
     ):
         """
         adds a cosine dihedral between all polymer numbers
@@ -873,19 +872,19 @@ class ReaddyUtil:
             and angle [radians]
         """
 
-        for x in ActinUtil.actin_number_range(actin_number_types):
+        for x in range(1, polymer_number_types+1):
             self.add_dihedral(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types1, x, polymer_offset1, actin_number_types
+                    particle_types1, x, polymer_offset1, polymer_number_types
                 ),
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types2, x, polymer_offset2, actin_number_types
+                    particle_types2, x, polymer_offset2, polymer_number_types
                 ),
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types3, x, polymer_offset3, actin_number_types
+                    particle_types3, x, polymer_offset3, polymer_number_types
                 ),
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
-                    particle_types4, x, polymer_offset4, actin_number_types
+                    particle_types4, x, polymer_offset4, polymer_number_types
                 ),
                 force_const,
                 angle,
