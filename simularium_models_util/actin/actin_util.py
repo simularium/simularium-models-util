@@ -1669,7 +1669,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_filament_twist_angles(force_constant, system, util):
+    def add_filament_twist_angles(force_constant, system, util, actin_number_types):
         """
         add angles for filament twist and cohesiveness
         """
@@ -1719,6 +1719,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_angle(
             [
@@ -1751,7 +1752,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_filament_twist_dihedrals(force_constant, system, util):
+    def add_filament_twist_dihedrals(force_constant, system, util, actin_number_types):
         """
         add dihedrals for filament twist and cohesiveness
         """
@@ -1812,6 +1813,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_dihedral(
             [
@@ -1949,7 +1951,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_branch_angles(force_constant, system, util): #
+    def add_branch_angles(force_constant, system, util, actin_number_types): 
         """
         add angles for branching
         """
@@ -2012,6 +2014,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.mother1_mother2_arp3_angle(),
             system,
+            actin_number_types
         )
         util.add_polymer_angle_1D(
             [
@@ -2041,6 +2044,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.mother3_mother2_arp3_angle(),
             system,
+            actin_number_types
         )
         angle = ActinStructure.mother0_mother1_arp2_angle()
         util.add_polymer_angle_1D(
@@ -2067,6 +2071,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
@@ -2078,7 +2083,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_branch_dihedrals(force_constant, system, util):
+    def add_branch_dihedrals(force_constant, system, util, actin_number_types):
         """
         add dihedrals for branching
         """
@@ -2105,6 +2110,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         angle = ActinStructure.mother_mother0_mother1_arp2_dihedral_angle()
         util.add_polymer_dihedral_1D(
@@ -2132,6 +2138,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
@@ -2163,6 +2170,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.mother3_mother2_arp3_arp2_dihedral_angle(),
             system,
+            actin_number_types
         )
         # arp ring
         angle = ActinStructure.mother1_mother2_arp3_arp2_dihedral_angle()
@@ -2187,6 +2195,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
@@ -2228,6 +2237,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_dihedral(
             ["arp2", "arp2#branched"],
@@ -2325,6 +2335,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],
@@ -2366,6 +2377,7 @@ class ActinUtil:
             force_constant,
             ActinStructure.mother2_arp3_arp2_daughter1_dihedral_angle(),
             system,
+            actin_number_types
         )
         util.add_dihedral(
             [
@@ -2430,7 +2442,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_cap_angles(force_constant, system, util):
+    def add_cap_angles(force_constant, system, util, actin_number_types):
         """
         add angles for capping protein
         """
@@ -2467,6 +2479,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_angle(
             ["actin#branch_1", "actin#branch_ATP_1"],
@@ -2478,7 +2491,7 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_cap_dihedrals(force_constant, system, util):
+    def add_cap_dihedrals(force_constant, system, util, actin_number_types):
         """
         add dihedrals for capping protein
         """
@@ -2504,6 +2517,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
+            actin_number_types
         )
         util.add_dihedral(
             ["actin#branch_1", "actin#branch_ATP_1"],

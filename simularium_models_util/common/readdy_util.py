@@ -648,7 +648,7 @@ class ReaddyUtil:
                         self.angle_triples.append((t1, t2, t3))
                         self.angle_triples.append((t3, t2, t1))
 
-    def add_dihedral(self, types1, types2, types3, types4, force_const, angle, system): #ANGLES: change to include new dihedral angles for 5 actins? 
+    def add_dihedral(self, types1, types2, types3, types4, force_const, angle, system): 
         """
         adds a cosine dihedral to the system (if it hasn't been added already)
             from each type in types1
@@ -677,7 +677,7 @@ class ReaddyUtil:
                             self.dihedral_quads.append((t1, t2, t3, t4))
                             self.dihedral_quads.append((t4, t3, t2, t1))
 
-    def add_repulsion(self, types1, types2, force_const, distance, system): #BONDS: need to change?
+    def add_repulsion(self, types1, types2, force_const, distance, system): 
         """
         adds a pairwise repulsion to the system (if it hasn't been added already)
             between each type in types1
@@ -850,7 +850,7 @@ class ReaddyUtil:
                     system,
                 )
 
-    def add_polymer_dihedral_1D( #ANGLES
+    def add_polymer_dihedral_1D( 
         self,
         particle_types1,
         polymer_offset1,

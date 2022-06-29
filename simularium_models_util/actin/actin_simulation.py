@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from examples.test import actin_numbers_excel
 import readdy
 import numpy as np
 
@@ -74,6 +75,7 @@ class ActinSimulation:
         Add particle and topology types for actin particles
         to the ReaDDy system
         """
+        actin_number_types = int(self.parameters["actin_number_types"])
         temperature = self.parameters["temperature_K"]
         viscosity = self.parameters["viscosity"]
         actin_diffCoeff = ReaddyUtil.calculate_diffusionCoefficient(
@@ -85,7 +87,7 @@ class ActinSimulation:
         cap_diffCoeff = ReaddyUtil.calculate_diffusionCoefficient(
             self.parameters["cap_radius"], viscosity, temperature
         )  # nm^2/s
-        self.actin_util.add_actin_types(self.system, actin_diffCoeff, int(self.parameters["actin_number_types"]))
+        self.actin_util.add_actin_types(self.system, actin_diffCoeff, actin_number_types)
         self.actin_util.add_arp23_types(self.system, arp23_diffCoeff)
         self.actin_util.add_cap_types(self.system, cap_diffCoeff)
         self.system.add_species("obstacle", 0.0)
@@ -97,22 +99,21 @@ class ActinSimulation:
         """
         force_constant = self.parameters["force_constant"]
         util = ReaddyUtil()
+        actin_number_types = int(self.parameters["actin_number_types"])
         # linear actin
-        self.actin_util.add_bonds_between_actins(force_constant, self.system, util)
+        self.actin_util.add_bonds_between_actins(force_constant, self.system, util, actin_number_types)
         self.actin_util.add_filament_twist_angles(
-            10 * force_constant, self.system, util
-        )
+            10 * force_constant, self.system, util, actin_number_types)
         self.actin_util.add_filament_twist_dihedrals(
-            25 * force_constant, self.system, util
-        )
+            25 * force_constant, self.system, util, actin_number_types)
         # branch junction
-        self.actin_util.add_branch_bonds(force_constant, self.system, util)
-        self.actin_util.add_branch_angles(10 * force_constant, self.system, util)
-        self.actin_util.add_branch_dihedrals(force_constant, self.system, util)
+        self.actin_util.add_branch_bonds(force_constant, self.system, util, actin_number_types)
+        self.actin_util.add_branch_angles(10 * force_constant, self.system, util, actin_number_types)
+        self.actin_util.add_branch_dihedrals(force_constant, self.system, util, actin_number_types)
         # capping protein
-        self.actin_util.add_cap_bonds(force_constant, self.system, util, int(self.parameters["actin_number_types"]))
-        self.actin_util.add_cap_angles(force_constant, self.system, util)
-        self.actin_util.add_cap_dihedrals(force_constant, self.system, util)
+        self.actin_util.add_cap_bonds(force_constant, self.system, util, actin_number_types)
+        self.actin_util.add_cap_angles(force_constant, self.system, util, actin_number_types)
+        self.actin_util.add_cap_dihedrals(force_constant, self.system, util, actin_number_types)
         # repulsions
         self.actin_util.add_repulsions(
             self.parameters["actin_radius"],
