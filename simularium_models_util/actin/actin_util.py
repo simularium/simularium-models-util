@@ -774,16 +774,13 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Reverse Dimerize")
+        actin_types = (
+            ActinUtil.get_all_polymer_actin_types("actin#barbed")
+            + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
+        )
         v_barbed = ReaddyUtil.get_first_vertex_of_types(
             topology,
-            [
-                "actin#barbed_ATP_1",
-                "actin#barbed_ATP_2",
-                "actin#barbed_ATP_3",
-                "actin#barbed_1",
-                "actin#barbed_2",
-                "actin#barbed_3",
-            ],
+            actin_types,
             error_msg="Failed to find barbed end of dimer",
         )
         v_pointed = ReaddyUtil.get_first_neighbor(
@@ -844,16 +841,13 @@ class ActinUtil:
         recipe = readdy.StructuralReactionRecipe(topology)
         if parameters["verbose"]:
             print("Reverse Trimerize")
+        actin_types = (
+            ActinUtil.get_all_polymer_actin_types("actin#barbed")
+            + ActinUtil.get_all_polymer_actin_types("actin#barbed_ATP")
+        )
         v_barbed = ReaddyUtil.get_first_vertex_of_types(
             topology,
-            [
-                "actin#barbed_ATP_1",
-                "actin#barbed_ATP_2",
-                "actin#barbed_ATP_3",
-                "actin#barbed_1",
-                "actin#barbed_2",
-                "actin#barbed_3",
-            ],
+            actin_types,
             error_msg="Failed to find barbed end in trimer",
         )
         v_neighbor = ReaddyUtil.get_first_neighbor(
@@ -2968,11 +2962,11 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_arp23_bind_reaction(system):
+    def add_arp23_bind_reaction(system, actin_number_types):
         """
         add arp2/3 along filament to start a branch
         """
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             system.topologies.add_spatial_reaction(
                 f"Arp_Bind_ATP1{i}: "
                 f"Actin-Polymer(actin#mid_ATP_{i}) + Arp23-Dimer(arp3) -> "
@@ -3083,11 +3077,11 @@ class ActinUtil:
         )
 
     @staticmethod
-    def add_cap_bind_reaction(system):
+    def add_cap_bind_reaction(system, actin_number_types):
         """
         add capping protein to a barbed end to stop growth
         """
-        for i in range(1, 4):
+        for i in ActinUtil.actin_number_range(actin_number_types):
             system.topologies.add_spatial_reaction(
                 f"Cap_Bind1{i}: Actin-Polymer(actin#barbed_{i}) + Cap(cap) -> "
                 f"Actin-Polymer#Capping(actin#{i}--cap#new)",

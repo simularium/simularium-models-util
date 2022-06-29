@@ -625,7 +625,7 @@ class ReaddyUtil:
                     self.bond_pairs.append((t1, t2))
                     self.bond_pairs.append((t2, t1))
 
-    def add_angle(self, types1, types2, types3, force_const, angle, system): #ANGLES: change "types" to actin_number_types, to include angles for 5 actins? 
+    def add_angle(self, types1, types2, types3, force_const, angle, system): 
         """
         adds an angle to the system (if it hasn't been added already)
             from each type in types1
