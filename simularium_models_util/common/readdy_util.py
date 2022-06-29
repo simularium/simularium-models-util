@@ -794,7 +794,7 @@ class ReaddyUtil:
             and angle [radians]
         """
 
-        for x in range(1, polymer_number_types+1)):
+        for x in range(1, polymer_number_types+1):
             self.add_angle(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
                     particle_types1, x, polymer_offset1, polymer_number_types

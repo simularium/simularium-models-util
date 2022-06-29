@@ -3179,4 +3179,4 @@ class ActinUtil:
     def actin_number_range(actin_number_types):
         if (actin_number_types < 3 or actin_number_types > 5) or actin_number_types == 4:
             raise Exception("Only polymer number values of 3 and 5 are supported.")
-        return range(1, actin_number_types+1)
+        return range(1, int(actin_number_types+1))
