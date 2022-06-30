@@ -35,5 +35,5 @@ MICROTUBULES_REACTIONS = {
     ],
     "Failed Hydrolyze": [
         "Fail_Hydrolyze",
-    ]
+    ],
 }

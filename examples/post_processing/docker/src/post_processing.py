@@ -27,7 +27,7 @@ def main():
     parser.add_argument(
         "model_name", help="prefix for output file names", nargs="?", default=""
     )
-    
+
     args = parser.parse_args()
     parameters = pandas.read_excel(
         args.params_path,
@@ -46,9 +46,9 @@ def main():
     parameters["name"] = "outputs/" + args.model_name + "_" + run_name
 
     stride = 10
-    h5_path=parameters["name"] + ".h5"
+    h5_path = parameters["name"] + ".h5"
 
-    s3 = boto3.client('s3')
+    s3 = boto3.client("s3")
     bucket_name = "readdy-working-bucket"
     s3.download_file(bucket_name, h5_path, h5_path)
 
@@ -69,6 +69,7 @@ def main():
         scaled_time_step_us=scaled_time_step_us,
         plots=plots,
     )
+
 
 if __name__ == "__main__":
     main()

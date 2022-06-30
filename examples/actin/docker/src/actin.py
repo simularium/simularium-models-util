@@ -82,7 +82,9 @@ def main():
     if parameters["branched_seed"]:
         print("Starting with branched seed")
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), use_uuids=False)
+            ActinGenerator.get_monomers(
+                ActinTestData.simple_branched_actin_fiber(), use_uuids=False
+            )
         )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
@@ -93,11 +95,19 @@ def main():
             plots = None
             if parameters["plot_polymerization"]:
                 plots = ActinVisualization.generate_polymerization_plots(
-                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                    parameters["name"] + ".h5",
+                    parameters["box_size"],
+                    10,
+                    parameters["periodic_boundary"],
+                    plots,
                 )
             if parameters["plot_bend_twist"]:
                 plots = ActinVisualization.generate_bend_twist_plots(
-                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                    parameters["name"] + ".h5",
+                    parameters["box_size"],
+                    10,
+                    parameters["periodic_boundary"],
+                    plots,
                 )
             ActinVisualization.visualize_actin(
                 parameters["name"] + ".h5",

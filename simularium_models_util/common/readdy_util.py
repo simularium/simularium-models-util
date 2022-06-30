@@ -29,7 +29,7 @@ class ReaddyUtil:
         normalize a vector
         """
         return v / np.linalg.norm(v)
-    
+
     @staticmethod
     def analyze_reaction_count_over_time(reactions, reaction_name):
         """
@@ -1135,8 +1135,9 @@ class ReaddyUtil:
         and the reaction time increment in seconds
         """
         if pickle_file_path is not None:
-            print('Loading pickle file for shaped data')
+            print("Loading pickle file for shaped data")
             import pickle
+
             data = []
             with open(pickle_file_path, "rb") as f:
                 while True:
@@ -1179,7 +1180,8 @@ class ReaddyUtil:
             data = [monomer_data, reactions, times, time_inc_s]
             if save_pickle_file:
                 import pickle
-                fname = h5_file_path+".dat"
+
+                fname = h5_file_path + ".dat"
                 with open(fname, "wb") as f:
                     pickle.dump(data, f)
         return monomer_data, reactions, times, time_inc_s
@@ -1210,18 +1212,21 @@ class ReaddyUtil:
         particle_types,
         frame_particle_data,
         exact_match,
-        ):
+    ):
         """
         Get a list of ids for all the neighbors of particle_id with particle type
         in the given list of types in the given frame of data
         """
         result = []
-        for neighbor_id in frame_particle_data["particles"][particle_id]["neighbor_ids"]:
+        for neighbor_id in frame_particle_data["particles"][particle_id][
+            "neighbor_ids"
+        ]:
             if neighbor_id in frame_particle_data["particles"]:
                 type_name = frame_particle_data["particles"][neighbor_id]["type_name"]
                 for particle_type in particle_types:
-                    if (exact_match and type_name==particle_type) or \
-                        (not exact_match and particle_type in type_name):
+                    if (exact_match and type_name == particle_type) or (
+                        not exact_match and particle_type in type_name
+                    ):
                         result.append(neighbor_id)
                         break
         return result
@@ -1250,16 +1255,24 @@ class ReaddyUtil:
         Get the id for the first neighbor with one of the neighbor_types
         in the given frame of data
         """
-        for neighbor_id in frame_particle_data["particles"][particle_id]["neighbor_ids"]:
+        for neighbor_id in frame_particle_data["particles"][particle_id][
+            "neighbor_ids"
+        ]:
             if neighbor_id not in frame_particle_data["particles"]:
                 neighbor_id = str(neighbor_id)
             if neighbor_id in exclude_ids:
                 continue
-            current_neighbor_type = frame_particle_data["particles"][neighbor_id]["type_name"]
+            current_neighbor_type = frame_particle_data["particles"][neighbor_id][
+                "type_name"
+            ]
             for neighbor_type in neighbor_types:
-                if (exact_match and current_neighbor_type == neighbor_type) or\
-                    (not exact_match and (neighbor_type in current_neighbor_type or \
-                        current_neighbor_type in neighbor_type)):
+                if (exact_match and current_neighbor_type == neighbor_type) or (
+                    not exact_match
+                    and (
+                        neighbor_type in current_neighbor_type
+                        or current_neighbor_type in neighbor_type
+                    )
+                ):
                     return neighbor_id
         return None
 
@@ -1299,7 +1312,7 @@ class ReaddyUtil:
         if chain_length == 1:
             return result
 
-        next_neighbor_index = (next_neighbor_index+1)%len(neighbor_types)
+        next_neighbor_index = (next_neighbor_index + 1) % len(neighbor_types)
 
         return ReaddyUtil.analyze_frame_get_chain_of_types(
             n_id,
@@ -1349,9 +1362,9 @@ class ReaddyUtil:
     @staticmethod
     def get_box_size(input_size):
         if isinstance(input_size, str):
-            lengths = input_size.split(',')
+            lengths = input_size.split(",")
             if len(lengths) != 3:
-                print('INCORRECT BOX SIZE. PLEASE CHECK INPUT FILE.')
+                print("INCORRECT BOX SIZE. PLEASE CHECK INPUT FILE.")
             return np.array([float(length) for length in lengths])
         else:
-            return np.array([float(input_size)]*3)
+            return np.array([float(input_size)] * 3)

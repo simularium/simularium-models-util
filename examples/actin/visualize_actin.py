@@ -26,7 +26,8 @@ def main():
         "periodic_boundary", help="is there a periodic boundary condition?"
     )
     parser.add_argument(
-        "plot_bend_twist", help="calculate bend/twist plots? otherwise calculate polymerization plots"
+        "plot_bend_twist",
+        help="calculate bend/twist plots? otherwise calculate polymerization plots",
     )
     args = parser.parse_args()
     dir_path = args.dir_path

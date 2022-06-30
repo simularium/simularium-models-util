@@ -62,7 +62,7 @@ def main():
             MicrotubulesVisualization.visualize_microtubules(
                 parameters["name"] + ".h5",
                 parameters["box_size"],
-                scaled_time_step_us =  scaled_time_step_us,
+                scaled_time_step_us=scaled_time_step_us,
                 plots=plots,
             )
         except Exception as e:

@@ -841,7 +841,7 @@ class MicrotubulesUtil:
         system.add_species("site#remove", 0)
         for site_type in site_types:
             system.add_topology_species(site_type, diffCoeff)
-    
+
     @staticmethod
     def get_all_tubulin_types():
         """

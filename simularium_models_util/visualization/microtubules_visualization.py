@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import numpy as np
 import os
 import argparse
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData, DisplayData, ScatterPlotData, DISPLAY_TYPE
-from ..microtubules import MicrotubulesUtil, MicrotubulesAnalyzer, MICROTUBULES_REACTIONS
+from ..microtubules import (
+    MicrotubulesUtil,
+    MicrotubulesAnalyzer,
+    MICROTUBULES_REACTIONS,
+)
 from ..common import ReaddyUtil
+
 
 class MicrotubulesVisualization:
     """
@@ -29,17 +33,19 @@ class MicrotubulesVisualization:
             for t in types:
                 result[t] = raw_display_data[particle_type]
         return result
-    
+
     @staticmethod
     def get_avg_length_plot(monomer_data, times):
         """
         Add a plot of average mother and daughter filament length
         """
-        protofilament_list = MicrotubulesAnalyzer.analyze_protofilament_lengths(monomer_data)
+        protofilament_list = MicrotubulesAnalyzer.analyze_protofilament_lengths(
+            monomer_data
+        )
         protofilaments = {}
         for count, protofilament in enumerate(protofilament_list):
-            protofilaments["Filament " + str(count+1)] = protofilament
-        
+            protofilaments["Filament " + str(count + 1)] = protofilament
+
         return ScatterPlotData(
             title="Average length of protofilaments",
             xaxis_title="Time (µs)",
@@ -60,7 +66,7 @@ class MicrotubulesVisualization:
             reaction_counts = ReaddyUtil.analyze_reaction_count_over_time(
                 reactions, total_rxn_name
             )
-            if reaction_counts is not None:            
+            if reaction_counts is not None:
                 reaction_events[total_rxn_name] = reaction_counts
                 if "Total Grow" not in reaction_events:
                     tmp = reaction_counts
@@ -84,11 +90,11 @@ class MicrotubulesVisualization:
         for each total shrink reaction
         """
         reaction_events = {}
-        
+
         reaction_counts = ReaddyUtil.analyze_reaction_count_over_time(
             reactions, MICROTUBULES_REACTIONS["MT Shrink"][0]
         )
-        if reaction_counts is not None:            
+        if reaction_counts is not None:
             reaction_events[MICROTUBULES_REACTIONS["MT Shrink"][0]] = reaction_counts
 
         return ScatterPlotData(
@@ -111,7 +117,7 @@ class MicrotubulesVisualization:
             reaction_counts = ReaddyUtil.analyze_reaction_count_over_time(
                 reactions, total_rxn_name
             )
-            if reaction_counts is not None:            
+            if reaction_counts is not None:
                 if "Total Attach" not in reaction_events:
                     tmp = reaction_counts
                 else:
@@ -129,12 +135,13 @@ class MicrotubulesVisualization:
 
     @staticmethod
     def generate_plots(
-            path_to_readdy_h5,
-            box_size,
-            stride=1,
-            periodic_boundary=True,
-            save_pickle_file=False,
-            pickle_file_path=None,):
+        path_to_readdy_h5,
+        box_size,
+        stride=1,
+        periodic_boundary=True,
+        save_pickle_file=False,
+        pickle_file_path=None,
+    ):
         """
         Use an MicrotubulesAnalyzer to generate plots of observables
         """
@@ -246,7 +253,7 @@ class MicrotubulesVisualization:
             "tubulinA#free",
             "tubulinB#free",
         ]
-        # convert        
+        # convert
         data = ReaddyData(
             meta_data=MetaData(
                 box_size=box_size,
@@ -267,7 +274,7 @@ class MicrotubulesVisualization:
             for plot_type in plots:
                 for plot in plots[plot_type]:
                     converter.add_plot(plot, plot_type)
-        
+
         converter.write_JSON(path_to_readdy_h5)
 
 
