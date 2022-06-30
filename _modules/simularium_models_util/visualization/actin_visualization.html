@@ -201,7 +201,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ytraces</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">GROWTH_RXNS</span><span class="p">:</span>
-            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
                 <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">rxn_events</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -225,7 +225,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ytraces</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">STRUCTURAL_RXNS</span><span class="p">:</span>
-            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+            <span class="n">rxn_events</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
                 <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">rxn_events</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -250,7 +250,7 @@
             <span class="n">group_reaction_events</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">GROUPED_GROWTH_RXNS</span><span class="p">[</span><span class="n">rxn_group_name</span><span class="p">]:</span>
                 <span class="n">group_reaction_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+                    <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
                         <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
@@ -925,7 +925,7 @@
             <span class="n">timestep</span><span class="o">=</span><span class="n">TIMESTEP</span> <span class="o">*</span> <span class="n">total_steps</span> <span class="o">*</span> <span class="mf">1e-3</span><span class="p">,</span>
             <span class="n">path_to_readdy_h5</span><span class="o">=</span><span class="n">path_to_readdy_h5</span><span class="p">,</span>
             <span class="n">meta_data</span><span class="o">=</span><span class="n">MetaData</span><span class="p">(</span>
-                <span class="n">box_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]),</span>
+                <span class="n">box_size</span><span class="o">=</span><span class="n">box_size</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">display_data</span><span class="o">=</span><span class="n">display_data</span><span class="p">,</span>
             <span class="n">time_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;µs&quot;</span><span class="p">),</span>

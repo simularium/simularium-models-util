@@ -154,7 +154,7 @@
 <span class="sd">        including particle types, constraints, and reactions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">ReactionDiffusionSystem</span><span class="p">(</span>
-            <span class="n">box_size</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="n">box_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">],</span>
             <span class="n">periodic_boundary_conditions</span><span class="o">=</span><span class="p">[</span><span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;periodic_boundary&quot;</span><span class="p">])]</span>
             <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
         <span class="p">)</span>

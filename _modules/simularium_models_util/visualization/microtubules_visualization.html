@@ -102,9 +102,9 @@
 <span class="kn">import</span> <span class="nn">argparse</span>
 
 <span class="kn">from</span> <span class="nn">simulariumio.readdy</span> <span class="kn">import</span> <span class="n">ReaddyConverter</span><span class="p">,</span> <span class="n">ReaddyData</span>
-<span class="kn">from</span> <span class="nn">simulariumio</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">UnitData</span><span class="p">,</span> <span class="n">DisplayData</span><span class="p">,</span> <span class="n">DISPLAY_TYPE</span>
-<span class="kn">from</span> <span class="nn">..microtubules</span> <span class="kn">import</span> <span class="n">MicrotubulesUtil</span>
-
+<span class="kn">from</span> <span class="nn">simulariumio</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">UnitData</span><span class="p">,</span> <span class="n">DisplayData</span><span class="p">,</span> <span class="n">ScatterPlotData</span><span class="p">,</span> <span class="n">DISPLAY_TYPE</span>
+<span class="kn">from</span> <span class="nn">..microtubules</span> <span class="kn">import</span> <span class="n">MicrotubulesUtil</span><span class="p">,</span> <span class="n">MicrotubulesAnalyzer</span><span class="p">,</span> <span class="n">MICROTUBULES_REACTIONS</span>
+<span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 
 <div class="viewcode-block" id="MicrotubulesVisualization"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization">[docs]</a><span class="k">class</span> <span class="nc">MicrotubulesVisualization</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -125,9 +125,139 @@
             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">types</span><span class="p">:</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_display_data</span><span class="p">[</span><span class="n">particle_type</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">result</span></div>
+    
+<div class="viewcode-block" id="MicrotubulesVisualization.get_avg_length_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_avg_length_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_avg_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a plot of average mother and daughter filament length</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">protofilament_list</span> <span class="o">=</span> <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">analyze_protofilament_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">)</span>
+        <span class="n">protofilaments</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">protofilament</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">protofilament_list</span><span class="p">):</span>
+            <span class="n">protofilaments</span><span class="p">[</span><span class="s2">&quot;Filament &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">protofilament</span>
+        
+        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average length of protofilaments&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Average length (monomers)&quot;</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">ytraces</span><span class="o">=</span><span class="n">protofilaments</span><span class="p">,</span>
+            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MicrotubulesVisualization.get_growth_reactions_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_growth_reactions_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_growth_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a plot of reaction events over time</span>
+<span class="sd">        for each total growth reaction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reaction_events</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">MICROTUBULES_REACTIONS</span><span class="p">[</span><span class="s2">&quot;Grow&quot;</span><span class="p">]:</span>
+            <span class="n">reaction_counts</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+                <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">reaction_counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>            
+                <span class="n">reaction_events</span><span class="p">[</span><span class="n">total_rxn_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">reaction_counts</span>
+                <span class="k">if</span> <span class="s2">&quot;Total Grow&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reaction_events</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">=</span> <span class="n">reaction_counts</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">+=</span> <span class="n">reaction_counts</span>
+        <span class="n">reaction_events</span><span class="p">[</span><span class="s2">&quot;Total Grow&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+
+        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Growth reactions&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Reaction events&quot;</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">ytraces</span><span class="o">=</span><span class="n">reaction_events</span><span class="p">,</span>
+            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MicrotubulesVisualization.get_shrink_reactions_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_shrink_reactions_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_shrink_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a plot of reaction events over time</span>
+<span class="sd">        for each total shrink reaction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reaction_events</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="n">reaction_counts</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+            <span class="n">reactions</span><span class="p">,</span> <span class="n">MICROTUBULES_REACTIONS</span><span class="p">[</span><span class="s2">&quot;MT Shrink&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">reaction_counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>            
+            <span class="n">reaction_events</span><span class="p">[</span><span class="n">MICROTUBULES_REACTIONS</span><span class="p">[</span><span class="s2">&quot;MT Shrink&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">reaction_counts</span>
+
+        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Shrink reactions&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Reaction events&quot;</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">ytraces</span><span class="o">=</span><span class="n">reaction_events</span><span class="p">,</span>
+            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MicrotubulesVisualization.get_attach_reactions_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_attach_reactions_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_attach_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a plot of attachment events over time</span>
+<span class="sd">        for each total attach reaction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reaction_events</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">total_rxn_name</span> <span class="ow">in</span> <span class="n">MICROTUBULES_REACTIONS</span><span class="p">[</span><span class="s2">&quot;Lateral Attach&quot;</span><span class="p">]:</span>
+            <span class="n">reaction_counts</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_reaction_count_over_time</span><span class="p">(</span>
+                <span class="n">reactions</span><span class="p">,</span> <span class="n">total_rxn_name</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">reaction_counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>            
+                <span class="k">if</span> <span class="s2">&quot;Total Attach&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reaction_events</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">=</span> <span class="n">reaction_counts</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">+=</span> <span class="n">reaction_counts</span>
+        <span class="n">reaction_events</span><span class="p">[</span><span class="s2">&quot;Total Attach&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+
+        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Attach reactions&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Reaction events&quot;</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">ytraces</span><span class="o">=</span><span class="n">reaction_events</span><span class="p">,</span>
+            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MicrotubulesVisualization.generate_plots"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.generate_plots">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">generate_plots</span><span class="p">(</span>
+            <span class="n">path_to_readdy_h5</span><span class="p">,</span>
+            <span class="n">box_size</span><span class="p">,</span>
+            <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">save_pickle_file</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">pickle_file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use an MicrotubulesAnalyzer to generate plots of observables</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span>
+            <span class="n">monomer_data</span><span class="p">,</span>
+            <span class="n">reactions</span><span class="p">,</span>
+            <span class="n">times</span><span class="p">,</span>
+            <span class="n">_</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">monomer_data_and_reactions_from_file</span><span class="p">(</span>
+            <span class="n">h5_file_path</span><span class="o">=</span><span class="n">path_to_readdy_h5</span><span class="p">,</span>
+            <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">reaction_names</span><span class="o">=</span><span class="n">MICROTUBULES_REACTIONS</span><span class="p">,</span>
+            <span class="n">save_pickle_file</span><span class="o">=</span><span class="n">save_pickle_file</span><span class="p">,</span>
+            <span class="n">pickle_file_path</span><span class="o">=</span><span class="n">pickle_file_path</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;scatter&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_avg_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_growth_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_shrink_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_attach_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">}</span></div>
 
 <div class="viewcode-block" id="MicrotubulesVisualization.visualize_microtubules"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.visualize_microtubules">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">visualize_microtubules</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">plots</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">visualize_microtubules</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">scaled_time_step_us</span><span class="p">,</span> <span class="n">plots</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        visualize a microtubule trajectory in Simularium</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -209,21 +339,32 @@
             <span class="s2">&quot;site#4_GDP&quot;</span><span class="p">,</span>
             <span class="s2">&quot;site#new&quot;</span><span class="p">,</span>
             <span class="s2">&quot;site#remove&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinA#free&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#free&quot;</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="c1"># convert</span>
+        <span class="c1"># convert        </span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ReaddyData</span><span class="p">(</span>
             <span class="n">meta_data</span><span class="o">=</span><span class="n">MetaData</span><span class="p">(</span>
-                <span class="n">box_size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">box_size</span><span class="p">]),</span>
+                <span class="n">box_size</span><span class="o">=</span><span class="n">box_size</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="n">timestep</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="n">scaled_time_step_us</span><span class="p">,</span>
             <span class="n">path_to_readdy_h5</span><span class="o">=</span><span class="n">path_to_readdy_h5</span><span class="p">,</span>
             <span class="n">display_data</span><span class="o">=</span><span class="n">display_data</span><span class="p">,</span>
-            <span class="n">time_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;ns&quot;</span><span class="p">),</span>
+            <span class="n">time_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;µs&quot;</span><span class="p">),</span>
             <span class="n">spatial_units</span><span class="o">=</span><span class="n">UnitData</span><span class="p">(</span><span class="s2">&quot;nm&quot;</span><span class="p">),</span>
             <span class="n">ignore_types</span><span class="o">=</span><span class="n">ignore_types</span><span class="p">,</span>
-            <span class="n">plots</span><span class="o">=</span><span class="n">plots</span><span class="p">,</span>
+            <span class="n">plots</span><span class="o">=</span><span class="p">[],</span>
         <span class="p">)</span>
-        <span class="n">ReaddyConverter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">write_JSON</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">)</span></div></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">converter</span> <span class="o">=</span> <span class="n">ReaddyConverter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">plots</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">plot_type</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">[</span><span class="n">plot_type</span><span class="p">]:</span>
+                    <span class="n">converter</span><span class="o">.</span><span class="n">add_plot</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">plot_type</span><span class="p">)</span>
+        
+        <span class="n">converter</span><span class="o">.</span><span class="n">write_JSON</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>

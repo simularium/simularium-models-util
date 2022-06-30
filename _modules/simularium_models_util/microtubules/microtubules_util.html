@@ -937,6 +937,26 @@
         <span class="n">system</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="s2">&quot;site#remove&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">site_type</span> <span class="ow">in</span> <span class="n">site_types</span><span class="p">:</span>
             <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="n">site_type</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="MicrotubulesUtil.get_all_tubulin_types"><a class="viewcode-back" href="../../../simularium_models_util.microtubules.html#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_all_tubulin_types">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_all_tubulin_types</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns the list of all tubulin types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tube_tubulin_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;tubulinA#GTP_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinA#GDP_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#GTP_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#GDP_&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">bent_tubulin_types</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;tubulinA#GTP_bent_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinA#GDP_bent_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#GTP_bent_&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;tubulinB#GDP_bent_&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">all_tubulin_types</span> <span class="o">=</span> <span class="n">tube_tubulin_types</span> <span class="o">+</span> <span class="n">bent_tubulin_types</span>
+        <span class="k">return</span> <span class="n">all_tubulin_types</span></div>
 
 <div class="viewcode-block" id="MicrotubulesUtil.do_grow1"><a class="viewcode-back" href="../../../simularium_models_util.microtubules.html#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.do_grow1">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">do_grow1</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">GTP_state</span><span class="p">):</span>

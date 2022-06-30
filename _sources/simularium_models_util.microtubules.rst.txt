@@ -4,6 +4,22 @@ simularium\_models\_util.microtubules package
 Submodules
 ----------
 
+simularium\_models\_util.microtubules.microtubules\_analyzer module
+-------------------------------------------------------------------
+
+.. automodule:: simularium_models_util.microtubules.microtubules_analyzer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+simularium\_models\_util.microtubules.microtubules\_reactions module
+--------------------------------------------------------------------
+
+.. automodule:: simularium_models_util.microtubules.microtubules_reactions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simularium\_models\_util.microtubules.microtubules\_simulation module
 ---------------------------------------------------------------------
 

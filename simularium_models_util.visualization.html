@@ -247,6 +247,25 @@ for a dictionary of types and values</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>visualize a microtubules trajectory in Simularium</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.generate_plots">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodic_boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_pickle_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pickle_file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.generate_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.generate_plots" title="Permalink to this definition"></a></dt>
+<dd><p>Use an MicrotubulesAnalyzer to generate plots of observables</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_attach_reactions_plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_attach_reactions_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reactions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.get_attach_reactions_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_attach_reactions_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Add a plot of attachment events over time
+for each total attach reaction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_avg_length_plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_avg_length_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monomer_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.get_avg_length_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_avg_length_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Add a plot of average mother and daughter filament length</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_display_data_for_all_polymer_types">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_display_data_for_all_polymer_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_display_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.get_display_data_for_all_polymer_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_display_data_for_all_polymer_types" title="Permalink to this definition"></a></dt>
 <dd><p>creates a dictionary mapping particle type for all polymer types to a value
@@ -255,8 +274,22 @@ for a dictionary of types and values</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_growth_reactions_plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_growth_reactions_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reactions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.get_growth_reactions_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_growth_reactions_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Add a plot of reaction events over time
+for each total growth reaction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_shrink_reactions_plot">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_shrink_reactions_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reactions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.get_shrink_reactions_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_shrink_reactions_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Add a plot of reaction events over time
+for each total shrink reaction</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.visualize_microtubules">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visualize_microtubules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.visualize_microtubules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.visualize_microtubules" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visualize_microtubules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_to_readdy_h5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaled_time_step_us</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/visualization/microtubules_visualization.html#MicrotubulesVisualization.visualize_microtubules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.visualize_microtubules" title="Permalink to this definition"></a></dt>
 <dd><p>visualize a microtubule trajectory in Simularium</p>
 </dd></dl>
 

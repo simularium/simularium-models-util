@@ -105,6 +105,36 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
+<section id="module-simularium_models_util.microtubules.microtubules_analyzer">
+<span id="simularium-models-util-microtubules-microtubules-analyzer-module"></span><h2>simularium_models_util.microtubules.microtubules_analyzer module<a class="headerlink" href="#module-simularium_models_util.microtubules.microtubules_analyzer" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simularium_models_util.microtubules.microtubules_analyzer.</span></span><span class="sig-name descname"><span class="pre">MicrotubulesAnalyzer</span></span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_analyzer.html#MicrotubulesAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.analyze_protofilament_lengths">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analyze_protofilament_lengths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monomer_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_analyzer.html#MicrotubulesAnalyzer.analyze_protofilament_lengths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.analyze_protofilament_lengths" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of the number of monomers in each mother filament
+in each frame of the trajectory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.get_plus_and_minus_end_neighbors">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_plus_and_minus_end_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_analyzer.html#MicrotubulesAnalyzer.get_plus_and_minus_end_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.get_plus_and_minus_end_neighbors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.get_protofilaments">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_protofilaments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_particle_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_analyzer.html#MicrotubulesAnalyzer.get_protofilaments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.get_protofilaments" title="Permalink to this definition"></a></dt>
+<dd><p>get a list of the number of monomers in the closed part of each protofilament at the time index</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simularium_models_util.microtubules.microtubules_reactions">
+<span id="simularium-models-util-microtubules-microtubules-reactions-module"></span><h2>simularium_models_util.microtubules.microtubules_reactions module<a class="headerlink" href="#module-simularium_models_util.microtubules.microtubules_reactions" title="Permalink to this heading"></a></h2>
+</section>
 <section id="module-simularium_models_util.microtubules.microtubules_simulation">
 <span id="simularium-models-util-microtubules-microtubules-simulation-module"></span><h2>simularium_models_util.microtubules.microtubules_simulation module<a class="headerlink" href="#module-simularium_models_util.microtubules.microtubules_simulation" title="Permalink to this heading"></a></h2>
 <dl class="py class">
@@ -406,6 +436,12 @@ have any crosslinks to other filaments?</p>
 <div><p>for type particle_type</p>
 <p>returns list of types</p>
 </div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_all_tubulin_types">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_all_tubulin_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simularium_models_util/microtubules/microtubules_util.html#MicrotubulesUtil.get_all_tubulin_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#simularium_models_util.microtubules.microtubules_util.MicrotubulesUtil.get_all_tubulin_types" title="Permalink to this definition"></a></dt>
+<dd><p>returns the list of all tubulin types</p>
 </dd></dl>
 
 <dl class="py method">

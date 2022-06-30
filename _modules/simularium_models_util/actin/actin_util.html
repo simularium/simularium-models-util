@@ -2720,7 +2720,7 @@
         <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;periodic_boundary&quot;</span><span class="p">]):</span>
             <span class="k">return</span>
         <span class="c1"># 1.0 margin on each side</span>
-        <span class="n">box_potential_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">box_potential_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_box_potential</span><span class="p">(</span>
             <span class="n">particle_types</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_particle_types</span><span class="p">(),</span>
             <span class="n">origin</span><span class="o">=-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">box_potential_size</span><span class="p">,</span>
