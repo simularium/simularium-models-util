@@ -98,38 +98,43 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">readdy</span>
 
 <span class="kn">from</span> <span class="nn">..common</span> <span class="kn">import</span> <span class="n">ReaddyUtil</span>
 <span class="kn">from</span> <span class="nn">.microtubules_util</span> <span class="kn">import</span> <span class="n">MicrotubulesUtil</span>
-<span class="kn">from</span> <span class="nn">.microtubules_reactions</span> <span class="kn">import</span> <span class="n">MICROTUBULES_REACTIONS</span>
+
 
 <div class="viewcode-block" id="MicrotubulesAnalyzer"><a class="viewcode-back" href="../../../simularium_models_util.microtubules.html#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">MicrotubulesAnalyzer</span><span class="p">:</span>
-
 <div class="viewcode-block" id="MicrotubulesAnalyzer.get_protofilaments"><a class="viewcode-back" href="../../../simularium_models_util.microtubules.html#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.get_protofilaments">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_protofilaments</span><span class="p">(</span><span class="n">frame_particle_data</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        get a list of the number of monomers in the closed part of each protofilament at the time index</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a list of the number of monomers in the closed part</span>
+<span class="sd">        of each protofilament at the time index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">protofilaments</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">]:</span>
-            
-            <span class="n">plus_end_neighbor_id</span><span class="p">,</span> <span class="n">minus_end_neighbor_id</span> <span class="o">=</span> <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">get_plus_and_minus_end_neighbors</span><span class="p">(</span>
+
+            <span class="p">(</span>
+                <span class="n">plus_end_neighbor_id</span><span class="p">,</span>
+                <span class="n">minus_end_neighbor_id</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">get_plus_and_minus_end_neighbors</span><span class="p">(</span>
                 <span class="n">particle_id</span><span class="p">,</span>
                 <span class="n">frame_particle_data</span><span class="p">,</span>
-                <span class="p">)</span>
-            
+            <span class="p">)</span>
+
             <span class="k">if</span> <span class="n">plus_end_neighbor_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">minus_end_neighbor_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">protofilament</span> <span class="o">=</span> <span class="p">[</span><span class="n">particle_id</span><span class="p">]</span>
             <span class="k">while</span> <span class="n">plus_end_neighbor_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">protofilament</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plus_end_neighbor_id</span><span class="p">)</span>
-                <span class="n">plus_end_neighbor_id</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">get_plus_and_minus_end_neighbors</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">plus_end_neighbor_id</span><span class="p">,</span>
+                    <span class="n">_</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">=</span> <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">get_plus_and_minus_end_neighbors</span><span class="p">(</span>
                     <span class="n">plus_end_neighbor_id</span><span class="p">,</span>
                     <span class="n">frame_particle_data</span><span class="p">,</span>
-                    <span class="p">)</span>
+                <span class="p">)</span>
             <span class="n">protofilaments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">protofilament</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">protofilaments</span></div>
 
@@ -137,7 +142,7 @@
     <span class="k">def</span> <span class="nf">get_plus_and_minus_end_neighbors</span><span class="p">(</span>
         <span class="n">particle_id</span><span class="p">,</span>
         <span class="n">frame_particle_data</span><span class="p">,</span>
-        <span class="p">):</span>
+    <span class="p">):</span>
         <span class="n">tubulin_types</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_all_tubulin_types</span><span class="p">()</span>
 
         <span class="n">particle</span> <span class="o">=</span> <span class="n">frame_particle_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span>
@@ -148,36 +153,44 @@
         <span class="c1"># is this a polymer tubulin?</span>
         <span class="k">if</span> <span class="s2">&quot;tubulin&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">particle</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;free&quot;</span> <span class="ow">in</span> <span class="n">particle</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">plus_end_neighbor_id</span><span class="p">,</span> <span class="n">minus_end_neighbor_id</span>
-        
+
         <span class="n">tubulin_neighbor_ids</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">analyze_frame_get_neighbor_ids_of_types</span><span class="p">(</span>
             <span class="n">particle_id</span><span class="o">=</span><span class="n">particle_id</span><span class="p">,</span>
             <span class="n">particle_types</span><span class="o">=</span><span class="n">tubulin_types</span><span class="p">,</span>
             <span class="n">frame_particle_data</span><span class="o">=</span><span class="n">frame_particle_data</span><span class="p">,</span>
             <span class="n">exact_match</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="p">[</span><span class="n">x_suffix</span><span class="p">,</span> <span class="n">y_suffix</span><span class="p">]</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_polymer_indices</span><span class="p">(</span><span class="n">particle</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">])</span>
-        
+        <span class="p">)</span>
+        <span class="p">[</span><span class="n">x_suffix</span><span class="p">,</span> <span class="n">y_suffix</span><span class="p">]</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_polymer_indices</span><span class="p">(</span>
+            <span class="n">particle</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
         <span class="n">plus_end_suffixes</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">increment_polymer_indices</span><span class="p">(</span>
             <span class="p">[</span><span class="n">x_suffix</span><span class="p">,</span> <span class="n">y_suffix</span><span class="p">],</span>
-            <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
         <span class="p">)</span>
 
         <span class="n">minus_end_suffixes</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">increment_polymer_indices</span><span class="p">(</span>
             <span class="p">[</span><span class="n">x_suffix</span><span class="p">,</span> <span class="n">y_suffix</span><span class="p">],</span>
-            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
         <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">neighbor_id</span> <span class="ow">in</span> <span class="n">tubulin_neighbor_ids</span><span class="p">:</span>
             <span class="p">[</span><span class="n">neighbor_x</span><span class="p">,</span> <span class="n">neighbor_y</span><span class="p">]</span> <span class="o">=</span> <span class="n">MicrotubulesUtil</span><span class="o">.</span><span class="n">get_polymer_indices</span><span class="p">(</span>
                 <span class="n">frame_particle_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">neighbor_id</span><span class="p">][</span><span class="s2">&quot;type_name&quot;</span><span class="p">]</span>
-                <span class="p">)</span>
-            <span class="k">if</span> <span class="n">neighbor_x</span> <span class="o">==</span> <span class="n">plus_end_suffixes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">neighbor_y</span> <span class="o">==</span> <span class="n">plus_end_suffixes</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">neighbor_x</span> <span class="o">==</span> <span class="n">plus_end_suffixes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="n">neighbor_y</span> <span class="o">==</span> <span class="n">plus_end_suffixes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">):</span>
                 <span class="n">plus_end_neighbor_id</span> <span class="o">=</span> <span class="n">neighbor_id</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">neighbor_x</span> <span class="o">==</span> <span class="n">minus_end_suffixes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">neighbor_y</span> <span class="o">==</span> <span class="n">minus_end_suffixes</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">neighbor_x</span> <span class="o">==</span> <span class="n">minus_end_suffixes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="n">neighbor_y</span> <span class="o">==</span> <span class="n">minus_end_suffixes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">):</span>
                 <span class="n">minus_end_neighbor_id</span> <span class="o">=</span> <span class="n">neighbor_id</span>
                 <span class="k">continue</span>
-        
+
         <span class="k">return</span> <span class="n">plus_end_neighbor_id</span><span class="p">,</span> <span class="n">minus_end_neighbor_id</span></div>
 
 <div class="viewcode-block" id="MicrotubulesAnalyzer.analyze_protofilament_lengths"><a class="viewcode-back" href="../../../simularium_models_util.microtubules.html#simularium_models_util.microtubules.microtubules_analyzer.MicrotubulesAnalyzer.analyze_protofilament_lengths">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -196,8 +209,11 @@
                 <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filament</span><span class="p">))</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
                 <span class="n">max_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
-        
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">lengths_at_time</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">max_len</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">lengths_at_time</span><span class="p">))</span> <span class="k">for</span> <span class="n">lengths_at_time</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">lengths_at_time</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">lengths_at_time</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">lengths_at_time</span> <span class="ow">in</span> <span class="n">result</span>
+        <span class="p">]</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div></div>
 </pre></div>
