@@ -45,6 +45,7 @@ dev_requirements = [
 example_requirements = [
     "psutil",
     "awscli",
+    "boto3",
     "openpyxl>=3.0",
     *viz_requirements,
 ]
