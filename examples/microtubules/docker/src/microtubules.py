@@ -51,7 +51,7 @@ def main():
     rt = RepeatedTimer(600, report_memory_usage)  # every 10 min
     try:
         mt_simulation.simulation.run(
-            int(parameters["total_steps"]), parameters["timestep"]
+            int(parameters["total_steps"]), parameters["internal_timestep"]
         )
         try:
             plots = MicrotubulesVisualization.generate_plots(

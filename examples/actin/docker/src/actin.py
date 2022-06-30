@@ -64,25 +64,41 @@ def main():
     actin_simulation = ActinSimulation(parameters, True, False)
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()
-    if "orthogonal_seed" in parameters and parameters["orthogonal_seed"]:
-        print("ortho")
+    if parameters["orthogonal_seed"]:
+        print("Starting with orthogonal seed")
+        fiber_data = [
+            FiberData(
+                28,
+                [
+                    np.array([-75, 0, 0]),
+                    np.array([75, 0, 0]),
+                ],
+                "Actin-Polymer",
+            )
+        ]
+        monomers = ActinGenerator.get_monomers(fiber_data, use_uuids=False)
+        monomers = ActinGenerator.setup_fixed_monomers(monomers, parameters)
+        actin_simulation.add_monomers_from_data(monomers)
+    if parameters["branched_seed"]:
+        print("Starting with branched seed")
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.linear_actin_fiber(), 0)
-        )
-    if "branched_seed" in parameters and parameters["branched_seed"]:
-        print("branched")
-        actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), 0)
+            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), use_uuids=False)
         )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
         actin_simulation.simulation.run(
-            int(parameters["total_steps"]), parameters["timestep"]
+            int(parameters["total_steps"]), parameters["internal_timestep"]
         )
         try:
-            plots = ActinVisualization.generate_plots(
-                parameters["name"] + ".h5", parameters["box_size"], 10
-            )
+            plots = None
+            if parameters["plot_polymerization"]:
+                plots = ActinVisualization.generate_polymerization_plots(
+                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                )
+            if parameters["plot_bend_twist"]:
+                plots = ActinVisualization.generate_bend_twist_plots(
+                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                )
             ActinVisualization.visualize_actin(
                 parameters["name"] + ".h5",
                 parameters["box_size"],

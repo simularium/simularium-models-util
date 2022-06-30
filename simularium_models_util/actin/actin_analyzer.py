@@ -5,6 +5,7 @@ import numpy as np
 
 from ..common import ReaddyUtil
 from .actin_util import ActinUtil
+from .actin_structure import ActinStructure
 
 
 TIMESTEP = 0.1  # ns
@@ -27,9 +28,9 @@ class ActinAnalyzer:
         return np.insert(reactions[reaction_name].to_numpy() / time_inc_s, 0, 0.0)
 
     @staticmethod
-    def analyze_average_over_time(data):
+    def analyze_average_for_series(data):
         """
-        Get a list of the average per time frame of the given data
+        Get a list of the average per item of the given 2D data
         """
         result = []
         for t in range(len(data)):
@@ -42,9 +43,9 @@ class ActinAnalyzer:
         return np.array(result)
 
     @staticmethod
-    def analyze_stddev_over_time(data):
+    def analyze_stddev_for_series(data):
         """
-        Get a list of the std deviation per time frame of the given data
+        Get a list of the std deviation per item of the given 2D data
         """
         result = []
         for t in range(len(data)):
@@ -68,6 +69,8 @@ class ActinAnalyzer:
         for i in range(1, 4):
             result.append(f"actin#pointed_{i}")
             result.append(f"actin#pointed_ATP_{i}")
+            result.append(f"actin#pointed_fixed_{i}")
+            result.append(f"actin#pointed_fixed_ATP_{i}")
         return result
 
     @staticmethod
@@ -81,6 +84,10 @@ class ActinAnalyzer:
             result.append(f"actin#ATP_{i}")
             result.append(f"actin#mid_{i}")
             result.append(f"actin#mid_ATP_{i}")
+            result.append(f"actin#fixed_{i}")
+            result.append(f"actin#fixed_ATP_{i}")
+            result.append(f"actin#mid_fixed_{i}")
+            result.append(f"actin#mid_fixed_ATP_{i}")
         return result
 
     @staticmethod
@@ -92,6 +99,8 @@ class ActinAnalyzer:
         for i in range(1, 4):
             result.append(f"actin#barbed_{i}")
             result.append(f"actin#barbed_ATP_{i}")
+            result.append(f"actin#fixed_barbed_{i}")
+            result.append(f"actin#fixed_barbed_ATP_{i}")
         return result
 
     @staticmethod
@@ -129,6 +138,10 @@ class ActinAnalyzer:
             result.append(f"actin#mid_ATP_{i}")
             result.append(f"actin#pointed_ATP_{i}")
             result.append(f"actin#barbed_ATP_{i}")
+            result.append(f"actin#fixed_ATP_{i}")
+            result.append(f"actin#mid_fixed_ATP_{i}")
+            result.append(f"actin#pointed_fixed_ATP_{i}")
+            result.append(f"actin#fixed_barbed_ATP_{i}")
         result.append("actin#branch_ATP_1")
         result.append("actin#branch_barbed_ATP_1")
         return result
@@ -144,6 +157,10 @@ class ActinAnalyzer:
             result.append(f"actin#mid_{i}")
             result.append(f"actin#pointed_{i}")
             result.append(f"actin#barbed_{i}")
+            result.append(f"actin#fixed_{i}")
+            result.append(f"actin#mid_fixed_{i}")
+            result.append(f"actin#pointed_fixed_{i}")
+            result.append(f"actin#fixed_barbed_{i}")
         result.append("actin#branch_1")
         result.append("actin#branch_barbed_1")
         return result
@@ -804,4 +821,139 @@ class ActinAnalyzer:
                     box_size,
                 )
             )
+        return np.array(result)
+
+    @staticmethod
+    def analyze_pointed_end_displacement(monomer_data, box_size, periodic_boundary):
+        """
+        Get the distance the pointed end has moved since it's initial position
+        over the time course of a simulation
+        """
+        result = []
+        initial_pointed_pos = None
+        for t in range(len(monomer_data)):
+            pointed_id = ReaddyUtil.analyze_frame_get_ids_for_types(
+                ActinAnalyzer._pointed_actin_types(), monomer_data[t]["particles"]
+            )[0]
+            pointed_position = monomer_data[t]["particles"][pointed_id]["position"]
+            if t == 0:
+                result.append(0.0)
+                initial_pointed_pos = pointed_position
+                continue
+            if periodic_boundary:
+                pointed_position = ReaddyUtil.get_non_periodic_boundary_position(
+                    initial_pointed_pos, pointed_position, box_size
+                )
+            result.append(np.linalg.norm(pointed_position - initial_pointed_pos))
+        return np.array(result)
+
+    @staticmethod
+    def analyze_total_twist(
+        monomer_data, box_size, periodic_boundary, remove_bend=True
+    ):
+        """
+        Get the total twist from monomer normal to monomer normal
+        along the first mother filament in degrees
+        """
+        result = []
+        for t in range(len(monomer_data)):
+            skip = False
+            filament = ActinAnalyzer._frame_mother_filaments(
+                monomer_data[t]["particles"]
+            )[0]
+            filament_length = len(filament)
+            normals = []
+            axis_positions = []
+            for index in range(1, filament_length - 1):
+                position = monomer_data[t]["particles"][filament[index]]["position"]
+                actin_ids = [filament[index - 1], filament[index], filament[index + 1]]
+                axis_pos = ActinAnalyzer._get_axis_position_for_actin(
+                    monomer_data[t]["particles"], actin_ids, box_size, periodic_boundary
+                )
+                if ReaddyUtil.vector_is_invalid(axis_pos):
+                    print(
+                        "Something is wrong with actin structure at "
+                        f"monomer {filament[index]}, skipping twist calculation"
+                    )
+                    skip = True
+                    break
+                if periodic_boundary:
+                    axis_pos = ReaddyUtil.get_non_periodic_boundary_position(
+                        position, axis_pos, box_size
+                    )
+                axis_positions.append(axis_pos)
+                normals.append(ReaddyUtil.normalize(position - axis_pos))
+            if skip:
+                result.append(0.0)
+                continue
+            total_angle = 0
+            for index in range(len(normals) - 2):
+                if remove_bend:
+                    tangent = axis_positions[index + 2] - axis_positions[index]
+                    normal1 = ReaddyUtil.get_perpendicular_components_of_vector(
+                        normals[index], tangent
+                    )
+                    normal2 = ReaddyUtil.get_perpendicular_components_of_vector(
+                        normals[index + 2], tangent
+                    )
+                    total_angle += ReaddyUtil.get_angle_between_vectors(
+                        normal1, normal2, in_degrees=True
+                    )
+                else:
+                    total_angle += ReaddyUtil.get_angle_between_vectors(
+                        normals[index], normals[index + 2], in_degrees=True
+                    )
+            result.append(total_angle / 360.0)
+        return np.array(result)
+
+    @staticmethod
+    def analyze_lateral_bond_lengths(monomer_data, box_size, periodic_boundary):
+        """
+        Get the distance between bonds along the first mother filament,
+        normalized to the ideal distance,
+        trace the explicit lateral bonds
+        """
+        result = []
+        ideal_length = np.linalg.norm(
+            ActinStructure.mother_positions[1] - ActinStructure.mother_positions[0]
+        )
+        for t in range(len(monomer_data)):
+            result.append([])
+            filament = ActinAnalyzer._frame_mother_filaments(
+                monomer_data[t]["particles"]
+            )[0]
+            for index in range(len(filament) - 1):
+                pos = monomer_data[t]["particles"][filament[index]]["position"]
+                pos_lat = monomer_data[t]["particles"][filament[index + 1]]["position"]
+                if periodic_boundary:
+                    pos_lat = ReaddyUtil.get_non_periodic_boundary_position(
+                        pos, pos_lat, box_size
+                    )
+                result[t].append(np.linalg.norm(pos_lat - pos) / ideal_length)
+        return np.array(result)
+
+    @staticmethod
+    def analyze_longitudinal_bond_lengths(monomer_data, box_size, periodic_boundary):
+        """
+        Get the distance between bonds along the first mother filament,
+        normalized to the ideal distance,
+        trace the implicit longitudinal bonds
+        """
+        result = []
+        ideal_length = np.linalg.norm(
+            ActinStructure.mother_positions[2] - ActinStructure.mother_positions[0]
+        )
+        for t in range(len(monomer_data)):
+            result.append([])
+            filament = ActinAnalyzer._frame_mother_filaments(
+                monomer_data[t]["particles"]
+            )[0]
+            for index in range(len(filament) - 2):
+                pos = monomer_data[t]["particles"][filament[index]]["position"]
+                pos_long = monomer_data[t]["particles"][filament[index + 2]]["position"]
+                if periodic_boundary:
+                    pos_long = ReaddyUtil.get_non_periodic_boundary_position(
+                        pos, pos_long, box_size
+                    )
+                result[t].append(np.linalg.norm(pos_long - pos) / ideal_length)
         return np.array(result)
