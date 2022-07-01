@@ -36,14 +36,14 @@ GOAL:
                                     ||   //     
                                     ||  //   
                                 arp2#branched
-                                        \\
-                                         \\
-                                         actin#branch_1
-                                         //
-                                        //
-                                    actin#2
-                                        \\
-                                         \\
+                                    ||    \\
+                                    ||     \\
+                                    ||   actin#branch_1
+                                    ||   //      ||
+                                    ||  //       ||
+                                    actin#2      ||
+                                        \\       || 
+                                         \\      ||
                                          actin#barbed_3
 
                                             + end
@@ -52,6 +52,8 @@ TODO:
 - test the new actin_number_types 
   with 3 and 5
   make sure it runs without errors and visualizes
+- run tests: `make build` from root of simularium-models-util
+  add more test cases to test_actin_number_types.py
 - add bonds: with offset of 2
    1 - 3
    3 - 5
