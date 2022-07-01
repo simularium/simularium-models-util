@@ -46,9 +46,11 @@ def main():
         "model_name", help="prefix for output file names", nargs="?", default=""
     )
     args = parser.parse_args()
+    print("finished args")
     parameters = pandas.read_excel(
         args.params_path, sheet_name="actin", usecols=[0, int(args.data_column)]
     )
+    print(f"parameter excel: {parameters}")
     parameters.set_index("name", inplace=True)
     parameters.transpose()
     run_name = list(parameters)[0]
@@ -56,7 +58,7 @@ def main():
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
-    actin_simulation = ActinSimulation(parameters, True, False)
+    actin_simulation = ActinSimulation(parameters, True, False) 
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()
     if parameters["orthogonal_seed"]:
@@ -70,14 +72,14 @@ def main():
                 ],
                 "Actin-Polymer",
             )
-        ]
-        monomers = ActinGenerator.get_monomers(fiber_data, use_uuids=False)
+        ] 
+        monomers = ActinGenerator.get_monomers(fiber_data, int(parameters["actin_number_types"]), use_uuids=False)
         monomers = ActinGenerator.setup_fixed_monomers(monomers, parameters)
         actin_simulation.add_monomers_from_data(monomers)
     if parameters["branched_seed"]:
         print("Starting with branched seed")
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), use_uuids=False)
+            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), int(parameters["actin_number_types"]), use_uuids=False)
         )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:

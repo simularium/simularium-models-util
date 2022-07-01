@@ -227,13 +227,14 @@ class ActinSimulation:
             self.simulation,
         )
 
-    def add_random_linear_fibers(self, use_uuids=True):
+    def add_random_linear_fibers(self, actin_number_types=3, use_uuids=True):
         """
         Add randomly distributed and oriented linear fibers
         """
         self.actin_util.add_random_linear_fibers(
             self.simulation,
             int(self.parameters["seed_n_fibers"]),
+            actin_number_types,
             self.parameters["seed_fiber_length"],
             -1 if use_uuids else 0,
         )

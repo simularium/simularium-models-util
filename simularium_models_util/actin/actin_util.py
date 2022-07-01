@@ -89,7 +89,8 @@ class ActinUtil:
                 f"Failed to get actin number: {pt} is not actin\n"
                 f"{ReaddyUtil.topology_to_string(topology)}"
             )
-        return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset, parameters["actin_number_types"])
+        
+        return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset, 5) ########
 
     @staticmethod
     def get_all_polymer_actin_types(vertex_type):
@@ -586,7 +587,7 @@ class ActinUtil:
                 ActinUtil.set_actin_mid_flag(topology, recipe, v_actin, arp3_id)
 
     @staticmethod
-    def add_random_linear_fibers(simulation, n_fibers, length=20, use_uuids=True):
+    def add_random_linear_fibers(simulation, n_fibers, actin_number_types=3, length=20, use_uuids=True):
         """
         add linear actin fibers of the given length
         """
@@ -595,7 +596,7 @@ class ActinUtil:
             - parameters["box_size"] * 0.5
         )
         print("Adding random fibers at \n" + str(positions))
-        for fiber in range(n_fibers):
+        for fiber in range(1, n_fibers):
             direction = ReaddyUtil.get_random_unit_vector()
             monomers = ActinGenerator.get_monomers(
                 [
@@ -607,18 +608,20 @@ class ActinUtil:
                         ],
                     ),
                 ],
+                actin_number_types,
                 use_uuids,
             )
+            print(f"monomers:{monomers}")
             ActinUtil.add_monomers_from_data(simulation, monomers)
 
     @staticmethod
-    def add_fibers_from_data(simulation, fibers_data, use_uuids=True):
+    def add_fibers_from_data(simulation, fibers_data, actin_number_types=3, use_uuids=True):
         """
         add (branched) actin fiber(s)
 
         fibers_data : List[FiberData]
         """
-        fiber_monomers = ActinGenerator.get_monomers(fibers_data, use_uuids)
+        fiber_monomers = ActinGenerator.get_monomers(fibers_data, actin_number_types, use_uuids)
         ActinUtil.add_monomers_from_data(simulation, fiber_monomers)
 
     @staticmethod
@@ -647,10 +650,13 @@ class ActinUtil:
             topology = monomer_data["topologies"][topology_id]
             types = []
             positions = []
+            print(topology)
             for particle_id in topology["particle_ids"]:
                 particle = monomer_data["particles"][particle_id]
+                print(f"particles:{particle}")
                 types.append(particle["type_name"])
                 positions.append(particle["position"])
+            print(f"types:{types}")
             top = simulation.add_topology(
                 topology["type_name"], types, np.array(positions)
             )
@@ -1436,6 +1442,7 @@ class ActinUtil:
                 f"actin#barbed_{i}",
                 f"actin#barbed_ATP_{i}",
             ]
+    
         return result
 
     @staticmethod

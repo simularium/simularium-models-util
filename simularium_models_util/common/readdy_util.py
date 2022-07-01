@@ -456,7 +456,7 @@ class ReaddyUtil:
             n -= polymer_number_types 
         if n < 1:
             n += polymer_number_types
-        return n
+        return int(n)
 
     @staticmethod
     def get_vertex_position(topology, vertex): 
