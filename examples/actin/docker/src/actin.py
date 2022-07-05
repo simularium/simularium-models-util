@@ -48,19 +48,21 @@ def main():
     args = parser.parse_args()
     print("finished args")
     parameters = pandas.read_excel(
-        args.params_path, sheet_name="actin", usecols=[0, int(args.data_column)]
+        args.params_path, sheet_name="actin", usecols=[0, int(args.data_column)], dtype=object
     )
     print(f"parameter excel: {parameters}")
     parameters.set_index("name", inplace=True)
     parameters.transpose()
     run_name = list(parameters)[0]
     parameters = parameters[run_name]
+    # # read in box size
+    # parameters["box_size"] = ReaddyUtil.get_box_size(parameters["box_size"])
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
-    # actin_simulation = ActinSimulation(parameters, True, False) 
-    # actin_simulation.add_obstacles()
-    # actin_simulation.add_random_monomers()
+    actin_simulation = ActinSimulation(parameters, True, False) 
+    actin_simulation.add_obstacles()
+    actin_simulation.add_random_monomers()
     if parameters["orthogonal_seed"]:
         print("Starting with orthogonal seed")
         fiber_data = [
@@ -74,10 +76,11 @@ def main():
             )
         ] 
         # raise Exception(int(parameters["actin_number_types"]))
+        print("starts w/ actin_number_types in actin.py =", int(parameters["actin_number_types"]))
         monomers = ActinGenerator.get_monomers(fiber_data, int(parameters["actin_number_types"]), use_uuids=False)
         monomers = ActinGenerator.setup_fixed_monomers(monomers, parameters)
-        import ipdb; ipdb.set_trace()
-        #"pp monomers" in terminal
+        # import ipdb; ipdb.set_trace()
+        # #"pp monomers" in terminal
 
         actin_simulation.add_monomers_from_data(monomers)
     print("success orthogonal if loop")

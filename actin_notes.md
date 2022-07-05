@@ -52,8 +52,11 @@ TODO:
 - test the new actin_number_types 
   with 3 and 5
   make sure it runs without errors and visualizes
-- debug using raise exception or prints above each line that was errored at, next at 530. 
+- debug using raise Exception() or print() above each line that was errored at, next at 530. 
   - check where the actin_number_types is getting changed to 1 
+  - @ line 823 in actin_generator.py, actin_number_types = 5 is used 
+  - actin_number_types is probably getting changed in get_monomers bc its output that's being used in get_monomers_for_fiber (actin_number_types = 1)
+  - actin_number_types is getting changed to 1 when get_monomers_for_fiber() is getting called in get_monomers() method. it’s happening bc get_monomers_for_fiber() takes 7 args (including actin_number_types) but in def get_monomers(), it’s only given 6 arguments so actin_number_types is being set to 1 (which is what is given for the particles arg, the default for particles is an empty dictionary) 
 - run tests: `make build` from root of simularium-models-util
   add more test cases to test_actin_number_types.py
 - add bonds: with offset of 2
