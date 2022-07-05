@@ -52,6 +52,8 @@ TODO:
 - test the new actin_number_types 
   with 3 and 5
   make sure it runs without errors and visualizes
+- debug using raise exception or prints above each line that was errored at, next at 530. 
+  - check where the actin_number_types is getting changed to 1 
 - run tests: `make build` from root of simularium-models-util
   add more test cases to test_actin_number_types.py
 - add bonds: with offset of 2
@@ -64,3 +66,4 @@ TODO:
 - test again
   make sure it runs without errors and visualizes
 - for adding angles and dihedrals, talk to subcellular modeling group (esp Matt A)
+- lucid chart 

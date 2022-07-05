@@ -89,8 +89,7 @@ class ActinUtil:
                 f"Failed to get actin number: {pt} is not actin\n"
                 f"{ReaddyUtil.topology_to_string(topology)}"
             )
-        
-        return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset, 5) ########
+        return ReaddyUtil.calculate_polymer_number(int(pt[-1]), offset, int(parameters["actin_number_types"]))
 
     @staticmethod
     def get_all_polymer_actin_types(vertex_type):
@@ -651,6 +650,7 @@ class ActinUtil:
             types = []
             positions = []
             print(topology)
+
             for particle_id in topology["particle_ids"]:
                 particle = monomer_data["particles"][particle_id]
                 print(f"particles:{particle}")

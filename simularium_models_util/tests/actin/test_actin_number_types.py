@@ -21,9 +21,18 @@ from simularium_models_util.actin import ActinGenerator
             1, # from -2 to +2
             4,
         ),
+        ( # test 3
+            1,
+            5,
+            2,
+            2
+        ),
     ],
 )
 def test_get_actin_number(actin_number, actin_number_types, offset, expected_value):
     test_value = ActinGenerator.get_actin_number(actin_number, actin_number_types, offset)
     assert isinstance(test_value, int)
     assert test_value == expected_value
+
+
+#run from simularium-models-util >> "make build"

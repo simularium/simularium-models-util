@@ -58,9 +58,9 @@ def main():
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
-    actin_simulation = ActinSimulation(parameters, True, False) 
-    actin_simulation.add_obstacles()
-    actin_simulation.add_random_monomers()
+    # actin_simulation = ActinSimulation(parameters, True, False) 
+    # actin_simulation.add_obstacles()
+    # actin_simulation.add_random_monomers()
     if parameters["orthogonal_seed"]:
         print("Starting with orthogonal seed")
         fiber_data = [
@@ -73,9 +73,14 @@ def main():
                 "Actin-Polymer",
             )
         ] 
+        # raise Exception(int(parameters["actin_number_types"]))
         monomers = ActinGenerator.get_monomers(fiber_data, int(parameters["actin_number_types"]), use_uuids=False)
         monomers = ActinGenerator.setup_fixed_monomers(monomers, parameters)
+        import ipdb; ipdb.set_trace()
+        #"pp monomers" in terminal
+
         actin_simulation.add_monomers_from_data(monomers)
+    print("success orthogonal if loop")
     if parameters["branched_seed"]:
         print("Starting with branched seed")
         actin_simulation.add_monomers_from_data(

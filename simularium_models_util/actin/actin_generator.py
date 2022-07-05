@@ -73,8 +73,10 @@ class ActinGenerator:
         """
         assert offset >= -1 or offset <= 1, "Offset for actin number is not in [-1, 1]"
         n = actin_number + offset
-        actin_number_types = 5 ####actin_number_types is 1 if not hard coded; not reading from excel####
-    
+        # actin_number_types = 5 ####actin_number_types is 1 if not hard coded; not reading from excel####
+        print(f"{actin_number} + {offset} \n {actin_number_types}")
+        if actin_number_types != 5:
+            raise Exception(actin_number_types)
         if n > actin_number_types:
             n -= actin_number_types
         if n < 1:
@@ -234,6 +236,7 @@ class ActinGenerator:
             index = i if direction > 0 else len(particle_ids) - 1 - i
             particle_id = particle_ids[index]
             particles[particle_id].type_name = f"actin#mid_ATP_{actin_number}"
+            print(f"line 239; get_actin_actin_for_linear_fiber number types = {actin_number_types}")
             actin_number = ActinGenerator.get_actin_number(actin_number, actin_number_types, 1)
             if index > 0:
                 particles[particle_id].neighbor_ids.append(particle_ids[index - 1])

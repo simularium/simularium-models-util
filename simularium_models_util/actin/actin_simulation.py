@@ -123,7 +123,7 @@ class ActinSimulation:
             force_constant,
             self.system,
             util,
-            self.parameters["actin_number_types"]
+            int(self.parameters["actin_number_types"])
         )
         # box potentials
         self.actin_util.add_monomer_box_potentials(self.system)
