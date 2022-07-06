@@ -22,7 +22,7 @@ class ReaddyUtil:
         self.angle_triples = []
         self.dihedral_quads = []
         self.repulse_pairs = []
-       
+
 
     @staticmethod
     def normalize(v):
@@ -716,8 +716,7 @@ class ReaddyUtil:
             with force constant force_const
             and length bond_length [nm]
         """
-        
-        for x in range(1, polymer_number_types+1): 
+        for x in range(1, polymer_number_types + 1): 
             self.add_bond(
                 (
                     ReaddyUtil.get_types_with_polymer_numbers_1D(
@@ -738,7 +737,7 @@ class ReaddyUtil:
                 system,
             )
 
-    def add_polymer_bond_2D( #don't change 2D for now 
+    def add_polymer_bond_2D( 
         self,
         particle_types1,
         polymer_offsets1,
@@ -794,7 +793,7 @@ class ReaddyUtil:
             and angle [radians]
         """
 
-        for x in range(1, polymer_number_types+1):
+        for x in range(1, polymer_number_types + 1):
             self.add_angle(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
                     particle_types1, x, polymer_offset1, polymer_number_types
@@ -872,7 +871,7 @@ class ReaddyUtil:
             and angle [radians]
         """
 
-        for x in range(1, polymer_number_types+1):
+        for x in range(1, polymer_number_types + 1):
             self.add_dihedral(
                 ReaddyUtil.get_types_with_polymer_numbers_1D(
                     particle_types1, x, polymer_offset1, polymer_number_types

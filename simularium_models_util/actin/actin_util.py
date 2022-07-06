@@ -5,8 +5,6 @@ import numpy as np
 import readdy
 import random
 
-from simularium_models_util import actin
-
 from ..common import ReaddyUtil
 from .actin_generator import ActinGenerator
 from .actin_structure import ActinStructure
@@ -598,6 +596,7 @@ class ActinUtil:
         for fiber in range(1, n_fibers):
             direction = ReaddyUtil.get_random_unit_vector()
             monomers = ActinGenerator.get_monomers(
+                actin_number_types,
                 [
                     FiberData(
                         0,
@@ -607,8 +606,7 @@ class ActinUtil:
                         ],
                     ),
                 ],
-                actin_number_types,
-                use_uuids,
+                use_uuids
             )
             print(f"monomers:{monomers}")
             ActinUtil.add_monomers_from_data(simulation, monomers)
@@ -620,7 +618,7 @@ class ActinUtil:
 
         fibers_data : List[FiberData]
         """
-        fiber_monomers = ActinGenerator.get_monomers(fibers_data, actin_number_types, use_uuids)
+        fiber_monomers = ActinGenerator.get_monomers(actin_number_types, fibers_data, use_uuids)
         ActinUtil.add_monomers_from_data(simulation, fiber_monomers)
 
     @staticmethod
@@ -1442,7 +1440,7 @@ class ActinUtil:
                 f"actin#barbed_{i}",
                 f"actin#barbed_ATP_{i}",
             ]
-    
+
         return result
 
     @staticmethod
@@ -3186,4 +3184,4 @@ class ActinUtil:
     def actin_number_range(actin_number_types):
         if (actin_number_types < 3 or actin_number_types > 5) or actin_number_types == 4:
             raise Exception("Only polymer number values of 3 and 5 are supported.")
-        return range(1, int(actin_number_types+1))
+        return range(1, int(actin_number_types + 1))

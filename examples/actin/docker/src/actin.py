@@ -77,7 +77,7 @@ def main():
         ] 
         # raise Exception(int(parameters["actin_number_types"]))
         print("starts w/ actin_number_types in actin.py =", int(parameters["actin_number_types"]))
-        monomers = ActinGenerator.get_monomers(fiber_data, int(parameters["actin_number_types"]), use_uuids=False)
+        monomers = ActinGenerator.get_monomers(int(parameters["actin_number_types"]), fiber_data, use_uuids=False)
         monomers = ActinGenerator.setup_fixed_monomers(monomers, parameters)
         # import ipdb; ipdb.set_trace()
         # #"pp monomers" in terminal
@@ -87,7 +87,7 @@ def main():
     if parameters["branched_seed"]:
         print("Starting with branched seed")
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(ActinTestData.simple_branched_actin_fiber(), int(parameters["actin_number_types"]), use_uuids=False)
+            ActinGenerator.get_monomers(int(parameters["actin_number_types"]), ActinTestData.simple_branched_actin_fiber(), use_uuids=False)
         )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
