@@ -98,7 +98,7 @@ def main():
             plots = None
             if parameters["plot_polymerization"]:
                 plots = ActinVisualization.generate_polymerization_plots(
-                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                    int(parameters["actin_number_types"]), parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
                 )
             if parameters["plot_bend_twist"]:
                 plots = ActinVisualization.generate_bend_twist_plots(

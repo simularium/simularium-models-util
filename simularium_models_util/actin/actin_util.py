@@ -1440,7 +1440,7 @@ class ActinUtil:
                 f"actin#barbed_{i}",
                 f"actin#barbed_ATP_{i}",
             ]
-
+    
         return result
 
     @staticmethod

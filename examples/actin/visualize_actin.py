@@ -44,7 +44,7 @@ def main():
             else:
 
                 plots = ActinVisualization.generate_polymerization_plots(
-                    file_path, float(args.box_size), args.actin_number_types, 10, args.periodic_boundary
+                    int(args.actin_number_types), file_path, float(args.box_size), 10, args.periodic_boundary
                 )
             ActinVisualization.visualize_actin(
                 file_path,

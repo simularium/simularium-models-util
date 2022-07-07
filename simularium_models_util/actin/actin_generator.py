@@ -572,7 +572,6 @@ class ActinGenerator:
         get the main actins for a fiber as well as any bound arps and daughter fibers
         """
         print(f"line 577; get_monomers_for_fiber: actin number types = {actin_number_types}")
-        # assert actin_number_types == 5
         (
             particles,
             main_particle_ids,
@@ -823,7 +822,6 @@ class ActinGenerator:
             cropped_fiber_data = fibers_data
         for fiber in cropped_fiber_data:
             print(f"line 823; get_monomers_for_fiber is using actin number types = {actin_number_types}")
-            #missing positional argument 
             particles, particle_ids = ActinGenerator.get_monomers_for_fiber(
                 actin_number_types,
                 fiber,

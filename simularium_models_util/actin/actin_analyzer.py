@@ -543,11 +543,12 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def _get_frame_branch_angles(frame_particle_data, box_size, actin_number_types, periodic_boundary=True):
+    def _get_frame_branch_angles(actin_number_types, frame_particle_data, box_size, periodic_boundary=True):
         """
         get the angle between mother and daughter filament
         at each branch point in the given frame of the trajectory
         """
+        actin_number_types = int(actin_number_types)
         branch_ids = ActinAnalyzer._get_frame_branch_ids(frame_particle_data, actin_number_types)
         result = []
         for branch in branch_ids:
@@ -609,15 +610,16 @@ class ActinAnalyzer:
         return result
 
     @staticmethod
-    def analyze_branch_angles(monomer_data, box_size, periodic_boundary, actin_number_types):
+    def analyze_branch_angles(actin_number_types, monomer_data, box_size, periodic_boundary):
         """
         Get a list of the angles between mother and daughter filaments
         at each branch point in each frame of the trajectory
         """
+        actin_number_types = int(actin_number_types)
         result = []
         for t in range(len(monomer_data)):
             branch_angles = ActinAnalyzer._get_frame_branch_angles(
-                monomer_data[t]["particles"], box_size, actin_number_types, periodic_boundary
+                actin_number_types, monomer_data[t]["particles"], box_size, periodic_boundary
             )
             result.append(branch_angles)
         return result

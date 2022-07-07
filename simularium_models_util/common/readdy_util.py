@@ -716,6 +716,7 @@ class ReaddyUtil:
             with force constant force_const
             and length bond_length [nm]
         """
+        polymer_number_types = int(polymer_number_types)
         for x in range(1, polymer_number_types + 1): 
             self.add_bond(
                 (
