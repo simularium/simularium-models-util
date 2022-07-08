@@ -3,6 +3,7 @@
 
 import os
 import argparse
+import numpy as np
 
 from simulariumio.readdy import ReaddyConverter, ReaddyData
 from simulariumio import MetaData, UnitData, DisplayData, ScatterPlotData, DISPLAY_TYPE
@@ -35,9 +36,9 @@ class MicrotubulesVisualization:
         return result
 
     @staticmethod
-    def get_avg_length_plot(monomer_data, times):
+    def get_protofilament_length_plot(monomer_data, times):
         """
-        Add a plot of average mother and daughter filament length
+        Add a plot of protofilament lengths
         """
         protofilament_list = MicrotubulesAnalyzer.analyze_protofilament_lengths(
             monomer_data
@@ -47,11 +48,32 @@ class MicrotubulesVisualization:
             protofilaments["Filament " + str(count + 1)] = protofilament
 
         return ScatterPlotData(
-            title="Average length of protofilaments",
+            title="Length of protofilaments",
             xaxis_title="Time (µs)",
-            yaxis_title="Average length (monomers)",
+            yaxis_title="Protofilament length (monomers)",
             xtrace=times,
             ytraces=protofilaments,
+            render_mode="lines",
+        )
+
+    @staticmethod
+    def get_avg_microtubule_length_plot(monomer_data, times):
+        """
+        Add a plot of average microtubule length
+        """
+        protofilament_list = np.array(
+            MicrotubulesAnalyzer.analyze_protofilament_lengths(monomer_data),
+            dtype=float,
+        )
+        mean_lengths = np.nanmean(protofilament_list, axis=0)
+        mean_lengths[np.isnan(mean_lengths)] = 0
+
+        return ScatterPlotData(
+            title="Average microtubule length",
+            xaxis_title="Time (µs)",
+            yaxis_title="Average microtubule length (monomers)",
+            xtrace=times,
+            ytraces={"Average microtubule length": mean_lengths},
             render_mode="lines",
         )
 
@@ -160,7 +182,12 @@ class MicrotubulesVisualization:
         )
         return {
             "scatter": [
-                MicrotubulesVisualization.get_avg_length_plot(monomer_data, times),
+                MicrotubulesVisualization.get_avg_microtubule_length_plot(
+                    monomer_data, times
+                ),
+                MicrotubulesVisualization.get_protofilament_length_plot(
+                    monomer_data, times
+                ),
                 MicrotubulesVisualization.get_growth_reactions_plot(reactions, times),
                 MicrotubulesVisualization.get_shrink_reactions_plot(reactions, times),
                 MicrotubulesVisualization.get_attach_reactions_plot(reactions, times),
