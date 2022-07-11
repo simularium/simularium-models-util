@@ -106,6 +106,7 @@ def main():
                     parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
                 )
             ActinVisualization.visualize_actin(
+                int(parameters["actin_number_types"]),
                 parameters["name"] + ".h5",
                 parameters["box_size"],
                 parameters["total_steps"],
