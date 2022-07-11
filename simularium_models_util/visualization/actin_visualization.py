@@ -193,7 +193,9 @@ class ActinVisualization:
         )
 
     @staticmethod
-    def get_branch_angle_plot(actin_number_types, monomer_data, box_size, periodic_boundary, times):
+    def get_branch_angle_plot(
+        actin_number_types, monomer_data, box_size, periodic_boundary, times
+    ):
         """
         Add a plot of branch angle mean and std dev
         """
@@ -273,7 +275,12 @@ class ActinVisualization:
 
     @staticmethod
     def generate_polymerization_plots(
-        actin_number_types, path_to_readdy_h5, box_size, stride=1, periodic_boundary=True, plots=None
+        actin_number_types,
+        path_to_readdy_h5,
+        box_size,
+        stride=1,
+        periodic_boundary=True,
+        plots=None,
     ):
         """
         Use an ActinAnalyzer to generate plots of observables
@@ -315,7 +322,9 @@ class ActinVisualization:
             ),
             ActinVisualization.get_structural_reactions_plot(reactions, times),
         ]
-        print(f"generate_polymerization_plots is using {actin_number_types} as actin_number_types")
+        print(
+            f"generate_polymerization_plots is using {actin_number_types} as actin_number_types"
+        )
         return plots
 
     @staticmethod
