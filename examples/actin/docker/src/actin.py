@@ -60,6 +60,7 @@ def main():
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
+    parameters["box_size"] = float(parameters["box_size"])
     actin_simulation = ActinSimulation(parameters, True, False) 
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()

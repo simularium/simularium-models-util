@@ -134,8 +134,8 @@ class ActinSimulation:
         """
         actin_number_types = int(self.parameters["actin_number_types"])
         self.actin_util.add_dimerize_reaction(self.system)
-        self.actin_util.add_trimerize_reaction(self.system, actin_number_types)
-        self.actin_util.add_nucleate_reaction(self.system, actin_number_types)
+        self.actin_util.add_trimerize_reaction(self.system)
+        self.actin_util.add_nucleate_reaction(self.system)
         self.actin_util.add_pointed_growth_reaction(self.system, actin_number_types)
         self.actin_util.add_barbed_growth_reaction(self.system, actin_number_types)
         self.actin_util.add_nucleate_branch_reaction(self.system)
