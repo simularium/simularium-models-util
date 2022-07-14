@@ -421,7 +421,9 @@ class ActinVisualization:
         return plots
 
     @staticmethod
-    def visualize_actin(actin_number_types, path_to_readdy_h5, box_size, total_steps, plots=None):
+    def visualize_actin(
+        actin_number_types, path_to_readdy_h5, box_size, total_steps, plots=None
+    ):
         """
         visualize an actin trajectory in Simularium
         """
@@ -548,106 +550,107 @@ class ActinVisualization:
             ),
         }
 
-        for i in range(1, actin_number_types+1):
-            display_data.update({
-                f"actin#{i}": DisplayData(
-                    name="actin",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#bf9b30",
-                ),
-                f"actin#mid_{i}": DisplayData(
-                    name="actin#mid",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#bf9b30",
-                ),
-                f"actin#fixed_{i}": DisplayData(
-                    name="actin#fixed",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#bf9b30",
-                ),
-                f"actin#mid_fixed_{i}": DisplayData(
-                    name="actin#mid_fixed",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#bf9b30",
-                ),
-                f"actin#ATP_{i}": DisplayData(
-                    name="actin#ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffbf00"
-                ),
-                f"actin#mid_ATP_{i}": DisplayData(
-                    name="actin#mid_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffbf00",
-                ),
-                f"actin#fixed_ATP_{i}": DisplayData(
-                    name="actin#fixed_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffbf00",
-                ),
-                f"actin#mid_fixed_ATP_{i}": DisplayData(
-                    name="actin#mid_fixed_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffbf00",
-                ),
-                f"actin#barbed_{i}": DisplayData(
-                    name="actin#barbed",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffdc73",
-                ),
-                f"actin#barbed_ATP_{i}": DisplayData(
-                    name="actin#barbed_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffdc73",
-                ),
-                f"actin#fixed_barbed_{i}": DisplayData(
-                    name="actin#fixed_barbed",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffdc73",
-                ),
-                f"actin#fixed_barbed_ATP_{i}": DisplayData(
-                    name="actin#fixed_barbed_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#ffdc73",
-                ), 
-                f"actin#pointed_{i}": DisplayData(
-                    name="actin#pointed",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#a67c00",
-                ),
-                f"actin#pointed_ATP_{i}": DisplayData(
-                    name="actin#pointed_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#a67c00",
-                ),
-                f"actin#pointed_fixed_{i}": DisplayData(
-                    name="actin#pointed_fixed",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#a67c00",
-                ),
+        for i in range(1, actin_number_types + 1):
+            display_data.update(
+                {
+                    f"actin#{i}": DisplayData(
+                        name="actin",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#bf9b30",
+                    ),
+                    f"actin#mid_{i}": DisplayData(
+                        name="actin#mid",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#bf9b30",
+                    ),
+                    f"actin#fixed_{i}": DisplayData(
+                        name="actin#fixed",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#bf9b30",
+                    ),
+                    f"actin#mid_fixed_{i}": DisplayData(
+                        name="actin#mid_fixed",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#bf9b30",
+                    ),
+                    f"actin#ATP_{i}": DisplayData(
+                        name="actin#ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffbf00",
+                    ),
+                    f"actin#mid_ATP_{i}": DisplayData(
+                        name="actin#mid_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffbf00",
+                    ),
+                    f"actin#fixed_ATP_{i}": DisplayData(
+                        name="actin#fixed_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffbf00",
+                    ),
+                    f"actin#mid_fixed_ATP_{i}": DisplayData(
+                        name="actin#mid_fixed_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffbf00",
+                    ),
+                    f"actin#barbed_{i}": DisplayData(
+                        name="actin#barbed",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffdc73",
+                    ),
+                    f"actin#barbed_ATP_{i}": DisplayData(
+                        name="actin#barbed_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffdc73",
+                    ),
+                    f"actin#fixed_barbed_{i}": DisplayData(
+                        name="actin#fixed_barbed",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffdc73",
+                    ),
+                    f"actin#fixed_barbed_ATP_{i}": DisplayData(
+                        name="actin#fixed_barbed_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#ffdc73",
+                    ),
+                    f"actin#pointed_{i}": DisplayData(
+                        name="actin#pointed",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#a67c00",
+                    ),
+                    f"actin#pointed_ATP_{i}": DisplayData(
+                        name="actin#pointed_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#a67c00",
+                    ),
+                    f"actin#pointed_fixed_{i}": DisplayData(
+                        name="actin#pointed_fixed",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#a67c00",
+                    ),
                     f"actin#pointed_fixed_ATP_{i}": DisplayData(
-                    name="actin#pointed_fixed_ATP",
-                    display_type=DISPLAY_TYPE.SPHERE,
-                    radius=actin_radius,
-                    color="#a67c00",
-                ),
-            },
-        )
+                        name="actin#pointed_fixed_ATP",
+                        display_type=DISPLAY_TYPE.SPHERE,
+                        radius=actin_radius,
+                        color="#a67c00",
+                    ),
+                },
+            )
         # convert
         data = ReaddyData(
             # assume 1e3 recorded steps

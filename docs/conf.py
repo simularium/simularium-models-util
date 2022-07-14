@@ -69,9 +69,9 @@ source_suffix = {
 master_doc = "index"
 
 # General information about the project.
-project = u"Simularium Models Util"
-copyright = u"2021, Blair Lyons"
-author = u"Blair Lyons"
+project = "Simularium Models Util"
+copyright = "2021, Blair Lyons"
+author = "Blair Lyons"
 
 # The version info for the project you"re documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -153,8 +153,8 @@ latex_documents = [
     (
         master_doc,
         "simularium_models_util.tex",
-        u"Simularium Models Util Documentation",
-        u"Blair Lyons",
+        "Simularium Models Util Documentation",
+        "Blair Lyons",
         "manual",
     ),
 ]
@@ -168,7 +168,7 @@ man_pages = [
     (
         master_doc,
         "simularium_models_util",
-        u"Simularium Models Util Documentation",
+        "Simularium Models Util Documentation",
         [author],
         1,
     )
@@ -184,7 +184,7 @@ texinfo_documents = [
     (
         master_doc,
         "simularium_models_util",
-        u"Simularium Models Util Documentation",
+        "Simularium Models Util Documentation",
         author,
         "simularium_models_util",
         "One line description of project.",

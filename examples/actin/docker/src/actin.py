@@ -48,7 +48,10 @@ def main():
     args = parser.parse_args()
     print("finished args")
     parameters = pandas.read_excel(
-        args.params_path, sheet_name="actin", usecols=[0, int(args.data_column)], dtype=object
+        args.params_path,
+        sheet_name="actin",
+        usecols=[0, int(args.data_column)],
+        dtype=object,
     )
     print(f"parameter excel: {parameters}")
     parameters.set_index("name", inplace=True)
@@ -61,7 +64,7 @@ def main():
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
     parameters["box_size"] = float(parameters["box_size"])
-    actin_simulation = ActinSimulation(parameters, True, False) 
+    actin_simulation = ActinSimulation(parameters, True, False)
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()
     actin_simulation.add_random_linear_fibers(use_uuids=False)
@@ -76,10 +79,15 @@ def main():
                 ],
                 "Actin-Polymer",
             )
-        ] 
+        ]
         # raise Exception(int(parameters["actin_number_types"]))
-        print("starts w/ actin_number_types in actin.py =", int(parameters["actin_number_types"]))
-        monomers = ActinGenerator.get_monomers(int(parameters["actin_number_types"]), fiber_data, use_uuids=False)
+        print(
+            "starts w/ actin_number_types in actin.py =",
+            int(parameters["actin_number_types"]),
+        )
+        monomers = ActinGenerator.get_monomers(
+            int(parameters["actin_number_types"]), fiber_data, use_uuids=False
+        )
         monomers = ActinGenerator.setup_fixed_monomers(monomers, parameters)
         # import ipdb; ipdb.set_trace()
         # #"pp monomers" in terminal
@@ -89,7 +97,11 @@ def main():
     if parameters["branched_seed"]:
         print("Starting with branched seed")
         actin_simulation.add_monomers_from_data(
-            ActinGenerator.get_monomers(int(parameters["actin_number_types"]), ActinTestData.simple_branched_actin_fiber(), use_uuids=False)
+            ActinGenerator.get_monomers(
+                int(parameters["actin_number_types"]),
+                ActinTestData.simple_branched_actin_fiber(),
+                use_uuids=False,
+            )
         )
     rt = RepeatedTimer(300, report_hardware_usage)  # every 5 min
     try:
@@ -100,11 +112,20 @@ def main():
             plots = None
             if parameters["plot_polymerization"]:
                 plots = ActinVisualization.generate_polymerization_plots(
-                    int(parameters["actin_number_types"]), parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                    int(parameters["actin_number_types"]),
+                    parameters["name"] + ".h5",
+                    parameters["box_size"],
+                    10,
+                    parameters["periodic_boundary"],
+                    plots,
                 )
             if parameters["plot_bend_twist"]:
                 plots = ActinVisualization.generate_bend_twist_plots(
-                    parameters["name"] + ".h5", parameters["box_size"], 10, parameters["periodic_boundary"], plots
+                    parameters["name"] + ".h5",
+                    parameters["box_size"],
+                    10,
+                    parameters["periodic_boundary"],
+                    plots,
                 )
             ActinVisualization.visualize_actin(
                 int(parameters["actin_number_types"]),

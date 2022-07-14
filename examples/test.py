@@ -1,4 +1,3 @@
-
 # # # lst = ['a', 'b', 'c']
 # # # lst2 = []
 
@@ -14,21 +13,21 @@
 # # #         """
 # # #         get particle types for actin
 
-# # #         Actin filaments are polymers and to encode polarity,there are 5 polymer types. 
-# # #         These are represented as "actin#N" where N is in [1,5]. At branch points, 
-# # #         2 particles arp2 and arp3 join the pointed end of a branch to the side 
+# # #         Actin filaments are polymers and to encode polarity,there are 5 polymer types.
+# # #         These are represented as "actin#N" where N is in [1,5]. At branch points,
+# # #         2 particles arp2 and arp3 join the pointed end of a branch to the side
 # # #         of its mother filament. Spatially, the types are mapped like so:
 
 # # #         - end                                                                    + end
 
-# # #         actin#pointed_1     actin#3 - - - actin#2 - - - actin#4 - - actin#barbed_3     
+# # #         actin#pointed_1     actin#3 - - - actin#2 - - - actin#4 - - actin#barbed_3
 # # #                     \\      //   \\      // || \\      //   \\      //
 # # #                     \\    //     \\    //  ||  \\    //     \\    //
 # # #                     actin#2      actin#1   ||   actin#5      actin#2
 # # #                                     ||     ||
 # # #                                     ||    arp3
-# # #                                     ||   //     
-# # #                                     ||  //   
+# # #                                     ||   //
+# # #                                     ||  //
 # # #                                 arp2#branched
 # # #                                         \\
 # # #                                         \\
@@ -64,12 +63,6 @@
 # # #                 f"actin#barbed_ATP_{i}",
 # # #             ]
 # # #         return result
-
-
-
-
-    
-        
 
 
 # # def get_all_polymer_actin_types(vertex_type):
@@ -132,10 +125,19 @@
 #             )
 #         return types
 
-import pandas as pd 
+import pandas as pd
+
+
 def actin_numbers_excel():
-    actin_number_types = pd.read_excel("/Users/manasa/Documents/GitHub/simularium-models-util/examples/actin/template.xlsx", sheet_name="actin")
-    actin_number_types = int(actin_number_types.loc[actin_number_types['name'] == "actin_number_types","run0"].iloc[0])
+    actin_number_types = pd.read_excel(
+        "/Users/manasa/Documents/GitHub/simularium-models-util/examples/actin/template.xlsx",
+        sheet_name="actin",
+    )
+    actin_number_types = int(
+        actin_number_types.loc[
+            actin_number_types["name"] == "actin_number_types", "run0"
+        ].iloc[0]
+    )
     print(actin_number_types)
 
 

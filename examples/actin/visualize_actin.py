@@ -26,10 +26,12 @@ def main():
         "periodic_boundary", help="is there a periodic boundary condition?"
     )
     parser.add_argument(
-        "plot_bend_twist", help="calculate bend/twist plots? otherwise calculate polymerization plots"
+        "plot_bend_twist",
+        help="calculate bend/twist plots? otherwise calculate polymerization plots",
     )
     parser.add_argument(
-        "actin_number_types", help="number of possible actin monomer types. can be either 3 or 5."
+        "actin_number_types",
+        help="number of possible actin monomer types. can be either 3 or 5.",
     )
     args = parser.parse_args()
     dir_path = args.dir_path
@@ -44,7 +46,11 @@ def main():
             else:
 
                 plots = ActinVisualization.generate_polymerization_plots(
-                    int(args.actin_number_types), file_path, float(args.box_size), 10, args.periodic_boundary
+                    int(args.actin_number_types),
+                    file_path,
+                    float(args.box_size),
+                    10,
+                    args.periodic_boundary,
                 )
             ActinVisualization.visualize_actin(
                 file_path,
