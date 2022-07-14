@@ -101,6 +101,7 @@ class ActinSimulation:
         Add geometric constraints for connected actin particles,
         including bonds, angles, and repulsions, to the ReaDDy system
         """
+        angle = ActinStructure.actin_to_actin_dihedral_angle()
         force_constant = self.parameters["force_constant"]
         util = ReaddyUtil()
         actin_number_types = int(self.parameters["actin_number_types"])
@@ -114,6 +115,20 @@ class ActinSimulation:
         self.actin_util.add_filament_twist_dihedrals(
             25 * force_constant, self.system, util, actin_number_types
         )
+        #must be something wrong with the types 
+        print(f"input into dihedral functions {force_constant}, {angle}, {actin_number_types}")
+        # self.system.topologies.configure_cosine_dihedral(
+        #                         'actin#pointed_ATP_1', 'actin#ATP_2', 'actin#mid_ATP_3', 'actin#mid_ATP_4', 25 * force_constant, 1.0, angle
+        #                     )
+        # self.system.topologies.configure_cosine_dihedral(
+        #                         'actin#ATP_2', 'actin#mid_ATP_3', 'actin#mid_ATP_4', 'actin#mid_ATP_5', 25 * force_constant, 1.0, angle
+        #                     )
+        # self.system.topologies.configure_cosine_dihedral(
+        #                         'actin#mid_ATP_3', 'actin#mid_ATP_4', 'actin#mid_ATP_5', 'actin#mid_ATP_1', 25 * force_constant, 1.0, angle
+        #                     )
+        # self.system.topologies.configure_cosine_dihedral(
+        #                         'actin#mid_ATP_4', 'actin#mid_ATP_5', 'actin#mid_ATP_1', 'actin#barbed_ATP_2', 25 * force_constant, 1.0, angle
+        #                     )
         # branch junction
         self.actin_util.add_branch_bonds(
             force_constant, self.system, util, actin_number_types
@@ -247,14 +262,14 @@ class ActinSimulation:
             self.simulation,
         )
 
-    def add_random_linear_fibers(self, actin_number_types=3, use_uuids=True):
+    def add_random_linear_fibers(self, use_uuids=True):
         """
         Add randomly distributed and oriented linear fibers
         """
         self.actin_util.add_random_linear_fibers(
             self.simulation,
             int(self.parameters["seed_n_fibers"]),
-            actin_number_types,
+            int(self.parameters["actin_number_types"]),
             self.parameters["seed_fiber_length"],
             -1 if use_uuids else 0,
         )

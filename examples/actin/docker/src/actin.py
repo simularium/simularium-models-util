@@ -64,6 +64,7 @@ def main():
     actin_simulation = ActinSimulation(parameters, True, False) 
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()
+    actin_simulation.add_random_linear_fibers(use_uuids=False)
     if parameters["orthogonal_seed"]:
         print("Starting with orthogonal seed")
         fiber_data = [

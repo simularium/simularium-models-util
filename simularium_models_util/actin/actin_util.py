@@ -597,7 +597,7 @@ class ActinUtil:
             - parameters["box_size"] * 0.5
         )
         print("Adding random fibers at \n" + str(positions))
-        for fiber in range(1, n_fibers):
+        for fiber in range(0, n_fibers):
             direction = ReaddyUtil.get_random_unit_vector()
             monomers = ActinGenerator.get_monomers(
                 actin_number_types,
@@ -1902,7 +1902,7 @@ class ActinUtil:
             force_constant,
             angle,
             system,
-        )
+        )#only 1 through 3 is here ? why aren't we used get_types_with_polymer_numbers_1D here?
 
     @staticmethod
     def add_branch_bonds(force_constant, system, util, actin_number_types):

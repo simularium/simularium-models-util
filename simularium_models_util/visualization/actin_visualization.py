@@ -646,7 +646,7 @@ class ActinVisualization:
                     radius=actin_radius,
                     color="#a67c00",
                 ),
-            }
+            },
         )
         # convert
         data = ReaddyData(
