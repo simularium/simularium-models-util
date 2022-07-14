@@ -105,7 +105,7 @@ class ActinVisualization:
         """
         ytraces = {}
         for total_rxn_name in GROWTH_RXNS:
-            rxn_events = ActinAnalyzer.analyze_reaction_count_over_time(
+            rxn_events = ReaddyUtil.analyze_reaction_count_over_time(
                 reactions, total_rxn_name
             )
             if rxn_events is not None:
@@ -129,7 +129,7 @@ class ActinVisualization:
         """
         ytraces = {}
         for total_rxn_name in STRUCTURAL_RXNS:
-            rxn_events = ActinAnalyzer.analyze_reaction_count_over_time(
+            rxn_events = ReaddyUtil.analyze_reaction_count_over_time(
                 reactions, total_rxn_name
             )
             if rxn_events is not None:
@@ -154,7 +154,7 @@ class ActinVisualization:
             group_reaction_events = []
             for total_rxn_name in GROUPED_GROWTH_RXNS[rxn_group_name]:
                 group_reaction_events.append(
-                    ActinAnalyzer.analyze_reaction_count_over_time(
+                    ReaddyUtil.analyze_reaction_count_over_time(
                         reactions, total_rxn_name
                     )
                 )
@@ -657,7 +657,7 @@ class ActinVisualization:
             timestep=TIMESTEP * total_steps * 1e-3,
             path_to_readdy_h5=path_to_readdy_h5,
             meta_data=MetaData(
-                box_size=np.array([box_size, box_size, box_size]),
+                box_size=box_size,
             ),
             display_data=display_data,
             time_units=UnitData("µs"),

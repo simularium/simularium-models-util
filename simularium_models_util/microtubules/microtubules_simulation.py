@@ -43,7 +43,7 @@ class MicrotubulesSimulation:
         Create the ReaDDy system for microtubules
         including particle types, constraints, and reactions
         """
-        self.system = readdy.ReactionDiffusionSystem([self.parameters["box_size"]] * 3)
+        self.system = readdy.ReactionDiffusionSystem(self.parameters["box_size"])
         self.parameters["temperature_K"] = self.parameters["temperature_C"] + 273.15
         self.system.temperature = self.parameters["temperature_K"]
         self.add_microtubules_types()

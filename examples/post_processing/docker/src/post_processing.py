@@ -6,14 +6,12 @@ import sys
 import pandas
 import argparse
 import psutil
+import numpy as np
+import boto3
 
 from simularium_models_util.microtubules import MicrotubulesSimulation
 from simularium_models_util.visualization import MicrotubulesVisualization
 from simularium_models_util import RepeatedTimer, ReaddyUtil
-
-
-def report_memory_usage():
-    print(f"RAM percent used: {psutil.virtual_memory()[2]}")
 
 
 def main():
@@ -29,10 +27,11 @@ def main():
     parser.add_argument(
         "model_name", help="prefix for output file names", nargs="?", default=""
     )
+
     args = parser.parse_args()
     parameters = pandas.read_excel(
         args.params_path,
-        sheet_name="microtubules",
+        sheet_name="post_processing",
         usecols=[0, int(args.data_column)],
         dtype=object,
     )
@@ -45,32 +44,31 @@ def main():
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + run_name
-    mt_simulation = MicrotubulesSimulation(parameters, True, True)
-    mt_simulation.add_random_tubulin_dimers()
-    mt_simulation.add_microtubule_seed()
-    rt = RepeatedTimer(600, report_memory_usage)  # every 10 min
-    try:
-        mt_simulation.simulation.run(
-            int(parameters["total_steps"]), parameters["internal_timestep"]
-        )
-        try:
-            plots = MicrotubulesVisualization.generate_plots(
-                parameters["name"] + ".h5", parameters["box_size"], 10
-            )
-            viz_stepsize = max(int(parameters["total_steps"] / 1000.0), 1)
-            scaled_time_step_us = parameters["timestep"] * 1e-3 * viz_stepsize
-            MicrotubulesVisualization.visualize_microtubules(
-                parameters["name"] + ".h5",
-                parameters["box_size"],
-                scaled_time_step_us=scaled_time_step_us,
-                plots=plots,
-            )
-        except Exception as e:
-            print("Failed viz!!!!!!!!!!\n" + str(type(e)) + " " + str(e))
-            sys.exit(88888888)
-    finally:
-        rt.stop()
-    sys.exit(0)
+
+    stride = 10
+    h5_path = parameters["name"] + ".h5"
+
+    s3 = boto3.client("s3")
+    bucket_name = "readdy-working-bucket"
+    s3.download_file(bucket_name, h5_path, h5_path)
+
+    plots = MicrotubulesVisualization.generate_plots(
+        h5_path=h5_path,
+        box_size=parameters["box_size"],
+        stride=stride,
+        save_pickle_file=True,
+        pickle_file_path=None,
+    )
+
+    viz_stepsize = max(int(parameters["total_steps"] / 1000.0), 1)
+    scaled_time_step_us = parameters["timestep"] * 1e-3 * viz_stepsize
+
+    MicrotubulesVisualization.visualize_microtubules(
+        parameters["name"] + ".h5",
+        parameters["box_size"],
+        scaled_time_step_us=scaled_time_step_us,
+        plots=plots,
+    )
 
 
 if __name__ == "__main__":
