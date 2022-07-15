@@ -1860,49 +1860,49 @@ class ActinUtil:
             system,
             actin_number_types,
         )
-        util.add_dihedral(
-            [
-                "actin#branch_1",
-                "actin#branch_ATP_1",
-            ],
-            [
-                "actin#2",
-                "actin#ATP_2",
-                "actin#mid_2",
-                "actin#mid_ATP_2",
-                "actin#fixed_2",
-                "actin#fixed_ATP_2",
-                "actin#mid_fixed_2",
-                "actin#mid_fixed_ATP_2",
-            ],
-            [
-                "actin#3",
-                "actin#ATP_3",
-                "actin#mid_3",
-                "actin#mid_ATP_3",
-                "actin#fixed_3",
-                "actin#fixed_ATP_3",
-                "actin#mid_fixed_3",
-                "actin#mid_fixed_ATP_3",
-            ],
-            [
-                "actin#1",
-                "actin#ATP_1",
-                "actin#mid_1",
-                "actin#mid_ATP_1",
-                "actin#barbed_1",
-                "actin#barbed_ATP_1",
-                "actin#fixed_1",
-                "actin#fixed_ATP_1",
-                "actin#mid_fixed_1",
-                "actin#mid_fixed_ATP_1",
-                "actin#fixed_barbed_1",
-                "actin#fixed_barbed_ATP_1",
-            ],
-            force_constant,
-            angle,
-            system,
-        )  # only 1 through 3 is here ? why aren't we used get_types_with_polymer_numbers_1D here?
+        # util.add_dihedral(
+        #     [
+        #         "actin#branch_1",
+        #         "actin#branch_ATP_1",
+        #     ],
+        #     [
+        #         "actin#2",
+        #         "actin#ATP_2",
+        #         "actin#mid_2",
+        #         "actin#mid_ATP_2",
+        #         "actin#fixed_2",
+        #         "actin#fixed_ATP_2",
+        #         "actin#mid_fixed_2",
+        #         "actin#mid_fixed_ATP_2",
+        #     ],
+        #     [
+        #         "actin#3",
+        #         "actin#ATP_3",
+        #         "actin#mid_3",
+        #         "actin#mid_ATP_3",
+        #         "actin#fixed_3",
+        #         "actin#fixed_ATP_3",
+        #         "actin#mid_fixed_3",
+        #         "actin#mid_fixed_ATP_3",
+        #     ],
+        #     [
+        #         "actin#1",
+        #         "actin#ATP_1",
+        #         "actin#mid_1",
+        #         "actin#mid_ATP_1",
+        #         "actin#barbed_1",
+        #         "actin#barbed_ATP_1",
+        #         "actin#fixed_1",
+        #         "actin#fixed_ATP_1",
+        #         "actin#mid_fixed_1",
+        #         "actin#mid_fixed_ATP_1",
+        #         "actin#fixed_barbed_1",
+        #         "actin#fixed_barbed_ATP_1",
+        #     ],
+        #     force_constant,
+        #     angle,
+        #     system,
+        # )  
 
     @staticmethod
     def add_branch_bonds(force_constant, system, util, actin_number_types):
@@ -2692,7 +2692,7 @@ class ActinUtil:
         if bool(parameters["periodic_boundary"]):
             return
         # 1.0 margin on each side
-        box_potential_size = np.array(parameters["box_size"] - 2.0)
+        box_potential_size = np.array([parameters["box_size"] - 2.0] * 3)
         ActinUtil.add_box_potential(
             particle_types=ActinUtil.get_all_particle_types(actin_number_types),
             origin=-0.5 * box_potential_size,

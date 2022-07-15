@@ -665,7 +665,7 @@ class ReaddyUtil:
                         )
                         self.angle_triples.append((t1, t2, t3))
                         self.angle_triples.append((t3, t2, t1))
-                        print(f"angles: {t1}, {t2}, {t3}")
+                        # print(f"angles: {t1}, {t2}, {t3}")
 
     def add_dihedral(self, types1, types2, types3, types4, force_const, angle, system):
         """
@@ -695,7 +695,7 @@ class ReaddyUtil:
                             )
                             self.dihedral_quads.append((t1, t2, t3, t4))
                             self.dihedral_quads.append((t4, t3, t2, t1))
-                            print(f"dihedrals: {t1}, {t2}, {t3}, {t4}")
+                            # print(f"dihedrals: {t1}, {t2}, {t3}, {t4}")
                             # print("from add_dihedrals:", self.dihedral_quads)
 
     def add_repulsion(self, types1, types2, force_const, distance, system):
