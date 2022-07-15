@@ -59,7 +59,7 @@ class ActinSimulation:
         including particle types, constraints, and reactions
         """
         self.system = readdy.ReactionDiffusionSystem(
-            box_size=[self.parameters["box_size"]] * 3,
+            box_size=self.parameters["box_size"],
             periodic_boundary_conditions=[bool(self.parameters["periodic_boundary"])]
             * 3,
         )

@@ -59,11 +59,11 @@ def main():
     run_name = list(parameters)[0]
     parameters = parameters[run_name]
     # # read in box size
-    # parameters["box_size"] = ReaddyUtil.get_box_size(parameters["box_size"])
+    parameters["box_size"] = ReaddyUtil.get_box_size(parameters["box_size"])
     if not os.path.exists("outputs/"):
         os.mkdir("outputs/")
     parameters["name"] = "outputs/" + args.model_name + "_" + str(run_name)
-    parameters["box_size"] = float(parameters["box_size"])
+    # parameters["box_size"] = float(parameters["box_size"])
     actin_simulation = ActinSimulation(parameters, True, False)
     actin_simulation.add_obstacles()
     actin_simulation.add_random_monomers()
