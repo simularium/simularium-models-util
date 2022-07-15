@@ -1327,7 +1327,7 @@ class ReaddyUtil:
             return result
         result.append(n_id)
 
-        if chain_length == 1:
+        if chain_length == 0:
             return result
 
         next_neighbor_index = (next_neighbor_index + 1) % len(neighbor_types)
