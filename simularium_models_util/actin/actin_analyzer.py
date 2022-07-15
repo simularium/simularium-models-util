@@ -237,13 +237,13 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._free_actin_types(), monomer_data[t]["particles"]
+                    ActinAnalyzer._free_actin_types(), monomer_data[t]
                 )
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_actin_types(),
-                    monomer_data[t]["particles"],
+                    monomer_data[t],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -262,18 +262,18 @@ class ActinAnalyzer:
             ATP_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_ATP_actin_types(),
-                    monomer_data[t]["particles"],
+                    monomer_data[t],
                 )
             )
             free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._free_actin_types(), monomer_data[t]["particles"]
+                    ActinAnalyzer._free_actin_types(), monomer_data[t]
                 )
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_actin_types(),
-                    monomer_data[t]["particles"],
+                    monomer_data[t],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -292,19 +292,19 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             daughter_actin = 0
             daughter_filaments = ActinAnalyzer._frame_daughter_filaments(
-                monomer_data[t]["particles"]
+                monomer_data[t]
             )
             for daughter_filament in daughter_filaments:
                 daughter_actin += len(daughter_filament)
             free_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ActinAnalyzer._free_actin_types(), monomer_data[t]["particles"]
+                    ActinAnalyzer._free_actin_types(), monomer_data[t]
                 )
             )
             filamentous_actin = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
                     ActinAnalyzer._filamentous_actin_types(),
-                    monomer_data[t]["particles"],
+                    monomer_data[t],
                 )
             )
             if free_actin + filamentous_actin > 0:
@@ -322,7 +322,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             mother_filaments = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]["particles"]
+                monomer_data[t]
             )
             result.append([])
             for filament in mother_filaments:
@@ -338,7 +338,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             daughter_filaments = ActinAnalyzer._frame_daughter_filaments(
-                monomer_data[t]["particles"]
+                monomer_data[t]
             )
             result.append([])
             for filament in daughter_filaments:
@@ -354,12 +354,12 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             bound_arp23 = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ["arp2", "arp2#branched"], monomer_data[t]["particles"]
+                    ["arp2", "arp2#branched"], monomer_data[t]
                 )
             )
             free_arp23 = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    ["arp2#free"], monomer_data[t]["particles"]
+                    ["arp2#free"], monomer_data[t]
                 )
             )
             if free_arp23 + bound_arp23 > 0:
@@ -383,12 +383,12 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             capped_ends = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    capped_end_types, monomer_data[t]["particles"]
+                    capped_end_types, monomer_data[t]
                 )
             )
             growing_ends = len(
                 ReaddyUtil.analyze_frame_get_ids_for_types(
-                    growing_end_types, monomer_data[t]["particles"]
+                    growing_end_types, monomer_data[t]
                 )
             )
             if growing_ends + capped_ends > 0:
@@ -617,7 +617,7 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             branch_angles = ActinAnalyzer._get_frame_branch_angles(
                 actin_number_types,
-                monomer_data[t]["particles"],
+                monomer_data[t],
                 box_size,
                 periodic_boundary,
             )
@@ -721,7 +721,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             helix_pitches = ActinAnalyzer._get_frame_short_helix_pitches(
-                monomer_data[t]["particles"], box_size, periodic_boundary
+                monomer_data[t], box_size, periodic_boundary
             )
             result.append(helix_pitches)
         return result
@@ -735,7 +735,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             helix_pitches = ActinAnalyzer._get_frame_long_helix_pitches(
-                monomer_data[t]["particles"], box_size, periodic_boundary
+                monomer_data[t], box_size, periodic_boundary
             )
             result.append(helix_pitches)
         return result
@@ -811,7 +811,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             straightness = ActinAnalyzer._get_frame_distance_from_straight(
-                monomer_data[t]["particles"], box_size, periodic_boundary
+                monomer_data[t], box_size, periodic_boundary
             )
             result.append(straightness)
         return result
@@ -828,7 +828,7 @@ class ActinAnalyzer:
                     len(
                         ReaddyUtil.analyze_frame_get_ids_for_types(
                             ActinAnalyzer._free_actin_types(),
-                            monomer_data[t]["particles"],
+                            monomer_data[t],
                         )
                     ),
                     box_size,
@@ -846,9 +846,9 @@ class ActinAnalyzer:
         initial_pointed_pos = None
         for t in range(len(monomer_data)):
             pointed_id = ReaddyUtil.analyze_frame_get_ids_for_types(
-                ActinAnalyzer._pointed_actin_types(), monomer_data[t]["particles"]
+                ActinAnalyzer._pointed_actin_types(), monomer_data[t]
             )[0]
-            pointed_position = monomer_data[t]["particles"][pointed_id]["position"]
+            pointed_position = monomer_data[t][pointed_id]["position"]
             if t == 0:
                 result.append(0.0)
                 initial_pointed_pos = pointed_position
@@ -872,16 +872,16 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             skip = False
             filament = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]["particles"]
+                monomer_data[t]
             )[0]
             filament_length = len(filament)
             normals = []
             axis_positions = []
             for index in range(1, filament_length - 1):
-                position = monomer_data[t]["particles"][filament[index]]["position"]
+                position = monomer_data[t][filament[index]]["position"]
                 actin_ids = [filament[index - 1], filament[index], filament[index + 1]]
                 axis_pos = ActinAnalyzer._get_axis_position_for_actin(
-                    monomer_data[t]["particles"], actin_ids, box_size, periodic_boundary
+                    monomer_data[t], actin_ids, box_size, periodic_boundary
                 )
                 if ReaddyUtil.vector_is_invalid(axis_pos):
                     print(
@@ -933,11 +933,11 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             result.append([])
             filament = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]["particles"]
+                monomer_data[t]
             )[0]
             for index in range(len(filament) - 1):
-                pos = monomer_data[t]["particles"][filament[index]]["position"]
-                pos_lat = monomer_data[t]["particles"][filament[index + 1]]["position"]
+                pos = monomer_data[t][filament[index]]["position"]
+                pos_lat = monomer_data[t][filament[index + 1]]["position"]
                 if periodic_boundary:
                     pos_lat = ReaddyUtil.get_non_periodic_boundary_position(
                         pos, pos_lat, box_size
@@ -959,11 +959,11 @@ class ActinAnalyzer:
         for t in range(len(monomer_data)):
             result.append([])
             filament = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]["particles"]
+                monomer_data[t]
             )[0]
             for index in range(len(filament) - 2):
-                pos = monomer_data[t]["particles"][filament[index]]["position"]
-                pos_long = monomer_data[t]["particles"][filament[index + 2]]["position"]
+                pos = monomer_data[t][filament[index]]["position"]
+                pos_long = monomer_data[t][filament[index + 2]]["position"]
                 if periodic_boundary:
                     pos_long = ReaddyUtil.get_non_periodic_boundary_position(
                         pos, pos_long, box_size
