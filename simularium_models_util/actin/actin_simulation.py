@@ -112,25 +112,25 @@ class ActinSimulation:
         self.actin_util.add_filament_twist_angles(
             10 * force_constant, self.system, util, actin_number_types
         )
-        self.actin_util.add_filament_twist_dihedrals(
-            25 * force_constant, self.system, util, actin_number_types
-        )
-        # must be something wrong with the types
-        print(
-            f"input into dihedral functions {force_constant}, {angle}, {actin_number_types}"
-        )
-        # self.system.topologies.configure_cosine_dihedral(
-        #                         'actin#pointed_ATP_1', 'actin#ATP_2', 'actin#mid_ATP_3', 'actin#mid_ATP_4', 25 * force_constant, 1.0, angle
-        #                     )
-        # self.system.topologies.configure_cosine_dihedral(
-        #                         'actin#ATP_2', 'actin#mid_ATP_3', 'actin#mid_ATP_4', 'actin#mid_ATP_5', 25 * force_constant, 1.0, angle
-        #                     )
-        # self.system.topologies.configure_cosine_dihedral(
-        #                         'actin#mid_ATP_3', 'actin#mid_ATP_4', 'actin#mid_ATP_5', 'actin#mid_ATP_1', 25 * force_constant, 1.0, angle
-        #                     )
-        # self.system.topologies.configure_cosine_dihedral(
-        #                         'actin#mid_ATP_4', 'actin#mid_ATP_5', 'actin#mid_ATP_1', 'actin#barbed_ATP_2', 25 * force_constant, 1.0, angle
-        #                     )
+        # self.actin_util.add_filament_twist_dihedrals(
+        #     25 * force_constant, self.system, util, actin_number_types
+        # )
+       
+        # print(
+        #     f"input into dihedral functions {force_constant}, {angle}, {actin_number_types}"
+        # )
+        self.system.topologies.configure_cosine_dihedral(
+                                'actin#pointed_ATP_1', 'actin#ATP_2', 'actin#mid_ATP_3', 'actin#mid_ATP_4', 25 * force_constant, 1.0, angle
+                            )
+        self.system.topologies.configure_cosine_dihedral(
+                                'actin#ATP_2', 'actin#mid_ATP_3', 'actin#mid_ATP_4', 'actin#mid_ATP_5', 25 * force_constant, 1.0, angle
+                            )
+        self.system.topologies.configure_cosine_dihedral(
+                                'actin#mid_ATP_3', 'actin#mid_ATP_4', 'actin#mid_ATP_5', 'actin#mid_ATP_1', 25 * force_constant, 1.0, angle
+                            )
+        self.system.topologies.configure_cosine_dihedral(
+                                'actin#mid_ATP_4', 'actin#mid_ATP_5', 'actin#mid_ATP_1', 'actin#barbed_ATP_2', 25 * force_constant, 1.0, angle
+                            )
         # branch junction
         self.actin_util.add_branch_bonds(
             force_constant, self.system, util, actin_number_types
