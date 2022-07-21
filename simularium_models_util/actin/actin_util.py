@@ -1902,7 +1902,7 @@ class ActinUtil:
         #     force_constant,
         #     angle,
         #     system,
-        # )  
+        # )
 
     @staticmethod
     def add_branch_bonds(force_constant, system, util, actin_number_types):

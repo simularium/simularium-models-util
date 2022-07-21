@@ -321,9 +321,7 @@ class ActinAnalyzer:
         """
         result = []
         for t in range(len(monomer_data)):
-            mother_filaments = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]
-            )
+            mother_filaments = ActinAnalyzer._frame_mother_filaments(monomer_data[t])
             result.append([])
             for filament in mother_filaments:
                 result[t].append(len(filament))
@@ -414,8 +412,12 @@ class ActinAnalyzer:
     def neighbor_types_to_string(particle_id, frame_particle_data):
         """ """
         result = ""
-        for neighbor_id in (frame_particle_data["particles"][particle_id])["neighbor_ids"]:
-            result += (frame_particle_data["particles"][neighbor_id])["type_name"] + ", "
+        for neighbor_id in (frame_particle_data["particles"][particle_id])[
+            "neighbor_ids"
+        ]:
+            result += (frame_particle_data["particles"][neighbor_id])[
+                "type_name"
+            ] + ", "
         return result[:-2]
 
     @staticmethod
@@ -423,7 +425,9 @@ class ActinAnalyzer:
         """ """
         positions = []
         for i in range(3):
-            positions.append(frame_particle_data["particles"][particle_ids[i]]["position"])
+            positions.append(
+                frame_particle_data["particles"][particle_ids[i]]["position"]
+            )
         for i in range(len(positions)):
             if i == 1:
                 continue
@@ -871,9 +875,7 @@ class ActinAnalyzer:
         result = []
         for t in range(len(monomer_data)):
             skip = False
-            filament = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]
-            )[0]
+            filament = ActinAnalyzer._frame_mother_filaments(monomer_data[t])[0]
             filament_length = len(filament)
             normals = []
             axis_positions = []
@@ -932,9 +934,7 @@ class ActinAnalyzer:
         )
         for t in range(len(monomer_data)):
             result.append([])
-            filament = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]
-            )[0]
+            filament = ActinAnalyzer._frame_mother_filaments(monomer_data[t])[0]
             for index in range(len(filament) - 1):
                 pos = monomer_data[t][filament[index]]["position"]
                 pos_lat = monomer_data[t][filament[index + 1]]["position"]
@@ -958,9 +958,7 @@ class ActinAnalyzer:
         )
         for t in range(len(monomer_data)):
             result.append([])
-            filament = ActinAnalyzer._frame_mother_filaments(
-                monomer_data[t]
-            )[0]
+            filament = ActinAnalyzer._frame_mother_filaments(monomer_data[t])[0]
             for index in range(len(filament) - 2):
                 pos = monomer_data[t][filament[index]]["position"]
                 pos_long = monomer_data[t][filament[index + 2]]["position"]
