@@ -183,7 +183,9 @@
                 <span class="sa">f</span><span class="s2">&quot;Failed to get actin number: </span><span class="si">{</span><span class="n">pt</span><span class="si">}</span><span class="s2"> is not actin</span><span class="se">\n</span><span class="s2">&quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">topology_to_string</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">offset</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_polymer_number</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">pt</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">offset</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">])</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.get_all_polymer_actin_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_all_polymer_actin_types">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_all_polymer_actin_types</span><span class="p">(</span><span class="n">vertex_type</span><span class="p">):</span>
@@ -199,6 +201,8 @@
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vertex_type</span><span class="si">}{</span><span class="n">spacer</span><span class="si">}</span><span class="s2">1&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vertex_type</span><span class="si">}{</span><span class="n">spacer</span><span class="si">}</span><span class="s2">2&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vertex_type</span><span class="si">}{</span><span class="n">spacer</span><span class="si">}</span><span class="s2">3&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vertex_type</span><span class="si">}{</span><span class="n">spacer</span><span class="si">}</span><span class="s2">4&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">vertex_type</span><span class="si">}{</span><span class="n">spacer</span><span class="si">}</span><span class="s2">5&quot;</span><span class="p">,</span>
         <span class="p">]</span></div>
 
 <div class="viewcode-block" id="ActinUtil.get_actin_rotation"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_actin_rotation">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -678,7 +682,9 @@
                 <span class="n">ActinUtil</span><span class="o">.</span><span class="n">set_actin_mid_flag</span><span class="p">(</span><span class="n">topology</span><span class="p">,</span> <span class="n">recipe</span><span class="p">,</span> <span class="n">v_actin</span><span class="p">,</span> <span class="n">arp3_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_random_linear_fibers"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_random_linear_fibers">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">n_fibers</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_random_linear_fibers</span><span class="p">(</span>
+        <span class="n">simulation</span><span class="p">,</span> <span class="n">n_fibers</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add linear actin fibers of the given length</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -687,9 +693,10 @@
             <span class="o">-</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adding random fibers at </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">positions</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_fibers</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fiber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_fibers</span><span class="p">):</span>
             <span class="n">direction</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_random_unit_vector</span><span class="p">()</span>
             <span class="n">monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span>
+                <span class="n">actin_number_types</span><span class="p">,</span>
                 <span class="p">[</span>
                     <span class="n">FiberData</span><span class="p">(</span>
                         <span class="mi">0</span><span class="p">,</span>
@@ -701,16 +708,21 @@
                 <span class="p">],</span>
                 <span class="n">use_uuids</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;monomers:</span><span class="si">{</span><span class="n">monomers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">monomers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_fibers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_fibers_from_data">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_fibers_from_data</span><span class="p">(</span>
+        <span class="n">simulation</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">use_uuids</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add (branched) actin fiber(s)</span>
 
 <span class="sd">        fibers_data : List[FiberData]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fiber_monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span><span class="n">fibers_data</span><span class="p">,</span> <span class="n">use_uuids</span><span class="p">)</span>
+        <span class="n">fiber_monomers</span> <span class="o">=</span> <span class="n">ActinGenerator</span><span class="o">.</span><span class="n">get_monomers</span><span class="p">(</span>
+            <span class="n">actin_number_types</span><span class="p">,</span> <span class="n">fibers_data</span><span class="p">,</span> <span class="n">use_uuids</span>
+        <span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_monomers_from_data</span><span class="p">(</span><span class="n">simulation</span><span class="p">,</span> <span class="n">fiber_monomers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_monomers_from_data"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_monomers_from_data">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -739,10 +751,14 @@
             <span class="n">topology</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;topologies&quot;</span><span class="p">][</span><span class="n">topology_id</span><span class="p">]</span>
             <span class="n">types</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
+
             <span class="k">for</span> <span class="n">particle_id</span> <span class="ow">in</span> <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;particle_ids&quot;</span><span class="p">]:</span>
                 <span class="n">particle</span> <span class="o">=</span> <span class="n">monomer_data</span><span class="p">[</span><span class="s2">&quot;particles&quot;</span><span class="p">][</span><span class="n">particle_id</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;particles:</span><span class="si">{</span><span class="n">particle</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="n">types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">])</span>
                 <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">particle</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;types:</span><span class="si">{</span><span class="n">types</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">top</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">add_topology</span><span class="p">(</span>
                 <span class="n">topology</span><span class="p">[</span><span class="s2">&quot;type_name&quot;</span><span class="p">],</span> <span class="n">types</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
             <span class="p">)</span>
@@ -866,16 +882,12 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reverse Dimerize&quot;</span><span class="p">)</span>
+        <span class="n">actin_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span>
+            <span class="s2">&quot;actin#barbed&quot;</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">)</span>
         <span class="n">v_barbed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
+            <span class="n">actin_types</span><span class="p">,</span>
             <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find barbed end of dimer&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">v_pointed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
@@ -936,16 +948,12 @@
         <span class="n">recipe</span> <span class="o">=</span> <span class="n">readdy</span><span class="o">.</span><span class="n">StructuralReactionRecipe</span><span class="p">(</span><span class="n">topology</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;verbose&quot;</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reverse Trimerize&quot;</span><span class="p">)</span>
+        <span class="n">actin_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span>
+            <span class="s2">&quot;actin#barbed&quot;</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_polymer_actin_types</span><span class="p">(</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">)</span>
         <span class="n">v_barbed</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_vertex_of_types</span><span class="p">(</span>
             <span class="n">topology</span><span class="p">,</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
+            <span class="n">actin_types</span><span class="p">,</span>
             <span class="n">error_msg</span><span class="o">=</span><span class="s2">&quot;Failed to find barbed end in trimer&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">v_neighbor</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">get_first_neighbor</span><span class="p">(</span>
@@ -1481,7 +1489,7 @@
         <span class="k">return</span> <span class="n">recipe</span></div>
 
 <div class="viewcode-block" id="ActinUtil.get_all_actin_particle_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_all_actin_particle_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_all_actin_particle_types</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">get_all_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get particle types for actin</span>
 
@@ -1523,7 +1531,7 @@
             <span class="s2">&quot;actin#branch_barbed_1&quot;</span><span class="p">,</span>
             <span class="s2">&quot;actin#branch_barbed_ATP_1&quot;</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">+=</span> <span class="p">[</span>
                 <span class="sa">f</span><span class="s2">&quot;actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -1534,15 +1542,16 @@
                 <span class="sa">f</span><span class="s2">&quot;actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="p">]</span>
+
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="ActinUtil.get_all_fixed_actin_particle_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_all_fixed_actin_particle_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_all_fixed_actin_particle_types</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">get_all_fixed_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get particle types for actins that don&#39;t diffuse</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">+=</span> <span class="p">[</span>
                 <span class="sa">f</span><span class="s2">&quot;actin#fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="sa">f</span><span class="s2">&quot;actin#fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -1582,13 +1591,13 @@
         <span class="p">]</span></div>
 
 <div class="viewcode-block" id="ActinUtil.get_all_particle_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.get_all_particle_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_all_particle_types</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">get_all_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add the given particle_types to the system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">()</span>
-            <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_fixed_actin_particle_types</span><span class="p">()</span>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_fixed_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">)</span>
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_arp23_particle_types</span><span class="p">()</span>
             <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_cap_particle_types</span><span class="p">()</span>
             <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;obstacle&quot;</span><span class="p">]</span>
@@ -1603,7 +1612,7 @@
             <span class="n">system</span><span class="o">.</span><span class="n">add_topology_species</span><span class="p">(</span><span class="n">particle_type</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_actin_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_actin_types">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_actin_types</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_actin_types</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">diffCoeff</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add particle and topology types for actin</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1621,10 +1630,14 @@
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Branch-Nucleating&quot;</span><span class="p">)</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_type</span><span class="p">(</span><span class="s2">&quot;Actin-Polymer#Capping&quot;</span><span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_particle_types</span><span class="p">(</span>
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">(),</span> <span class="n">system</span><span class="p">,</span> <span class="n">diffCoeff</span>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">),</span>
+            <span class="n">system</span><span class="p">,</span>
+            <span class="n">diffCoeff</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_particle_types</span><span class="p">(</span>
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_fixed_actin_particle_types</span><span class="p">(),</span> <span class="n">system</span><span class="p">,</span> <span class="mf">0.0</span>
+            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_fixed_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">),</span>
+            <span class="n">system</span><span class="p">,</span>
+            <span class="mf">0.0</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_arp23_types"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_arp23_types">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -1649,7 +1662,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_bonds_between_actins"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_bonds_between_actins">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_bonds_between_actins</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_bonds_between_actins</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add bonds between actins</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1688,6 +1701,43 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">bond_length</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_bond_1D</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#pointed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#pointed_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#fixed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#fixed_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_fixed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_fixed_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#pointed_fixed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#pointed_fixed_ATP_&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;actin#&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#barbed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#barbed_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#fixed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#fixed_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_fixed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#mid_fixed_ATP_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#fixed_barbed_&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actin#fixed_barbed_ATP_&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="mi">2</span><span class="p">,</span>
+            <span class="n">force_constant</span><span class="p">,</span>
+            <span class="n">bond_length</span><span class="p">,</span>
+            <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>
             <span class="p">[</span>
@@ -1740,6 +1790,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">bond_length</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>  <span class="c1"># temporary during growth reactions</span>
             <span class="p">[</span>
@@ -1759,7 +1810,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_filament_twist_angles"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_filament_twist_angles">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_filament_twist_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_filament_twist_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add angles for filament twist and cohesiveness</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1809,6 +1860,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_angle</span><span class="p">(</span>
             <span class="p">[</span>
@@ -1841,7 +1893,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_filament_twist_dihedrals"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_filament_twist_dihedrals">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_filament_twist_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_filament_twist_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add dihedrals for filament twist and cohesiveness</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1902,53 +1954,54 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_ATP_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_fixed_2&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_fixed_ATP_2&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_ATP_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_fixed_3&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_fixed_ATP_3&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="s2">&quot;actin#1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_fixed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#mid_fixed_ATP_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_barbed_1&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;actin#fixed_barbed_ATP_1&quot;</span><span class="p">,</span>
-            <span class="p">],</span>
-            <span class="n">force_constant</span><span class="p">,</span>
-            <span class="n">angle</span><span class="p">,</span>
-            <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span></div>
+        <span class="c1"># util.add_dihedral(</span>
+        <span class="c1">#     [</span>
+        <span class="c1">#         &quot;actin#branch_1&quot;,</span>
+        <span class="c1">#         &quot;actin#branch_ATP_1&quot;,</span>
+        <span class="c1">#     ],</span>
+        <span class="c1">#     [</span>
+        <span class="c1">#         &quot;actin#2&quot;,</span>
+        <span class="c1">#         &quot;actin#ATP_2&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_2&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_ATP_2&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_2&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_ATP_2&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_fixed_2&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_fixed_ATP_2&quot;,</span>
+        <span class="c1">#     ],</span>
+        <span class="c1">#     [</span>
+        <span class="c1">#         &quot;actin#3&quot;,</span>
+        <span class="c1">#         &quot;actin#ATP_3&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_3&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_ATP_3&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_3&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_ATP_3&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_fixed_3&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_fixed_ATP_3&quot;,</span>
+        <span class="c1">#     ],</span>
+        <span class="c1">#     [</span>
+        <span class="c1">#         &quot;actin#1&quot;,</span>
+        <span class="c1">#         &quot;actin#ATP_1&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_1&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_ATP_1&quot;,</span>
+        <span class="c1">#         &quot;actin#barbed_1&quot;,</span>
+        <span class="c1">#         &quot;actin#barbed_ATP_1&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_1&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_ATP_1&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_fixed_1&quot;,</span>
+        <span class="c1">#         &quot;actin#mid_fixed_ATP_1&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_barbed_1&quot;,</span>
+        <span class="c1">#         &quot;actin#fixed_barbed_ATP_1&quot;,</span>
+        <span class="c1">#     ],</span>
+        <span class="c1">#     force_constant,</span>
+        <span class="c1">#     angle,</span>
+        <span class="c1">#     system,</span>
+        <span class="c1"># )</span>
 
 <div class="viewcode-block" id="ActinUtil.add_branch_bonds"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_branch_bonds">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_branch_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_branch_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add bonds between arp2, arp3, and actins</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1977,6 +2030,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp2_to_mother_distance</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_bond_1D</span><span class="p">(</span>  <span class="c1"># mother filament actin to arp3 bonds</span>
             <span class="p">[</span>
@@ -2004,6 +2058,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">arp3_to_mother_distance</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_bond</span><span class="p">(</span>  <span class="c1"># arp2 to arp3 bonds</span>
             <span class="p">[</span>
@@ -2037,7 +2092,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_branch_angles"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_branch_angles">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_branch_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_branch_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add angles for branching</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2100,6 +2155,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother1_mother2_arp3_angle</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_1D</span><span class="p">(</span>
             <span class="p">[</span>
@@ -2129,6 +2185,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother3_mother2_arp3_angle</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother0_mother1_arp2_angle</span><span class="p">()</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_angle_1D</span><span class="p">(</span>
@@ -2155,6 +2212,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_angle</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
@@ -2166,7 +2224,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_branch_dihedrals"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_branch_dihedrals">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_branch_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_branch_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add dihedrals for branching</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2193,6 +2251,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother_mother0_mother1_arp2_dihedral_angle</span><span class="p">()</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_polymer_dihedral_1D</span><span class="p">(</span>
@@ -2220,6 +2279,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
@@ -2251,6 +2311,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother3_mother2_arp3_arp2_dihedral_angle</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># arp ring</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother1_mother2_arp3_arp2_dihedral_angle</span><span class="p">()</span>
@@ -2275,6 +2336,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
@@ -2316,6 +2378,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;arp2&quot;</span><span class="p">,</span> <span class="s2">&quot;arp2#branched&quot;</span><span class="p">],</span>
@@ -2413,6 +2476,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
@@ -2454,6 +2518,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">mother2_arp3_arp2_daughter1_dihedral_angle</span><span class="p">(),</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span>
@@ -2502,7 +2567,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_cap_bonds"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_cap_bonds">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_cap_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_cap_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add capping protein to actin bonds</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2514,10 +2579,11 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_distance</span><span class="p">()</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_cap_angles"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_cap_angles">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_cap_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_cap_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add angles for capping protein</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2554,6 +2620,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_angle</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
@@ -2565,7 +2632,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_cap_dihedrals"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_cap_dihedrals">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_cap_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_cap_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add dihedrals for capping protein</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2591,6 +2658,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="n">angle</span><span class="p">,</span>
             <span class="n">system</span><span class="p">,</span>
+            <span class="n">actin_number_types</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">util</span><span class="o">.</span><span class="n">add_dihedral</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;actin#branch_1&quot;</span><span class="p">,</span> <span class="s2">&quot;actin#branch_ATP_1&quot;</span><span class="p">],</span>
@@ -2620,14 +2688,14 @@
         <span class="n">force_constant</span><span class="p">,</span>
         <span class="n">system</span><span class="p">,</span>
         <span class="n">util</span><span class="p">,</span>
+        <span class="n">actin_number_types</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add repulsions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">actin_types</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">()</span>
-            <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_fixed_actin_particle_types</span><span class="p">()</span>
-        <span class="p">)</span>
+        <span class="n">actin_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_actin_particle_types</span><span class="p">(</span>
+            <span class="n">actin_number_types</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_fixed_actin_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">)</span>
         <span class="n">arp_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_arp23_particle_types</span><span class="p">()</span>
         <span class="n">cap_types</span> <span class="o">=</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_cap_particle_types</span><span class="p">()</span>
         <span class="c1"># actin</span>
@@ -2712,7 +2780,7 @@
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.check_add_global_box_potential"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.check_add_global_box_potential">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">check_add_global_box_potential</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">check_add_global_box_potential</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the boundaries are not periodic,</span>
 <span class="sd">        all particles need a box potential to keep them in the box volume</span>
@@ -2722,7 +2790,7 @@
         <span class="c1"># 1.0 margin on each side</span>
         <span class="n">box_potential_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;box_size&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mf">2.0</span><span class="p">)</span>
         <span class="n">ActinUtil</span><span class="o">.</span><span class="n">add_box_potential</span><span class="p">(</span>
-            <span class="n">particle_types</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_particle_types</span><span class="p">(),</span>
+            <span class="n">particle_types</span><span class="o">=</span><span class="n">ActinUtil</span><span class="o">.</span><span class="n">get_all_particle_types</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">),</span>
             <span class="n">origin</span><span class="o">=-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">box_potential_size</span><span class="p">,</span>
             <span class="n">extent</span><span class="o">=</span><span class="n">box_potential_size</span><span class="p">,</span>
             <span class="n">force_constant</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">],</span>
@@ -2791,11 +2859,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_trimerize_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_trimerize_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_trimerize_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_trimerize_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        attach a monomer to a dimer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Trimerize</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Dimer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
@@ -2824,11 +2892,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_nucleate_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_nucleate_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_nucleate_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_nucleate_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        reversibly attach a monomer to a trimer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_Nucleate_ATP</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Trimer(actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
@@ -2846,11 +2914,11 @@
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_pointed_growth_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_pointed_growth_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_pointed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_pointed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        attach a monomer to the pointed end of a filament</span>
+<span class="sd">        attach a monomer to the pointed (-) end of a filament</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Pointed_Growth_ATP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#pointed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
                 <span class="s2">&quot;Actin-Monomer-ATP(actin#free_ATP) -&gt; &quot;</span>
@@ -2889,7 +2957,7 @@
 <div class="viewcode-block" id="ActinUtil.add_pointed_shrink_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_pointed_shrink_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_pointed_shrink_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        remove a monomer from the pointed end of a filament</span>
+<span class="sd">        remove a monomer from the pointed (-) end of a filament</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
             <span class="s2">&quot;Pointed_Shrink_ATP&quot;</span><span class="p">,</span>
@@ -2911,11 +2979,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_barbed_growth_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_barbed_growth_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_barbed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_barbed_growth_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        attach a monomer to the barbed end of a filament</span>
+<span class="sd">        attach a monomer to the barbed (+) end of a filament</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Barbed_Growth_ATP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + &quot;</span>
                 <span class="s2">&quot;Actin-Monomer-ATP(actin#free_ATP) -&gt; &quot;</span>
@@ -2982,7 +3050,7 @@
 <div class="viewcode-block" id="ActinUtil.add_barbed_shrink_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_barbed_shrink_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">add_barbed_shrink_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        remove a monomer from the barbed end of a filament</span>
+<span class="sd">        remove a monomer from the barbed (+) end of a filament</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_structural_reaction</span><span class="p">(</span>
             <span class="s2">&quot;Barbed_Shrink_ATP&quot;</span><span class="p">,</span>
@@ -3040,11 +3108,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_arp23_bind_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_arp23_bind_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_arp23_bind_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_arp23_bind_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add arp2/3 along filament to start a branch</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Arp_Bind_ATP1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Polymer(actin#mid_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + Arp23-Dimer(arp3) -&gt; &quot;</span>
@@ -3155,11 +3223,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinUtil.add_cap_bind_reaction"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.add_cap_bind_reaction">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">add_cap_bind_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">add_cap_bind_reaction</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        add capping protein to a barbed end to stop growth</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ActinUtil</span><span class="o">.</span><span class="n">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
             <span class="n">system</span><span class="o">.</span><span class="n">topologies</span><span class="o">.</span><span class="n">add_spatial_reaction</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Cap_Bind1</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Actin-Polymer(actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) + Cap(cap) -&gt; &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;Actin-Polymer#Capping(actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">--cap#new)&quot;</span><span class="p">,</span>
@@ -3251,7 +3319,15 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">monomer_pos</span> <span class="o">-</span> <span class="n">pos_magnitude</span> <span class="o">*</span> <span class="n">v_pos_1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
             <span class="n">d_pos_0</span> <span class="o">+</span> <span class="n">pos_magnitude</span> <span class="o">*</span> <span class="n">v_pos_2</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ActinUtil.actin_number_range"><a class="viewcode-back" href="../../../simularium_models_util.actin.html#simularium_models_util.actin.actin_util.ActinUtil.actin_number_range">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">actin_number_range</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">actin_number_types</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">actin_number_types</span> <span class="o">&gt;</span> <span class="mi">5</span>
+        <span class="p">)</span> <span class="ow">or</span> <span class="n">actin_number_types</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only polymer number values of 3 and 5 are supported.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">actin_number_types</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>

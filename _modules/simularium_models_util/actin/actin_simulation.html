@@ -97,6 +97,7 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
+
 <span class="kn">import</span> <span class="nn">readdy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -161,7 +162,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_C&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">273.15</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_particle_types</span><span class="p">()</span>
-        <span class="n">ActinUtil</span><span class="o">.</span><span class="n">check_add_global_box_potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="n">ActinUtil</span><span class="o">.</span><span class="n">check_add_global_box_potential</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_constraints</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_reactions</span><span class="p">()</span></div>
 
@@ -170,6 +173,7 @@
 <span class="sd">        Add particle and topology types for actin particles</span>
 <span class="sd">        to the ReaDDy system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actin_number_types</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">])</span>
         <span class="n">temperature</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;temperature_K&quot;</span><span class="p">]</span>
         <span class="n">viscosity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;viscosity&quot;</span><span class="p">]</span>
         <span class="n">actin_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
@@ -181,7 +185,9 @@
         <span class="n">cap_diffCoeff</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="o">.</span><span class="n">calculate_diffusionCoefficient</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;cap_radius&quot;</span><span class="p">],</span> <span class="n">viscosity</span><span class="p">,</span> <span class="n">temperature</span>
         <span class="p">)</span>  <span class="c1"># nm^2/s</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_diffCoeff</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_actin_types</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_diffCoeff</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">arp23_diffCoeff</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_types</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">cap_diffCoeff</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="s2">&quot;obstacle&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span></div>
@@ -191,24 +197,56 @@
 <span class="sd">        Add geometric constraints for connected actin particles,</span>
 <span class="sd">        including bonds, angles, and repulsions, to the ReaDDy system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">ActinStructure</span><span class="o">.</span><span class="n">actin_to_actin_dihedral_angle</span><span class="p">()</span>
         <span class="n">force_constant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;force_constant&quot;</span><span class="p">]</span>
         <span class="n">util</span> <span class="o">=</span> <span class="n">ReaddyUtil</span><span class="p">()</span>
+        <span class="n">actin_number_types</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">])</span>
+        <span class="n">dihedral_strength</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;dihedral_strength&quot;</span><span class="p">])</span>
         <span class="c1"># linear actin</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_bonds_between_actins</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_bonds_between_actins</span><span class="p">(</span>
+            <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_filament_twist_angles</span><span class="p">(</span>
-            <span class="mi">10</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+            <span class="mi">10</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_filament_twist_dihedrals</span><span class="p">(</span>
-            <span class="mi">25</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span>
+            <span class="n">dihedral_strength</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
         <span class="p">)</span>
+        <span class="c1"># # print(</span>
+        <span class="c1">#     f&quot;input into dihedral functions {force_constant}, {angle}, {actin_number_types}&quot;</span>
+        <span class="c1"># )</span>
+        <span class="c1"># self.system.topologies.configure_cosine_dihedral(</span>
+        <span class="c1">#                         &#39;actin#pointed_ATP_1&#39;, &#39;actin#mid_ATP_2&#39;, &#39;actin#mid_ATP_3&#39;, &#39;actin#mid_ATP_4&#39;,  dihedral_strength * force_constant, 1.0, angle</span>
+        <span class="c1">#                     )</span>
+        <span class="c1"># self.system.topologies.configure_cosine_dihedral(</span>
+        <span class="c1">#                         &#39;actin#mid_ATP_2&#39;, &#39;actin#mid_ATP_3&#39;, &#39;actin#mid_ATP_4&#39;, &#39;actin#mid_ATP_5&#39;, dihedral_strength * force_constant, 1.0, angle</span>
+        <span class="c1">#                     )</span>
+        <span class="c1"># self.system.topologies.configure_cosine_dihedral(</span>
+        <span class="c1">#                         &#39;actin#mid_ATP_3&#39;, &#39;actin#mid_ATP_4&#39;, &#39;actin#mid_ATP_5&#39;, &#39;actin#mid_ATP_1&#39;, dihedral_strength * force_constant, 1.0, angle</span>
+        <span class="c1">#                     )</span>
+        <span class="c1"># self.system.topologies.configure_cosine_dihedral(</span>
+        <span class="c1">#                         &#39;actin#mid_ATP_4&#39;, &#39;actin#mid_ATP_5&#39;, &#39;actin#mid_ATP_1&#39;, &#39;actin#barbed_ATP_2&#39;, dihedral_strength * force_constant, 1.0, angle</span>
+        <span class="c1">#                     )</span>
         <span class="c1"># branch junction</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_angles</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_bonds</span><span class="p">(</span>
+            <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_angles</span><span class="p">(</span>
+            <span class="mi">10</span> <span class="o">*</span> <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_branch_dihedrals</span><span class="p">(</span>
+            <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
         <span class="c1"># capping protein</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bonds</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_angles</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_dihedrals</span><span class="p">(</span><span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bonds</span><span class="p">(</span>
+            <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_angles</span><span class="p">(</span>
+            <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_dihedrals</span><span class="p">(</span>
+            <span class="n">force_constant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">util</span><span class="p">,</span> <span class="n">actin_number_types</span>
+        <span class="p">)</span>
         <span class="c1"># repulsions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_repulsions</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_radius&quot;</span><span class="p">],</span>
@@ -218,6 +256,7 @@
             <span class="n">force_constant</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span>
             <span class="n">util</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">]),</span>
         <span class="p">)</span>
         <span class="c1"># box potentials</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_monomer_box_potentials</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span></div>
@@ -226,14 +265,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add reactions to the ReaDDy system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actin_number_types</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_dimerize_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_barbed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_barbed_growth_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_nucleate_branch_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_bind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_arp23_bind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_cap_bind_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">actin_number_types</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_dimerize_reverse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_trimerize_reverse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_pointed_shrink_reaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
@@ -327,6 +367,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">actin_util</span><span class="o">.</span><span class="n">add_random_linear_fibers</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">,</span>
             <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;seed_n_fibers&quot;</span><span class="p">]),</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;actin_number_types&quot;</span><span class="p">]),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;seed_fiber_length&quot;</span><span class="p">],</span>
             <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">use_uuids</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span></div>

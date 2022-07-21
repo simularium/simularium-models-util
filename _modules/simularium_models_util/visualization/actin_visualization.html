@@ -289,12 +289,15 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_branch_angle_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_branch_angle_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_branch_angle_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_branch_angle_plot</span><span class="p">(</span>
+        <span class="n">actin_number_types</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a plot of branch angle mean and std dev</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actin_number_types</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">)</span>
         <span class="n">angles</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_branch_angles</span><span class="p">(</span>
-            <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
+            <span class="n">actin_number_types</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span>
         <span class="p">)</span>
         <span class="n">mean</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_average_for_series</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
         <span class="n">stddev</span> <span class="o">=</span> <span class="n">ActinAnalyzer</span><span class="o">.</span><span class="n">analyze_stddev_for_series</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
@@ -368,12 +371,18 @@
 
 <div class="viewcode-block" id="ActinVisualization.generate_polymerization_plots"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.generate_polymerization_plots">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">generate_polymerization_plots</span><span class="p">(</span>
-        <span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="kc">None</span>
+        <span class="n">actin_number_types</span><span class="p">,</span>
+        <span class="n">path_to_readdy_h5</span><span class="p">,</span>
+        <span class="n">box_size</span><span class="p">,</span>
+        <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">periodic_boundary</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">plots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use an ActinAnalyzer to generate plots of observables</span>
 <span class="sd">        for polymerizing actin</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actin_number_types</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">actin_number_types</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">plots</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">plots</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;scatter&quot;</span><span class="p">:</span> <span class="p">[],</span>
@@ -399,7 +408,7 @@
             <span class="p">),</span>
             <span class="c1"># ActinVisualization.get_capped_ends_plot(monomer_data, times),</span>
             <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_branch_angle_plot</span><span class="p">(</span>
-                <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
+                <span class="n">actin_number_types</span><span class="p">,</span> <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
             <span class="p">),</span>
             <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_helix_pitch_plot</span><span class="p">(</span>
                 <span class="n">monomer_data</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">periodic_boundary</span><span class="p">,</span> <span class="n">times</span>
@@ -409,6 +418,9 @@
             <span class="p">),</span>
             <span class="n">ActinVisualization</span><span class="o">.</span><span class="n">get_structural_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
         <span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;generate_polymerization_plots is using </span><span class="si">{</span><span class="n">actin_number_types</span><span class="si">}</span><span class="s2"> as actin_number_types&quot;</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">plots</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.get_total_twist_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.get_total_twist_plot">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -505,7 +517,9 @@
         <span class="k">return</span> <span class="n">plots</span></div>
 
 <div class="viewcode-block" id="ActinVisualization.visualize_actin"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.actin_visualization.ActinVisualization.visualize_actin">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">visualize_actin</span><span class="p">(</span><span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">total_steps</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">visualize_actin</span><span class="p">(</span>
+        <span class="n">actin_number_types</span><span class="p">,</span> <span class="n">path_to_readdy_h5</span><span class="p">,</span> <span class="n">box_size</span><span class="p">,</span> <span class="n">total_steps</span><span class="p">,</span> <span class="n">plots</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        visualize an actin trajectory in Simularium</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -600,294 +614,6 @@
                 <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
             <span class="p">),</span>
-            <span class="s2">&quot;actin#1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#barbed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#barbed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#barbed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#barbed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#barbed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_fixed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_fixed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_fixed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_fixed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_fixed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#mid_fixed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_fixed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_fixed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_fixed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_fixed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_fixed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#pointed_fixed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_barbed_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_barbed_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_barbed_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_barbed_ATP_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_barbed_ATP_2&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;actin#fixed_barbed_ATP_3&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed_ATP&quot;</span><span class="p">,</span>
-                <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
-                <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
-            <span class="p">),</span>
             <span class="s2">&quot;actin#branch_1&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#branch&quot;</span><span class="p">,</span>
                 <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
@@ -919,6 +645,108 @@
                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#666666&quot;</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">actin_number_types</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">display_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#mid_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#mid_fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#bf9b30&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#mid_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#mid_fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#mid_fixed_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffbf00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#barbed_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#fixed_barbed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#fixed_barbed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#fixed_barbed_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffdc73&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#pointed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#pointed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#pointed_fixed_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="sa">f</span><span class="s2">&quot;actin#pointed_fixed_ATP_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">DisplayData</span><span class="p">(</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;actin#pointed_fixed_ATP&quot;</span><span class="p">,</span>
+                        <span class="n">display_type</span><span class="o">=</span><span class="n">DISPLAY_TYPE</span><span class="o">.</span><span class="n">SPHERE</span><span class="p">,</span>
+                        <span class="n">radius</span><span class="o">=</span><span class="n">actin_radius</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#a67c00&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
         <span class="c1"># convert</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">ReaddyData</span><span class="p">(</span>
             <span class="c1"># assume 1e3 recorded steps</span>
