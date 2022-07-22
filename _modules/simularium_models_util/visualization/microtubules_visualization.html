@@ -99,6 +99,7 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">simulariumio.readdy</span> <span class="kn">import</span> <span class="n">ReaddyConverter</span><span class="p">,</span> <span class="n">ReaddyData</span>
 <span class="kn">from</span> <span class="nn">simulariumio</span> <span class="kn">import</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">UnitData</span><span class="p">,</span> <span class="n">DisplayData</span><span class="p">,</span> <span class="n">ScatterPlotData</span><span class="p">,</span> <span class="n">DISPLAY_TYPE</span>
@@ -130,10 +131,10 @@
                 <span class="n">result</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw_display_data</span><span class="p">[</span><span class="n">particle_type</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="MicrotubulesVisualization.get_avg_length_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_avg_length_plot">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_avg_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+<div class="viewcode-block" id="MicrotubulesVisualization.get_protofilament_length_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_protofilament_length_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_protofilament_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a plot of average mother and daughter filament length</span>
+<span class="sd">        Add a plot of protofilament lengths</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">protofilament_list</span> <span class="o">=</span> <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">analyze_protofilament_lengths</span><span class="p">(</span>
             <span class="n">monomer_data</span>
@@ -143,11 +144,32 @@
             <span class="n">protofilaments</span><span class="p">[</span><span class="s2">&quot;Filament &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">protofilament</span>
 
         <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average length of protofilaments&quot;</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Length of protofilaments&quot;</span><span class="p">,</span>
             <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
-            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Average length (monomers)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Protofilament length (monomers)&quot;</span><span class="p">,</span>
             <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
             <span class="n">ytraces</span><span class="o">=</span><span class="n">protofilaments</span><span class="p">,</span>
+            <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MicrotubulesVisualization.get_avg_microtubule_length_plot"><a class="viewcode-back" href="../../../simularium_models_util.visualization.html#simularium_models_util.visualization.microtubules_visualization.MicrotubulesVisualization.get_avg_microtubule_length_plot">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_avg_microtubule_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a plot of average microtubule length</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">protofilament_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="n">MicrotubulesAnalyzer</span><span class="o">.</span><span class="n">analyze_protofilament_lengths</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">),</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">mean_lengths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">protofilament_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">mean_lengths</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">mean_lengths</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">return</span> <span class="n">ScatterPlotData</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Average microtubule length&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time (µs)&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Average microtubule length (monomers)&quot;</span><span class="p">,</span>
+            <span class="n">xtrace</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">ytraces</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Average microtubule length&quot;</span><span class="p">:</span> <span class="n">mean_lengths</span><span class="p">},</span>
             <span class="n">render_mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
@@ -256,7 +278,12 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;scatter&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_avg_length_plot</span><span class="p">(</span><span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
+                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_avg_microtubule_length_plot</span><span class="p">(</span>
+                    <span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span>
+                <span class="p">),</span>
+                <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_protofilament_length_plot</span><span class="p">(</span>
+                    <span class="n">monomer_data</span><span class="p">,</span> <span class="n">times</span>
+                <span class="p">),</span>
                 <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_growth_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
                 <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_shrink_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
                 <span class="n">MicrotubulesVisualization</span><span class="o">.</span><span class="n">get_attach_reactions_plot</span><span class="p">(</span><span class="n">reactions</span><span class="p">,</span> <span class="n">times</span><span class="p">),</span>
